@@ -1,0 +1,47 @@
+# Private working notes, never committed
+CLAUDE.local.md
+
+# Secrets and tokens
+.env
+.env.*
+*.key
+*.pem
+kaggle.json
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+dist/
+build/
+*.egg-info/
+
+# Data (loaders fetch and verify; nothing raw is committed)
+data/raw/
+data/build/
+# The table grid: every synthetic table with its seed and budget, and the attack and utility
+# runs on it. Evidence for the tables, too large to commit; the report command publishes the
+# summaries.
+data/synth/
+data/runs*/
+
+# Models and caches
+models/
+runs/
+.cache/
+*.sqlite
+*.sqlite3
+*.sqlite-wal
+*.sqlite-shm
+
+# The built site (facsimile site writes it; the workflow deploys it)
+site/out/
+
+# OS and editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
