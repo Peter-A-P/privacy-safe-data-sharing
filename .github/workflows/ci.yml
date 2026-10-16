@@ -1,0 +1,45 @@
+name: ci
+
+# Lint, types and tests on every push and pull request. No dataset is fetched here: the tests
+# that read data read the published results/ records and the docs, never a row, and the IEEE-CIS
+# rules forbid putting that data on a runner at all (docs/data.md).
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.13"
+
+      - name: Install
+        # CPU torch on Linux, from the index [tool.uv.sources] names.
+        run: uv sync --locked --extra dev --extra reference
+
+      - name: Lint
+        run: uv run ruff check .
+
+      - name: Format
+        run: uv run ruff format --check .
+
+      - name: Types
+        run: uv run mypy
+
+      - name: Tests
+        run: uv run pytest

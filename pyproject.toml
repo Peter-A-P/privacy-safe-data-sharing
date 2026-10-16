@@ -1,0 +1,133 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "facsimile"
+version = "0.0.1"
+description = "Synthetic tables of real people, attacked the way a regulator says and the way a researcher would, and measured for usefulness as train-on-synthetic, test-on-real."
+readme = "README.md"
+requires-python = ">=3.13,<3.14"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Peter Parker" }]
+
+# Every pin is a major version with a reason. Minors and patches float so fixes arrive without
+# a commit; a major does not move without a note in docs/synthesisers.md, because the version of
+# a synthesiser is part of every leak this project names.
+dependencies = [
+  # Frames, codes and every statistic. 2.x is the current line; the generated tables are
+  # integer-coded arrays and rely on its Generator API.
+  "numpy>=2,<3",
+  # The tables. SDV and SmartNoise both take a DataFrame; 2.x is what both are tested against.
+  # 3.0 changes string dtypes, which SDV 2.0 has not caught up with.
+  "pandas>=2.2,<3",
+  # Parquet for the built splits and the table grid. Majors change writer defaults; 25 is current.
+  "pyarrow>=18,<26",
+  # Gaussian copula, CTGAN and TVAE. 2.x moved fit() to take a dict of tables, which
+  # synth/sdv_common.py relies on. Business Source License 1.1: use is permitted provided it is
+  # not a commercial synthetic data service (docs/synthesisers.md quotes the grant).
+  "sdv>=2,<3",
+  # AIM, MST and PATE-CTGAN. 1.0.x is the only line; its accountants are what docs/synthesisers.md
+  # names. It caps opacus below 0.15, which PATE-CTGAN does not call.
+  "smartnoise-synth>=1.0.8,<1.1",
+  # The zCDP-to-approximate-DP conversion behind AIM and MST's rho (snsynth.utils.cdp_rho).
+  # Pinned here because accounting.py calls it to check what was spent, and its version is part
+  # of every epsilon reported. Pre-1.0, so the minor is pinned.
+  "opendp>=0.14,<0.15",
+  # The ACSIncome and ACSEmployment task definitions (features, filters, targets). Pre-1.0 and
+  # barely moving; the minor is pinned so a changed filter cannot move a published number.
+  "folktables>=0.0.12,<0.1",
+  # The downstream models for train-on-synthetic, test-on-real. 4.x is current.
+  "lightgbm>=4,<5",
+  # Bootstrap quantiles and the exact binomial interval. 1.x has been the line for a decade.
+  "scipy>=1,<2",
+  # CTGAN, TVAE and PATE-CTGAN train on it. A dependency of SDV already; named here so that
+  # [tool.uv.sources] can choose the build: CUDA 12.6 on the Windows desktop (a GTX 1650, sm_75,
+  # checked 2026-10-16), CPU in CI. 2.x is current.
+  "torch>=2.14,<3",
+]
+
+[project.optional-dependencies]
+# The reference library for the three legal-test attacks, run beside this project's own
+# implementations on the same tables. Anonymeter 1.1 pins numpy below 1.27, which has no Python
+# 3.13 wheel; the override in [tool.uv] lifts that pin, and the agreement report is what shows
+# the library still computes what it did. TAPAS needs Python below 3.11 and lives in its own
+# environment (docs/attacks.md).
+reference = ["anonymeter>=1.1,<2"]
+dev = [
+  "pytest>=9,<10",
+  "ruff>=0.17,<0.18",
+  "mypy>=2,<3",
+  "pandas-stubs>=2.2,<3",
+]
+
+[project.scripts]
+facsimile = "facsimile.cli:main"
+
+[project.urls]
+Repository = "https://github.com/Peter-A-P/privacy-safe-data-sharing"
+
+[tool.uv]
+# Anonymeter 1.1.0 declares numpy<1.27. numpy 1.26 has no wheel for Python 3.13, and the
+# library imports and runs on numpy 2 (checked 2026-10-16 on a copied table). Lifted here rather
+# than downgrading Python; the reference agreement report is the standing check.
+override-dependencies = ["numpy>=2,<3"]
+# The working copy lives in a OneDrive folder, which refuses uv's default hardlinks (os error 396).
+link-mode = "copy"
+
+[tool.uv.sources]
+torch = [
+  { index = "pytorch-cu126", marker = "sys_platform == 'win32'" },
+  { index = "pytorch-cpu", marker = "sys_platform != 'win32'" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu126"
+url = "https://download.pytorch.org/whl/cu126"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["facsimile"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+# ruff formats Python blocks inside Markdown by default; the plan and docs keep their layout.
+extend-exclude = ["*.md"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "N", "RUF"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+files = ["facsimile", "tests"]
+warn_unreachable = true
+
+[[tool.mypy.overrides]]
+# None of these ships type information that mypy --strict accepts.
+module = [
+  "sdv.*",
+  "snsynth.*",
+  "opendp.*",
+  "folktables.*",
+  "lightgbm.*",
+  "scipy.*",
+  "pyarrow.*",
+  "torch.*",
+  "anonymeter.*",
+]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+markers = ["slow: fits a real synthesiser; minutes, not seconds"]
+filterwarnings = ["ignore::DeprecationWarning", "ignore::FutureWarning"]

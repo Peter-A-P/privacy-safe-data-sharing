@@ -1,0 +1,54 @@
+{
+  "facsimile": "0.0.1",
+  "dataset": "acs",
+  "method": "aim",
+  "library": "smartnoise-synth",
+  "family": "dp marginal",
+  "epsilon": 0.5,
+  "seed": 0,
+  "cell": {
+    "eps_tag": "eps0.5"
+  },
+  "rows": 20000,
+  "params": {
+    "delta": 1e-05,
+    "degree": 2,
+    "max_model_size": 80,
+    "max_cells": 10000,
+    "rounds": null
+  },
+  "accounting": {
+    "dp": true,
+    "accountant": "zCDP; rho from snsynth.utils.cdp_rho (OpenDP make_zCDP_to_approxDP, binary search)",
+    "epsilon_requested": 0.5,
+    "delta": 1e-05,
+    "epsilon_passed_to_accountant": 0.5,
+    "delta_passed_to_accountant": 1e-05,
+    "rho": 0.008505530591181908,
+    "versions": {
+      "smartnoise-synth": "1.0.8",
+      "opendp": "0.14.2",
+      "mbi": "1.1.0",
+      "sdv": "2.0.0",
+      "torch": "2.14.1+cu126"
+    },
+    "epsilon_after_preprocessing": 0.5
+  },
+  "fitted_on_sha256": "65a4f56e371436e76d4a3ddbd524208223033a8f22830e715ee7c7fa625628de",
+  "train_sha256": "65a4f56e371436e76d4a3ddbd524208223033a8f22830e715ee7c7fa625628de",
+  "table_sha256": "1afa033235892e52fdd8698b500d216a2d9939ddeb1e04b9f8778e6744cc6f3a",
+  "fit_seconds": 808.765,
+  "sample_seconds": 4.507,
+  "device": "cpu",
+  "hardware": {
+    "cpu": "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz",
+    "logical_cores": 12,
+    "os": "Windows 11",
+    "python": "3.13.5",
+    "torch": "2.14.1+cu126",
+    "gpu": "NVIDIA GeForce GTX 1650",
+    "gpu_memory_gb": 4.0
+  },
+  "started_utc": "2026-10-16T19:00:21+00:00",
+  "notes": []
+}

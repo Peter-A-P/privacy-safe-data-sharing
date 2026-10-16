@@ -17,7 +17,8 @@ a curve, and the configurations that leak.
 
 ## Result
 
-Plan only. Nothing has been measured yet. The columns the benchmark will fill:
+Building, week 1. Nothing has been measured yet: the three datasets are fetched, checksummed and
+split, and the table grid is being generated. The columns the benchmark will fill:
 
 | Dataset | Synthesiser | Epsilon | Singling out risk (95% CI) | Linkability risk | Inference risk | Membership inference | Utility, TSTR vs real | Marginal error | Recommended |
 |---|---|---|---|---|---|---|---|---|---|

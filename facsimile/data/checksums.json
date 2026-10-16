@@ -1,0 +1,32 @@
+{
+  "acs": {
+    "csv_pca_2018.zip": {
+      "bytes": 67233615,
+      "fetched": "2026-10-16",
+      "sha256": "6194ade52892ddb0e41903f7d3b49399842f08eeebd42e6b19ee8e417affbf79",
+      "source": "https://www2.census.gov/programs-surveys/acs/data/pums/2018/1-Year/csv_pca.zip"
+    }
+  },
+  "ieeecis": {
+    "train_identity.csv": {
+      "bytes": 26529680,
+      "fetched": "2026-09-12",
+      "sha256": "b63c725d8377be90a995268d97f347c17d456b95db45807adcf9f59cd603c37c",
+      "source": "recorded by project 09 (docs/ieee-cis-checksums.json), from https://www.kaggle.com/competitions/ieee-fraud-detection/data"
+    },
+    "train_transaction.csv": {
+      "bytes": 683351067,
+      "fetched": "2026-09-12",
+      "sha256": "3a5c83ab6b3cc13dcabe5ffa9f522307fd5f7f7b6e6f6a60c32284ca6283d642",
+      "source": "recorded by project 09 (docs/ieee-cis-checksums.json), from https://www.kaggle.com/competitions/ieee-fraud-detection/data"
+    }
+  },
+  "sparcs": {
+    "sparcs_inpatient_2024_sf4k-39ay.csv": {
+      "bytes": 286377101,
+      "fetched": "2026-10-16",
+      "sha256": "0ca770fe743ef801aa71b7b2d8c9e4cd96b5fc6d47a56a815cba047a073f985b",
+      "source": "https://health.data.ny.gov/resource/sf4k-39ay.csv ($select of 16 fields, $order=:id)"
+    }
+  }
+}

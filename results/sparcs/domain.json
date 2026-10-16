@@ -1,0 +1,312 @@
+{
+  "note": "category sets from the test split; bin edges from the spec",
+  "min_share": 0.005,
+  "columns": [
+    {
+      "name": "age_group",
+      "kind": "categorical",
+      "labels": [
+        "0-17",
+        "18-29",
+        "30-49",
+        "50-69",
+        "70 or Older",
+        "OTHER"
+      ],
+      "edges": [],
+      "nullable": false
+    },
+    {
+      "name": "gender",
+      "kind": "categorical",
+      "labels": [
+        "F",
+        "M",
+        "OTHER"
+      ],
+      "edges": [],
+      "nullable": false
+    },
+    {
+      "name": "race",
+      "kind": "categorical",
+      "labels": [
+        "Black/African American",
+        "Multi-racial",
+        "Other Race",
+        "White",
+        "OTHER"
+      ],
+      "edges": [],
+      "nullable": false
+    },
+    {
+      "name": "ethnicity",
+      "kind": "categorical",
+      "labels": [
+        "Not Span/Hispanic",
+        "Spanish/Hispanic",
+        "Unknown",
+        "OTHER"
+      ],
+      "edges": [],
+      "nullable": false
+    },
+    {
+      "name": "zip_code",
+      "kind": "categorical",
+      "labels": [
+        "100",
+        "103",
+        "104",
+        "105",
+        "106",
+        "107",
+        "109",
+        "110",
+        "111",
+        "112",
+        "113",
+        "114",
+        "115",
+        "116",
+        "117",
+        "119",
+        "120",
+        "121",
+        "122",
+        "123",
+        "124",
+        "125",
+        "126",
+        "127",
+        "128",
+        "129",
+        "130",
+        "131",
+        "132",
+        "133",
+        "134",
+        "136",
+        "137",
+        "140",
+        "141",
+        "142",
+        "144",
+        "145",
+        "146",
+        "147",
+        "148",
+        "OOS",
+        "OTHER",
+        "NA"
+      ],
+      "edges": [],
+      "nullable": true
+    },
+    {
+      "name": "health_service_area",
+      "kind": "categorical",
+      "labels": [
+        "Capital/Adirondacks",
+        "Central NY",
+        "Finger Lakes",
+        "Hudson Valley",
+        "Long Island",
+        "New York City",
+        "Southern Tier",
+        "Western NY",
+        "OTHER",
+        "NA"
+      ],
+      "edges": [],
+      "nullable": true
+    },
+    {
+      "name": "type_of_admission",
+      "kind": "categorical",
+      "labels": [
+        "Elective",
+        "Emergency",
+        "Newborn",
+        "Urgent",
+        "OTHER"
+      ],
+      "edges": [],
+      "nullable": false
+    },
+    {
+      "name": "patient_disposition",
+      "kind": "categorical",
+      "labels": [
+        "Expired",
+        "Home or Self Care",
+        "Home w/ Home Health Services",
+        "Hospice - Medical Facility",
+        "Inpatient Rehabilitation Facility",
+        "Left Against Medical Advice",
+        "Short-term Hospital",
+        "Skilled Nursing Home",
+        "OTHER"
+      ],
+      "edges": [],
+      "nullable": false
+    },
+    {
+      "name": "apr_mdc_code",
+      "kind": "categorical",
+      "labels": [
+        "01",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10",
+        "11",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "23",
+        "OTHER"
+      ],
+      "edges": [],
+      "nullable": false
+    },
+    {
+      "name": "apr_severity_of_illness_code",
+      "kind": "categorical",
+      "labels": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "OTHER"
+      ],
+      "edges": [],
+      "nullable": false
+    },
+    {
+      "name": "apr_risk_of_mortality",
+      "kind": "categorical",
+      "labels": [
+        "Extreme",
+        "Major",
+        "Minor",
+        "Moderate",
+        "OTHER",
+        "NA"
+      ],
+      "edges": [],
+      "nullable": true
+    },
+    {
+      "name": "apr_medical_surgical",
+      "kind": "categorical",
+      "labels": [
+        "Medical",
+        "Surgical",
+        "OTHER"
+      ],
+      "edges": [],
+      "nullable": false
+    },
+    {
+      "name": "payment_typology_1",
+      "kind": "categorical",
+      "labels": [
+        "Blue Cross/Blue Shield",
+        "Federal/State/Local/VA",
+        "Managed Care, Unspecified",
+        "Medicaid",
+        "Medicare",
+        "Miscellaneous/Other",
+        "Private Health Insurance",
+        "Self-Pay",
+        "OTHER",
+        "NA"
+      ],
+      "edges": [],
+      "nullable": true
+    },
+    {
+      "name": "emergency_department_indicator",
+      "kind": "categorical",
+      "labels": [
+        "N",
+        "Y",
+        "OTHER"
+      ],
+      "edges": [],
+      "nullable": false
+    },
+    {
+      "name": "length_of_stay",
+      "kind": "numeric",
+      "labels": [
+        "[1, 2)",
+        "[2, 3)",
+        "[3, 4)",
+        "[4, 5)",
+        "[5, 6)",
+        "[6, 8)",
+        "[8, 11)",
+        "[11, 15)",
+        "[15, 31)",
+        "[31, 120]"
+      ],
+      "edges": [
+        1.0,
+        2.0,
+        3.0,
+        4.0,
+        5.0,
+        6.0,
+        8.0,
+        11.0,
+        15.0,
+        31.0,
+        120.0
+      ],
+      "nullable": false
+    },
+    {
+      "name": "total_charges",
+      "kind": "numeric",
+      "labels": [
+        "[0, 5000)",
+        "[5000, 10000)",
+        "[10000, 20000)",
+        "[20000, 30000)",
+        "[30000, 50000)",
+        "[50000, 75000)",
+        "[75000, 100000)",
+        "[100000, 200000)",
+        "[200000, 500000)",
+        "[500000, 1e+07]"
+      ],
+      "edges": [
+        0.0,
+        5000.0,
+        10000.0,
+        20000.0,
+        30000.0,
+        50000.0,
+        75000.0,
+        100000.0,
+        200000.0,
+        500000.0,
+        10000000.0
+      ],
+      "nullable": false
+    }
+  ]
+}

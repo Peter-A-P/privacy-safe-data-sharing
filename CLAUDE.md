@@ -5,7 +5,7 @@ versions of three public datasets of real people, generated six ways with and wi
 differential privacy, attacked with the three criteria regulators use to judge anonymity and
 with membership inference, and measured for usefulness as train-on-synthetic, test-on-real.
 The plan is in [PLAN.md](PLAN.md); the diagrams in [docs/architecture.md](docs/architecture.md).
-Status: plan only.
+Status: week 1 in progress (datasets built, synthesiser grid running).
 
 ## Read first
 
@@ -13,9 +13,18 @@ Status: plan only.
 - [PLAN.md](PLAN.md): the design. Do not deviate from it silently; if something in it turns
   out wrong, change the plan in the same commit as the code and say why in the commit
   message.
-- `docs/data.md`, `docs/synthesisers.md` and `docs/attacks.md` once they exist: the terms as
+- `docs/data.md`, `docs/synthesisers.md` and `docs/attacks.md` once it exists: the terms as
   quoted, the library versions and accountants, and the attack implementations beside their
   papers.
+
+## Running it
+
+- `uv sync --all-extras` (CUDA torch on Windows, CPU elsewhere; `link-mode = "copy"` because the
+  working copy is in OneDrive).
+- IEEE-CIS is never downloaded by this project: set `FACSIMILE_IEEE_CIS_DIR` to the extracted
+  competition folder (on the build desktop, `../09-realtime-risk-platform/data/raw/ieee-fraud-detection`).
+- `facsimile data fetch all`, `facsimile build all`, `facsimile grid all` (resumable; one process
+  per cell; `--status` to see progress). Rows land in `data/`, records in `results/`.
 
 ## Engineering standard
 

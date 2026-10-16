@@ -1,0 +1,25 @@
+{
+  "dataset": "ieeecis",
+  "population_rows": 590540,
+  "split": {
+    "seed": 20261016,
+    "train": {
+      "n": 20000,
+      "sha256": "89951c6b87d51e5c60be991fed185639463f4660f8d62c7344a0735d4a39c26a"
+    },
+    "control": {
+      "n": 2000,
+      "sha256": "d6a2ab50c65748e06bec7ba49dedefae0a985916c9e84e71739412ccaeb3198e"
+    },
+    "test": {
+      "n": 10000,
+      "sha256": "218ec863595f8da8bac035779e531a787619ba5e80756648b2168dd7b998bae8"
+    },
+    "targets": {
+      "n": 2000,
+      "sha256": "adcbcb414f552b34a24717a6d1fe765496ca40b2c83e42136a45aef708e1b3f1"
+    }
+  },
+  "train_frame_sha256": "500a68e725547e6ecf3a375fc6ff047bb8818f889135f45d6a1a52961e25960c",
+  "domain_cells": 315916151685120
+}

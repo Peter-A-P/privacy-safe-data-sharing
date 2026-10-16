@@ -1,6 +1,8 @@
 # Plan: Share the Data, Not the People
 
-**Written:** 2026-10-16. **Status:** plan only, nothing built, nothing fetched, nothing spent.
+**Written:** 2026-10-16. **Status:** week 1 started 2026-10-16: all three datasets fetched and
+built, the six synthesisers behind one interface; amendments made while building are marked
+"Amended 2026-10-16" where they fall.
 **Build:** three weeks of evenings and weekends alongside 16, starting when this plan is
 approved; the weeks in section 6 are relative, not dated. **Package:** `facsimile`.
 **Repository:** `privacy-safe-data-sharing`.
@@ -52,11 +54,19 @@ with terms a stranger can accept:
 - **ACS PUMS via folktables** (census respondents; public Census Bureau data; folktables MIT).
   The standard benchmark of the differential-privacy literature, so every number here can be
   set beside published ones. Tasks: ACSIncome and ACSEmployment, one state-year each.
+  **Amended 2026-10-16:** one table carries both tasks, because the grid is fitted once per
+  dataset. The table is ACSEmployment's population (age 17 to 89) and the income task applies
+  ACSIncome's own filter in the coded domain, so it is ACSIncome exactly but for the 90-and-over;
+  the employment task keeps ten of its sixteen features (the six dropped keep AIM tractable), so
+  it compares with published numbers loosely, not exactly. California 2018.
 - **IEEE-CIS Fraud Detection** (card transactions; Kaggle competition terms, non-commercial,
   read and recorded by 09 on 2026-09-12 and reused here unchanged). The fintech set; the
   downstream task is fraud classification.
 - **New York SPARCS de-identified inpatient discharges** (real hospital stays; public use file
-  with no application), **if the state's own terms, read on day one, permit the use**. The
+  with no application), **if the state's own terms, read on day one, permit the use**.
+  **Amended 2026-10-16:** read on day one; the Department of Health's Data Use Policy Statement
+  places no controls on end use and asks for attribution, the access date and a disclaimer, so
+  the set is in (`docs/data.md` quotes it). The 2024 file, the latest published. The
   health set; tasks are length of stay and a charge band. If the terms do not permit it, the
   project runs on two datasets and the README says why; the MIMIC-IV demo (100 patients) is
   too small for an attack to mean anything and is not a substitute.
@@ -77,7 +87,11 @@ file, which is the risk the law names; it is never carried past the dataset.
 
 Every method is wrapped in one interface: fit on the training split with a seed, a privacy
 budget where it applies, and the preprocessing the benchmark recommends (uniform binning,
-rare-category merging at a fixed threshold, recorded). Budgets: epsilon 0.5, 1, 2, 4 and 8,
+rare-category merging at a fixed threshold, recorded). **Amended 2026-10-16:** the domain spends
+no budget. Bin edges are fixed from public bounds in each dataset's spec; category sets come from
+the test split, which no synthesiser sees, at a half-percent threshold; SmartNoise is handed a
+transformer already fitted to that domain, because its default reads the category set off the
+training data without charging for it (`docs/synthesisers.md`). Budgets: epsilon 0.5, 1, 2, 4 and 8,
 delta 1e-5, with the non-DP methods reported at epsilon infinity; three seeds per cell. The
 accountant each library uses is named in `docs/synthesisers.md` with the version, because a
 wrong epsilon is worse than none and the plan does not roll its own.
@@ -94,12 +108,20 @@ of real records that were not, and a random baseline. Risk is the main attack's 
 the control's, which is what separates leakage from the synthetic table simply being useful.
 Beside them, the membership inference attack of Stadler et al. (USENIX 2022) in its Groundhog
 form: shadow synthetic datasets, a feature map of naive statistics, histograms and
-correlations, a random forest that says whether a target was in. And distance to closest
+correlations, a random forest that says whether a target was in. **Amended 2026-10-16
+(Peter's decision):** at AIM's measured 29 minutes per 20,000-row table, shadow training at the
+grid's size cannot finish, so the Groundhog attack runs at about 1,000 rows, the scale Stadler et
+al. used: shadow and attacked tables of that size, a small fixed set of targets per dataset, all
+six synthesisers at three budgets (epsilon 1, 8 and infinity). It is reported as membership
+inference at that scale, not as a property of the 20,000-row grid tables. And distance to closest
 record, the metric vendors quote, computed on the same tables so the comparison is paired.
 
 The project's implementations are run beside the reference libraries, Anonymeter (Clear BSD;
 its authors hold a patent application, recorded in `docs/attacks.md`) and TAPAS (MIT), on the
-same tables, and the agreement is published. If they disagree, the plan says which is wrong
+same tables, and the agreement is published. **Amended 2026-10-16:** Anonymeter 1.1 pins numpy
+below 1.27, which has no Python 3.13 wheel, so `pyproject.toml` overrides the pin (it runs on
+numpy 2, checked on a copied table); TAPAS requires Python below 3.11 and pandas 1.x, so it runs
+in its own Python 3.10 environment on tables exported to disk. If they disagree, the plan says which is wrong
 and why before any number ships. Implementing them is what shows understanding; agreeing with
 the authors is what shows the implementation is theirs.
 
@@ -119,7 +141,11 @@ records they never see (the attacks' control set), and a test split for utility.
 the attacks are drawn from the training split; the control set is the same size. A leakage
 check on every build confirms the three are disjoint and that no synthesiser was fit on a
 control or test record. The splits and the attack target ids are published so the attacks are
-reproducible exactly.
+reproducible exactly. **Amended 2026-10-16:** except for IEEE-CIS, whose competition rules (7.B)
+make a list of TransactionIDs a row-level reference that may not be published; its manifest
+carries counts and SHA-256 hashes, and the split is reproducible exactly from the files and the
+seed. Sizes for all three: train 20,000, control 2,000, attack targets 2,000 drawn from train,
+test 10,000.
 
 ### 2.6 The surface and the recommendation
 
@@ -128,6 +154,11 @@ intervals: the epsilon-utility-risk surface. The recommendation is a rule, not a
 smallest epsilon at which utility is within a stated delta of the real-data ceiling and every
 risk is within its interval of the control, or the statement that no such point exists for
 that synthesiser. The rule, its delta and the result per dataset are in the README.
+**Specified 2026-10-16** (`facsimile/surface.py`, before any table was scored on purpose):
+utility passes when every task's 95% interval of AUC(synthetic) minus AUC(real ceiling) lies
+above -0.02 on every seed; risk passes when, with successes pooled over the three seeds, every
+attack's risk interval at 1 - 0.05/(number of attacks) includes zero; epsilon infinity is a
+budget like any other.
 
 ### 2.7 Naming a leak
 
@@ -155,8 +186,8 @@ browser, no uploads. The pattern of 01, 08 and 16.
 | Source | Size | What it gives | Access and terms |
 |---|---|---|---|
 | ACS PUMS via folktables, one state-year (for example California 2018) | About 200k person records, 10 to 17 attributes per task | Census respondents; ACSIncome and ACSEmployment tasks; comparability with the DP literature | Census Bureau public data; the API terms forbid any attempt to identify a person, which section 2.1 honours by construction; folktables MIT |
-| IEEE-CIS Fraud Detection | 590k transactions, 400+ attributes; a 30-attribute subset chosen as 09 did | Card transactions with a fraud label; the fintech set | Kaggle competition rules section 7: non-commercial use only; 09's record of the terms reused |
-| NY SPARCS de-identified inpatient discharges, one year | About 2 million discharges, about 30 attributes (age group, sex, race, 3-digit zip, diagnosis, procedure, length of stay, charges) | Real hospital stays; the health set | Public use file, no application; the terms on health.data.ny.gov are read and quoted on day one, and the set is used only if they permit |
+| IEEE-CIS Fraud Detection | 590k transactions, 400+ attributes; a 16-attribute subset (amended 2026-10-16 from "30, chosen as 09 did": 09's features are engineered, not a raw subset, and AIM at 30 attributes would not finish the grid) | Card transactions with a fraud label; the fintech set | Kaggle competition rules section 7: non-commercial use only; 09's record of the terms reused |
+| NY SPARCS de-identified inpatient discharges, 2024 | 2,196,737 discharges, 33 attributes, a 16-attribute subset (age group, sex, race, 3-digit zip, diagnosis group, severity, length of stay, charges and the rest) | Real hospital stays; the health set | Public use file, no application; the terms on health.data.ny.gov are read and quoted on day one, and the set is used only if they permit |
 
 Nothing raw is committed; loaders fetch and verify checksums; licences are quoted in
 `docs/data.md` before the first fetch. Each dataset is reduced to a documented attribute
