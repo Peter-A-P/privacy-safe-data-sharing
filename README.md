@@ -1,4 +1,11 @@
-# Privacy-Safe Data Sharing
+# Share the Data, Not the People
+
+Synthetic data promises the patterns without the people, and this measures whether it keeps
+the promise: three public datasets of real people, synthesised six ways with and without
+differential privacy, and every table attacked the way a regulator says and the way a
+researcher would. How much each gives away, how useful it still is for the models people will train on it, the
+price of privacy as a curve, and the configurations that leak, named down to the library
+version and setting, every number with its interval.
 
 Organisations under privacy law sit on data they cannot share, and synthetic data is sold to
 them as the way out. This project generates synthetic versions of three public datasets of

@@ -1,4 +1,4 @@
-# Plan: Privacy-Safe Data Sharing (name pending)
+# Plan: Share the Data, Not the People
 
 **Written:** 2026-10-16. **Status:** plan only, nothing built, nothing fetched, nothing spent.
 **Build:** three weeks of evenings and weekends alongside 16, starting when this plan is
@@ -311,14 +311,19 @@ Whichever produces the clearest evidence becomes `docs/rejected.md`.
 
 ## 13. Name
 
-"Privacy-Safe Data Sharing" names the subject and nothing else: no outcome, no magnitude, no
-argument, the failure NAMING.md describes. Candidates for Peter's pick; the one-liner carries
-the magnitude whichever is chosen:
+**Chosen 2026-10-16: Share the Data, Not the People.** The promise in six words; the one-liner
+carries the measurement (three datasets of real people, six methods, the attacks) and the
+finding. "Privacy-Safe Data Sharing" named the subject and nothing else. The candidates as
+weighed, two rounds:
 
 1. **Fake Data, Real People: Which Synthetic Tables Leak**: the finding in the name, in the
    shape of 02 and 06.
 2. **Shareable Data, Attacked Before It Is Shared**: the outcome and the method's argument.
 3. **The Data You Can Share, and the Proof It Is Safe**: the buyer's question answered.
 4. **Privacy-Safe Data Sharing**: keep it and let the one-liner carry everything.
+5. Second round, after Peter found 2 to 4 close but not right: **Share the Data, Not the
+   People** (chosen), How Much a Synthetic Table Gives Away, Released Only After It Survives
+   the Attacks, The Same Patterns, None of the People, The Price of Privacy, in Data You Can
+   Share.
 
 Repository, package and slug stay as they are whichever is chosen.
