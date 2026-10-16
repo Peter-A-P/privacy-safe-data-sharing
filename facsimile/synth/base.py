@@ -12,6 +12,7 @@ from __future__ import annotations
 import os
 import platform
 import random
+import sys
 import time
 from collections.abc import Callable
 from dataclasses import dataclass, field
@@ -110,7 +111,8 @@ def hardware() -> dict[str, Any]:
     import torch
 
     cpu = platform.processor()
-    if platform.system() == "Windows":
+    # sys.platform, not platform.system(): mypy narrows on it, so the Linux CI check skips winreg.
+    if sys.platform == "win32":
         try:
             import winreg
 
