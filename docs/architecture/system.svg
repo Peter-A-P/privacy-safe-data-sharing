@@ -68,31 +68,31 @@
 <rect x="908.0" y="750.0" width="290.0" height="64.0" rx="4" fill="#F2F4F3" stroke="#5C6B67" stroke-width="1.1" stroke-dasharray="5 3"/>
 <text x="1053.0" y="778.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">The 03 gate</text>
 <text x="1053.0" y="794.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">synthetic-trained against real-trained</text>
-<rect x="108.2" y="149.0" width="129.6" height="20.0" rx="3" fill="#FFFFFF"/>
+<rect x="106.3" y="149.0" width="133.4" height="20.0" rx="3" fill="#FFFFFF"/>
 <text x="173.0" y="161.0" font-size="12" text-anchor="middle" fill="#14201E">fetched, checksummed</text>
-<rect x="114.1" y="259.0" width="117.8" height="20.0" rx="3" fill="#FFFFFF"/>
+<rect x="120.3" y="259.0" width="105.4" height="20.0" rx="3" fill="#FFFFFF"/>
 <text x="173.0" y="271.0" font-size="12" text-anchor="middle" fill="#14201E">the prepared table</text>
-<rect x="328.2" y="316.0" width="129.6" height="20.0" rx="3" fill="#FFFFFF"/>
+<rect x="342.3" y="316.0" width="101.4" height="20.0" rx="3" fill="#FFFFFF"/>
 <text x="393.0" y="328.0" font-size="12" text-anchor="middle" fill="#14201E">the train split only</text>
-<rect x="554.1" y="377.0" width="117.8" height="20.0" rx="3" fill="#FFFFFF"/>
+<rect x="563.0" y="377.0" width="100.1" height="20.0" rx="3" fill="#FFFFFF"/>
 <text x="613.0" y="389.0" font-size="12" text-anchor="middle" fill="#14201E">one table per cell</text>
-<rect x="501.2" y="483.0" width="223.7" height="20.0" rx="3" fill="#FFFFFF"/>
+<rect x="517.3" y="483.0" width="191.4" height="20.0" rx="3" fill="#FFFFFF"/>
 <text x="613.0" y="495.0" font-size="12" text-anchor="middle" fill="#14201E">every table, against the control set</text>
-<rect x="785.8" y="430.0" width="94.3" height="20.0" rx="3" fill="#FFFFFF"/>
+<rect x="791.0" y="430.0" width="84.0" height="20.0" rx="3" fill="#FFFFFF"/>
 <text x="833.0" y="442.0" font-size="12" text-anchor="middle" fill="#14201E">scored on test</text>
-<rect x="548.2" y="605.0" width="129.6" height="20.0" rx="3" fill="#FFFFFF"/>
+<rect x="560.3" y="605.0" width="105.3" height="20.0" rx="3" fill="#FFFFFF"/>
 <text x="613.0" y="617.0" font-size="12" text-anchor="middle" fill="#14201E">risks with intervals</text>
-<rect x="843.6" y="647.3" width="123.7" height="20.0" rx="3" fill="#FFFFFF"/>
+<rect x="849.2" y="647.3" width="112.7" height="20.0" rx="3" fill="#FFFFFF"/>
 <text x="905.5" y="659.3" font-size="12" text-anchor="middle" fill="#14201E">TSTR with intervals</text>
-<rect x="231.0" y="658.0" width="170.8" height="20.0" rx="3" fill="#FFFFFF"/>
-<text x="316.3" y="670.0" font-size="12" text-anchor="middle" fill="#14201E">per dataset and synthesiser</text>
-<rect x="997.0" y="704.3" width="112.0" height="20.0" rx="3" fill="#FFFFFF"/>
+<rect x="228.6" y="658.0" width="155.4" height="20.0" rx="3" fill="#FFFFFF"/>
+<text x="306.3" y="670.0" font-size="12" text-anchor="middle" fill="#14201E">per dataset and synthesiser</text>
+<rect x="995.6" y="704.3" width="114.7" height="20.0" rx="3" fill="#FFFFFF"/>
 <text x="1053.0" y="716.3" font-size="12" text-anchor="middle" fill="#14201E">recommended table</text>
-<rect x="288.7" y="772.0" width="112.0" height="20.0" rx="3" fill="#FFFFFF"/>
+<rect x="295.0" y="772.0" width="99.4" height="20.0" rx="3" fill="#FFFFFF"/>
 <text x="344.7" y="784.0" font-size="12" text-anchor="middle" fill="#14201E">the rule&#x27;s answer</text>
-<rect x="806.4" y="772.0" width="53.2" height="20.0" rx="3" fill="#FFFFFF"/>
+<rect x="811.0" y="772.0" width="44.0" height="20.0" rx="3" fill="#FFFFFF"/>
 <text x="833.0" y="784.0" font-size="12" text-anchor="middle" fill="#14201E">verdict</text>
-<rect x="595.2" y="829.0" width="35.5" height="20.0" rx="3" fill="#FFFFFF"/>
+<rect x="593.0" y="829.0" width="40.0" height="20.0" rx="3" fill="#FFFFFF"/>
 <text x="613.0" y="841.0" font-size="12" text-anchor="middle" fill="#14201E">JSON</text>
 <rect x="28" y="950" width="26" height="16" rx="3" fill="#FFFFFF" stroke="#0E6E60" stroke-width="1.6"/>
 <text x="62" y="962" font-size="11" fill="#5C6B67">built here</text>
