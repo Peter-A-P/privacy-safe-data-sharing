@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1176" height="768" viewBox="0 0 1176 768" role="img" aria-label="The attack&#x27;s success on records the synthesiser never saw is what the synthetic table reveals about anyone; the excess on the records it did see is the leak; a random guess that ignores the table is the sanity floor." font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 1 1 L 9 5 L 1 9 z" fill="#14201E"/></marker><marker id="arrow-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 1 1 L 9 5 L 1 9 z" fill="#0E6E60"/></marker><marker id="arrow-signal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 1 1 L 9 5 L 1 9 z" fill="#A64C1C"/></marker><marker id="arrow-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 1 1 L 9 5 L 1 9 z" fill="#5C6B67"/></marker></defs>
+<rect width="1176" height="768" fill="#FFFFFF"/>
+<text x="28" y="42" font-size="16" font-weight="700" fill="#14201E">The three-way split: why there is a control set</text>
+<path d="M 448.0 98.0 L 174.0 98.0 Q 168.0 98.0 168.0 104.0 L 168.0 182.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 728.0 98.0 L 1002.0 98.0 Q 1008.0 98.0 1008.0 104.0 L 1008.0 181.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 168.0 246.0 L 168.0 298.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 308.0 214.0 L 582.0 214.0 Q 588.0 214.0 588.0 220.0 L 588.0 298.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 588.0 362.0 L 588.0 414.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 448.0 446.0 L 220.7 446.0 Q 214.7 446.0 214.7 452.0 L 214.7 530.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 588.0 478.0 L 588.0 530.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 168.0 362.0 L 168.0 440.0 Q 168.0 446.0 162.0 446.0 L 127.3 446.0 Q 121.3 446.0 121.3 452.0 L 121.3 530.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 868.0 214.0 L 804.0 214.0 Q 798.0 214.0 798.0 220.0 L 798.0 556.0 Q 798.0 562.0 792.0 562.0 L 728.0 562.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 168.0 594.0 L 168.0 672.0 Q 168.0 678.0 174.0 678.0 L 448.0 678.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 588.0 594.0 L 588.0 646.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 868.0 678.0 L 728.0 678.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 448.0 73.0 a 140.0 7 0 0 1 280.0 0 L 728.0 123.0 a 140.0 7 0 0 1 -280.0 0 Z" fill="#FFFFFF" stroke="#14201E" stroke-width="1.1"/><path d="M 448.0 73.0 a 140.0 7 0 0 0 280.0 0" fill="none" stroke="#14201E" stroke-width="1.1"/>
+<text x="588.0" y="106.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">The real table</text>
+<rect x="28.0" y="182.0" width="280.0" height="64.0" rx="4" fill="#FFFFFF" stroke="#14201E" stroke-width="1.1"/>
+<text x="168.0" y="210.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">train</text>
+<text x="168.0" y="226.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">the synthesisers see this</text>
+<rect x="868.0" y="181.0" width="280.0" height="66.0" rx="4" fill="#FFFFFF" stroke="#0E6E60" stroke-width="1.6"/>
+<rect x="868.0" y="181.0" width="5" height="66.0" rx="2" fill="#0E6E60"/>
+<text x="1008.0" y="202.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">control</text>
+<text x="1008.0" y="218.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">never seen by any synthesiser;</text>
+<text x="1008.0" y="234.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">the same size as the target set</text>
+<rect x="28.0" y="298.0" width="280.0" height="64.0" rx="4" fill="#FFFFFF" stroke="#14201E" stroke-width="1.1"/>
+<text x="168.0" y="326.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">attack targets</text>
+<text x="168.0" y="342.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">drawn from train; ids published</text>
+<rect x="448.0" y="298.0" width="280.0" height="64.0" rx="4" fill="#FFFFFF" stroke="#14201E" stroke-width="1.1"/>
+<text x="588.0" y="326.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">The synthesisers</text>
+<text x="588.0" y="342.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">six methods, each budget, each seed</text>
+<path d="M 448.0 421.0 a 140.0 7 0 0 1 280.0 0 L 728.0 471.0 a 140.0 7 0 0 1 -280.0 0 Z" fill="#FFFFFF" stroke="#14201E" stroke-width="1.1"/><path d="M 448.0 421.0 a 140.0 7 0 0 0 280.0 0" fill="none" stroke="#14201E" stroke-width="1.1"/>
+<text x="588.0" y="454.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">The synthetic table</text>
+<rect x="28.0" y="530.0" width="280.0" height="64.0" rx="4" fill="#FFFFFF" stroke="#0E6E60" stroke-width="1.6"/>
+<rect x="28.0" y="530.0" width="5" height="64.0" rx="2" fill="#0E6E60"/>
+<text x="168.0" y="558.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">The main attack</text>
+<text x="168.0" y="574.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">on the targets</text>
+<rect x="448.0" y="530.0" width="280.0" height="64.0" rx="4" fill="#FFFFFF" stroke="#0E6E60" stroke-width="1.6"/>
+<rect x="448.0" y="530.0" width="5" height="64.0" rx="2" fill="#0E6E60"/>
+<text x="588.0" y="558.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">The control attack</text>
+<text x="588.0" y="574.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">on the control records</text>
+<rect x="868.0" y="646.0" width="280.0" height="64.0" rx="4" fill="#FFFFFF" stroke="#14201E" stroke-width="1.1"/>
+<text x="1008.0" y="674.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">The baseline</text>
+<text x="1008.0" y="690.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">a random guess that ignores the table</text>
+<rect x="448.0" y="646.0" width="280.0" height="64.0" rx="4" fill="#FFFFFF" stroke="#A64C1C" stroke-width="1.6"/>
+<rect x="448.0" y="646.0" width="5" height="64.0" rx="2" fill="#A64C1C"/>
+<text x="588.0" y="674.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">risk = main success over control success</text>
+<text x="588.0" y="690.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">baseline as the floor; 95% interval</text>
+<text x="1008.0" y="326.0" font-size="13" font-weight="400" text-anchor="middle" fill="#5C6B67" font-style="italic">test is held apart for utility only</text>
+<text x="1008.0" y="342.0" font-size="13" font-weight="400" text-anchor="middle" fill="#5C6B67" font-style="italic">and takes no part in any attack</text>
+<rect x="803.2" y="88.0" width="129.6" height="20.0" rx="3" fill="#FFFFFF"/>
+<text x="868.0" y="100.0" font-size="12" text-anchor="middle" fill="#14201E">split once, recorded</text>
+<rect x="141.4" y="262.0" width="53.2" height="20.0" rx="3" fill="#FFFFFF"/>
+<text x="168.0" y="274.0" font-size="12" text-anchor="middle" fill="#14201E">sampled</text>
+<rect x="433.2" y="204.0" width="29.6" height="20.0" rx="3" fill="#FFFFFF"/>
+<text x="448.0" y="216.0" font-size="12" text-anchor="middle" fill="#14201E">fit</text>
+<rect x="564.4" y="378.0" width="47.3" height="20.0" rx="3" fill="#FFFFFF"/>
+<text x="588.0" y="390.0" font-size="12" text-anchor="middle" fill="#14201E">sample</text>
+<rect x="540.8" y="494.0" width="94.3" height="20.0" rx="3" fill="#FFFFFF"/>
+<text x="588.0" y="506.0" font-size="12" text-anchor="middle" fill="#14201E">the same table</text>
+<rect x="123.8" y="394.0" width="88.4" height="20.0" rx="3" fill="#FFFFFF"/>
+<text x="168.0" y="406.0" font-size="12" text-anchor="middle" fill="#14201E">who to attack</text>
+<rect x="753.8" y="378.0" width="88.4" height="20.0" rx="3" fill="#FFFFFF"/>
+<text x="798.0" y="390.0" font-size="12" text-anchor="middle" fill="#14201E">who to attack</text>
+<rect x="543.8" y="610.0" width="88.4" height="20.0" rx="3" fill="#FFFFFF"/>
+<text x="588.0" y="622.0" font-size="12" text-anchor="middle" fill="#14201E">success rates</text>
+<rect x="765.5" y="668.0" width="64.9" height="20.0" rx="3" fill="#FFFFFF"/>
+<text x="798.0" y="680.0" font-size="12" text-anchor="middle" fill="#14201E">the floor</text>
+<rect x="28" y="732" width="26" height="16" rx="3" fill="#FFFFFF" stroke="#0E6E60" stroke-width="1.6"/>
+<text x="62" y="744" font-size="11" fill="#5C6B67">what makes the arithmetic honest</text>
+<rect x="260.48" y="732" width="26" height="16" rx="3" fill="#FFFFFF" stroke="#A64C1C" stroke-width="1.6"/>
+<text x="294.48" y="744" font-size="11" fill="#5C6B67">the number</text>
+<path d="M 374.4 739.0 a 13.0 7 0 0 1 26.0 0 L 400.4 741.0 a 13.0 7 0 0 1 -26.0 0 Z" fill="#FFFFFF" stroke="#14201E" stroke-width="1.1"/><path d="M 374.4 739.0 a 13.0 7 0 0 0 26.0 0" fill="none" stroke="#14201E" stroke-width="1.1"/>
+<text x="408.38" y="744" font-size="11" fill="#5C6B67">data at rest</text>
+</svg>

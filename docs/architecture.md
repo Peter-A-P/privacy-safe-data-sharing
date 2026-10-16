@@ -1,92 +1,68 @@
 # Architecture
 
-The diagrams behind [PLAN.md](../PLAN.md), in Mermaid so they render on GitHub and change in
-the same commit as the code they describe. Four views: the pipeline, the three-way split
-that makes the attack arithmetic honest, one attack's anatomy, and the surface.
+The figures behind [PLAN.md](../PLAN.md), drawn before the first line of code so the design
+cannot be shaped to fit the result. Four views: the pipeline, the three-way split that makes
+the attack arithmetic honest, one attack's anatomy, and the surface. Nothing in them is
+measured yet; the module names are the plan's.
 
-## 1. The pipeline
+## The pipeline
 
-Real tables in, a grid of synthetic tables, every table attacked and scored, one surface out.
+![Three public datasets of real people are prepared and split three ways, synthesised six ways at six privacy budgets and three seeds, attacked with the three legal criteria and membership inference checked against the reference libraries, scored for train-on-synthetic, test-on-real utility, and summarised as a surface with a recommendation rule that the release gate confirms.](architecture/system.svg)
 
-```mermaid
-flowchart LR
-  subgraph data["Real microdata (fetched, checksummed, terms quoted)"]
-    ACS["ACS PUMS via folktables<br/>census respondents"]
-    CIS["IEEE-CIS<br/>card transactions (09's terms)"]
-    SP["NY SPARCS discharges<br/>if the terms permit"]
-  end
-  data --> subset["subset + prep<br/>attribute subset, uniform binning,<br/>rare-category merge (recorded)"]
-  subset --> split["split<br/>train · control · test<br/>attack targets; leakage check"]
-  split --> grid
+Three real datasets, their terms quoted in `docs/data.md` before the first fetch, come in:
+ACS PUMS census microdata via folktables, IEEE-CIS transactions under the terms project 09
+recorded, and NY SPARCS hospital discharges only if its terms permit (`facsimile.data`). Each
+is prepared with a recorded attribute subset, uniform binning and rare-category merging, and
+split three ways: a training set the synthesisers see, a control set they never see, and a
+test set for utility, with the attack targets drawn and a leakage check (`facsimile.split`).
+The synthesiser grid is six methods at six privacy budgets and three seeds: Gaussian copula,
+CTGAN and TVAE through SDV, and AIM, MST and PATE-CTGAN through SmartNoise, every epsilon from
+a library's own accountant (`facsimile.synth`), one table per cell. Every table is attacked
+with singling out, linkability and inference implemented from the paper that defines the legal
+test, the Groundhog membership inference attack and distance to closest record, each checked
+against Anonymeter and TAPAS on the same tables (`facsimile.attacks`, `facsimile.reference`),
+and scored for utility as a model trained on synthetic data and tested on real, against the
+real-data ceiling, with marginal error reported as fidelity and never as utility
+(`facsimile.utility`). The outcomes per table carry bootstrap intervals; the surface and its
+recommendation rule (`facsimile.surface`) and the release gate's verdict on the recommended
+table feed the report, which writes the README tables, the leak table and the JSON behind the
+static explorer at privacy.peterparker.ca.
 
-  subgraph grid["Synthesiser grid: 6 methods x 6 budgets x 3 seeds"]
-    NDP["non-DP: Gaussian copula, CTGAN, TVAE (SDV)"]
-    DPM["DP marginal: AIM, MST (SmartNoise / Private-PGM)"]
-    DPD["DP deep: PATE-CTGAN (SmartNoise)"]
-  end
-  grid --> tables[("data/synth<br/>one table per cell,<br/>seed, epsilon, wall-clock")]
+## The three-way split
 
-  tables --> attacks["attacks (from the papers)<br/>singling out · linkability · inference<br/>Groundhog MIA · DCR"]
-  tables --> reference["reference check<br/>Anonymeter, TAPAS<br/>on the same tables"]
-  tables --> utility["utility<br/>train-on-synthetic, test-on-real<br/>ceiling, floor; marginal error"]
-  attacks & reference & utility --> results[("outcomes per table<br/>bootstrap intervals")]
-  results --> surface["surface<br/>epsilon vs utility vs risk;<br/>the recommendation rule"]
-  results --> gate["03 gate<br/>synthetic-trained vs real-trained"]
-  surface & gate --> report["report<br/>README tables, leak table, site JSON"]
-  report --> site["privacy.peterparker.ca (static)"]
-```
+![The attack's success on records the synthesiser never saw is what the synthetic table reveals about anyone; the excess on the records it did see is the leak; a random guess that ignores the table is the sanity floor.](architecture/split.svg)
 
-## 2. The three-way split
+The real table is split once and the split recorded. The synthesisers are fitted on the
+training split alone and sampled into a synthetic table. The attack targets are drawn from the
+training split with their ids published; the control set is never seen by any synthesiser and
+is the same size as the target set; the test split takes no part in any attack. The main
+attack runs on the targets and the control attack on the control records against the same
+synthetic table, and a random guess that ignores the table is the baseline. The risk is the
+main success rate over the control success rate with the baseline as the sanity floor, and a
+95% interval, which is what keeps an attack's success on strangers from being counted as a
+leak.
 
-Why there is a control set: the attack's success on records the synthesiser never saw is what
-the synthetic table reveals about anyone; the excess on records it did see is the leak.
+## One attack: the inference risk
 
-```mermaid
-flowchart TB
-  real["real table"] --> train["train<br/>the synthesisers see this"]
-  real --> control["control<br/>never seen by any synthesiser,<br/>same size as the target set"]
-  real --> test["test<br/>utility only"]
-  train --> targets["attack targets<br/>drawn from train, ids published"]
-  train --> synth["synthesisers"] --> syn["synthetic table"]
-  syn --> main["main attack<br/>on targets"]
-  syn --> ctrl["control attack<br/>on control records"]
-  rnd["baseline<br/>random guess, ignores the table"]
-  main & ctrl & rnd --> risk["risk = main success over control success,<br/>baseline as the sanity floor,<br/>95% interval"]
-  syn --> tstr["model trained on synthetic"] --> test
-  train --> ceiling["model trained on real"] --> test
-```
+![The shape every attack follows: a target or control record, the quasi-identifiers an attacker is assumed to know, its nearest neighbours in the synthetic table, a guess at the secret attribute, and a success rate on targets against controls against a random baseline, checked against the reference library on the same inputs.](architecture/one-attack.svg)
 
-## 3. One attack, the legal test's inference risk
+Every attack in `facsimile.attacks` follows one shape; the predicates and the neighbour search
+differ, the three-way design does not. For a target record or a control record, the attacker
+is assumed to know the quasi-identifiers, finds the record's nearest neighbours in the
+synthetic table, and guesses the secret attribute from them. Correct or not is aggregated into
+a success rate on the targets, on the controls and for the random baseline, and the inference
+risk with its interval comes from the ratio. Anonymeter is run on the same inputs and a
+disagreement is resolved and recorded before a number ships.
 
-The shape every attack in `facsimile/attacks/` follows; the predicates and the neighbour
-search differ, the three-way design does not.
+## The surface
 
-```mermaid
-flowchart LR
-  target["target record<br/>(train) or control record"] --> qi["quasi-identifiers<br/>known to the attacker"]
-  qi --> nn["nearest neighbours<br/>in the synthetic table"]
-  syn[("synthetic table")] --> nn
-  nn --> guess["guess the secret attribute"]
-  guess --> score["correct?"]
-  score --> agg["success rate on targets<br/>vs on controls<br/>vs random baseline"]
-  agg --> out["inference risk, with interval"]
-  ref["Anonymeter on the same inputs"] --> agree["agreement report"]
-  out --> agree
-```
+![Each privacy budget is one cell with three seeds; utility against the real ceiling and the four risks are read for every cell; the rule picks the smallest epsilon where utility is within delta of the ceiling and every risk is within its interval of the control, or says there is no such point; the release gate confirms the recommended table.](architecture/surface.svg)
 
-## 4. The surface
-
-One chart per dataset and synthesiser; the recommendation is where the rule says, or nowhere.
-
-```mermaid
-flowchart LR
-  eps["epsilon: 0.5, 1, 2, 4, 8, infinity"] --> cells["one cell per budget<br/>3 seeds"]
-  cells --> u["utility: TSTR vs real ceiling"]
-  cells --> r1["singling out risk"]
-  cells --> r2["linkability risk"]
-  cells --> r3["inference risk"]
-  cells --> r4["membership inference"]
-  u & r1 & r2 & r3 & r4 --> rule["rule: smallest epsilon where utility is within delta<br/>of the ceiling and every risk is within its interval<br/>of the control, else 'no such point'"]
-  rule --> rec["recommended configuration<br/>per dataset and synthesiser"]
-  rec --> gate["03 gate confirms<br/>non-inferiority of the recommended table"]
-```
+For each dataset and synthesiser, the budgets 0.5, 1, 2, 4, 8 and no privacy at all are one
+cell each with three seeds. Every cell is read five ways: utility against the real ceiling,
+singling out, linkability, inference and membership inference. The rule (`facsimile.surface`)
+picks the smallest epsilon where utility is within delta of the ceiling and every risk is
+within its interval of the control, or says plainly that there is no such point. The
+recommended configuration per dataset and synthesiser is then handed to project 03's gate,
+which confirms the non-inferiority of a model trained on the recommended table against one
+trained on the real data.

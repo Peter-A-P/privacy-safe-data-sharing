@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1226" height="986" viewBox="0 0 1226 986" role="img" aria-label="Three public datasets of real people are prepared and split three ways, synthesised six ways at six privacy budgets and three seeds, attacked with the three legal criteria and membership inference checked against the reference libraries, scored for train-on-synthetic, test-on-real utility, and summarised as a surface with a recommendation rule that the release gate confirms." font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 1 1 L 9 5 L 1 9 z" fill="#14201E"/></marker><marker id="arrow-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 1 1 L 9 5 L 1 9 z" fill="#0E6E60"/></marker><marker id="arrow-signal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 1 1 L 9 5 L 1 9 z" fill="#A64C1C"/></marker><marker id="arrow-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 1 1 L 9 5 L 1 9 z" fill="#5C6B67"/></marker></defs>
+<rect width="1226" height="986" fill="#FFFFFF"/>
+<text x="28" y="42" font-size="16" font-weight="700" fill="#14201E">The pipeline: real tables in, a grid of synthetic tables, every one attacked and scored, one surface out</text>
+<path d="M 173.0 138.0 L 173.0 180.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 173.0 244.0 L 173.0 294.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 318.0 326.0 L 468.0 326.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 613.0 366.0 L 613.0 408.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 613.0 472.0 L 613.0 514.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 758.0 440.0 L 908.0 440.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 613.0 594.0 L 613.0 636.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 1053.0 480.0 L 1053.0 651.3 Q 1053.0 657.3 1047.0 657.3 L 758.0 657.3" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 468.0 668.0 L 130.7 668.0 Q 124.7 668.0 124.7 662.0 L 124.7 586.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 758.0 678.7 L 1047.0 678.7 Q 1053.0 678.7 1053.0 684.7 L 1053.0 750.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 221.3 586.0 L 221.3 776.0 Q 221.3 782.0 227.3 782.0 L 468.0 782.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 908.0 782.0 L 758.0 782.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 613.0 814.0 L 613.0 864.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="28.0" y="58.0" width="290.0" height="80.0" rx="4" fill="#F2F4F3" stroke="#5C6B67" stroke-width="1.1" stroke-dasharray="5 3"/>
+<text x="173.0" y="79.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">Real microdata, terms quoted first</text>
+<text x="173.0" y="95.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">ACS PUMS via folktables; IEEE-CIS;</text>
+<text x="173.0" y="111.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">NY SPARCS if its terms permit</text>
+<text x="173.0" y="128.0" font-size="11" font-family="Consolas, Menlo, 'DejaVu Sans Mono', monospace" text-anchor="middle" fill="#5C6B67">facsimile.data</text>
+<rect x="28.0" y="180.0" width="290.0" height="64.0" rx="4" fill="#FFFFFF" stroke="#14201E" stroke-width="1.1"/>
+<text x="173.0" y="201.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">Subset and prep</text>
+<text x="173.0" y="217.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">attribute subset, binning, rare merge</text>
+<text x="173.0" y="234.0" font-size="11" font-family="Consolas, Menlo, 'DejaVu Sans Mono', monospace" text-anchor="middle" fill="#5C6B67">facsimile.data, recorded</text>
+<rect x="28.0" y="294.0" width="290.0" height="64.0" rx="4" fill="#FFFFFF" stroke="#0E6E60" stroke-width="1.6"/>
+<rect x="28.0" y="294.0" width="5" height="64.0" rx="2" fill="#0E6E60"/>
+<text x="173.0" y="315.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">Three-way split</text>
+<text x="173.0" y="331.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">train, control, test; targets drawn</text>
+<text x="173.0" y="348.0" font-size="11" font-family="Consolas, Menlo, 'DejaVu Sans Mono', monospace" text-anchor="middle" fill="#5C6B67">facsimile.split</text>
+<rect x="28.0" y="522.0" width="290.0" height="64.0" rx="4" fill="#FFFFFF" stroke="#A64C1C" stroke-width="1.6"/>
+<rect x="28.0" y="522.0" width="5" height="64.0" rx="2" fill="#A64C1C"/>
+<text x="173.0" y="543.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">The surface and the rule</text>
+<text x="173.0" y="559.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">epsilon against utility against risk</text>
+<text x="173.0" y="576.0" font-size="11" font-family="Consolas, Menlo, 'DejaVu Sans Mono', monospace" text-anchor="middle" fill="#5C6B67">facsimile.surface</text>
+<rect x="468.0" y="286.0" width="290.0" height="80.0" rx="4" fill="#FFFFFF" stroke="#0E6E60" stroke-width="1.6"/>
+<rect x="468.0" y="286.0" width="5" height="80.0" rx="2" fill="#0E6E60"/>
+<text x="613.0" y="307.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">Synthesiser grid: 6 x 6 budgets x 3 seeds</text>
+<text x="613.0" y="323.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">copula, CTGAN, TVAE (SDV);</text>
+<text x="613.0" y="339.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">AIM, MST, PATE-CTGAN (SmartNoise)</text>
+<text x="613.0" y="356.0" font-size="11" font-family="Consolas, Menlo, 'DejaVu Sans Mono', monospace" text-anchor="middle" fill="#5C6B67">facsimile.synth; library accountants</text>
+<path d="M 468.0 415.0 a 145.0 7 0 0 1 290.0 0 L 758.0 465.0 a 145.0 7 0 0 1 -290.0 0 Z" fill="#FFFFFF" stroke="#14201E" stroke-width="1.1"/><path d="M 468.0 415.0 a 145.0 7 0 0 0 290.0 0" fill="none" stroke="#14201E" stroke-width="1.1"/>
+<text x="613.0" y="440.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">data/synth</text>
+<text x="613.0" y="456.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">one table per cell; seed, epsilon, time</text>
+<rect x="468.0" y="514.0" width="290.0" height="80.0" rx="4" fill="#FFFFFF" stroke="#0E6E60" stroke-width="1.6"/>
+<rect x="468.0" y="514.0" width="5" height="80.0" rx="2" fill="#0E6E60"/>
+<text x="613.0" y="535.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">Attacks, from the papers</text>
+<text x="613.0" y="551.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">singling out, linkability, inference; MIA;</text>
+<text x="613.0" y="567.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">DCR; checked against Anonymeter, TAPAS</text>
+<text x="613.0" y="584.0" font-size="11" font-family="Consolas, Menlo, 'DejaVu Sans Mono', monospace" text-anchor="middle" fill="#5C6B67">facsimile.attacks, facsimile.reference</text>
+<path d="M 468.0 643.0 a 145.0 7 0 0 1 290.0 0 L 758.0 693.0 a 145.0 7 0 0 1 -290.0 0 Z" fill="#FFFFFF" stroke="#14201E" stroke-width="1.1"/><path d="M 468.0 643.0 a 145.0 7 0 0 0 290.0 0" fill="none" stroke="#14201E" stroke-width="1.1"/>
+<text x="613.0" y="668.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">Outcomes per table</text>
+<text x="613.0" y="684.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">bootstrap intervals</text>
+<rect x="468.0" y="750.0" width="290.0" height="64.0" rx="4" fill="#FFFFFF" stroke="#A64C1C" stroke-width="1.6"/>
+<rect x="468.0" y="750.0" width="5" height="64.0" rx="2" fill="#A64C1C"/>
+<text x="613.0" y="771.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">Report</text>
+<text x="613.0" y="787.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">README tables, the leak table, site JSON</text>
+<text x="613.0" y="804.0" font-size="11" font-family="Consolas, Menlo, 'DejaVu Sans Mono', monospace" text-anchor="middle" fill="#5C6B67">facsimile.report</text>
+<rect x="468.0" y="864.0" width="290.0" height="64.0" rx="4" fill="#FFFFFF" stroke="#14201E" stroke-width="1.1"/>
+<text x="613.0" y="892.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">privacy.peterparker.ca</text>
+<text x="613.0" y="908.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">static explorer</text>
+<rect x="908.0" y="400.0" width="290.0" height="80.0" rx="4" fill="#FFFFFF" stroke="#14201E" stroke-width="1.1"/>
+<text x="1053.0" y="421.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">Utility</text>
+<text x="1053.0" y="437.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">train-on-synthetic, test-on-real; ceiling,</text>
+<text x="1053.0" y="453.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">floor; marginal error reported as fidelity</text>
+<text x="1053.0" y="470.0" font-size="11" font-family="Consolas, Menlo, 'DejaVu Sans Mono', monospace" text-anchor="middle" fill="#5C6B67">facsimile.utility</text>
+<rect x="908.0" y="750.0" width="290.0" height="64.0" rx="4" fill="#F2F4F3" stroke="#5C6B67" stroke-width="1.1" stroke-dasharray="5 3"/>
+<text x="1053.0" y="778.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">The 03 gate</text>
+<text x="1053.0" y="794.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">synthetic-trained against real-trained</text>
+<rect x="108.2" y="149.0" width="129.6" height="20.0" rx="3" fill="#FFFFFF"/>
+<text x="173.0" y="161.0" font-size="12" text-anchor="middle" fill="#14201E">fetched, checksummed</text>
+<rect x="114.1" y="259.0" width="117.8" height="20.0" rx="3" fill="#FFFFFF"/>
+<text x="173.0" y="271.0" font-size="12" text-anchor="middle" fill="#14201E">the prepared table</text>
+<rect x="328.2" y="316.0" width="129.6" height="20.0" rx="3" fill="#FFFFFF"/>
+<text x="393.0" y="328.0" font-size="12" text-anchor="middle" fill="#14201E">the train split only</text>
+<rect x="554.1" y="377.0" width="117.8" height="20.0" rx="3" fill="#FFFFFF"/>
+<text x="613.0" y="389.0" font-size="12" text-anchor="middle" fill="#14201E">one table per cell</text>
+<rect x="501.2" y="483.0" width="223.7" height="20.0" rx="3" fill="#FFFFFF"/>
+<text x="613.0" y="495.0" font-size="12" text-anchor="middle" fill="#14201E">every table, against the control set</text>
+<rect x="785.8" y="430.0" width="94.3" height="20.0" rx="3" fill="#FFFFFF"/>
+<text x="833.0" y="442.0" font-size="12" text-anchor="middle" fill="#14201E">scored on test</text>
+<rect x="548.2" y="605.0" width="129.6" height="20.0" rx="3" fill="#FFFFFF"/>
+<text x="613.0" y="617.0" font-size="12" text-anchor="middle" fill="#14201E">risks with intervals</text>
+<rect x="843.6" y="647.3" width="123.7" height="20.0" rx="3" fill="#FFFFFF"/>
+<text x="905.5" y="659.3" font-size="12" text-anchor="middle" fill="#14201E">TSTR with intervals</text>
+<rect x="231.0" y="658.0" width="170.8" height="20.0" rx="3" fill="#FFFFFF"/>
+<text x="316.3" y="670.0" font-size="12" text-anchor="middle" fill="#14201E">per dataset and synthesiser</text>
+<rect x="997.0" y="704.3" width="112.0" height="20.0" rx="3" fill="#FFFFFF"/>
+<text x="1053.0" y="716.3" font-size="12" text-anchor="middle" fill="#14201E">recommended table</text>
+<rect x="288.7" y="772.0" width="112.0" height="20.0" rx="3" fill="#FFFFFF"/>
+<text x="344.7" y="784.0" font-size="12" text-anchor="middle" fill="#14201E">the rule&#x27;s answer</text>
+<rect x="806.4" y="772.0" width="53.2" height="20.0" rx="3" fill="#FFFFFF"/>
+<text x="833.0" y="784.0" font-size="12" text-anchor="middle" fill="#14201E">verdict</text>
+<rect x="595.2" y="829.0" width="35.5" height="20.0" rx="3" fill="#FFFFFF"/>
+<text x="613.0" y="841.0" font-size="12" text-anchor="middle" fill="#14201E">JSON</text>
+<rect x="28" y="950" width="26" height="16" rx="3" fill="#FFFFFF" stroke="#0E6E60" stroke-width="1.6"/>
+<text x="62" y="962" font-size="11" fill="#5C6B67">built here</text>
+<rect x="141.9" y="950" width="26" height="16" rx="3" fill="#FFFFFF" stroke="#A64C1C" stroke-width="1.6"/>
+<text x="175.9" y="962" font-size="11" fill="#5C6B67">the finding</text>
+<rect x="261.19" y="950" width="26" height="16" rx="3" fill="#F2F4F3" stroke="#5C6B67" stroke-dasharray="4 3"/>
+<text x="295.19" y="962" font-size="11" fill="#5C6B67">data or reused</text>
+<path d="M 396.6 957.0 a 13.0 7 0 0 1 26.0 0 L 422.6 959.0 a 13.0 7 0 0 1 -26.0 0 Z" fill="#FFFFFF" stroke="#14201E" stroke-width="1.1"/><path d="M 396.6 957.0 a 13.0 7 0 0 0 26.0 0" fill="none" stroke="#14201E" stroke-width="1.1"/>
+<text x="430.65" y="962" font-size="11" fill="#5C6B67">data at rest</text>
+</svg>

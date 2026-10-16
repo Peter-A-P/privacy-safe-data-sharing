@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1220" height="788" viewBox="0 0 1220 788" role="img" aria-label="Each privacy budget is one cell with three seeds; utility against the real ceiling and the four risks are read for every cell; the rule picks the smallest epsilon where utility is within delta of the ceiling and every risk is within its interval of the control, or says there is no such point; the release gate confirms the recommended table." font-family="'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 1 1 L 9 5 L 1 9 z" fill="#14201E"/></marker><marker id="arrow-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 1 1 L 9 5 L 1 9 z" fill="#0E6E60"/></marker><marker id="arrow-signal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 1 1 L 9 5 L 1 9 z" fill="#A64C1C"/></marker><marker id="arrow-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 1 1 L 9 5 L 1 9 z" fill="#5C6B67"/></marker></defs>
+<rect width="1220" height="788" fill="#FFFFFF"/>
+<text x="28" y="42" font-size="16" font-weight="700" fill="#14201E">The surface: one chart per dataset and synthesiser, and where the rule says to sit</text>
+<path d="M 610.0 130.0 L 610.0 186.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 450.4 250.0 L 450.4 272.0 Q 450.4 278.0 444.4 278.0 L 142.0 278.0 Q 136.0 278.0 136.0 284.0 L 136.0 306.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 556.8 250.0 L 556.8 272.0 Q 556.8 278.0 550.8 278.0 L 458.0 278.0 Q 452.0 278.0 452.0 284.0 L 452.0 306.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 663.2 250.0 L 663.2 272.0 Q 663.2 278.0 669.2 278.0 L 762.0 278.0 Q 768.0 278.0 768.0 284.0 L 768.0 306.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 769.6 250.0 L 769.6 272.0 Q 769.6 278.0 775.6 278.0 L 1078.0 278.0 Q 1084.0 278.0 1084.0 284.0 L 1084.0 306.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 136.0 370.0 L 136.0 392.0 Q 136.0 398.0 142.0 398.0 L 444.4 398.0 Q 450.4 398.0 450.4 404.0 L 450.4 410.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 452.0 370.0 L 452.0 392.0 Q 452.0 398.0 458.0 398.0 L 550.8 398.0 Q 556.8 398.0 556.8 404.0 L 556.8 410.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 768.0 370.0 L 768.0 392.0 Q 768.0 398.0 762.0 398.0 L 669.2 398.0 Q 663.2 398.0 663.2 404.0 L 663.2 410.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 1084.0 370.0 L 1084.0 392.0 Q 1084.0 398.0 1078.0 398.0 L 775.6 398.0 Q 769.6 398.0 769.6 404.0 L 769.6 410.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 610.0 506.0 L 610.0 546.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<path d="M 610.0 610.0 L 610.0 666.0" fill="none" stroke="#14201E" stroke-width="1.4" marker-end="url(#arrow)"/>
+<rect x="344.0" y="66.0" width="532.0" height="64.0" rx="4" fill="#FFFFFF" stroke="#14201E" stroke-width="1.1"/>
+<text x="610.0" y="94.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">Epsilon</text>
+<text x="610.0" y="110.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">0.5, 1, 2, 4, 8, and no privacy</text>
+<path d="M 344.0 193.0 a 266.0 7 0 0 1 532.0 0 L 876.0 243.0 a 266.0 7 0 0 1 -532.0 0 Z" fill="#FFFFFF" stroke="#14201E" stroke-width="1.1"/><path d="M 344.0 193.0 a 266.0 7 0 0 0 532.0 0" fill="none" stroke="#14201E" stroke-width="1.1"/>
+<text x="610.0" y="218.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">One cell per budget</text>
+<text x="610.0" y="234.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">three seeds each</text>
+<rect x="28.0" y="306.0" width="216.0" height="64.0" rx="4" fill="#FFFFFF" stroke="#14201E" stroke-width="1.1"/>
+<text x="136.0" y="334.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">Utility</text>
+<text x="136.0" y="350.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">TSTR vs the real ceiling</text>
+<rect x="344.0" y="306.0" width="216.0" height="64.0" rx="4" fill="#FFFFFF" stroke="#14201E" stroke-width="1.1"/>
+<text x="452.0" y="342.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">Singling out risk</text>
+<rect x="660.0" y="306.0" width="216.0" height="64.0" rx="4" fill="#FFFFFF" stroke="#14201E" stroke-width="1.1"/>
+<text x="768.0" y="334.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">Linkability and</text>
+<text x="768.0" y="350.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">inference risk</text>
+<rect x="976.0" y="306.0" width="216.0" height="64.0" rx="4" fill="#FFFFFF" stroke="#14201E" stroke-width="1.1"/>
+<text x="1084.0" y="342.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">Membership inference</text>
+<rect x="344.0" y="410.0" width="532.0" height="96.0" rx="4" fill="#FFFFFF" stroke="#0E6E60" stroke-width="1.6"/>
+<rect x="344.0" y="410.0" width="5" height="96.0" rx="2" fill="#0E6E60"/>
+<text x="610.0" y="431.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">The rule</text>
+<text x="610.0" y="447.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">smallest epsilon with utility within delta of the</text>
+<text x="610.0" y="463.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">ceiling and every risk within its interval of the</text>
+<text x="610.0" y="479.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">control; otherwise no such point</text>
+<text x="610.0" y="496.0" font-size="11" font-family="Consolas, Menlo, 'DejaVu Sans Mono', monospace" text-anchor="middle" fill="#5C6B67">facsimile.surface</text>
+<rect x="344.0" y="546.0" width="532.0" height="64.0" rx="4" fill="#FFFFFF" stroke="#A64C1C" stroke-width="1.6"/>
+<rect x="344.0" y="546.0" width="5" height="64.0" rx="2" fill="#A64C1C"/>
+<text x="610.0" y="574.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">Recommended configuration</text>
+<text x="610.0" y="590.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">per dataset and synthesiser</text>
+<rect x="344.0" y="666.0" width="532.0" height="64.0" rx="4" fill="#F2F4F3" stroke="#5C6B67" stroke-width="1.1" stroke-dasharray="5 3"/>
+<text x="610.0" y="694.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">The 03 gate confirms</text>
+<text x="610.0" y="710.0" font-size="13" font-weight="500" text-anchor="middle" fill="#14201E">non-inferiority of the recommended table</text>
+<rect x="571.7" y="148.0" width="76.7" height="20.0" rx="3" fill="#FFFFFF"/>
+<text x="610.0" y="160.0" font-size="12" text-anchor="middle" fill="#14201E">six budgets</text>
+<rect x="548.1" y="516.0" width="123.7" height="20.0" rx="3" fill="#FFFFFF"/>
+<text x="610.0" y="528.0" font-size="12" text-anchor="middle" fill="#14201E">the answer, or none</text>
+<rect x="577.5" y="628.0" width="64.9" height="20.0" rx="3" fill="#FFFFFF"/>
+<text x="610.0" y="640.0" font-size="12" text-anchor="middle" fill="#14201E">its table</text>
+<text x="1084.0" y="260.0" font-size="11" text-anchor="middle" fill="#5C6B67" font-style="italic">every cell is read five ways</text>
+<text x="1084.0" y="416.0" font-size="11" text-anchor="middle" fill="#5C6B67" font-style="italic">all five feed the rule</text>
+<rect x="28" y="752" width="26" height="16" rx="3" fill="#FFFFFF" stroke="#0E6E60" stroke-width="1.6"/>
+<text x="62" y="764" font-size="11" fill="#5C6B67">the rule</text>
+<rect x="131.12" y="752" width="26" height="16" rx="3" fill="#FFFFFF" stroke="#A64C1C" stroke-width="1.6"/>
+<text x="165.12" y="764" font-size="11" fill="#5C6B67">the finding</text>
+<rect x="250.41" y="752" width="26" height="16" rx="3" fill="#F2F4F3" stroke="#5C6B67" stroke-dasharray="4 3"/>
+<text x="284.40999999999997" y="764" font-size="11" fill="#5C6B67">reused</text>
+</svg>
