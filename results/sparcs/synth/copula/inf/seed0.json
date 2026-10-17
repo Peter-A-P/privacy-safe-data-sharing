@@ -1,0 +1,36 @@
+{
+  "facsimile": "0.0.1",
+  "dataset": "sparcs",
+  "method": "copula",
+  "library": "sdv",
+  "family": "non-dp statistical",
+  "epsilon": null,
+  "seed": 0,
+  "cell": {
+    "eps_tag": "inf"
+  },
+  "rows": 20000,
+  "params": {
+    "library_version": "2.0.0",
+    "default_distribution": "beta"
+  },
+  "accounting": {
+    "dp": false,
+    "epsilon": "inf"
+  },
+  "fitted_on_sha256": "82b4c6bde25b37b5b1a6c5572247ae4d23efa23d7a400a92b256162f9c74b810",
+  "train_sha256": "82b4c6bde25b37b5b1a6c5572247ae4d23efa23d7a400a92b256162f9c74b810",
+  "table_sha256": "a8064cc90d811eadc242acaf5d45f6929c6736417010bbbbbd41403d9ff04c4b",
+  "fit_seconds": 4.254,
+  "sample_seconds": 0.307,
+  "device": "cpu",
+  "hardware": {
+    "cpu": "x86_64",
+    "logical_cores": 32,
+    "os": "Linux 7.0.0-1014-aws",
+    "python": "3.13.16",
+    "torch": "2.14.1+cpu"
+  },
+  "started_utc": "2026-10-17T16:43:35+00:00",
+  "notes": []
+}

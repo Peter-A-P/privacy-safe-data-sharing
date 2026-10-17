@@ -1,0 +1,315 @@
+{
+  "facsimile": "0.0.1",
+  "dataset": "sparcs",
+  "method": "pate_ctgan",
+  "epsilon": 0.5,
+  "seed": 1,
+  "table_sha256": "1cfd0d7495e3359fad640176885155f9e32d750108b5188b287f4c1ee6bb4e52",
+  "attacks": {
+    "singling_out_univariate": {
+      "attack": "singling_out_univariate",
+      "n_attacks": 2000,
+      "main": {
+        "value": 0.0009585236406264672,
+        "lo": 1.0842021724855044e-19,
+        "hi": 0.0019170472812529344,
+        "successes": 0.0,
+        "trials": 2000
+      },
+      "control": {
+        "value": 0.0009585236406264672,
+        "lo": 1.0842021724855044e-19,
+        "hi": 0.0019170472812529344,
+        "successes": 0.0,
+        "trials": 2000
+      },
+      "baseline": {
+        "value": 0.027407721887673268,
+        "lo": 0.02031692041496907,
+        "hi": 0.03449852336037747,
+        "successes": 53.0,
+        "trials": 2000
+      },
+      "risk": {
+        "value": 0.0,
+        "lo": 0.0,
+        "hi": 0.0013568577126237004,
+        "detected": false
+      },
+      "beats_baseline": false,
+      "params": {
+        "mode": "univariate",
+        "n_cols": 1,
+        "predicates_found": 0,
+        "max_attempts": 1000000,
+        "unique_rows": {
+          "synthetic": 20000,
+          "targets": 1996,
+          "control": 1997
+        },
+        "seed": 1
+      }
+    },
+    "singling_out_multivariate": {
+      "attack": "singling_out_multivariate",
+      "n_attacks": 2000,
+      "main": {
+        "value": 0.039883758796657606,
+        "lo": 0.03136143254939692,
+        "hi": 0.048406085043918294,
+        "successes": 78.0,
+        "trials": 2000
+      },
+      "control": {
+        "value": 0.03389526108034512,
+        "lo": 0.026022752700289684,
+        "hi": 0.04176776946040056,
+        "successes": 66.0,
+        "trials": 2000
+      },
+      "baseline": {
+        "value": 0.05685116899287631,
+        "lo": 0.046748333938764555,
+        "hi": 0.06695400404698806,
+        "successes": 112.0,
+        "trials": 2000
+      },
+      "risk": {
+        "value": 0.006198600912577152,
+        "lo": 0.0,
+        "hi": 0.01817343571675341,
+        "detected": false
+      },
+      "beats_baseline": false,
+      "params": {
+        "mode": "multivariate",
+        "n_cols": 3,
+        "predicates_found": 1072,
+        "max_attempts": 1000000,
+        "unique_rows": {
+          "synthetic": 20000,
+          "targets": 1996,
+          "control": 1997
+        },
+        "seed": 1
+      }
+    },
+    "linkability_k1": {
+      "attack": "linkability",
+      "n_attacks": 2000,
+      "main": {
+        "value": 0.0009585236406264672,
+        "lo": 1.0842021724855044e-19,
+        "hi": 0.0019170472812529344,
+        "successes": 0.0,
+        "trials": 2000
+      },
+      "control": {
+        "value": 0.0009585236406264672,
+        "lo": 1.0842021724855044e-19,
+        "hi": 0.0019170472812529344,
+        "successes": 0.0,
+        "trials": 2000
+      },
+      "baseline": {
+        "value": 0.0009585236406264672,
+        "lo": 1.0842021724855044e-19,
+        "hi": 0.0019170472812529344,
+        "successes": 0.0,
+        "trials": 2000
+      },
+      "risk": {
+        "value": 0.0,
+        "lo": 0.0,
+        "hi": 0.0013568577126237004,
+        "detected": false
+      },
+      "beats_baseline": false,
+      "params": {
+        "a": [
+          "age_group",
+          "gender",
+          "race",
+          "ethnicity",
+          "zip_code",
+          "health_service_area",
+          "payment_typology_1"
+        ],
+        "b": [
+          "type_of_admission",
+          "patient_disposition",
+          "apr_mdc_code",
+          "apr_severity_of_illness_code",
+          "apr_risk_of_mortality",
+          "apr_medical_surgical",
+          "emergency_department_indicator",
+          "length_of_stay",
+          "total_charges"
+        ],
+        "k": 1,
+        "seed": 1
+      }
+    },
+    "linkability_k10": {
+      "attack": "linkability",
+      "n_attacks": 2000,
+      "main": {
+        "value": 0.005449896927860829,
+        "lo": 0.002369280636961836,
+        "hi": 0.008530513218759823,
+        "successes": 9.0,
+        "trials": 2000
+      },
+      "control": {
+        "value": 0.004451813975142082,
+        "lo": 0.0016964316970424186,
+        "hi": 0.007207196253241746,
+        "successes": 7.0,
+        "trials": 2000
+      },
+      "baseline": {
+        "value": 0.007446062833298323,
+        "lo": 0.003802596494074152,
+        "hi": 0.011089529172522495,
+        "successes": 13.0,
+        "trials": 2000
+      },
+      "risk": {
+        "value": 0.0010025461014639683,
+        "lo": 0.0,
+        "hi": 0.0051522560864403774,
+        "detected": false
+      },
+      "beats_baseline": false,
+      "params": {
+        "a": [
+          "age_group",
+          "gender",
+          "race",
+          "ethnicity",
+          "zip_code",
+          "health_service_area",
+          "payment_typology_1"
+        ],
+        "b": [
+          "type_of_admission",
+          "patient_disposition",
+          "apr_mdc_code",
+          "apr_severity_of_illness_code",
+          "apr_risk_of_mortality",
+          "apr_medical_surgical",
+          "emergency_department_indicator",
+          "length_of_stay",
+          "total_charges"
+        ],
+        "k": 10,
+        "seed": 1
+      }
+    },
+    "inference": {
+      "attack": "inference",
+      "n_attacks": 2000,
+      "main": {
+        "value": 0.047369380942048206,
+        "lo": 0.03810906851120825,
+        "hi": 0.05662969337288816,
+        "successes": 93.0,
+        "trials": 2000
+      },
+      "control": {
+        "value": 0.04487417356025134,
+        "lo": 0.035851820416416526,
+        "hi": 0.05389652670408616,
+        "successes": 88.0,
+        "trials": 2000
+      },
+      "baseline": {
+        "value": 0.04487417356025134,
+        "lo": 0.035851820416416526,
+        "hi": 0.05389652670408616,
+        "successes": 88.0,
+        "trials": 2000
+      },
+      "risk": {
+        "value": 0.0026124383957847747,
+        "lo": 0.0,
+        "hi": 0.016131551822727623,
+        "detected": false
+      },
+      "beats_baseline": false,
+      "params": {
+        "secret": "apr_mdc_code",
+        "aux": [
+          "age_group",
+          "gender",
+          "race",
+          "ethnicity",
+          "zip_code",
+          "health_service_area",
+          "type_of_admission",
+          "patient_disposition",
+          "apr_severity_of_illness_code",
+          "apr_risk_of_mortality",
+          "apr_medical_surgical",
+          "payment_typology_1",
+          "emergency_department_indicator",
+          "length_of_stay",
+          "total_charges"
+        ],
+        "seed": 1
+      }
+    }
+  },
+  "timings": {
+    "singling_out_univariate": 0.22,
+    "singling_out_multivariate": 36.32,
+    "linkability_k1": 23.95,
+    "linkability_k10": 29.14,
+    "inference": 24.59,
+    "dcr": 31.99
+  },
+  "dcr": {
+    "exact_copy_targets": {
+      "point": 0.0,
+      "lo": 0.0,
+      "hi": 0.0018427397934059364,
+      "n": 2000
+    },
+    "exact_copy_control": {
+      "point": 0.0,
+      "lo": 0.0,
+      "hi": 0.0018427397934059364,
+      "n": 2000
+    },
+    "median_dcr_targets": 5.333333333333333,
+    "median_dcr_control": 5.333333333333333,
+    "mean_dcr_targets": {
+      "point": 5.3247222222222215,
+      "lo": 5.300886111111111,
+      "hi": 5.347113888888889,
+      "n": 2000
+    },
+    "mean_dcr_control": {
+      "point": 5.330111111111111,
+      "lo": 5.307108333333334,
+      "hi": 5.352945833333334,
+      "n": 2000
+    },
+    "closer_to_training_share": {
+      "point": 0.507125,
+      "lo": 0.49325,
+      "hi": 0.52175,
+      "n": 4000
+    },
+    "synthetic_sampled": 4000
+  },
+  "hardware": {
+    "cpu": "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz",
+    "logical_cores": 12,
+    "os": "Windows 11",
+    "python": "3.13.5",
+    "torch": "2.14.1+cu126",
+    "gpu": "NVIDIA GeForce GTX 1650",
+    "gpu_memory_gb": 4.0
+  }
+}

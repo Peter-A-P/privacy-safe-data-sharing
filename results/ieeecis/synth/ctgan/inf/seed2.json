@@ -1,0 +1,40 @@
+{
+  "facsimile": "0.0.1",
+  "dataset": "ieeecis",
+  "method": "ctgan",
+  "library": "sdv",
+  "family": "non-dp deep",
+  "epsilon": null,
+  "seed": 2,
+  "cell": {
+    "eps_tag": "inf"
+  },
+  "rows": 20000,
+  "params": {
+    "library_version": "2.0.0",
+    "epochs": 300,
+    "batch_size": 500,
+    "enable_gpu": true
+  },
+  "accounting": {
+    "dp": false,
+    "epsilon": "inf"
+  },
+  "fitted_on_sha256": "500a68e725547e6ecf3a375fc6ff047bb8818f889135f45d6a1a52961e25960c",
+  "train_sha256": "500a68e725547e6ecf3a375fc6ff047bb8818f889135f45d6a1a52961e25960c",
+  "table_sha256": "209ef0f550a5cea652bd3009db52eb31a47491e132c0581c92933b765acfaaf2",
+  "fit_seconds": 727.614,
+  "sample_seconds": 0.685,
+  "device": "cuda",
+  "hardware": {
+    "cpu": "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz",
+    "logical_cores": 12,
+    "os": "Windows 11",
+    "python": "3.13.5",
+    "torch": "2.14.1+cu126",
+    "gpu": "NVIDIA GeForce GTX 1650",
+    "gpu_memory_gb": 4.0
+  },
+  "started_utc": "2026-10-16T20:50:16+00:00",
+  "notes": []
+}
