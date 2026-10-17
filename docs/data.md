@@ -93,6 +93,12 @@ What they bind here, as they bound 09:
 - **Nothing downloads the data.** The account holder downloads the archive; on the build
   desktop the loader reads the copy 09 verified, through `FACSIMILE_IEEE_CIS_DIR`, against 09's
   recorded checksums (copied into `facsimile/data/checksums.json`).
+- **One rented machine, private to the account holder** (Peter's decision, 2026-10-17). The AIM
+  fits for this set run on a spot instance in Peter's AWS account (`deploy/aws`), which is the
+  account holder's own machine for 7.B, not another party. It receives the coded splits and the
+  Groundhog pools, never the raw files; it accepts SSH from one address with one key, has no
+  instance role and no other service on it, and is terminated with its disk by
+  `deploy/aws/teardown.sh` once the results are pulled back.
 
 ## NY SPARCS de-identified inpatient discharges
 

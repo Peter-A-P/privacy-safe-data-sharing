@@ -1,0 +1,17 @@
+#cloud-config
+# The rented machine for AIM (PLAN.md section 7, decided 2026-10-17). Ubuntu 24.04. Installs uv
+# and nothing else system-wide; the project brings its own Python 3.13 through uv. The hard cap
+# is armed at first boot, before any work is copied: 72 hours after boot the machine powers
+# itself off whatever it is doing. provision.sh launches it with shutdown behaviour "stop", so
+# powering off stops the instance and the compute bill with it; the disk and its results stay
+# until teardown.sh.
+package_update: true
+packages: [curl, python3, at]
+swap:
+  filename: /swapfile
+  size: 32G
+runcmd:
+  - su - ubuntu -c "curl -LsSf https://astral.sh/uv/install.sh | sh"
+  - systemctl enable --now atd
+  - echo "/usr/sbin/shutdown -h now" | at now + 72 hours
+  - date -u +%FT%TZ > /home/ubuntu/booted-at

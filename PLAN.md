@@ -266,17 +266,28 @@ CPU (the benchmark reports no GPU speed-up) at minutes to tens of minutes per ta
 at the chosen subset sizes, with a rented L4-class card as the fallback for the largest
 tables. Prices as of 2026-10-16.
 
+Amended 2026-10-17: AIM is far slower than this estimate (epsilon 2 takes 2.6 to 4.2 hours per
+table on the desktop, epsilon 4 more than 10), and the Groundhog attack needs 60 AIM fits per
+target. Those run on one rented 32-vCPU spot instance (`deploy/aws`) with four spend controls:
+the queue powers it off when done, a 72-hour power-off armed at boot, a spot price cap and a
+budget alert. The cheaper m5 and m5a spot types were tried first; AWS's spot advisor put their
+interruption rate in ca-central-1 over 20 percent, and the first m5a.8xlarge was interrupted ten
+minutes after launch, which a day-long AIM fit would not survive. m6a.8xlarge is under 5 percent.
+The deep-synthesiser GPU line is not needed; the desktop card was enough.
+
 | Item | Basis | US$ | CA$ |
 |---|---|---:|---:|
-| Deep synthesisers on rented GPU, if the desktop card is too slow | About 15 hours of L4 or 4090 class at US$0.30 to 0.50 | 6 | 8 |
+| Deep synthesisers on rented GPU, if the desktop card is too slow | Not needed (amended 2026-10-17): the desktop card ran the whole deep grid | 0 | 0 |
 | Marginal synthesisers | CPU on the desktop, about 40 hours of wall-clock across the grid | 0 | 0 |
+| AIM grid cells and Groundhog AIM fits (amended 2026-10-17) | One m6a.8xlarge spot instance in ca-central-1, about 50 hours at US$0.50, capped at 72 hours and US$0.55 an hour | 25 to 40 | 34 to 54 |
 | Attacks and utility | CPU | 0 | 0 |
 | Storage for the table grid | Local; nothing raw is committed | 0 | 0 |
 | Demo site | Azure Static Web Apps free tier | 0 | 0 |
-| **Total** | | **6** | **8** |
+| **Total** | | **25 to 40** | **34 to 54** |
 
 Budgeted at the project file's **CA$55**, outside the plan's lines as the alongside projects
-are; the estimate is about CA$10 and the remainder buys, in order, a second state-year of ACS,
+are; the estimate was about CA$10, is CA$34 to 54 since the AIM amendment (the top of the range is
+every cap binding at once), and any remainder buys, in order, a second state-year of ACS,
 a fourth seed, and a longer PATE-CTGAN schedule. Actuals go to STATUS next to the estimate.
 
 ## 8. Handover and reuse
