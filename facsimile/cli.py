@@ -104,6 +104,95 @@ def cmd_utility(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_groundhog(args: argparse.Namespace) -> int:
+    from facsimile.attacks.groundhog_run import BUDGETS, run_groundhog
+
+    for name in _datasets(args.datasets):
+        for method in args.methods or list(BUDGETS):
+            for eps in BUDGETS[method]:
+                tag = "inf" if eps is None else f"{eps:g}"
+                print(f"== {name} {method} epsilon {tag}", flush=True)
+                payload = run_groundhog(name, method, eps)
+                acc = payload["pooled"]["all"]["accuracy"]
+                print(
+                    f"   accuracy {acc['point']:.3f} ({acc['lo']:.3f} to {acc['hi']:.3f}) "
+                    f"over {acc['n']} trials",
+                    flush=True,
+                )
+    return 0
+
+
+def _eps(text: str | None) -> float | None:
+    return None if text is None or text == "inf" else float(text)
+
+
+def cmd_groundhog_prepare(args: argparse.Namespace) -> int:
+    from facsimile.attacks.groundhog_run import load_pools, prepare
+
+    for name in _datasets(args.datasets):
+        prepare(name)
+        pools = load_pools(name)
+        print(
+            f"{name}: shadow {len(pools.shadow):,}, evaluation {len(pools.evaluation):,}, targets {pools.kinds}"
+        )
+    return 0
+
+
+def cmd_groundhog_fit(args: argparse.Namespace) -> int:
+    from facsimile.attacks.groundhog_run import fit_one
+
+    path = fit_one(args.dataset, args.method, _eps(args.epsilon), args.target, args.name)
+    print(f"wrote {path.name}")
+    return 0
+
+
+def cmd_groundhog_assemble(args: argparse.Namespace) -> int:
+    from facsimile.attacks.groundhog_run import BUDGETS, assemble, tag
+
+    for name in _datasets(args.datasets):
+        for method in args.methods or list(BUDGETS):
+            for eps in BUDGETS[method]:
+                p = assemble(name, method, eps)
+                acc = p["pooled"].get("all", {}).get("accuracy")
+                shown = (
+                    f"{acc['point']:.3f} ({acc['lo']:.3f} to {acc['hi']:.3f})"
+                    if acc
+                    else "no target complete"
+                )
+                print(
+                    f"{name} {method} {tag(eps)}: {p['targets_complete']} targets, {p['fits_missing']} fits missing, accuracy {shown}"
+                )
+    return 0
+
+
+def cmd_queue(args: argparse.Namespace) -> int:
+    from pathlib import Path
+
+    from facsimile import queue
+
+    path = Path(args.file)
+    if args.queue_command == "make":
+        jobs: list[queue.Job] = []
+        if args.grid:
+            jobs += queue.grid_jobs(_datasets(args.datasets), args.grid_methods)
+        if args.groundhog:
+            jobs += queue.groundhog_jobs(_datasets(args.datasets), args.groundhog_methods)
+        n = queue.write_jobs(path, jobs)
+        hours = sum(j.seconds for j in jobs) / 3600
+        print(
+            f"{n} jobs written to {path}, about {hours:,.0f} process-hours by the desktop's timings"
+        )
+        return 0
+    return queue.run(
+        path,
+        jobs=args.jobs,
+        hours=args.hours,
+        then=args.then,
+        log=Path(args.log),
+        memory_gb=args.memory_gb,
+    )
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="facsimile", description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -147,6 +236,49 @@ def main(argv: Sequence[str] | None = None) -> int:
         if name == "attack":
             p.add_argument("--reference", action="store_true", help="also run Anonymeter")
         p.set_defaults(func=func)
+
+    gh = sub.add_parser("groundhog", help="membership inference at about 1,000 rows, resumable")
+    gh.add_argument("datasets", nargs="+")
+    gh.add_argument("--methods", nargs="*", default=None)
+    gh.set_defaults(func=cmd_groundhog)
+
+    ghp = sub.add_parser("groundhog-prepare", help="draw and save the Groundhog pools and targets")
+    ghp.add_argument("datasets", nargs="+")
+    ghp.set_defaults(func=cmd_groundhog_prepare)
+
+    ghf = sub.add_parser("groundhog-fit", help="one shadow or evaluation fit, to its feature file")
+    ghf.add_argument("dataset")
+    ghf.add_argument("method")
+    ghf.add_argument("--epsilon", default=None)
+    ghf.add_argument("target", type=int)
+    ghf.add_argument("name")
+    ghf.set_defaults(func=cmd_groundhog_fit)
+
+    gha = sub.add_parser("groundhog-assemble", help="train and score the classifier per target")
+    gha.add_argument("datasets", nargs="+")
+    gha.add_argument("--methods", nargs="*", default=None)
+    gha.set_defaults(func=cmd_groundhog_assemble)
+
+    qp = sub.add_parser("queue", help="the job queue for the rented machine")
+    qsub = qp.add_subparsers(dest="queue_command", required=True)
+    qm = qsub.add_parser("make")
+    qm.add_argument("file")
+    qm.add_argument("datasets", nargs="+")
+    qm.add_argument("--grid", action="store_true")
+    qm.add_argument("--grid-methods", nargs="*", default=None)
+    qm.add_argument("--groundhog", action="store_true")
+    qm.add_argument("--groundhog-methods", nargs="*", default=None)
+    qm.set_defaults(func=cmd_queue)
+    qr = qsub.add_parser("run")
+    qr.add_argument("file")
+    qr.add_argument("--jobs", type=int, default=2)
+    qr.add_argument("--hours", type=float, default=None, help="start no job after this many hours")
+    qr.add_argument("--then", default=None, help="a shell command to run when the queue stops")
+    qr.add_argument("--log", default="data/runs/queue.log")
+    qr.add_argument(
+        "--memory-gb", type=float, default=None, help="start a job only while estimates fit this"
+    )
+    qr.set_defaults(func=cmd_queue)
 
     args = parser.parse_args(argv)
     result: int = args.func(args)

@@ -42,6 +42,9 @@ dependencies = [
   "lightgbm>=4,<5",
   # Bootstrap quantiles and the exact binomial interval. 1.x has been the line for a decade.
   "scipy>=1,<2",
+  # The Groundhog attack's random forest, as in Stadler et al. Already a dependency of SDV;
+  # named because the attack calls it directly. 1.x is the only line.
+  "scikit-learn>=1.5,<2",
   # CTGAN, TVAE and PATE-CTGAN train on it. A dependency of SDV already; named here so that
   # [tool.uv.sources] can choose the build: CUDA 12.6 on the Windows desktop (a GTX 1650, sm_75,
   # checked 2026-10-16), CPU in CI. 2.x is current.
@@ -123,6 +126,7 @@ module = [
   "pyarrow.*",
   "torch.*",
   "anonymeter.*",
+  "sklearn.*",
 ]
 ignore_missing_imports = true
 

@@ -27,6 +27,8 @@ data/build/
 # summaries.
 data/synth/
 data/runs*/
+# Groundhog pools (coded real rows) and the feature vectors of every shadow fit.
+data/groundhog/
 
 # Models and caches
 models/

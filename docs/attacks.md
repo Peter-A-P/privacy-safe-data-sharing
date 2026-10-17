@@ -31,7 +31,7 @@ is read with that in mind and the grid's three seeds are what a finding rests on
 | Singling out, univariate and multivariate | Giomi et al. 2023, section 4.1 | `singling_out.py` | Anonymeter 1.1.0 `SinglingOutEvaluator` |
 | Linkability | Giomi et al. 2023, section 4.2 | `linkability.py` | Anonymeter 1.1.0 `LinkabilityEvaluator` |
 | Inference | Giomi et al. 2023, section 4.3 | `inference.py` | Anonymeter 1.1.0 `InferenceEvaluator` |
-| Membership inference (Groundhog) | Stadler, Oprisanu and Troncoso, "Synthetic Data: Anonymisation Groundhog Day", USENIX Security 2022 | not yet built; at about 1,000 rows, epsilon 1, 8 and infinity (PLAN.md 2.3) | TAPAS (MIT), in its own Python 3.10 environment |
+| Membership inference (Groundhog) | Stadler, Oprisanu and Troncoso, "Synthetic Data: Anonymisation Groundhog Day", USENIX Security 2022 | `groundhog.py`, `groundhog_run.py`; at about 1,000 rows, epsilon 1, 8 and infinity (PLAN.md 2.3) | TAPAS (MIT), in its own Python 3.10 environment |
 | Distance to closest record | the vendors' metric | `dcr.py` | none: it is the thing under test (Rule C candidate 1) |
 
 Per dataset (`facsimile/attacks/config.py`, fixed before any table was attacked): the inference
@@ -39,6 +39,25 @@ secret is the income band (ACS), the transaction amount band (IEEE-CIS) and the 
 category (SPARCS); the attacker knows every other attribute. The linkability halves are
 who-you-are attributes against what-happened attributes. Singling out uses 2,000 predicates of
 three attributes each; linkability is reported at k = 1 and k = 10 neighbours.
+
+## Membership inference at about 1,000 rows
+
+The Groundhog attack (Stadler et al. 2022) trains a random forest on synthetic tables made from
+shadow datasets that do or do not contain one target, then asks it about fresh tables. Here, per
+dataset: shadow datasets of 1,000 rows from a pool of 50,000 population records outside every
+split, 40 shadow tables and 20 evaluation tables per target (each half with the target), six
+targets (the three records farthest on average from the rest, and three at random), and the
+paper's three feature sets (naive statistics, one-way histograms, pairwise correlations). The
+score is accuracy against 0.5 with an exact interval, per target and pooled.
+
+The sanity pair (`tests/test_groundhog.py`): a synthesiser that copies its input must give a
+planted outlier away (it does, above 90%), and one that ignores its input must score chance.
+Building it showed a limit of the paper's features worth stating: a target whose oddness lies
+only in a combination of individually common values was close to invisible even through a
+copying synthesiser (23 of 40 on the first attempt), because the features see a table through
+its marginals and pairwise correlations. Outliers by mean distance are not all outliers in a
+single attribute, so a low score on such a target is a statement about the features as well as
+the synthesiser.
 
 ## Choices where the paper is silent, and what the reference does
 
