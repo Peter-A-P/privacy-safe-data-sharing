@@ -9,8 +9,9 @@ The accountant test (`tests/test_accounting.py`) then checks the record against 
   (epsilon, delta) to a zCDP budget rho with `snsynth.utils.cdp_rho`, which binary-searches
   OpenDP's `make_zCDP_to_approxDP` conversion of a Gaussian mechanism, and then spends rho.
   Recorded: the rho the library computed, from the call itself.
-- **PATE-CTGAN** (smartnoise-synth): PATE's data-dependent moments accountant
-  (`snsynth.pytorch.nn.privacy_utils.moments_acc`), accumulated over training, with epsilon read
+- **PATE-CTGAN** (smartnoise-synth): PATE's moments accountant, written to depend on the
+  teachers' votes; at the default noise_multiplier its clamp always binds, so in these runs it
+  does not (docs/synthesisers.md). `snsynth.pytorch.nn.privacy_utils.moments_acc`, accumulated over training, with epsilon read
   off as min over orders l of (alpha_l - log delta) / l. Recorded: every increment the library
   computed, summed, and that formula applied to the sum. That formula is the library's own line
   (`patectgan.py`, the training loop's stopping test), applied once more after the loop ends,

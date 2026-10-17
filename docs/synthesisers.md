@@ -71,23 +71,43 @@ computed, summed, and that formula applied to the sum once training has finished
 ### Three properties of PATE-CTGAN in smartnoise-synth 1.0.8
 
 Read from the library's source on 2026-10-16 (`snsynth/pytorch/nn/patectgan.py`,
-`privacy_utils.py`). Recorded, not patched: the project measures what the library does.
+`privacy_utils.py`) and checked against the 45 PATE-CTGAN tables of the grid on 2026-10-17.
+Recorded, not patched: the project measures what the library does.
 
-1. **The accountant is data-dependent.** Each increment depends on the teachers' vote counts on
-   the generated batch, so the reported epsilon is itself computed from the training data. A
-   data-dependent bound is a statement about this run, and releasing the number is not covered by
-   it. The PATE papers handle this with smooth sensitivity; this implementation does not.
-2. **The loop tests the budget before an iteration, not after it.** `while eps < self.epsilon`
-   computes eps from the moments accumulated so far, then trains a full round of teachers and
-   students. The last round can therefore carry the total past the target, and the finished model
-   has consumed more than was asked for. Each record reports `epsilon_spent` (what the finished
-   model consumed, by the library's own formula) and `overshoot` beside the request.
-3. **The discriminator reseeds torch with 0.** `Discriminator.__init__` calls
-   `torch.manual_seed(0)` and `torch.cuda.manual_seed(0)`, and a discriminator is built for each
-   teacher and for the student after this project has set its seed. Whether three seeds produce
-   three different tables is measured from the grid's table hashes, not assumed.
+1. **The accountant is written to be data-dependent, and at the default settings it is not.**
+   `moments_acc` computes each increment from the teachers' vote counts, then clamps it at
+   2 lambda^2 l (l + 1) per generated sample. With the default `noise_multiplier` of 1e-3 (the
+   Laplace scale lambda) the clamp always binds: on 21 teachers and a batch of 500, the
+   increment equals the bound for votes all 0, all 21 or random (checked 2026-10-17). Every
+   increment is then the same number, and the epsilon reported is a function of the number of
+   student steps alone. The grid shows it: the epsilon spent is identical to the last digit
+   across all three datasets and all three seeds at every budget. What was read on 2026-10-16
+   as "the reported epsilon is computed from the training data" is true of the code and false of
+   the runs, and is corrected here.
+2. **The loop tests the budget before an iteration, not after it, and overshoots.**
+   `while eps < self.epsilon` computes eps from the moments accumulated so far, then trains a full
+   round of teachers and students, so the finished model has consumed more than was asked for.
+   Measured on the grid, the same on every dataset and seed:
 
-Each becomes a line in the leak table if, and only if, a measurement on these tables shows it.
+   | Requested epsilon | Spent, by the library's own accountant | Over the request |
+   |---:|---:|---:|
+   | 0.5 | 0.6886 | 37.7% |
+   | 1 | 1.0982 | 9.8% |
+   | 2 | 2.0644 | 3.2% |
+   | 4 | 4.0188 | 0.5% |
+   | 8 | 8.0176 | 0.2% |
+
+   The overshoot is one round's worth of budget, so it matters most where the budget is smallest.
+   Each record reports `epsilon_spent` and `overshoot` beside the request, and the surface plots
+   PATE-CTGAN at the epsilon it spent.
+3. **The discriminator reseeds torch with 0, and the seeds still differ.**
+   `Discriminator.__init__` calls `torch.manual_seed(0)` every time a teacher or the student is
+   built. The three seeds nevertheless produce three different tables in every cell (distinct
+   table hashes in all 15 cells per dataset), because sampling is reseeded by this project after
+   training. Training itself may be identical across seeds; the tables are not.
+
+Items 1 and 2 are measurements on these tables; they go in the leak table as properties of
+smartnoise-synth 1.0.8 PATE-CTGAN at its default settings.
 
 ## SDV's licence
 

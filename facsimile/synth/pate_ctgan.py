@@ -1,17 +1,17 @@
 """PATE-CTGAN (SmartNoise): the deep DP arm the 2025 benchmark expects to lose (Rule C candidate 2).
 
 Library defaults, run as shipped. Three properties of smartnoise-synth 1.0.8's implementation,
-read from its source on 2026-10-16 and recorded rather than patched, because the project measures
-what the library does:
+read from its source on 2026-10-16, checked against the grid on 2026-10-17, and recorded rather
+than patched, because the project measures what the library does (docs/synthesisers.md):
 
-1. The accountant is PATE's data-dependent moments accountant: the increment each step depends
-   on the teachers' vote counts, so the reported epsilon is itself a function of the data.
+1. The moments accountant is written to depend on the teachers' votes, but at the default
+   noise_multiplier of 1e-3 its clamp always binds, so every increment is the same and the
+   epsilon spent depends only on the number of student steps.
 2. The training loop compares the budget with the target before each iteration, so the last
-   iteration it runs can carry the total past the target. `accounting.pate_record` reports what
-   the finished model consumed (`epsilon_spent`) beside what was asked for.
-3. `Discriminator.__init__` calls `torch.manual_seed(0)`, which resets the global generator each
-   time a teacher or the student is built, after this project's seed has been set. Whether three
-   seeds then give three tables is measured in the grid, not assumed.
+   iteration carries the total past the target (37.7% over at epsilon 0.5, measured).
+   `accounting.pate_record` reports what the finished model consumed (`epsilon_spent`).
+3. `Discriminator.__init__` calls `torch.manual_seed(0)` each time a teacher or the student is
+   built; the three seeds still give three different tables, because sampling is reseeded here.
 """
 
 from __future__ import annotations
