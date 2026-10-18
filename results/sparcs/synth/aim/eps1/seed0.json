@@ -1,0 +1,52 @@
+{
+  "facsimile": "0.0.1",
+  "dataset": "sparcs",
+  "method": "aim",
+  "library": "smartnoise-synth",
+  "family": "dp marginal",
+  "epsilon": 1.0,
+  "seed": 0,
+  "cell": {
+    "eps_tag": "eps1"
+  },
+  "rows": 20000,
+  "params": {
+    "delta": 1e-05,
+    "degree": 2,
+    "max_model_size": 80,
+    "max_cells": 10000,
+    "rounds": null
+  },
+  "accounting": {
+    "dp": true,
+    "accountant": "zCDP; rho from snsynth.utils.cdp_rho (OpenDP make_zCDP_to_approxDP, binary search)",
+    "epsilon_requested": 1.0,
+    "delta": 1e-05,
+    "epsilon_passed_to_accountant": 1.0,
+    "delta_passed_to_accountant": 1e-05,
+    "rho": 0.030556595197639556,
+    "versions": {
+      "smartnoise-synth": "1.0.8",
+      "opendp": "0.14.2",
+      "mbi": "1.1.0",
+      "sdv": "2.0.0",
+      "torch": "2.14.1+cpu"
+    },
+    "epsilon_after_preprocessing": 1.0
+  },
+  "fitted_on_sha256": "82b4c6bde25b37b5b1a6c5572247ae4d23efa23d7a400a92b256162f9c74b810",
+  "train_sha256": "82b4c6bde25b37b5b1a6c5572247ae4d23efa23d7a400a92b256162f9c74b810",
+  "table_sha256": "40de37f9c7bc8b0302f6098e4ae9ea4ad186ff81ca15c96368a006653843db9e",
+  "fit_seconds": 8348.676,
+  "sample_seconds": 59.689,
+  "device": "cpu",
+  "hardware": {
+    "cpu": "x86_64",
+    "logical_cores": 32,
+    "os": "Linux 7.0.0-1014-aws",
+    "python": "3.13.16",
+    "torch": "2.14.1+cpu"
+  },
+  "started_utc": "2026-10-17T22:31:00+00:00",
+  "notes": []
+}

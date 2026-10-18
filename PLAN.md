@@ -95,6 +95,11 @@ training data without charging for it (`docs/synthesisers.md`). Budgets: epsilon
 delta 1e-5, with the non-DP methods reported at epsilon infinity; three seeds per cell. The
 accountant each library uses is named in `docs/synthesisers.md` with the version, because a
 wrong epsilon is worse than none and the plan does not roll its own.
+**Amended 2026-10-18:** AIM's epsilon 8 grid cells are dropped for now, to be revisited (Peter).
+On the rented 32-vCPU, 128 GB machine AIM at epsilon 8 on ACS grew to 25 GB in under five hours
+while every other cell stayed under 8 GB, and two such cells exhausted the machine; none of the
+nine had finished when they were stopped. The report shows the cell as not run, with that
+measurement, rather than leaving it blank. AIM's Groundhog fits at epsilon 8 (1,000 rows) stay.
 
 ### 2.3 The attacks are implemented from the papers and checked against the libraries
 
