@@ -21,7 +21,12 @@
     {
       "Sid": "StopStartTerminateOnlyThisProject",
       "Effect": "Allow",
-      "Action": ["ec2:StopInstances", "ec2:StartInstances", "ec2:TerminateInstances"],
+      "Action": [
+        "ec2:StopInstances",
+        "ec2:StartInstances",
+        "ec2:TerminateInstances",
+        "ec2:ModifyInstanceAttribute"
+      ],
       "Resource": "*",
       "Condition": {
         "StringEquals": {"aws:RequestedRegion": "ca-central-1", "aws:ResourceTag/project": "facsimile"}

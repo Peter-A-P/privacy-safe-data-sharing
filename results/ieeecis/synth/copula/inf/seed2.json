@@ -1,0 +1,36 @@
+{
+  "facsimile": "0.0.1",
+  "dataset": "ieeecis",
+  "method": "copula",
+  "library": "sdv",
+  "family": "non-dp statistical",
+  "epsilon": null,
+  "seed": 2,
+  "cell": {
+    "eps_tag": "inf"
+  },
+  "rows": 20000,
+  "params": {
+    "library_version": "2.0.0",
+    "default_distribution": "beta"
+  },
+  "accounting": {
+    "dp": false,
+    "epsilon": "inf"
+  },
+  "fitted_on_sha256": "500a68e725547e6ecf3a375fc6ff047bb8818f889135f45d6a1a52961e25960c",
+  "train_sha256": "500a68e725547e6ecf3a375fc6ff047bb8818f889135f45d6a1a52961e25960c",
+  "table_sha256": "1d6e790d2ebd2e0376f67b8f4cf3119c6a2c92a9afc03647aa2fc1f56590fa03",
+  "fit_seconds": 10.627,
+  "sample_seconds": 0.454,
+  "device": "cpu",
+  "hardware": {
+    "cpu": "x86_64",
+    "logical_cores": 32,
+    "os": "Linux 7.0.0-1014-aws",
+    "python": "3.13.16",
+    "torch": "2.14.1+cpu"
+  },
+  "started_utc": "2026-10-19T12:32:12+00:00",
+  "notes": []
+}

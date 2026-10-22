@@ -1,0 +1,187 @@
+{
+  "facsimile": "0.0.1",
+  "dataset": "acs",
+  "method": "aim",
+  "epsilon": 1.0,
+  "scale": {
+    "n": 1000,
+    "n_shadow": 40,
+    "n_eval": 20,
+    "n_outliers": 3,
+    "n_random": 3,
+    "pool_rows": 50000,
+    "seed": 20261017
+  },
+  "targets": [
+    {
+      "target_id": 221701,
+      "kind": "outlier",
+      "accuracy": {
+        "point": 0.7,
+        "lo": 0.4572108177237109,
+        "hi": 0.8810684095942722,
+        "n": 20
+      },
+      "advantage": 0.3999999999999999,
+      "tpr": 0.7,
+      "fpr": 0.3,
+      "raw": {
+        "target_id": 221701,
+        "kind": "outlier",
+        "correct": 14,
+        "trials": 20,
+        "true_positive": 7,
+        "false_positive": 3
+      }
+    },
+    {
+      "target_id": 174771,
+      "kind": "outlier",
+      "accuracy": {
+        "point": 0.5,
+        "lo": 0.2719578495607919,
+        "hi": 0.7280421504392081,
+        "n": 20
+      },
+      "advantage": 0.0,
+      "tpr": 0.5,
+      "fpr": 0.5,
+      "raw": {
+        "target_id": 174771,
+        "kind": "outlier",
+        "correct": 10,
+        "trials": 20,
+        "true_positive": 5,
+        "false_positive": 5
+      }
+    },
+    {
+      "target_id": 114139,
+      "kind": "outlier",
+      "accuracy": {
+        "point": 0.45,
+        "lo": 0.23057789677592416,
+        "hi": 0.6847218669594515,
+        "n": 20
+      },
+      "advantage": -0.09999999999999998,
+      "tpr": 0.5,
+      "fpr": 0.6,
+      "raw": {
+        "target_id": 114139,
+        "kind": "outlier",
+        "correct": 9,
+        "trials": 20,
+        "true_positive": 5,
+        "false_positive": 6
+      }
+    },
+    {
+      "target_id": 277475,
+      "kind": "random",
+      "accuracy": {
+        "point": 0.4,
+        "lo": 0.19119006072530725,
+        "hi": 0.6394574126925103,
+        "n": 20
+      },
+      "advantage": -0.19999999999999996,
+      "tpr": 0.2,
+      "fpr": 0.4,
+      "raw": {
+        "target_id": 277475,
+        "kind": "random",
+        "correct": 8,
+        "trials": 20,
+        "true_positive": 2,
+        "false_positive": 4
+      }
+    },
+    {
+      "target_id": 160380,
+      "kind": "random",
+      "accuracy": {
+        "point": 0.65,
+        "lo": 0.4078114654671719,
+        "hi": 0.8460907952154588,
+        "n": 20
+      },
+      "advantage": 0.30000000000000004,
+      "tpr": 0.6,
+      "fpr": 0.3,
+      "raw": {
+        "target_id": 160380,
+        "kind": "random",
+        "correct": 13,
+        "trials": 20,
+        "true_positive": 6,
+        "false_positive": 3
+      }
+    },
+    {
+      "target_id": 128623,
+      "kind": "random",
+      "accuracy": {
+        "point": 0.4,
+        "lo": 0.19119006072530725,
+        "hi": 0.6394574126925103,
+        "n": 20
+      },
+      "advantage": -0.19999999999999996,
+      "tpr": 0.4,
+      "fpr": 0.6,
+      "raw": {
+        "target_id": 128623,
+        "kind": "random",
+        "correct": 8,
+        "trials": 20,
+        "true_positive": 4,
+        "false_positive": 6
+      }
+    }
+  ],
+  "targets_complete": 6,
+  "fits_missing": 0,
+  "pooled": {
+    "outlier": {
+      "accuracy": {
+        "point": 0.55,
+        "lo": 0.4161191456332159,
+        "hi": 0.6787784765366431,
+        "n": 60
+      },
+      "advantage": 0.10000000000000009,
+      "targets": 3
+    },
+    "random": {
+      "accuracy": {
+        "point": 0.48333333333333334,
+        "lo": 0.3523129300021264,
+        "hi": 0.6160539826684032,
+        "n": 60
+      },
+      "advantage": -0.033333333333333326,
+      "targets": 3
+    },
+    "all": {
+      "accuracy": {
+        "point": 0.5166666666666667,
+        "lo": 0.42366365483270757,
+        "hi": 0.6088277437806595,
+        "n": 120
+      },
+      "advantage": 0.03333333333333344,
+      "targets": 6
+    }
+  },
+  "fit_seconds_median": 226.3,
+  "hardware": {
+    "cpu": "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz",
+    "logical_cores": 12,
+    "os": "Windows 11",
+    "python": "3.13.5",
+    "torch": "2.14.1+cu126",
+    "gpu": "NVIDIA GeForce GTX 1650",
+    "gpu_memory_gb": 4.0
+  }
+}
