@@ -244,6 +244,15 @@
     "2way": 0.1674326388888889,
     "3way": 0.229059
    },
+   "membership": {
+    "accuracy": 0.5,
+    "lo": 0.40736926744019714,
+    "hi": 0.5926307325598028,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
    "passes_utility": false,
    "passes_risk": true
   },
@@ -352,6 +361,15 @@
     "1way": 0.10809895833333333,
     "2way": 0.18944236111111112,
     "3way": 0.26277991666666667
+   },
+   "membership": {
+    "accuracy": 0.5,
+    "lo": 0.40736926744019714,
+    "hi": 0.5926307325598028,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
    },
    "passes_utility": false,
    "passes_risk": true
@@ -1497,6 +1515,15 @@
     "2way": 0.5562579166666667,
     "3way": 0.6855462500000001
    },
+   "membership": {
+    "accuracy": 0.4666666666666667,
+    "lo": 0.3750728585224454,
+    "hi": 0.5599444970380982,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
    "passes_utility": false,
    "passes_risk": true
   },
@@ -1824,6 +1851,15 @@
     "2way": 0.34134902777777776,
     "3way": 0.4310969166666667
    },
+   "membership": {
+    "accuracy": 0.49166666666666664,
+    "lo": 0.39925858253840957,
+    "hi": 0.5844957086346798,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
    "passes_utility": false,
    "passes_risk": true
   },
@@ -2037,6 +2073,15 @@
     "2way": 0.17276384803921566,
     "3way": 0.224271
    },
+   "membership": {
+    "accuracy": 0.5666666666666667,
+    "lo": 0.473133543234243,
+    "hi": 0.6568305082938808,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
    "passes_utility": false,
    "passes_risk": true
   },
@@ -2138,6 +2183,15 @@
     "1way": 0.17925980392156862,
     "2way": 0.305646568627451,
     "3way": 0.41130858333333337
+   },
+   "membership": {
+    "accuracy": 0.5333333333333333,
+    "lo": 0.4400555029619017,
+    "hi": 0.6249271414775546,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
    },
    "passes_utility": false,
    "passes_risk": true
@@ -3213,6 +3267,15 @@
     "2way": 0.6315729166666667,
     "3way": 0.7628871666666667
    },
+   "membership": {
+    "accuracy": 0.49166666666666664,
+    "lo": 0.39925858253840957,
+    "hi": 0.5844957086346798,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
    "passes_utility": false,
    "passes_risk": true
   },
@@ -3519,6 +3582,15 @@
     "2way": 0.18934436274509803,
     "3way": 0.2385900833333333
    },
+   "membership": {
+    "accuracy": 0.5166666666666667,
+    "lo": 0.42366365483270757,
+    "hi": 0.6088277437806595,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
    "passes_utility": false,
    "passes_risk": true
   },
@@ -3746,6 +3818,15 @@
     "2way": 0.16035708333333334,
     "3way": 0.22076616666666668
    },
+   "membership": {
+    "accuracy": 0.45,
+    "lo": 0.3590716375379321,
+    "hi": 0.5434547802638482,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
    "passes_utility": false,
    "passes_risk": true
   },
@@ -3854,6 +3935,15 @@
     "1way": 0.23557083333333337,
     "2way": 0.3891320833333334,
     "3way": 0.49398091666666666
+   },
+   "membership": {
+    "accuracy": 0.5583333333333333,
+    "lo": 0.4648269963164124,
+    "hi": 0.6488918893958241,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
    },
    "passes_utility": false,
    "passes_risk": true
@@ -4999,6 +5089,15 @@
     "2way": 0.5016959722222222,
     "3way": 0.6362820833333332
    },
+   "membership": {
+    "accuracy": 0.475,
+    "lo": 0.38311032820074165,
+    "hi": 0.5681526215574849,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
    "passes_utility": false,
    "passes_risk": true
   },
@@ -5325,6 +5424,15 @@
     "1way": 0.21303645833333332,
     "2way": 0.3310161111111111,
     "3way": 0.41513625
+   },
+   "membership": {
+    "accuracy": 0.475,
+    "lo": 0.38311032820074165,
+    "hi": 0.5681526215574849,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
    },
    "passes_utility": false,
    "passes_risk": true

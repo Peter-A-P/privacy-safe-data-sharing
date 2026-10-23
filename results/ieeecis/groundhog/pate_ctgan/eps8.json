@@ -1,0 +1,187 @@
+{
+  "facsimile": "0.0.1",
+  "dataset": "ieeecis",
+  "method": "pate_ctgan",
+  "epsilon": 8.0,
+  "scale": {
+    "n": 1000,
+    "n_shadow": 40,
+    "n_eval": 20,
+    "n_outliers": 3,
+    "n_random": 3,
+    "pool_rows": 50000,
+    "seed": 20261017
+  },
+  "targets": [
+    {
+      "target_id": -1,
+      "kind": "outlier",
+      "accuracy": {
+        "point": 0.5,
+        "lo": 0.2719578495607919,
+        "hi": 0.7280421504392081,
+        "n": 20
+      },
+      "advantage": 0.0,
+      "tpr": 0.4,
+      "fpr": 0.4,
+      "raw": {
+        "target_id": -1,
+        "kind": "outlier",
+        "correct": 10,
+        "trials": 20,
+        "true_positive": 4,
+        "false_positive": 4
+      }
+    },
+    {
+      "target_id": -1,
+      "kind": "outlier",
+      "accuracy": {
+        "point": 0.6,
+        "lo": 0.3605425873074897,
+        "hi": 0.8088099392746928,
+        "n": 20
+      },
+      "advantage": 0.19999999999999996,
+      "tpr": 0.8,
+      "fpr": 0.6,
+      "raw": {
+        "target_id": -1,
+        "kind": "outlier",
+        "correct": 12,
+        "trials": 20,
+        "true_positive": 8,
+        "false_positive": 6
+      }
+    },
+    {
+      "target_id": -1,
+      "kind": "outlier",
+      "accuracy": {
+        "point": 0.5,
+        "lo": 0.2719578495607919,
+        "hi": 0.7280421504392081,
+        "n": 20
+      },
+      "advantage": 0.0,
+      "tpr": 0.6,
+      "fpr": 0.6,
+      "raw": {
+        "target_id": -1,
+        "kind": "outlier",
+        "correct": 10,
+        "trials": 20,
+        "true_positive": 6,
+        "false_positive": 6
+      }
+    },
+    {
+      "target_id": -1,
+      "kind": "random",
+      "accuracy": {
+        "point": 0.35,
+        "lo": 0.1539092047845412,
+        "hi": 0.5921885345328282,
+        "n": 20
+      },
+      "advantage": -0.30000000000000004,
+      "tpr": 0.2,
+      "fpr": 0.5,
+      "raw": {
+        "target_id": -1,
+        "kind": "random",
+        "correct": 7,
+        "trials": 20,
+        "true_positive": 2,
+        "false_positive": 5
+      }
+    },
+    {
+      "target_id": -1,
+      "kind": "random",
+      "accuracy": {
+        "point": 0.6,
+        "lo": 0.3605425873074897,
+        "hi": 0.8088099392746928,
+        "n": 20
+      },
+      "advantage": 0.19999999999999996,
+      "tpr": 0.5,
+      "fpr": 0.3,
+      "raw": {
+        "target_id": -1,
+        "kind": "random",
+        "correct": 12,
+        "trials": 20,
+        "true_positive": 5,
+        "false_positive": 3
+      }
+    },
+    {
+      "target_id": -1,
+      "kind": "random",
+      "accuracy": {
+        "point": 0.55,
+        "lo": 0.3152781330405486,
+        "hi": 0.7694221032240758,
+        "n": 20
+      },
+      "advantage": 0.10000000000000009,
+      "tpr": 0.7,
+      "fpr": 0.6,
+      "raw": {
+        "target_id": -1,
+        "kind": "random",
+        "correct": 11,
+        "trials": 20,
+        "true_positive": 7,
+        "false_positive": 6
+      }
+    }
+  ],
+  "targets_complete": 6,
+  "fits_missing": 0,
+  "pooled": {
+    "outlier": {
+      "accuracy": {
+        "point": 0.5333333333333333,
+        "lo": 0.3999649025843027,
+        "hi": 0.6633008637495477,
+        "n": 60
+      },
+      "advantage": 0.06666666666666665,
+      "targets": 3
+    },
+    "random": {
+      "accuracy": {
+        "point": 0.5,
+        "lo": 0.368062031942437,
+        "hi": 0.631937968057563,
+        "n": 60
+      },
+      "advantage": 0.0,
+      "targets": 3
+    },
+    "all": {
+      "accuracy": {
+        "point": 0.5166666666666667,
+        "lo": 0.42366365483270757,
+        "hi": 0.6088277437806595,
+        "n": 120
+      },
+      "advantage": 0.03333333333333344,
+      "targets": 6
+    }
+  },
+  "fit_seconds_median": 235.8,
+  "hardware": {
+    "cpu": "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz",
+    "logical_cores": 12,
+    "os": "Windows 11",
+    "python": "3.13.5",
+    "torch": "2.14.1+cu126",
+    "gpu": "NVIDIA GeForce GTX 1650",
+    "gpu_memory_gb": 4.0
+  }
+}
