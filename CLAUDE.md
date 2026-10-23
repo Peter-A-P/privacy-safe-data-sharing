@@ -5,7 +5,8 @@ versions of three public datasets of real people, generated six ways with and wi
 differential privacy, attacked with the three criteria regulators use to judge anonymity and
 with membership inference, and measured for usefulness as train-on-synthetic, test-on-real.
 The plan is in [PLAN.md](PLAN.md); the diagrams in [docs/architecture.md](docs/architecture.md).
-Status: week 1 in progress (datasets built, synthesiser grid running).
+Status: week 3 in progress (grid built except AIM at epsilon 4 and 8; attacks, utility and the
+report running; GPU Groundhog fits running).
 
 ## Read first
 
@@ -25,6 +26,12 @@ Status: week 1 in progress (datasets built, synthesiser grid running).
   competition folder (on the build desktop, `../09-realtime-risk-platform/data/raw/ieee-fraud-detection`).
 - `facsimile data fetch all`, `facsimile build all`, `facsimile grid all` (resumable; one process
   per cell; `--status` to see progress). Rows land in `data/`, records in `results/`.
+- `facsimile attack all`, `facsimile utility all`, `facsimile groundhog-assemble all` score what
+  the grid and the Groundhog fits wrote; `facsimile report` then fills the README section between
+  the `report:start` and `report:end` markers, `docs/results.md` and `results/report.json`, and
+  `facsimile site` writes `site/data.json` for the static explorer in `site/`.
+- The expensive work runs through `facsimile queue` (make a job file, run it anywhere, resumable);
+  `deploy/aws` holds the rented-machine scripts and their spend controls.
 
 ## Engineering standard
 

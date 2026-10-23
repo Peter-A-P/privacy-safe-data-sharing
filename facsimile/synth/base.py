@@ -16,6 +16,7 @@ import sys
 import time
 from collections.abc import Callable
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Any, Final, Literal, Protocol
 
 import numpy as np
@@ -120,6 +121,15 @@ def hardware() -> dict[str, Any]:
                 winreg.HKEY_LOCAL_MACHINE, r"HARDWARE\DESCRIPTION\System\CentralProcessor\0"
             )
             cpu = str(winreg.QueryValueEx(key, "ProcessorNameString")[0]).strip()
+        except OSError:
+            pass
+    elif sys.platform == "linux":
+        # platform.processor() says only "x86_64" on Linux; the model name is in /proc/cpuinfo.
+        try:
+            for line in Path("/proc/cpuinfo").read_text(encoding="utf-8").splitlines():
+                if line.startswith("model name"):
+                    cpu = line.split(":", 1)[1].strip()
+                    break
         except OSError:
             pass
     out: dict[str, Any] = {

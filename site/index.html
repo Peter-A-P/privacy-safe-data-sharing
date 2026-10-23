@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Share the Data, Not the People</title>
+<meta name="description" content="Synthetic versions of three public datasets of real people, attacked the way a regulator says and a researcher would: risk, usefulness and the price of privacy, with intervals.">
+<style>
+:root {
+  --bg: #fbfaf7; --fg: #1d1f21; --muted: #5d6166; --line: #d9d6cf; --panel: #ffffff;
+  --util: #2f6db5; --risk: #b5482f; --mem: #6b4fa3; --pass: #2c7a4b; --mark: #e8b730;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15171a; --fg: #e8e6e1; --muted: #a2a5aa; --line: #34373c; --panel: #1d2024;
+    --util: #6fa3e6; --risk: #e57d63; --mem: #a68ae0; --pass: #5fbf86; --mark: #f0c95a;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #15171a; --fg: #e8e6e1; --muted: #a2a5aa; --line: #34373c; --panel: #1d2024;
+  --util: #6fa3e6; --risk: #e57d63; --mem: #a68ae0; --pass: #5fbf86; --mark: #f0c95a;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg);
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+main { max-width: 1080px; margin: 0 auto; padding: 24px 16px 64px; }
+h1 { font-size: 1.9rem; margin: 0 0 4px; letter-spacing: -0.01em; }
+h2 { font-size: 1.15rem; margin: 32px 0 8px; }
+p.lede { color: var(--muted); margin: 0 0 20px; max-width: 70ch; }
+.controls { display: flex; flex-wrap: wrap; gap: 12px; margin: 16px 0; }
+label { font-size: 0.85rem; color: var(--muted); display: flex; flex-direction: column; gap: 4px; }
+select { font: inherit; padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px;
+  background: var(--panel); color: var(--fg); min-width: 220px; }
+.verdict { background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--mark);
+  border-radius: 6px; padding: 12px 14px; margin: 8px 0 16px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px; }
+.card h3 { font-size: 0.95rem; margin: 0 0 4px; }
+.card p { font-size: 0.8rem; color: var(--muted); margin: 0 0 6px; }
+svg { width: 100%; height: auto; display: block; }
+svg text { fill: var(--muted); font-size: 11px; }
+.axis { stroke: var(--line); }
+table { border-collapse: collapse; width: 100%; font-size: 0.85rem; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; }
+.wrap { overflow-x: auto; }
+.note { font-size: 0.8rem; color: var(--muted); }
+footer { margin-top: 40px; font-size: 0.8rem; color: var(--muted); }
+a { color: var(--util); }
+</style>
+</head>
+<body>
+<main>
+<h1>Share the Data, Not the People</h1>
+<p class="lede">Synthetic copies of three public datasets of real people, made six ways with and
+without differential privacy, then attacked the way a regulator says (singling out, linkability,
+inference) and the way a researcher would (membership inference). Pick a dataset and a
+synthesiser to see what each privacy budget costs in usefulness and buys in risk. Every point
+carries its 95% interval; nothing here is modelled in the browser.</p>
+
+<div class="controls">
+  <label>Dataset <select id="ds"></select></label>
+  <label>Synthesiser <select id="method"></select></label>
+</div>
+<div class="verdict" id="verdict"></div>
+
+<div class="grid" id="charts"></div>
+
+<h2>What leaked</h2>
+<p class="note">A risk counts as a leak when its interval, at the Bonferroni-corrected level the
+recommendation rule uses, excludes zero. Each is a property of that library, version and
+configuration on this data.</p>
+<div class="wrap"><table id="leaks"></table></div>
+
+<footer>
+  Data: <code>results/report.json</code>, written by <code>facsimile report</code>.
+  Library versions: <span id="versions"></span>.
+  Source and method: <a href="https://github.com/Peter-A-P/privacy-safe-data-sharing">the repository</a>.
+</footer>
+</main>
+<script>
+"use strict";
+const NAMES = {
+  acs: "ACS PUMS, California 2018", ieeecis: "IEEE-CIS card transactions", sparcs: "NY SPARCS discharges",
+  copula: "Gaussian copula", ctgan: "CTGAN", tvae: "TVAE", mst: "MST", aim: "AIM", pate_ctgan: "PATE-CTGAN",
+  singling_out_univariate: "Singling out, univariate", singling_out_multivariate: "Singling out, multivariate",
+  linkability_k1: "Linkability, 1 neighbour", linkability_k10: "Linkability, 10 neighbours", inference: "Inference",
+};
+const label = (e) => (e === null ? "∞" : String(e));
+let REPORT = null;
+
+function el(tag, attrs = {}, text) {
+  const n = document.createElementNS("http://www.w3.org/2000/svg", tag);
+  for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v);
+  if (text !== undefined) n.textContent = text;
+  return n;
+}
+
+// One small chart: x is the budget (categorical, in order, infinity last), y a value with an interval.
+function chart(title, note, series, yLo, yHi, ref, refLabel, recommended) {
+  const card = document.createElement("div");
+  card.className = "card";
+  card.innerHTML = `<h3>${title}</h3><p>${note}</p>`;
+  const W = 340, H = 190, L = 44, R = 10, T = 10, B = 28;
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": title });
+  const xs = [...new Set(series.flatMap((s) => s.points.map((p) => label(p.eps))))];
+  const xOf = (lab) => L + ((xs.indexOf(lab) + 0.5) * (W - L - R)) / Math.max(xs.length, 1);
+  const yOf = (v) => T + (1 - (v - yLo) / (yHi - yLo)) * (H - T - B);
+  svg.append(el("line", { x1: L, x2: W - R, y1: H - B, y2: H - B, class: "axis" }));
+  svg.append(el("line", { x1: L, x2: L, y1: T, y2: H - B, class: "axis" }));
+  for (const v of [yLo, (yLo + yHi) / 2, yHi]) {
+    svg.append(el("text", { x: L - 4, y: yOf(v) + 4, "text-anchor": "end" }, (+v.toFixed(3)).toString()));
+  }
+  for (const lab of xs) svg.append(el("text", { x: xOf(lab), y: H - 10, "text-anchor": "middle" }, "ε " + lab));
+  if (ref !== null) {
+    svg.append(el("line", { x1: L, x2: W - R, y1: yOf(ref), y2: yOf(ref), stroke: "var(--muted)", "stroke-dasharray": "3 3" }));
+    svg.append(el("text", { x: W - R, y: yOf(ref) - 4, "text-anchor": "end" }, refLabel));
+  }
+  if (recommended !== undefined) {
+    const x = xOf(label(recommended));
+    svg.append(el("rect", { x: x - 14, y: T, width: 28, height: H - T - B, fill: "var(--mark)", opacity: 0.18 }));
+  }
+  const n = series.length;
+  series.forEach((s, i) => {
+    const dx = (i - (n - 1) / 2) * 8;
+    for (const p of s.points) {
+      const x = xOf(label(p.eps)) + dx;
+      const clamp = (v) => Math.min(Math.max(v, yLo), yHi);
+      svg.append(el("line", { x1: x, x2: x, y1: yOf(clamp(p.lo)), y2: yOf(clamp(p.hi)), stroke: s.color, "stroke-width": 2 }));
+      const c = el("circle", { cx: x, cy: yOf(clamp(p.v)), r: p.flag ? 4.5 : 3.2, fill: p.flag ? s.color : "var(--panel)", stroke: s.color, "stroke-width": 2 });
+      c.append(el("title", {}, `${s.name}, ε ${label(p.eps)}: ${p.v.toFixed(3)} (${p.lo.toFixed(3)} to ${p.hi.toFixed(3)})${p.flag ? ", detected" : ""}`));
+      svg.append(c);
+    }
+  });
+  card.append(svg);
+  if (n > 1) {
+    const key = document.createElement("p");
+    key.innerHTML = series.map((s) => `<span style="color:${s.color}">●</span> ${s.name}`).join(" &nbsp; ");
+    card.append(key);
+  }
+  return card;
+}
+
+function render() {
+  const ds = document.getElementById("ds").value;
+  const m = document.getElementById("method").value;
+  const cells = REPORT.cells.filter((c) => c.dataset === ds && c.method === m)
+    .sort((a, b) => (a.epsilon ?? Infinity) - (b.epsilon ?? Infinity));
+  const surf = REPORT.surface.find((s) => s.dataset === ds && s.method === m);
+  const v = document.getElementById("verdict");
+  const notRun = cells.filter((c) => c.not_run).map((c) => `ε ${label(c.epsilon)}: ${c.not_run.replace(/^not run: /, "")}`);
+  let text;
+  if (!surf) text = "Not every budget's tables are attacked and scored yet.";
+  else if (surf.exists) text = `<strong>Recommended: ε ${label(surf.epsilon)}.</strong> ${surf.reason}.`;
+  else text = `<strong>No recommended budget.</strong> ${surf.reason[0].toUpperCase() + surf.reason.slice(1)}.`;
+  text += ` The rule: the smallest ε at which every task is within ${REPORT.rule.delta_auc} AUC of the real-data ceiling on every seed and no attack detects a risk.`;
+  if (notRun.length) text += `<br><span class="note">Not run: ${notRun.join("; ")}</span>`;
+  v.innerHTML = text;
+
+  const charts = document.getElementById("charts");
+  charts.replaceChildren();
+  const run = cells.filter((c) => !c.not_run);
+  const rec = surf && surf.exists ? surf.epsilon : undefined;
+  const tasks = [...new Set(run.flatMap((c) => Object.keys(c.utility || {})))];
+  const palette = ["var(--util)", "var(--pass)"];
+  if (tasks.length) {
+    const util = tasks.map((t, i) => ({
+      name: t, color: palette[i % 2],
+      points: run.filter((c) => c.utility && c.utility[t]).map((c) => ({
+        eps: c.epsilon, v: c.utility[t].delta, lo: c.utility[t].delta_lo_worst, hi: c.utility[t].delta_hi_best,
+        flag: c.utility[t].delta_lo_worst > -REPORT.rule.delta_auc })),
+    }));
+    const lo = Math.min(-0.1, ...util.flatMap((s) => s.points.map((p) => p.lo)));
+    charts.append(chart("Usefulness: AUC trained on synthetic minus trained on real",
+      "Mean over seeds; the bar runs from the worst seed's lower bound to the best seed's upper. Filled: within the margin.",
+      util, Math.floor(lo * 10) / 10, 0.05, -REPORT.rule.delta_auc, "margin", rec));
+  }
+  for (const a of REPORT.rule.attacks) {
+    const pts = run.filter((c) => c.risk && c.risk[a]).map((c) => ({
+      eps: c.epsilon, v: c.risk[a].value, lo: c.risk[a].lo, hi: c.risk[a].hi, flag: c.risk[a].detected }));
+    if (!pts.length) continue;
+    const hi = Math.max(0.05, ...pts.map((p) => p.hi));
+    charts.append(chart(`Risk: ${NAMES[a]}`, "Excess success on training records over the control set, pooled over seeds. Filled: detected.",
+      [{ name: NAMES[a], color: "var(--risk)", points: pts }], 0, Math.ceil(hi * 20) / 20, null, "", rec));
+  }
+  const mem = run.filter((c) => c.membership).map((c) => ({
+    eps: c.epsilon, v: c.membership.accuracy, lo: c.membership.lo, hi: c.membership.hi, flag: c.membership.detected }));
+  if (mem.length) {
+    charts.append(chart("Membership inference (Groundhog, about 1,000 rows)",
+      "Attack accuracy over six targets; chance is 0.5. Filled: above chance.",
+      [{ name: "membership", color: "var(--mem)", points: mem }], 0.3, 0.8, 0.5, "chance", rec));
+  }
+}
+
+function leaks() {
+  const t = document.getElementById("leaks");
+  if (!REPORT.leaks.length) { t.innerHTML = "<tr><td>No attack detected a risk on any table measured so far.</td></tr>"; return; }
+  const pct = (x) => (100 * x).toFixed(1);
+  t.innerHTML = "<tr><th>Dataset</th><th>Library</th><th>Configuration</th><th>Attack</th><th>Risk, % (95% CI)</th><th>Members vs control, %</th></tr>" +
+    REPORT.leaks.map((l) => `<tr><td>${NAMES[l.dataset]}</td><td>${l.library} ${l.version}</td>` +
+      `<td>${NAMES[l.method]}, ε ${label(l.epsilon)}</td><td>${NAMES[l.attack] || "Membership"}</td>` +
+      (l.attack === "membership"
+        ? `<td>accuracy ${l.risk.toFixed(3)} (${l.lo.toFixed(3)} to ${l.hi.toFixed(3)})</td><td></td>`
+        : `<td>${pct(l.risk)} (${pct(l.lo)} to ${pct(l.hi)})</td><td>${pct(l.main_rate)} vs ${pct(l.control_rate)}</td>`) +
+      "</tr>").join("");
+}
+
+fetch("data.json").then((r) => r.json()).then((data) => {
+  REPORT = data;
+  const fill = (id, keys) => {
+    const s = document.getElementById(id);
+    for (const k of keys) s.append(new Option(NAMES[k], k));
+    s.addEventListener("change", render);
+  };
+  fill("ds", [...new Set(data.cells.map((c) => c.dataset))]);
+  fill("method", [...new Set(data.cells.map((c) => c.method))]);
+  document.getElementById("method").value = "mst";
+  document.getElementById("versions").textContent =
+    Object.entries(data.versions).map(([k, v]) => `${k} ${v}`).join(", ");
+  render();
+  leaks();
+});
+</script>
+</body>
+</html>

@@ -193,6 +193,32 @@ def cmd_queue(args: argparse.Namespace) -> int:
     )
 
 
+def cmd_report(args: argparse.Namespace) -> int:
+    from facsimile import report
+
+    payload = report.build()
+    for path in report.write(payload):
+        print(f"wrote {path}")
+    cells = payload["cells"]
+    print(
+        f"{len(cells)} cells, {sum(1 for c in cells if 'risk' in c)} attacked, "
+        f"{len(payload['leaks'])} leaks named"
+    )
+    return 0
+
+
+def cmd_site(args: argparse.Namespace) -> int:
+    import json
+
+    from facsimile import report
+    from facsimile.paths import REPO
+
+    path = REPO / "site" / "data.json"
+    path.write_text(json.dumps(report.build(), separators=(",", ":")) + "\n", encoding="utf-8")
+    print(f"wrote {path} ({path.stat().st_size:,} bytes); serve site/ as static files")
+    return 0
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="facsimile", description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -258,6 +284,12 @@ def main(argv: Sequence[str] | None = None) -> int:
     gha.add_argument("datasets", nargs="+")
     gha.add_argument("--methods", nargs="*", default=None)
     gha.set_defaults(func=cmd_groundhog_assemble)
+
+    rp = sub.add_parser("report", help="the README tables, docs/results.md and the site JSON")
+    rp.set_defaults(func=cmd_report)
+
+    sp = sub.add_parser("site", help="write site/data.json for the static explorer")
+    sp.set_defaults(func=cmd_site)
 
     qp = sub.add_parser("queue", help="the job queue for the rented machine")
     qsub = qp.add_subparsers(dest="queue_command", required=True)

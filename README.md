@@ -17,12 +17,28 @@ a curve, and the configurations that leak.
 
 ## Result
 
-Building, week 1. Nothing has been measured yet: the three datasets are fetched, checksummed and
-split, and the table grid is being generated. The columns the benchmark will fill:
+<!-- report:start -->
 
-| Dataset | Synthesiser | Epsilon | Singling out risk (95% CI) | Linkability risk | Inference risk | Membership inference | Utility, TSTR vs real | Marginal error | Recommended |
-|---|---|---|---|---|---|---|---|---|---|
-| | | | | | | | | | |
+_Filled by `facsimile report`; the full tables, one row per dataset, synthesiser and budget,
+are in [docs/results.md](docs/results.md)._
+
+**Where to sit.** The rule (PLAN.md section 2.6, fixed before any table was scored): the
+smallest epsilon at which every task is within 0.02 AUC of the real-data ceiling on
+every seed and no attack's risk is detected.
+
+| Dataset | Gaussian copula | CTGAN | TVAE | MST | AIM | PATE-CTGAN |
+|---|---|---|---|---|---|---|
+| ACS PUMS, California 2018 | none: no budget is within 0.02 AUC of the real-data ceiling on every task and seed | none: no budget is within 0.02 AUC of the real-data ceiling on every task and seed | none: no budget is within 0.02 AUC of the real-data ceiling on every task and seed | none: no budget is within 0.02 AUC of the real-data ceiling on every task and seed | none: no budget is within 0.02 AUC of the real-data ceiling on every task and seed | none: no budget is within 0.02 AUC of the real-data ceiling on every task and seed |
+| IEEE-CIS card transactions | pending | none: no budget is within 0.02 AUC of the real-data ceiling on every task and seed | none: no budget is within 0.02 AUC of the real-data ceiling on every task and seed | pending | pending | none: no budget is within 0.02 AUC of the real-data ceiling on every task and seed |
+| NY SPARCS discharges | pending | none: no budget is within 0.02 AUC of the real-data ceiling on every task and seed | none: no budget is within 0.02 AUC of the real-data ceiling on every task and seed | pending | pending | none: no budget is within 0.02 AUC of the real-data ceiling on every task and seed |
+
+**What leaked.** A risk counts when its interval at the Bonferroni level excludes zero.
+
+| Dataset | Library and version | Configuration | Attack | Risk, % (95% CI) | Success on members vs control, % |
+|---|---|---|---|---|---|
+| ACS PUMS, California 2018 | smartnoise-synth 1.0.8 | AIM, epsilon 1, 20,000 rows | inference | 2.5 (0.7 to 4.4) | 23.4 vs 21.4 |
+
+<!-- report:end -->
 
 ## What this does not do
 
