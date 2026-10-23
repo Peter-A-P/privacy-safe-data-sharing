@@ -284,6 +284,68 @@ def versions() -> dict[str, str]:
     return out
 
 
+def agreement(cells: dict[tuple[str, str, float | None], Cell]) -> dict[str, Any]:
+    """Every table attacked by both this project and Anonymeter, attack by attack: the two risks
+    with their 95% intervals, whether each detects a risk, and the attack-success rates."""
+    rows = []
+    for c in cells.values():
+        for seed, rec in sorted(c.attacks.items()):
+            ref = rec.get("reference", {}).get("anonymeter")
+            if not ref:
+                continue
+            for a in ATTACKS:
+                ours, theirs = rec["attacks"][a], ref[a]
+                rows.append(
+                    {
+                        "dataset": c.dataset,
+                        "method": c.method,
+                        "epsilon": c.epsilon,
+                        "seed": seed,
+                        "attack": a,
+                        "ours": {k: ours["risk"][k] for k in ("value", "lo", "hi")},
+                        "anonymeter": {k: float(theirs["risk"][k]) for k in ("value", "lo", "hi")},
+                        "ours_detected": ours["risk"]["lo"] > 0.0,
+                        "anonymeter_detected": float(theirs["risk"]["lo"]) > 0.0,
+                        "ours_main": ours["main"]["value"],
+                        "anonymeter_main": float(theirs["main"]["value"]),
+                        "ours_control": ours["control"]["value"],
+                        "anonymeter_control": float(theirs["control"]["value"]),
+                        "predicates_found": ours.get("params", {}).get("predicates_found"),
+                    }
+                )
+    if not rows:
+        return {"tables": 0, "rows": []}
+    by_attack: dict[str, dict[str, float]] = {}
+    for a in ATTACKS:
+        sub = [r for r in rows if r["attack"] == a]
+        diffs = [abs(r["ours"]["value"] - r["anonymeter"]["value"]) for r in sub]
+        overlap = [
+            r["ours"]["lo"] <= r["anonymeter"]["hi"] and r["anonymeter"]["lo"] <= r["ours"]["hi"]
+            for r in sub
+        ]
+        by_attack[a] = {
+            "pairs": len(sub),
+            "same_call": sum(r["ours_detected"] == r["anonymeter_detected"] for r in sub)
+            / len(sub),
+            "intervals_overlap": sum(overlap) / len(sub),
+            "mean_abs_diff": _mean(diffs),
+            "max_abs_diff": max(diffs),
+        }
+    return {
+        "tables": len({(r["dataset"], r["method"], r["epsilon"], r["seed"]) for r in rows}),
+        "by_attack": by_attack,
+        "disagreements": [
+            r
+            for r in rows
+            if r["ours_detected"] != r["anonymeter_detected"]
+            or not (
+                r["ours"]["lo"] <= r["anonymeter"]["hi"]
+                and r["anonymeter"]["lo"] <= r["ours"]["hi"]
+            )
+        ],
+    }
+
+
 def build(root: Path = RESULTS) -> dict[str, Any]:
     from facsimile.synth import EPSILONS
 
@@ -375,6 +437,7 @@ def build(root: Path = RESULTS) -> dict[str, Any]:
         "cells": rows,
         "surface": surface,
         "leaks": leaks,
+        "agreement": agreement(cells),
     }
 
 
@@ -462,11 +525,58 @@ def render_results_md(report: dict[str, Any]) -> str:
             )
             out.append("| " + " | ".join(cells) + " |")
         out.append("")
+    out += render_agreement(report.get("agreement", {}))
     hardware = sorted({h for r in report["cells"] for h in r.get("hardware", [])})
     out += ["## Hardware", "", "Fit times were measured on:", ""]
     out += [f"- {h}" for h in hardware]
     out.append("")
     return "\n".join(out)
+
+
+def render_agreement(ag: dict[str, Any]) -> list[str]:
+    out = ["## Reference agreement: this project against Anonymeter", ""]
+    if not ag.get("tables"):
+        return [*out, "No table has been attacked by both yet.", ""]
+    out += [
+        f"{ag['tables']} tables attacked by both, on the same targets, control and synthetic table.",
+        "A pair agrees on the call when both or neither detect a risk at 95%; the intervals",
+        "overlap when the two risks' 95% intervals share any point. Differences are in risk",
+        "percentage points.",
+        "",
+        "| Attack | Pairs | Same call | Intervals overlap | Mean difference | Largest difference |",
+        "|---|---|---|---|---|---|",
+    ]
+    for a, s in ag["by_attack"].items():
+        out.append(
+            f"| {ATTACK_NAMES[a]} | {s['pairs']} | {_pct(s['same_call'])}% | "
+            f"{_pct(s['intervals_overlap'])}% | {_pct(s['mean_abs_diff'])} | {_pct(s['max_abs_diff'])} |"
+        )
+    dis = ag["disagreements"]
+    out += [
+        "",
+        f"Disagreements ({len(dis)}): a different call, or intervals that do not overlap.",
+        "",
+    ]
+    if dis:
+        out += [
+            "| Table | Attack | This project, risk % | Anonymeter, risk % | Success on targets, this project vs Anonymeter, % | Control, % |",
+            "|---|---|---|---|---|---|",
+        ]
+        for r in dis:
+            o, t = r["ours"], r["anonymeter"]
+            out.append(
+                f"| {r['dataset']} {r['method']} epsilon {_eps_label(r['epsilon'])} seed {r['seed']} | "
+                f"{ATTACK_NAMES[r['attack']]} | {_pct(o['value'])} ({_pct(o['lo'])} to {_pct(o['hi'])}) | "
+                f"{_pct(t['value'])} ({_pct(t['lo'])} to {_pct(t['hi'])}) | "
+                f"{_pct(r['ours_main'])} vs {_pct(r['anonymeter_main'])} | "
+                f"{_pct(r['ours_control'])} vs {_pct(r['anonymeter_control'])} |"
+            )
+    out += [
+        "",
+        "The causes, where the two implementations differ by design, are in `docs/attacks.md`.",
+        "",
+    ]
+    return out
 
 
 def render_readme_section(report: dict[str, Any]) -> str:

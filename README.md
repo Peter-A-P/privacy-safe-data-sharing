@@ -54,6 +54,13 @@ real, the mean over seeds (the worst seed's lower 95% bound in brackets).
 
 <!-- report:end -->
 
+## Tried and rejected
+
+Distance to closest record, the check most synthetic-data tools show their users, was tested as a
+privacy measure on every table and rejected. It passed the one configuration an attack broke and
+failed eight that no attack could break, six of them differentially private. The evidence is in
+[docs/rejected.md](docs/rejected.md). DCR stays in the full tables, labelled as what it is.
+
 ## What this does not do
 
 It does not synthesise text, images or time series, and it does not defend a table after

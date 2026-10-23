@@ -91,6 +91,7 @@ def run_attacks(cell: Cell, *, reference: bool = False, force: bool = False) -> 
         existing: dict[str, Any] = json.loads(path.read_text(encoding="utf-8"))
         if not reference or "reference" in existing:
             return existing
+        return add_reference(cell, existing)
     built = load_built(cell.dataset)
     record = json.loads(cell.record_path.read_text(encoding="utf-8"))
     table = load_table(cell)
@@ -107,3 +108,27 @@ def run_attacks(cell: Cell, *, reference: bool = False, force: bool = False) -> 
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, indent=2, default=float) + "\n", encoding="utf-8")
     return payload
+
+
+def add_reference(cell: Cell, existing: dict[str, Any]) -> dict[str, Any]:
+    """Run only Anonymeter on a table already attacked, on the same inputs, and add it to the
+    record. The project's own attacks are seeded, so rerunning them would reproduce the same
+    numbers; this saves the time."""
+    from facsimile.attacks.reference import anonymeter_all
+
+    built = load_built(cell.dataset)
+    record = json.loads(cell.record_path.read_text(encoding="utf-8"))
+    if record["table_sha256"] != existing["table_sha256"]:
+        raise ValueError(f"{cell.rel}: the table changed since it was attacked")
+    table = load_table(cell)
+    start = time.perf_counter()
+    existing["reference"] = {
+        "anonymeter": anonymeter_all(
+            built.targets, built.control, table, built.domain, CONFIGS[built.name], seed=cell.seed
+        )
+    }
+    existing.setdefault("timings", {})["anonymeter"] = round(time.perf_counter() - start, 2)
+    existing["reference_hardware"] = hardware()
+    path = attack_path(cell)
+    path.write_text(json.dumps(existing, indent=2, default=float) + "\n", encoding="utf-8")
+    return existing

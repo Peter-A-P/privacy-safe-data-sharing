@@ -5585,5 +5585,46 @@
    "control_rate": 0.21433333333333332,
    "seeds": 3
   }
- ]
+ ],
+ "agreement": {
+  "tables": 9,
+  "by_attack": {
+   "singling_out_univariate": {
+    "pairs": 9,
+    "same_call": 1.0,
+    "intervals_overlap": 1.0,
+    "mean_abs_diff": 0.0,
+    "max_abs_diff": 0.0
+   },
+   "singling_out_multivariate": {
+    "pairs": 9,
+    "same_call": 1.0,
+    "intervals_overlap": 1.0,
+    "mean_abs_diff": 0.004702636062109984,
+    "max_abs_diff": 0.013209161859135609
+   },
+   "linkability_k1": {
+    "pairs": 9,
+    "same_call": 1.0,
+    "intervals_overlap": 1.0,
+    "mean_abs_diff": 0.00016650675945171643,
+    "max_abs_diff": 0.0004995202783551493
+   },
+   "linkability_k10": {
+    "pairs": 9,
+    "same_call": 1.0,
+    "intervals_overlap": 1.0,
+    "mean_abs_diff": 0.0008951366029887572,
+    "max_abs_diff": 0.003029361918179763
+   },
+   "inference": {
+    "pairs": 9,
+    "same_call": 1.0,
+    "intervals_overlap": 1.0,
+    "mean_abs_diff": 0.0037008406339187386,
+    "max_abs_diff": 0.012717345729187717
+   }
+  },
+  "disagreements": []
+ }
 }

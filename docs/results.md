@@ -78,6 +78,26 @@ Library versions: sdv 2.0.0, smartnoise-synth 1.0.8, opendp 0.14.2, lightgbm 4.7
 | PATE-CTGAN | 4 (spent 4.02) | 0.0 (0.0 to 0.0) | 0.8 (0.0 to 1.7) | 0.0 (0.0 to 0.1) | 0.3 (0.0 to 0.6) | 0.0 (0.0 to 0.4) |  | -0.337 (worst seed lo -0.377) | -0.357 (worst seed lo -0.391) | 0.191 | 0.482 | 321 | 3 |
 | PATE-CTGAN | 8 (spent 8.02) | 0.0 (0.0 to 0.0) | 0.4 (0.0 to 1.8) | 0.0 (0.0 to 0.0) | 0.2 (0.0 to 0.5) | 0.0 (0.0 to 0.9) | pending | -0.346 (worst seed lo -0.401) | -0.291 (worst seed lo -0.316) | 0.331 | 0.476 | 1,004 | 3 |
 
+## Reference agreement: this project against Anonymeter
+
+9 tables attacked by both, on the same targets, control and synthetic table.
+A pair agrees on the call when both or neither detect a risk at 95%; the intervals
+overlap when the two risks' 95% intervals share any point. Differences are in risk
+percentage points.
+
+| Attack | Pairs | Same call | Intervals overlap | Mean difference | Largest difference |
+|---|---|---|---|---|---|
+| singling out, univariate | 9 | 100.0% | 100.0% | 0.0 | 0.0 |
+| singling out, multivariate | 9 | 100.0% | 100.0% | 0.5 | 1.3 |
+| linkability, 1 neighbour | 9 | 100.0% | 100.0% | 0.0 | 0.0 |
+| linkability, 10 neighbours | 9 | 100.0% | 100.0% | 0.1 | 0.3 |
+| inference | 9 | 100.0% | 100.0% | 0.4 | 1.3 |
+
+Disagreements (0): a different call, or intervals that do not overlap.
+
+
+The causes, where the two implementations differ by design, are in `docs/attacks.md`.
+
 ## Hardware
 
 Fit times were measured on:

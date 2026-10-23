@@ -193,6 +193,22 @@ def cmd_queue(args: argparse.Namespace) -> int:
     )
 
 
+def cmd_dcr_null(args: argparse.Namespace) -> int:
+    import json
+
+    from facsimile.attacks.dcr import null_reference
+    from facsimile.data.build import load_built
+    from facsimile.paths import results_dir
+
+    for name in _datasets(args.datasets):
+        rows = null_reference(load_built(name))
+        path = results_dir(name) / "dcr_null.json"
+        path.write_text(json.dumps(rows, indent=2) + "\n", encoding="utf-8")
+        shares = ", ".join(f"{r['closer_to_training_share']['point']:.3f}" for r in rows)
+        print(f"{name}: closer-to-training share on unseen real rows {shares}")
+    return 0
+
+
 def cmd_report(args: argparse.Namespace) -> int:
     from facsimile import report
 
@@ -284,6 +300,10 @@ def main(argv: Sequence[str] | None = None) -> int:
     gha.add_argument("datasets", nargs="+")
     gha.add_argument("--methods", nargs="*", default=None)
     gha.set_defaults(func=cmd_groundhog_assemble)
+
+    dn = sub.add_parser("dcr-null", help="DCR on unseen real rows, the yardstick for DCR")
+    dn.add_argument("datasets", nargs="+")
+    dn.set_defaults(func=cmd_dcr_null)
 
     rp = sub.add_parser("report", help="the README tables, docs/results.md and the site JSON")
     rp.set_defaults(func=cmd_report)

@@ -59,3 +59,18 @@ def dcr(
         "closer_to_training_share": bootstrap(closer.tolist(), seed=seed + 2).as_dict(),
         "synthetic_sampled": len(picked),
     }
+
+
+def null_reference(
+    built: Any, *, seeds: tuple[int, ...] = (0, 1, 2), rows: int = 4000
+) -> list[Any]:
+    """DCR on real records the synthesisers never saw: rows drawn from the test split stand in
+    for the synthetic table. A table that knows nothing about the targets should score this, so
+    it is the yardstick for the closer-to-training share (`docs/rejected.md`)."""
+    out = []
+    for seed in seeds:
+        held = built.test.sample(rows, random_state=seed)
+        out.append(
+            {"seed": seed, **dcr(built.targets, built.control, held, built.domain, seed=seed)}
+        )
+    return out

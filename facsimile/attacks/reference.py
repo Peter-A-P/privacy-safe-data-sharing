@@ -22,6 +22,10 @@ import pandas as pd
 from facsimile.attacks.config import AttackConfig
 from facsimile.prep import Domain
 
+N_JOBS = 2
+"""Anonymeter's neighbour search processes. Two, not all cores: it runs beside other work on the
+build desktop, and the count changes nothing but the time."""
+
 
 def for_anonymeter(
     frame: pd.DataFrame, domain: Domain, as_label: Sequence[str] = ()
@@ -85,12 +89,12 @@ def anonymeter_all(
             aux_cols=(list(config.half_a), list(config.half_b)),
             n_neighbors=k,
         )
-        lk.evaluate(n_jobs=-2)
+        lk.evaluate(n_jobs=N_JOBS)
         out[f"linkability_k{k}"] = pack(lk)
     aux = [c for c in domain.names if c != config.secret]
     inf = InferenceEvaluator(
         ori=ori, syn=syn, control=ctl, aux_cols=aux, secret=config.secret, n_attacks=n
     )
-    inf.evaluate(n_jobs=-2)
+    inf.evaluate(n_jobs=N_JOBS)
     out["inference"] = pack(inf)
     return out
