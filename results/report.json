@@ -5587,44 +5587,237 @@
   }
  ],
  "agreement": {
-  "tables": 9,
+  "tables": 48,
   "by_attack": {
    "singling_out_univariate": {
-    "pairs": 9,
+    "pairs": 48,
     "same_call": 1.0,
     "intervals_overlap": 1.0,
     "mean_abs_diff": 0.0,
     "max_abs_diff": 0.0
    },
    "singling_out_multivariate": {
-    "pairs": 9,
-    "same_call": 1.0,
+    "pairs": 48,
+    "same_call": 0.9791666666666666,
     "intervals_overlap": 1.0,
-    "mean_abs_diff": 0.004702636062109984,
-    "max_abs_diff": 0.013209161859135609
+    "mean_abs_diff": 0.004836516027633006,
+    "max_abs_diff": 0.016708724530033275
    },
    "linkability_k1": {
-    "pairs": 9,
+    "pairs": 48,
     "same_call": 1.0,
     "intervals_overlap": 1.0,
     "mean_abs_diff": 0.00016650675945171643,
-    "max_abs_diff": 0.0004995202783551493
+    "max_abs_diff": 0.001498560835065448
    },
    "linkability_k10": {
-    "pairs": 9,
-    "same_call": 1.0,
+    "pairs": 48,
+    "same_call": 0.8958333333333334,
     "intervals_overlap": 1.0,
-    "mean_abs_diff": 0.0008951366029887572,
-    "max_abs_diff": 0.003029361918179763
+    "mean_abs_diff": 0.0014973229511175844,
+    "max_abs_diff": 0.005519537148501944
    },
    "inference": {
-    "pairs": 9,
-    "same_call": 1.0,
+    "pairs": 48,
+    "same_call": 0.9583333333333334,
     "intervals_overlap": 1.0,
-    "mean_abs_diff": 0.0037008406339187386,
-    "max_abs_diff": 0.012717345729187717
+    "mean_abs_diff": 0.0035385288271687913,
+    "max_abs_diff": 0.03450844410263084
    }
   },
-  "disagreements": []
+  "disagreements": [
+   {
+    "dataset": "acs",
+    "method": "pate_ctgan",
+    "epsilon": 2.0,
+    "seed": 0,
+    "attack": "linkability_k10",
+    "ours": {
+     "value": 0.004515984939683409,
+     "lo": 0.0,
+     "hi": 0.009778094793364056
+    },
+    "anonymeter": {
+     "value": 0.005000198184329226,
+     "lo": 0.0011025703608458365,
+     "hi": 0.008897826007812616
+    },
+    "ours_detected": false,
+    "anonymeter_detected": true,
+    "ours_main": 0.009941270215095192,
+    "anonymeter_main": 0.00694702135693895,
+    "ours_control": 0.005449896927860829,
+    "anonymeter_control": 0.001956606593345214,
+    "predicates_found": null
+   },
+   {
+    "dataset": "acs",
+    "method": "pate_ctgan",
+    "epsilon": 2.0,
+    "seed": 0,
+    "attack": "inference",
+    "ours": {
+     "value": 0.017156258985482033,
+     "lo": 0.0,
+     "hi": 0.038087025236268404
+    },
+    "anonymeter": {
+     "value": 0.02264041674168145,
+     "lo": 0.0017659724255968123,
+     "hi": 0.043514861057766085
+    },
+    "ours_detected": false,
+    "anonymeter_detected": true,
+    "ours_main": 0.1137418972978449,
+    "anonymeter_main": 0.11673614615600113,
+    "ours_control": 0.09827161153070431,
+    "anonymeter_control": 0.09627544562526681,
+    "predicates_found": null
+   },
+   {
+    "dataset": "ieeecis",
+    "method": "mst",
+    "epsilon": 0.5,
+    "seed": 0,
+    "attack": "singling_out_multivariate",
+    "ours": {
+     "value": 0.020664294763910112,
+     "lo": 0.0014123081881797783,
+     "hi": 0.039916281339640446
+    },
+    "anonymeter": {
+     "value": 0.006515297818351412,
+     "lo": 0.0,
+     "hi": 0.027590175855348974
+    },
+    "ours_detected": true,
+    "anonymeter_detected": false,
+    "ours_main": 0.10126586038886055,
+    "anonymeter_main": 0.10825244105789178,
+    "ours_control": 0.08230228428720436,
+    "anonymeter_control": 0.10240433799949822,
+    "predicates_found": 2000
+   },
+   {
+    "dataset": "ieeecis",
+    "method": "pate_ctgan",
+    "epsilon": 1.0,
+    "seed": 0,
+    "attack": "linkability_k10",
+    "ours": {
+     "value": 0.003000118910597536,
+     "lo": 0.0,
+     "hi": 0.006376430100797022
+    },
+    "anonymeter": {
+     "value": 0.004002159706633232,
+     "lo": 0.00010173028803971661,
+     "hi": 0.007902589125226747
+    },
+    "ours_detected": false,
+    "anonymeter_detected": true,
+    "ours_main": 0.004950855451501456,
+    "anonymeter_main": 0.006447979880579577,
+    "ours_control": 0.001956606593345214,
+    "anonymeter_control": 0.002455648069704588,
+    "predicates_found": null
+   },
+   {
+    "dataset": "sparcs",
+    "method": "mst",
+    "epsilon": 8.0,
+    "seed": 0,
+    "attack": "linkability_k10",
+    "ours": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.005947101312164995
+    },
+    "anonymeter": {
+     "value": 0.005519537148501944,
+     "lo": 8.18643631359875e-05,
+     "hi": 0.0109572099338679
+    },
+    "ours_detected": false,
+    "anonymeter_detected": true,
+    "ours_main": 0.010939353167813939,
+    "anonymeter_main": 0.010939353167813939,
+    "ours_control": 0.011438394644173313,
+    "anonymeter_control": 0.005449896927860829,
+    "predicates_found": null
+   },
+   {
+    "dataset": "sparcs",
+    "method": "pate_ctgan",
+    "epsilon": 2.0,
+    "seed": 0,
+    "attack": "inference",
+    "ours": {
+     "value": 0.0180187749649795,
+     "lo": 0.0017835435821054423,
+     "hi": 0.034254006347853555
+    },
+    "anonymeter": {
+     "value": 0.012739389521719328,
+     "lo": 0.0,
+     "hi": 0.028925042557262547
+    },
+    "ours_detected": true,
+    "anonymeter_detected": false,
+    "ours_main": 0.07531570361817314,
+    "anonymeter_main": 0.07182241328365752,
+    "ours_control": 0.058348293421954425,
+    "anonymeter_control": 0.05984541785103255,
+    "predicates_found": null
+   },
+   {
+    "dataset": "sparcs",
+    "method": "pate_ctgan",
+    "epsilon": 4.0,
+    "seed": 0,
+    "attack": "linkability_k10",
+    "ours": {
+     "value": 0.005505723944936728,
+     "lo": 0.0010374949585833194,
+     "hi": 0.009973952931290136
+    },
+    "anonymeter": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0043805227364607175
+    },
+    "ours_detected": true,
+    "anonymeter_detected": false,
+    "ours_main": 0.008444145786017071,
+    "anonymeter_main": 0.005449896927860829,
+    "ours_control": 0.0029546895460639613,
+    "anonymeter_control": 0.005449896927860829,
+    "predicates_found": null
+   },
+   {
+    "dataset": "sparcs",
+    "method": "pate_ctgan",
+    "epsilon": 8.0,
+    "seed": 0,
+    "attack": "linkability_k10",
+    "ours": {
+     "value": 0.002006097805695065,
+     "lo": 0.0,
+     "hi": 0.006593623838756266
+    },
+    "anonymeter": {
+     "value": 0.005012730507319845,
+     "lo": 3.472453156557354e-05,
+     "hi": 0.009990736483074115
+    },
+    "ours_detected": false,
+    "anonymeter_detected": true,
+    "ours_main": 0.00694702135693895,
+    "anonymeter_main": 0.00944222873873582,
+    "ours_control": 0.004950855451501456,
+    "anonymeter_control": 0.004451813975142082,
+    "predicates_found": null
+   }
+  ]
  }
 }

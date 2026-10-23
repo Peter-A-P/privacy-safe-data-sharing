@@ -80,21 +80,31 @@ Library versions: sdv 2.0.0, smartnoise-synth 1.0.8, opendp 0.14.2, lightgbm 4.7
 
 ## Reference agreement: this project against Anonymeter
 
-9 tables attacked by both, on the same targets, control and synthetic table.
+48 tables attacked by both, on the same targets, control and synthetic table.
 A pair agrees on the call when both or neither detect a risk at 95%; the intervals
 overlap when the two risks' 95% intervals share any point. Differences are in risk
 percentage points.
 
 | Attack | Pairs | Same call | Intervals overlap | Mean difference | Largest difference |
 |---|---|---|---|---|---|
-| singling out, univariate | 9 | 100.0% | 100.0% | 0.0 | 0.0 |
-| singling out, multivariate | 9 | 100.0% | 100.0% | 0.5 | 1.3 |
-| linkability, 1 neighbour | 9 | 100.0% | 100.0% | 0.0 | 0.0 |
-| linkability, 10 neighbours | 9 | 100.0% | 100.0% | 0.1 | 0.3 |
-| inference | 9 | 100.0% | 100.0% | 0.4 | 1.3 |
+| singling out, univariate | 48 | 100.0% | 100.0% | 0.0 | 0.0 |
+| singling out, multivariate | 48 | 97.9% | 100.0% | 0.5 | 1.7 |
+| linkability, 1 neighbour | 48 | 100.0% | 100.0% | 0.0 | 0.1 |
+| linkability, 10 neighbours | 48 | 89.6% | 100.0% | 0.1 | 0.6 |
+| inference | 48 | 95.8% | 100.0% | 0.4 | 3.5 |
 
-Disagreements (0): a different call, or intervals that do not overlap.
+Disagreements (8): a different call, or intervals that do not overlap.
 
+| Table | Attack | This project, risk % | Anonymeter, risk % | Success on targets, this project vs Anonymeter, % | Control, % |
+|---|---|---|---|---|---|
+| acs pate_ctgan epsilon 2 seed 0 | linkability, 10 neighbours | 0.5 (0.0 to 1.0) | 0.5 (0.1 to 0.9) | 1.0 vs 0.7 | 0.5 vs 0.2 |
+| acs pate_ctgan epsilon 2 seed 0 | inference | 1.7 (0.0 to 3.8) | 2.3 (0.2 to 4.4) | 11.4 vs 11.7 | 9.8 vs 9.6 |
+| ieeecis mst epsilon 0.5 seed 0 | singling out, multivariate | 2.1 (0.1 to 4.0) | 0.7 (0.0 to 2.8) | 10.1 vs 10.8 | 8.2 vs 10.2 |
+| ieeecis pate_ctgan epsilon 1 seed 0 | linkability, 10 neighbours | 0.3 (0.0 to 0.6) | 0.4 (0.0 to 0.8) | 0.5 vs 0.6 | 0.2 vs 0.2 |
+| sparcs mst epsilon 8 seed 0 | linkability, 10 neighbours | 0.0 (0.0 to 0.6) | 0.6 (0.0 to 1.1) | 1.1 vs 1.1 | 1.1 vs 0.5 |
+| sparcs pate_ctgan epsilon 2 seed 0 | inference | 1.8 (0.2 to 3.4) | 1.3 (0.0 to 2.9) | 7.5 vs 7.2 | 5.8 vs 6.0 |
+| sparcs pate_ctgan epsilon 4 seed 0 | linkability, 10 neighbours | 0.6 (0.1 to 1.0) | 0.0 (0.0 to 0.4) | 0.8 vs 0.5 | 0.3 vs 0.5 |
+| sparcs pate_ctgan epsilon 8 seed 0 | linkability, 10 neighbours | 0.2 (0.0 to 0.7) | 0.5 (0.0 to 1.0) | 0.7 vs 0.9 | 0.5 vs 0.4 |
 
 The causes, where the two implementations differ by design, are in `docs/attacks.md`.
 

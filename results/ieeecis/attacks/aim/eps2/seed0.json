@@ -269,7 +269,8 @@
     "linkability_k1": 24.01,
     "linkability_k10": 20.72,
     "inference": 17.78,
-    "dcr": 22.74
+    "dcr": 22.74,
+    "anonymeter": 39.54
   },
   "dcr": {
     "exact_copy_targets": {
@@ -307,6 +308,114 @@
     "synthetic_sampled": 4000
   },
   "hardware": {
+    "cpu": "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz",
+    "logical_cores": 12,
+    "os": "Windows 11",
+    "python": "3.13.5",
+    "torch": "2.14.1+cu126",
+    "gpu": "NVIDIA GeForce GTX 1650",
+    "gpu_memory_gb": 4.0
+  },
+  "reference": {
+    "anonymeter": {
+      "singling_out_univariate": {
+        "main": {
+          "value": 0.0009585236406264672,
+          "error": 0.0009585236406264671
+        },
+        "control": {
+          "value": 0.0009585236406264672,
+          "error": 0.0009585236406264671
+        },
+        "baseline": {
+          "value": 0.009941270215095192,
+          "error": 0.004240770486517782
+        },
+        "risk": {
+          "value": 0.0,
+          "lo": 0.0,
+          "hi": 0.0013568577126237004
+        }
+      },
+      "singling_out_multivariate": {
+        "main": {
+          "value": 0.10126586038886055,
+          "error": 0.013186627207086373
+        },
+        "control": {
+          "value": 0.08599398567673955,
+          "error": 0.012249363953487705
+        },
+        "baseline": {
+          "value": 0.04886650537112633,
+          "error": 0.009399586380385301
+        },
+        "risk": {
+          "value": 0.016708724530033275,
+          "lo": 0.0,
+          "hi": 0.03624853089693886
+        }
+      },
+      "linkability_k1": {
+        "main": {
+          "value": 0.0009585236406264672,
+          "error": 0.0009585236406264671
+        },
+        "control": {
+          "value": 0.0009585236406264672,
+          "error": 0.0009585236406264671
+        },
+        "baseline": {
+          "value": 0.0009585236406264672,
+          "error": 0.0009585236406264671
+        },
+        "risk": {
+          "value": 0.0,
+          "lo": 0.0,
+          "hi": 0.0013568577126237004
+        }
+      },
+      "linkability_k10": {
+        "main": {
+          "value": 0.008943187262376445,
+          "error": 0.004012890409160517
+        },
+        "control": {
+          "value": 0.00944222873873582,
+          "error": 0.004128460999050264
+        },
+        "baseline": {
+          "value": 0.004451813975142082,
+          "error": 0.0027553822780996638
+        },
+        "risk": {
+          "value": 0.0,
+          "lo": 0.0,
+          "hi": 0.00530997292566345
+        }
+      },
+      "inference": {
+        "main": {
+          "value": 0.2829169577836725,
+          "error": 0.019716677107409025
+        },
+        "control": {
+          "value": 0.2918997043581412,
+          "error": 0.019901839744473442
+        },
+        "baseline": {
+          "value": 0.027906763364032642,
+          "error": 0.007154367122544637
+        },
+        "risk": {
+          "value": 0.0,
+          "lo": 0.0,
+          "hi": 0.02713174400943453
+        }
+      }
+    }
+  },
+  "reference_hardware": {
     "cpu": "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz",
     "logical_cores": 12,
     "os": "Windows 11",

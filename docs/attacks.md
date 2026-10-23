@@ -97,6 +97,38 @@ reimplements the method from the paper for measurement and publishes no product.
 
 ## Reference agreement
 
-Written by `facsimile report` once the grid is attacked: for every table attacked by both, the
-two risks and their intervals side by side, the share of tables where the two agree on whether a
-risk is detected, and every disagreement with its explanation.
+Anonymeter 1.1.0 was run beside this project's implementations on seed 0 of every configuration
+attacked (48 tables), with the same targets, control, synthetic table, secret, attribute halves,
+number of attacks and search budget (`facsimile attack --reference`). The table, written by
+`facsimile report`, is in [results.md](results.md#reference-agreement-this-project-against-anonymeter).
+
+**The intervals agree everywhere.** For all five attacks on all 48 tables, the two risks' 95%
+intervals overlap. The mean difference between the two risks is under 0.6 percentage points
+for every attack. The largest is 3.5 points, the inference risk on IEEE-CIS MST at epsilon 0.5:
+0.0% (0.0 to 2.5) here and 3.5% (0.0 to 7.3) in Anonymeter. Neither detects a risk there.
+
+**The calls differ on 8 of 240 pairs, and every one is a borderline case.** In each of them one
+implementation's lower bound is above zero by at most 0.18 points and the other's touches zero.
+Five are linkability with ten neighbours, two are inference and one is multivariate singling
+out. None is a leak in the README's sense, which pools the three seeds and tests at the
+Bonferroni level. The one leak there (AIM, epsilon 1, ACS, inference) is detected by both on this
+seed: 5.1% (1.8 to 8.3) here and 4.0% (0.7 to 7.3) in Anonymeter.
+
+**The causes are the two choices recorded above.**
+
+- *Ties between neighbours.* For linkability with ten neighbours and for inference, this project
+  breaks ties at random, seeded. Anonymeter takes `numpy.argsort` order. On binned attributes
+  most targets have many synthetic records at the same distance, so the two pick different
+  records and the success rates move by a few tenths of a point in either direction. The control
+  rates move too: on SPARCS MST at epsilon 8 the control linkability rate is 1.1% here and 0.5%
+  in Anonymeter. That is the pattern a tie-break difference produces, and it is why the five
+  linkability disagreements go both ways.
+- *The singling-out search.* Both search with the same budget of 1,000,000 attempts, but they
+  draw candidate predicates in a different order. On some tables neither finds all 2,000
+  predicates (Anonymeter reported 972 to 1,491 on three SPARCS tables), and the two then score
+  different predicate sets. The one multivariate singling-out disagreement (IEEE-CIS MST at
+  epsilon 0.5) comes from the control rate: 8.2% here against 10.2% in Anonymeter.
+
+Neither difference is a defect in either implementation. Both follow the paper, which leaves
+these choices open. The project keeps its own choices for the reasons given above and reports its
+own numbers, with the reference agreement published beside them.
