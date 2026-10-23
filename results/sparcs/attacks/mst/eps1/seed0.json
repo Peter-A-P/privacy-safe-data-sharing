@@ -1,0 +1,315 @@
+{
+  "facsimile": "0.0.1",
+  "dataset": "sparcs",
+  "method": "mst",
+  "epsilon": 1.0,
+  "seed": 0,
+  "table_sha256": "fd45756ded69a94919fff5fb345a2bab2aa46ae7aaabf1e5c78a4af16051cda2",
+  "attacks": {
+    "singling_out_univariate": {
+      "attack": "singling_out_univariate",
+      "n_attacks": 2000,
+      "main": {
+        "value": 0.0009585236406264672,
+        "lo": 1.0842021724855044e-19,
+        "hi": 0.0019170472812529344,
+        "successes": 0.0,
+        "trials": 2000
+      },
+      "control": {
+        "value": 0.0009585236406264672,
+        "lo": 1.0842021724855044e-19,
+        "hi": 0.0019170472812529344,
+        "successes": 0.0,
+        "trials": 2000
+      },
+      "baseline": {
+        "value": 0.028904846316751387,
+        "lo": 0.02162520994784405,
+        "hi": 0.03618448268565873,
+        "successes": 56.0,
+        "trials": 2000
+      },
+      "risk": {
+        "value": 0.0,
+        "lo": 0.0,
+        "hi": 0.0013568577126237004,
+        "detected": false
+      },
+      "beats_baseline": false,
+      "params": {
+        "mode": "univariate",
+        "n_cols": 1,
+        "predicates_found": 0,
+        "max_attempts": 1000000,
+        "unique_rows": {
+          "synthetic": 2690,
+          "targets": 1996,
+          "control": 1997
+        },
+        "seed": 0
+      }
+    },
+    "singling_out_multivariate": {
+      "attack": "singling_out_multivariate",
+      "n_attacks": 2000,
+      "main": {
+        "value": 0.15965371312290727,
+        "lo": 0.14362957550964014,
+        "hi": 0.1756778507361744,
+        "successes": 318.0,
+        "trials": 2000
+      },
+      "control": {
+        "value": 0.1511700080247979,
+        "lo": 0.13550019863222199,
+        "hi": 0.16683981741737383,
+        "successes": 301.0,
+        "trials": 2000
+      },
+      "baseline": {
+        "value": 0.05435596161107944,
+        "lo": 0.04446618753651598,
+        "hi": 0.0642457356856429,
+        "successes": 107.0,
+        "trials": 2000
+      },
+      "risk": {
+        "value": 0.009994586876422726,
+        "lo": 0.0,
+        "hi": 0.03626980008020541,
+        "detected": false
+      },
+      "beats_baseline": true,
+      "params": {
+        "mode": "multivariate",
+        "n_cols": 3,
+        "predicates_found": 2000,
+        "max_attempts": 1000000,
+        "unique_rows": {
+          "synthetic": 2690,
+          "targets": 1996,
+          "control": 1997
+        },
+        "seed": 0
+      }
+    },
+    "linkability_k1": {
+      "attack": "linkability",
+      "n_attacks": 2000,
+      "main": {
+        "value": 0.0009585236406264672,
+        "lo": 1.0842021724855044e-19,
+        "hi": 0.0019170472812529344,
+        "successes": 0.0,
+        "trials": 2000
+      },
+      "control": {
+        "value": 0.0009585236406264672,
+        "lo": 1.0842021724855044e-19,
+        "hi": 0.0019170472812529344,
+        "successes": 0.0,
+        "trials": 2000
+      },
+      "baseline": {
+        "value": 0.0009585236406264672,
+        "lo": 1.0842021724855044e-19,
+        "hi": 0.0019170472812529344,
+        "successes": 0.0,
+        "trials": 2000
+      },
+      "risk": {
+        "value": 0.0,
+        "lo": 0.0,
+        "hi": 0.0013568577126237004,
+        "detected": false
+      },
+      "beats_baseline": false,
+      "params": {
+        "a": [
+          "age_group",
+          "gender",
+          "race",
+          "ethnicity",
+          "zip_code",
+          "health_service_area",
+          "payment_typology_1"
+        ],
+        "b": [
+          "type_of_admission",
+          "patient_disposition",
+          "apr_mdc_code",
+          "apr_severity_of_illness_code",
+          "apr_risk_of_mortality",
+          "apr_medical_surgical",
+          "emergency_department_indicator",
+          "length_of_stay",
+          "total_charges"
+        ],
+        "k": 1,
+        "seed": 0
+      }
+    },
+    "linkability_k10": {
+      "attack": "linkability",
+      "n_attacks": 2000,
+      "main": {
+        "value": 0.010939353167813939,
+        "lo": 0.006482767876552688,
+        "hi": 0.015395938459075189,
+        "successes": 20.0,
+        "trials": 2000
+      },
+      "control": {
+        "value": 0.010440311691454566,
+        "lo": 0.006090240228609853,
+        "hi": 0.014790383154299279,
+        "successes": 19.0,
+        "trials": 2000
+      },
+      "baseline": {
+        "value": 0.005449896927860829,
+        "lo": 0.002369280636961836,
+        "hi": 0.008530513218759823,
+        "successes": 9.0,
+        "trials": 2000
+      },
+      "risk": {
+        "value": 0.0005043065943928902,
+        "lo": 0.0,
+        "hi": 0.00679616556506997,
+        "detected": false
+      },
+      "beats_baseline": false,
+      "params": {
+        "a": [
+          "age_group",
+          "gender",
+          "race",
+          "ethnicity",
+          "zip_code",
+          "health_service_area",
+          "payment_typology_1"
+        ],
+        "b": [
+          "type_of_admission",
+          "patient_disposition",
+          "apr_mdc_code",
+          "apr_severity_of_illness_code",
+          "apr_risk_of_mortality",
+          "apr_medical_surgical",
+          "emergency_department_indicator",
+          "length_of_stay",
+          "total_charges"
+        ],
+        "k": 10,
+        "seed": 0
+      }
+    },
+    "inference": {
+      "attack": "inference",
+      "n_attacks": 2000,
+      "main": {
+        "value": 0.23900130786404766,
+        "lo": 0.2203352658776133,
+        "hi": 0.25766734985048206,
+        "successes": 477.0,
+        "trials": 2000
+      },
+      "control": {
+        "value": 0.26345434020565694,
+        "lo": 0.2441724933907117,
+        "hi": 0.28273618702060216,
+        "successes": 526.0,
+        "trials": 2000
+      },
+      "baseline": {
+        "value": 0.07132337180729814,
+        "lo": 0.06008497467017321,
+        "hi": 0.08256176894442308,
+        "successes": 141.0,
+        "trials": 2000
+      },
+      "risk": {
+        "value": 0.0,
+        "lo": 0.0,
+        "hi": 0.0038657215196735706,
+        "detected": false
+      },
+      "beats_baseline": true,
+      "params": {
+        "secret": "apr_mdc_code",
+        "aux": [
+          "age_group",
+          "gender",
+          "race",
+          "ethnicity",
+          "zip_code",
+          "health_service_area",
+          "type_of_admission",
+          "patient_disposition",
+          "apr_severity_of_illness_code",
+          "apr_risk_of_mortality",
+          "apr_medical_surgical",
+          "payment_typology_1",
+          "emergency_department_indicator",
+          "length_of_stay",
+          "total_charges"
+        ],
+        "seed": 0
+      }
+    }
+  },
+  "timings": {
+    "singling_out_univariate": 0.15,
+    "singling_out_multivariate": 2.91,
+    "linkability_k1": 22.49,
+    "linkability_k10": 22.58,
+    "inference": 18.23,
+    "dcr": 20.84
+  },
+  "dcr": {
+    "exact_copy_targets": {
+      "point": 0.001,
+      "lo": 0.00012112759055682978,
+      "hi": 0.0036076285698285315,
+      "n": 2000
+    },
+    "exact_copy_control": {
+      "point": 0.0,
+      "lo": 0.0,
+      "hi": 0.0018427397934059364,
+      "n": 2000
+    },
+    "median_dcr_targets": 3.4444444444444446,
+    "median_dcr_control": 3.3333333333333335,
+    "mean_dcr_targets": {
+      "point": 3.4843888888888888,
+      "lo": 3.4333305555555556,
+      "hi": 3.5307819444444446,
+      "n": 2000
+    },
+    "mean_dcr_control": {
+      "point": 3.4762222222222228,
+      "lo": 3.423888888888889,
+      "hi": 3.5289444444444444,
+      "n": 2000
+    },
+    "closer_to_training_share": {
+      "point": 0.48975,
+      "lo": 0.475625,
+      "hi": 0.504375,
+      "n": 4000
+    },
+    "synthetic_sampled": 4000
+  },
+  "hardware": {
+    "cpu": "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz",
+    "logical_cores": 12,
+    "os": "Windows 11",
+    "python": "3.13.5",
+    "torch": "2.14.1+cu126",
+    "gpu": "NVIDIA GeForce GTX 1650",
+    "gpu_memory_gb": 4.0
+  }
+}

@@ -434,7 +434,10 @@ def render_results_md(report: dict[str, Any]) -> str:
         for r in rows:
             name = METHOD_NAMES[r["method"]]
             if "not_run" in r:
-                cells = [name, _eps_cell(r), r["not_run"]] + [""] * (len(head) - 3)
+                mem = r.get("membership")
+                shown = f"{mem['accuracy']:.3f} ({mem['lo']:.3f} to {mem['hi']:.3f})" if mem else ""
+                cells = [name, _eps_cell(r), r["not_run"]] + [""] * (len(ATTACKS) - 1) + [shown]
+                cells += [""] * (len(head) - len(cells))
                 out.append("| " + " | ".join(cells) + " |")
                 continue
             risk = r.get("risk", {})
@@ -497,7 +500,32 @@ def render_readme_section(report: dict[str, Any]) -> str:
         "_none: utility_ means no budget is within the margin of the ceiling on every task and seed;",
         "_none: risk_ means every useful budget has a detected risk; _pending_ means a budget's",
         "tables are not all attacked and scored yet.",
+        "",
+        "**How close each gets.** The budget at which a synthesiser comes nearest the real-data",
+        "ceiling, and the gap on its worst task there: AUC trained on synthetic minus trained on",
+        "real, the mean over seeds (the worst seed's lower 95% bound in brackets).",
+        "",
+        "| Dataset | " + " | ".join(METHOD_NAMES[m] for m in METHODS) + " |",
+        "|---|" + "---|" * len(METHODS),
     ]
+    for ds in DATASETS:
+        row = [DATASET_NAMES[ds]]
+        for m in METHODS:
+            scored = [
+                c
+                for c in report["cells"]
+                if c["dataset"] == ds and c["method"] == m and "utility" in c
+            ]
+            if not scored:
+                row.append("pending")
+                continue
+            best = max(scored, key=lambda c: min(u["delta"] for u in c["utility"].values()))
+            worst = min(best["utility"].values(), key=lambda u: u["delta"])
+            row.append(
+                f"{worst['delta']:+.3f} ({worst['delta_lo_worst']:+.3f}) "
+                f"at epsilon {_eps_label(best['epsilon'])}"
+            )
+        out.append("| " + " | ".join(row) + " |")
     out += [
         "",
         "**What leaked.** A risk counts when its interval at the Bonferroni level excludes zero.",

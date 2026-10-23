@@ -28,9 +28,23 @@ every seed and no attack's risk is detected.
 
 | Dataset | Gaussian copula | CTGAN | TVAE | MST | AIM | PATE-CTGAN |
 |---|---|---|---|---|---|---|
-| ACS PUMS, California 2018 | none: no budget is within 0.02 AUC of the real-data ceiling on every task and seed | none: no budget is within 0.02 AUC of the real-data ceiling on every task and seed | none: no budget is within 0.02 AUC of the real-data ceiling on every task and seed | none: no budget is within 0.02 AUC of the real-data ceiling on every task and seed | none: no budget is within 0.02 AUC of the real-data ceiling on every task and seed | none: no budget is within 0.02 AUC of the real-data ceiling on every task and seed |
-| IEEE-CIS card transactions | pending | none: no budget is within 0.02 AUC of the real-data ceiling on every task and seed | none: no budget is within 0.02 AUC of the real-data ceiling on every task and seed | pending | pending | none: no budget is within 0.02 AUC of the real-data ceiling on every task and seed |
-| NY SPARCS discharges | pending | none: no budget is within 0.02 AUC of the real-data ceiling on every task and seed | none: no budget is within 0.02 AUC of the real-data ceiling on every task and seed | pending | pending | none: no budget is within 0.02 AUC of the real-data ceiling on every task and seed |
+| ACS PUMS, California 2018 | none: utility | none: utility | none: utility | none: utility | none: utility | none: utility |
+| IEEE-CIS card transactions | none: utility | none: utility | none: utility | none: utility | none: utility | none: utility |
+| NY SPARCS discharges | none: utility | none: utility | none: utility | none: utility | none: utility | none: utility |
+
+_none: utility_ means no budget is within the margin of the ceiling on every task and seed;
+_none: risk_ means every useful budget has a detected risk; _pending_ means a budget's
+tables are not all attacked and scored yet.
+
+**How close each gets.** The budget at which a synthesiser comes nearest the real-data
+ceiling, and the gap on its worst task there: AUC trained on synthetic minus trained on
+real, the mean over seeds (the worst seed's lower 95% bound in brackets).
+
+| Dataset | Gaussian copula | CTGAN | TVAE | MST | AIM | PATE-CTGAN |
+|---|---|---|---|---|---|---|
+| ACS PUMS, California 2018 | -0.282 (-0.296) at epsilon inf | -0.062 (-0.075) at epsilon inf | -0.053 (-0.077) at epsilon inf | -0.306 (-0.346) at epsilon 4 | -0.147 (-0.239) at epsilon 1 | -0.339 (-0.409) at epsilon 8 |
+| IEEE-CIS card transactions | -0.404 (-0.453) at epsilon inf | -0.129 (-0.167) at epsilon inf | -0.101 (-0.152) at epsilon inf | -0.193 (-0.228) at epsilon 8 | -0.148 (-0.209) at epsilon 2 | -0.318 (-0.429) at epsilon 2 |
+| NY SPARCS discharges | -0.203 (-0.213) at epsilon inf | -0.075 (-0.087) at epsilon inf | -0.150 (-0.197) at epsilon inf | -0.288 (-0.311) at epsilon 2 | -0.144 (-0.167) at epsilon 2 | -0.346 (-0.401) at epsilon 8 |
 
 **What leaked.** A risk counts when its interval at the Bonferroni level excludes zero.
 
