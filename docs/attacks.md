@@ -161,5 +161,18 @@ Both are weak at this scale. Even on a copy of the training data neither is far 
 with 1,000 rows and 40 shadow tables per target. A Groundhog result at chance here therefore
 means the attack could not tell, not that the table is safe. The README says so.
 
-The resolution, which is to adopt the one-hot encoding and rerun or to publish the difference as
-it stands, is recorded here once it is decided.
+**Resolved 2026-10-24 (Peter's decision): adopt the encoding and rerun everything.** The feature
+map now one-hot encodes categorical attributes for the naive and correlation sets, as TAPAS
+does. Binned numeric attributes keep their bin code. Every Groundhog run, all six synthesisers
+at their three budgets, is being redone with it. The synthetic tables are now kept beside their
+features, so a later change to the feature map will not need the synthesisers again. The first
+runs' features are kept under `data/groundhog-v1/` and their results in the git history (up to
+commit be0c360).
+
+**A defect in TAPAS 1.0.0, found on the way.** `HistSetFeature` treats every column type that
+starts with "finite" as one-hot. It reads as many encoded columns as the column has values, but a
+`finite/ordered` column is encoded in a single column. Every histogram feature after the first
+ordered column is therefore read from the wrong place. The first reference run described binned
+numeric attributes as `finite/ordered` and was affected. They are now described as `real`, with
+the bin code scaled to [0, 1], which TAPAS handles correctly. On the ACS positive control this
+moved TAPAS from 72 to 77 correct of 120.

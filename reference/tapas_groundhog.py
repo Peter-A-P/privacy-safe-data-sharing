@@ -9,11 +9,13 @@ naive, histogram and correlation features of Stadler et al. (`NaiveSetFeature`,
 trains on the 40 shadow tables, scores the 20 evaluation tables, and adds the result to
 `results/<dataset>/groundhog_reference/<method>-<eps>.json` beside the project's own.
 
-The columns are described to TAPAS as the project codes them: categorical attributes as
-`finite` (TAPAS one-hot encodes them) and binned numeric ones as `finite/ordered` with their
-bin count (TAPAS keeps the bin code). That is where the two feature maps differ: the project
-takes the naive and correlation features of the codes of every column, TAPAS of the one-hot
-columns of the categorical ones.
+The columns are described to TAPAS as `finite` for categorical attributes (TAPAS one-hot encodes
+them) and as `real` for binned numeric ones, with the bin code scaled to [0, 1] (TAPAS keeps the
+value and histograms it in ten bins). `finite/ordered` would be the natural description of a bin,
+but TAPAS 1.0.0's `HistSetFeature` treats every type starting with "finite" as one-hot and reads
+as many encoded columns as the column has values. An ordered column is encoded in one, so the
+histogram features after it are taken from the wrong columns. The first reference run used that
+description; it was redone with this one (`docs/attacks.md`).
 
     .venv-tapas/Scripts/python reference/tapas_groundhog.py DATASET METHOD EPS_TAG
 """
@@ -46,8 +48,8 @@ def description(columns: list[dict]) -> DataDescription:
         [
             {
                 "name": c["name"],
-                "type": "finite" if c["kind"] == "categorical" else "finite/ordered",
-                "representation": int(c["size"]),
+                "type": "finite" if c["kind"] == "categorical" else "real",
+                "representation": int(c["size"]) if c["kind"] == "categorical" else "number",
             }
             for c in columns
         ],
@@ -55,18 +57,28 @@ def description(columns: list[dict]) -> DataDescription:
     )
 
 
+def scaled(frame: pd.DataFrame, columns: list[dict]) -> pd.DataFrame:
+    out = {}
+    for c in columns:
+        codes = frame[c["name"]].astype("int64")
+        if c["kind"] == "categorical":
+            out[c["name"]] = codes
+        else:
+            out[c["name"]] = codes / max(int(c["size"]) - 1, 1)
+    return pd.DataFrame(out)
+
+
 def main(dataset: str, method: str, eps_tag: str) -> None:
     here = REPO / "data" / "tapas" / dataset / method / eps_tag
     manifest = json.loads((here / "manifest.json").read_text(encoding="utf-8"))
     desc = description(manifest["columns"])
-    names = [c["name"] for c in manifest["columns"]]
     rows = []
     for t in manifest["targets"]:
         sets: dict[str, list[TabularDataset]] = {"shadow": [], "eval": []}
         labels: dict[str, list[int]] = {"shadow": [], "eval": []}
         for plan in t["plans"]:
             frame = pd.read_parquet(here / f"t{t['target']}" / f"{plan['name']}.parquet")
-            sets[plan["phase"]].append(TabularDataset(frame[names].astype("int64"), desc))
+            sets[plan["phase"]].append(TabularDataset(scaled(frame, manifest["columns"]), desc))
             labels[plan["phase"]].append(int(plan["label"]))
         clf = FeatureBasedSetClassifier(
             NaiveSetFeature() + HistSetFeature() + CorrSetFeature(),

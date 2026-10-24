@@ -8,7 +8,8 @@ Three steps, so that the expensive one can run in parallel on another machine:
    a third disjoint slice the targets are chosen from. Written to
    `data/groundhog/<dataset>/pools.parquet` with the targets in `targets.json`.
 2. **fit** (one per shadow or evaluation dataset): build the dataset from its plan, synthesise,
-   reduce to features, write `data/groundhog/<dataset>/<method>/<eps>/t<i>/<phase><k>.npy`.
+   reduce to features, write `data/groundhog/<dataset>/<method>/<eps>/t<i>/<phase><k>.npy` and
+   the synthetic table beside it as `.parquet`.
 3. **assemble**: for every target whose 60 feature files exist, train and score the classifier
    and write `results/<dataset>/groundhog/<method>/<eps>.json`.
 
@@ -197,6 +198,9 @@ def fit_one(
         .table
     )
     path.parent.mkdir(parents=True, exist_ok=True)
+    # The table is kept beside its features (a few kilobytes), so a change to the feature map or
+    # a reference implementation never needs the synthesiser again.
+    table.to_parquet(path.with_suffix(".parquet"))
     tmp = path.with_name(path.stem + ".partial.npy")
     np.save(tmp, features(table, domain))
     tmp.replace(path)
@@ -307,6 +311,12 @@ def export_for_reference(
         listed = []
         for plan in plans(pools, i, scale):
             path = out / f"t{i}" / f"{plan.name}.parquet"
+            kept_table = feature_path(dataset, method, epsilon, i, plan.name).with_suffix(
+                ".parquet"
+            )
+            if kept_table.exists() and not path.exists():
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(kept_table.read_bytes())
             if path.exists():
                 table = pd.read_parquet(path)
             else:

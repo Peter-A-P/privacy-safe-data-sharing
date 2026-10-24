@@ -13,9 +13,13 @@ reference data from the same population. For each target:
    are synthesised and classified. Accuracy over them, against 0.5 for a guess, is the attack's
    success on that target; the advantage is twice the accuracy minus one.
 
-Features, as in the paper: the naive set (mean, median and variance of each column's codes), the
+Features, as in the paper: the naive set (mean, median and variance of each encoded column), the
 histogram set (every one-way marginal) and the correlation set (pairwise correlation of the
-codes), concatenated.
+encoded columns), concatenated. Categorical attributes are one-hot encoded for the naive and
+correlation sets and binned numeric ones keep their bin code, as TAPAS encodes them. **Amended
+2026-10-24:** the first runs took the naive and correlation sets on the category codes, which
+have no order; beside TAPAS on the same tables that scored 180 of 360 on the positive control
+against TAPAS's 204, so every Groundhog run was redone with this encoding (`docs/attacks.md`).
 
 **Scale (PLAN.md section 2.3, amended 2026-10-16 by Peter's decision).** Shadow training needs a
 synthesiser fit per shadow dataset, and AIM takes about half an hour to hours per 20,000-row
@@ -46,18 +50,31 @@ Synthesise = Callable[[pd.DataFrame, int], pd.DataFrame]
 """Fit on a coded frame with a seed and return a synthetic frame of the same size."""
 
 
+def encoded(table: pd.DataFrame, domain: Domain) -> NDArray[np.float64]:
+    """Categorical attributes one-hot, binned numeric ones as their bin code."""
+    blocks = []
+    for c in domain.columns:
+        codes = table[c.name].to_numpy(dtype=np.int64)
+        if c.kind == "categorical":
+            blocks.append(np.eye(c.size, dtype=np.float64)[codes])
+        else:
+            blocks.append(codes.astype(np.float64)[:, None])
+    return np.hstack(blocks)
+
+
 def features(table: pd.DataFrame, domain: Domain) -> NDArray[np.float64]:
     """Naive, histogram and correlation features of a coded table, concatenated."""
-    values = table[domain.names].to_numpy(dtype=np.float64)
+    values = encoded(table, domain)
     naive = np.concatenate([values.mean(axis=0), np.median(values, axis=0), values.var(axis=0)])
+    codes = table[domain.names].to_numpy(dtype=np.int64)
     hist = np.concatenate(
         [
-            np.bincount(values[:, j].astype(np.int64), minlength=c.size) / len(values)
+            np.bincount(codes[:, j], minlength=c.size) / len(codes)
             for j, c in enumerate(domain.columns)
         ]
     )
     with np.errstate(invalid="ignore", divide="ignore"):
-        corr = np.corrcoef(values, rowvar=False)
+        corr = np.atleast_2d(np.corrcoef(values, rowvar=False))
     upper = np.nan_to_num(corr[np.triu_indices(values.shape[1], k=1)], nan=0.0)
     return np.concatenate([naive, hist, upper])
 
