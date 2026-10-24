@@ -273,3 +273,86 @@ def run_groundhog(
             fit_one(dataset, method, epsilon, i, name, pools=pools, scale=scale)
         print(f"  target {i + 1}/{len(pools.kinds)} ({pools.kinds[i]}) fitted", flush=True)
     return assemble(dataset, method, epsilon, scale)
+
+
+# 4. the reference: the same tables for TAPAS
+
+
+def reference_dir(dataset: str, method: str, epsilon: float | None) -> Path:
+    return DATA / "tapas" / dataset / method / tag(epsilon)
+
+
+def reference_path(dataset: str, method: str, epsilon: float | None) -> Path:
+    return results_dir(dataset) / "groundhog_reference" / f"{method}-{tag(epsilon)}.json"
+
+
+def export_for_reference(
+    dataset: str, method: str, epsilon: float | None, scale: Scale = SCALE
+) -> dict[str, Any]:
+    """Write every shadow and evaluation table of one Groundhog run to parquet, so that TAPAS (in
+    its own Python 3.10 environment, `reference/tapas_groundhog.py`) classifies the same tables,
+    and score them here with this project's features and classifier.
+
+    `method` may be "copy", the positive control: the "synthetic" table is the input dataset
+    itself, so whether the target is in is written into it. Every other method is refitted from
+    its plan and seed; where the Groundhog run kept its feature file, the refitted table must
+    reproduce it exactly, which checks that the tables TAPAS sees are the ones the run scored.
+    """
+    pools = load_pools(dataset)
+    domain = load_built(dataset).domain
+    out = reference_dir(dataset, method, epsilon)
+    targets: list[dict[str, Any]] = []
+    for i, kind in enumerate(pools.kinds):
+        feats: dict[str, list[tuple[NDArray[np.float64], int]]] = {"shadow": [], "eval": []}
+        listed = []
+        for plan in plans(pools, i, scale):
+            path = out / f"t{i}" / f"{plan.name}.parquet"
+            if path.exists():
+                table = pd.read_parquet(path)
+            else:
+                pool = pools.shadow if plan.phase == "shadow" else pools.evaluation
+                real = plan_dataset(pool, pools.targets.iloc[[i]], plan)
+                if method == "copy":
+                    table = real
+                else:
+                    table = (
+                        methods()[method]
+                        .run(real, domain, seed=plan.seed % 2**31, epsilon=epsilon, n=scale.n)
+                        .table
+                    )
+                path.parent.mkdir(parents=True, exist_ok=True)
+                table.to_parquet(path)
+            f = features(table, domain)
+            kept = feature_path(dataset, method, epsilon, i, plan.name)
+            if method != "copy" and kept.exists() and not np.allclose(np.load(kept), f):
+                raise ValueError(f"{path}: the refitted table does not reproduce {kept.name}")
+            feats[plan.phase].append((f, plan.label))
+            listed.append({"name": plan.name, "phase": plan.phase, "label": plan.label})
+        res = classify(feats["shadow"], feats["eval"], seed=scale.seed + i, target_id=-1, kind=kind)
+        targets.append({"target": i, "kind": kind, "plans": listed, "ours": asdict(res)})
+    manifest = {
+        "dataset": dataset,
+        "method": method,
+        "epsilon": epsilon,
+        "columns": [{"name": c.name, "kind": c.kind, "size": c.size} for c in domain.columns],
+        "targets": targets,
+    }
+    (out / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+    payload = {
+        "facsimile": __version__,
+        "dataset": dataset,
+        "method": method,
+        "epsilon": epsilon,
+        "ours": {
+            "features": "naive, histogram and correlation of the codes (facsimile.attacks.groundhog)",
+            "classifier": "random forest, 200 trees",
+            "targets": [{k: t[k] for k in ("target", "kind", "ours")} for t in targets],
+            "pooled": pooled([TargetResult(**t["ours"]) for t in targets]),
+        },
+    }
+    path = reference_path(dataset, method, epsilon)
+    if path.exists():
+        payload["tapas"] = json.loads(path.read_text(encoding="utf-8")).get("tapas")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    return payload

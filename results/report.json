@@ -5927,5 +5927,115 @@
     "predicates_found": null
    }
   ]
- }
+ },
+ "groundhog_reference": [
+  {
+   "dataset": "acs",
+   "method": "copula",
+   "epsilon": null,
+   "ours": {
+    "point": 0.49166666666666664,
+    "lo": 0.39925858253840957,
+    "hi": 0.5844957086346798,
+    "n": 120
+   },
+   "tapas": {
+    "point": 0.5166666666666667,
+    "lo": 0.42366365483270757,
+    "hi": 0.6088277437806595,
+    "n": 120
+   },
+   "tapas_version": "tapas 1.0.0 at a7069d7 (privacy-sdg-toolbox)"
+  },
+  {
+   "dataset": "acs",
+   "method": "copy",
+   "epsilon": null,
+   "ours": {
+    "point": 0.5,
+    "lo": 0.40736926744019714,
+    "hi": 0.5926307325598028,
+    "n": 120
+   },
+   "tapas": {
+    "point": 0.6,
+    "lo": 0.5066106947209386,
+    "hi": 0.6883322062887018,
+    "n": 120
+   },
+   "tapas_version": "tapas 1.0.0 at a7069d7 (privacy-sdg-toolbox)"
+  },
+  {
+   "dataset": "ieeecis",
+   "method": "copula",
+   "epsilon": null,
+   "ours": {
+    "point": 0.4166666666666667,
+    "lo": 0.32736767000327865,
+    "hi": 0.5101784457977024,
+    "n": 120
+   },
+   "tapas": {
+    "point": 0.44166666666666665,
+    "lo": 0.3511081106041759,
+    "hi": 0.5351730036835876,
+    "n": 120
+   },
+   "tapas_version": "tapas 1.0.0 at a7069d7 (privacy-sdg-toolbox)"
+  },
+  {
+   "dataset": "ieeecis",
+   "method": "copy",
+   "epsilon": null,
+   "ours": {
+    "point": 0.5333333333333333,
+    "lo": 0.4400555029619017,
+    "hi": 0.6249271414775546,
+    "n": 120
+   },
+   "tapas": {
+    "point": 0.5833333333333334,
+    "lo": 0.48982155420229756,
+    "hi": 0.6726323299967214,
+    "n": 120
+   },
+   "tapas_version": "tapas 1.0.0 at a7069d7 (privacy-sdg-toolbox)"
+  },
+  {
+   "dataset": "sparcs",
+   "method": "copula",
+   "epsilon": null,
+   "ours": {
+    "point": 0.4583333333333333,
+    "lo": 0.3670599277953184,
+    "hi": 0.5517119105053541,
+    "n": 120
+   },
+   "tapas": {
+    "point": 0.5083333333333333,
+    "lo": 0.41550429136532024,
+    "hi": 0.6007414174615904,
+    "n": 120
+   },
+   "tapas_version": "tapas 1.0.0 at a7069d7 (privacy-sdg-toolbox)"
+  },
+  {
+   "dataset": "sparcs",
+   "method": "copy",
+   "epsilon": null,
+   "ours": {
+    "point": 0.4666666666666667,
+    "lo": 0.3750728585224454,
+    "hi": 0.5599444970380982,
+    "n": 120
+   },
+   "tapas": {
+    "point": 0.5166666666666667,
+    "lo": 0.42366365483270757,
+    "hi": 0.6088277437806595,
+    "n": 120
+   },
+   "tapas_version": "tapas 1.0.0 at a7069d7 (privacy-sdg-toolbox)"
+  }
+ ]
 }

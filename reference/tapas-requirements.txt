@@ -1,0 +1,11 @@
+# The TAPAS environment (Python 3.10): TAPAS needs Python below 3.11, pandas 1.x and numpy 1.x,
+# so it cannot share the project's 3.13 environment (PLAN.md section 2.3). Pinned to the last
+# commit on its main branch when this was set up, 2026-10-24. Install with --no-config, or uv
+# applies the project's numpy>=2 override from pyproject.toml and pandas 1.5 will not import:
+#   uv venv --python 3.10 .venv-tapas
+#   uv pip install --no-config --python .venv-tapas/Scripts/python.exe -r reference/tapas-requirements.txt
+tapas @ git+https://github.com/alan-turing-institute/privacy-sdg-toolbox@a7069d7e040828db0da174d1b003fa03a98e5453
+numpy==1.26.4
+pandas==1.5.3
+pyarrow==16.1.0
+scikit-learn==1.5.2

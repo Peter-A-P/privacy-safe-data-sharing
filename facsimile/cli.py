@@ -165,6 +165,20 @@ def cmd_groundhog_assemble(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_groundhog_reference(args: argparse.Namespace) -> int:
+    from facsimile.attacks.groundhog_run import export_for_reference, reference_dir
+
+    eps = _eps(args.epsilon)
+    for name in _datasets(args.datasets):
+        p = export_for_reference(name, args.method, eps)
+        acc = p["ours"]["pooled"]["all"]["accuracy"]
+        print(
+            f"{name} {args.method}: ours {acc['point']:.3f} ({acc['lo']:.3f} to {acc['hi']:.3f}); "
+            f"tables in {reference_dir(name, args.method, eps)}"
+        )
+    return 0
+
+
 def cmd_queue(args: argparse.Namespace) -> int:
     from pathlib import Path
 
@@ -287,6 +301,14 @@ def main(argv: Sequence[str] | None = None) -> int:
     ghp = sub.add_parser("groundhog-prepare", help="draw and save the Groundhog pools and targets")
     ghp.add_argument("datasets", nargs="+")
     ghp.set_defaults(func=cmd_groundhog_prepare)
+
+    ghr = sub.add_parser(
+        "groundhog-reference", help="write a Groundhog run's tables for TAPAS and score them here"
+    )
+    ghr.add_argument("method", help="a synthesiser, or copy for the positive control")
+    ghr.add_argument("datasets", nargs="+")
+    ghr.add_argument("--epsilon", default=None)
+    ghr.set_defaults(func=cmd_groundhog_reference)
 
     ghf = sub.add_parser("groundhog-fit", help="one shadow or evaluation fit, to its feature file")
     ghf.add_argument("dataset")

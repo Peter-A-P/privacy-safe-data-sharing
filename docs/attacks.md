@@ -132,3 +132,34 @@ seed: 5.1% (1.8 to 8.3) here and 4.0% (0.7 to 7.3) in Anonymeter.
 Neither difference is a defect in either implementation. Both follow the paper, which leaves
 these choices open. The project keeps its own choices for the reasons given above and reports its
 own numbers, with the reference agreement published beside them.
+
+## Reference agreement for Groundhog: TAPAS
+
+TAPAS (privacy-sdg-toolbox, MIT, pinned at commit a7069d7) needs Python below 3.11, so it runs
+in its own environment (`reference/tapas-requirements.txt`). `facsimile groundhog-reference`
+rebuilds every shadow and evaluation table of a Groundhog run from its plan and seed. Each rebuilt
+table reproduced the run's saved feature vector exactly. The command writes the tables to disk,
+and `reference/tapas_groundhog.py` scores them with TAPAS's own Groundhog set classifier. The
+table is in [results.md](results.md#reference-agreement-groundhog-against-tapas).
+
+**The two feature maps differ in one respect.** TAPAS one-hot encodes categorical attributes
+before it takes the naive features (mean, median, variance) and the correlations. This project
+takes them on the category codes, which have no order. The histogram features are the same in
+both.
+
+**What that changes.** On the Gaussian copula tables both are at chance on all three datasets.
+On the positive control, where the attacked table is the real dataset, the two differ:
+
+| | Correct, of 360 evaluation trials | Accuracy |
+|---|---|---|
+| This project | 180 | 0.500 |
+| TAPAS | 204 | 0.567 (0.514 to 0.618) |
+
+So TAPAS's encoding is the stronger of the two, and this project's departs from the paper's.
+
+Both are weak at this scale. Even on a copy of the training data neither is far above chance,
+with 1,000 rows and 40 shadow tables per target. A Groundhog result at chance here therefore
+means the attack could not tell, not that the table is safe. The README says so.
+
+The resolution, which is to adopt the one-hot encoding and rerun or to publish the difference as
+it stands, is recorded here once it is decided.

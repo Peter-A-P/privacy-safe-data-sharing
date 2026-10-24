@@ -108,6 +108,24 @@ Disagreements (8): a different call, or intervals that do not overlap.
 
 The causes, where the two implementations differ by design, are in `docs/attacks.md`.
 
+## Reference agreement: Groundhog against TAPAS
+
+The same shadow and evaluation tables, scored by this project's feature map and
+classifier and by TAPAS's (tapas 1.0.0 at a7069d7 (privacy-sdg-toolbox)). Accuracy over six targets
+and 20 evaluation tables each, with exact 95% intervals; chance is 0.5. *Copy* is the
+positive control: the attacked table is the real dataset itself.
+
+| Dataset | Tables | This project | TAPAS |
+|---|---|---|---|
+| ACS PUMS, California 2018 | Gaussian copula, epsilon inf | 0.492 (0.399 to 0.584) | 0.517 (0.424 to 0.609) |
+| ACS PUMS, California 2018 | copy (control), epsilon inf | 0.500 (0.407 to 0.593) | 0.600 (0.507 to 0.688) |
+| IEEE-CIS card transactions | Gaussian copula, epsilon inf | 0.417 (0.327 to 0.510) | 0.442 (0.351 to 0.535) |
+| IEEE-CIS card transactions | copy (control), epsilon inf | 0.533 (0.440 to 0.625) | 0.583 (0.490 to 0.673) |
+| NY SPARCS discharges | Gaussian copula, epsilon inf | 0.458 (0.367 to 0.552) | 0.508 (0.416 to 0.601) |
+| NY SPARCS discharges | copy (control), epsilon inf | 0.467 (0.375 to 0.560) | 0.517 (0.424 to 0.609) |
+
+What the difference means is in `docs/attacks.md`.
+
 ## Hardware
 
 Fit times were measured on:

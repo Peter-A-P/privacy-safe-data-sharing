@@ -346,6 +346,33 @@ def agreement(cells: dict[tuple[str, str, float | None], Cell]) -> dict[str, Any
     }
 
 
+def groundhog_reference(root: Path = RESULTS) -> list[dict[str, Any]]:
+    """The Groundhog runs scored by both this project and TAPAS on the same tables."""
+    from facsimile.utility.stats import clopper_pearson
+
+    rows = []
+    for ds in DATASETS:
+        for path in sorted((root / ds / "groundhog_reference").glob("*.json")):
+            rec = _load(path)
+            if not rec.get("tapas"):
+                continue
+            ours_c = sum(t["ours"]["correct"] for t in rec["ours"]["targets"])
+            ours_n = sum(t["ours"]["trials"] for t in rec["ours"]["targets"])
+            rows.append(
+                {
+                    "dataset": ds,
+                    "method": rec["method"],
+                    "epsilon": rec["epsilon"],
+                    "ours": clopper_pearson(ours_c, ours_n).as_dict(),
+                    "tapas": clopper_pearson(
+                        rec["tapas"]["correct"], rec["tapas"]["trials"]
+                    ).as_dict(),
+                    "tapas_version": rec["tapas"]["version"],
+                }
+            )
+    return rows
+
+
 def build(root: Path = RESULTS) -> dict[str, Any]:
     from facsimile.synth import EPSILONS
 
@@ -438,6 +465,7 @@ def build(root: Path = RESULTS) -> dict[str, Any]:
         "surface": surface,
         "leaks": leaks,
         "agreement": agreement(cells),
+        "groundhog_reference": groundhog_reference(root),
     }
 
 
@@ -526,6 +554,7 @@ def render_results_md(report: dict[str, Any]) -> str:
             out.append("| " + " | ".join(cells) + " |")
         out.append("")
     out += render_agreement(report.get("agreement", {}))
+    out += render_groundhog_reference(report.get("groundhog_reference", []))
     hardware = sorted({h for r in report["cells"] for h in r.get("hardware", [])})
     out += ["## Hardware", "", "Fit times were measured on:", ""]
     out += [f"- {h}" for h in hardware]
@@ -577,6 +606,36 @@ def render_agreement(ag: dict[str, Any]) -> list[str]:
         "",
     ]
     return out
+
+
+def render_groundhog_reference(rows: list[dict[str, Any]]) -> list[str]:
+    out = ["## Reference agreement: Groundhog against TAPAS", ""]
+    if not rows:
+        return [*out, "No Groundhog run has been scored by TAPAS yet.", ""]
+    out += [
+        "The same shadow and evaluation tables, scored by this project's feature map and",
+        f"classifier and by TAPAS's ({rows[0]['tapas_version']}). Accuracy over six targets",
+        "and 20 evaluation tables each, with exact 95% intervals; chance is 0.5. *Copy* is the",
+        "positive control: the attacked table is the real dataset itself.",
+        "",
+        "| Dataset | Tables | This project | TAPAS |",
+        "|---|---|---|---|",
+    ]
+    for r in rows:
+        name = (
+            "copy (control)"
+            if r["method"] == "copy"
+            else METHOD_NAMES.get(r["method"], r["method"])
+        )
+        cells = [
+            f"{r[k]['point']:.3f} ({r[k]['lo']:.3f} to {r[k]['hi']:.3f})" for k in ("ours", "tapas")
+        ]
+        out.append(
+            f"| {DATASET_NAMES[r['dataset']]} | {name}, epsilon {_eps_label(r['epsilon'])} | "
+            + " | ".join(cells)
+            + " |"
+        )
+    return [*out, "", "What the difference means is in `docs/attacks.md`.", ""]
 
 
 def render_readme_section(report: dict[str, Any]) -> str:

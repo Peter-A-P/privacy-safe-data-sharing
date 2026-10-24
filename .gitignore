@@ -12,6 +12,7 @@ kaggle.json
 __pycache__/
 *.py[cod]
 .venv/
+.venv-tapas/
 .mypy_cache/
 .ruff_cache/
 .pytest_cache/
