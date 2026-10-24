@@ -54,6 +54,15 @@ real, the mean over seeds (the worst seed's lower 95% bound in brackets).
 
 <!-- report:end -->
 
+## The honest limitation
+
+The membership inference attack runs at about 1,000 rows with 40 shadow tables per target, the
+scale its paper used, because shadow training needs a synthesiser fit per shadow table. At that
+scale it has little power. Even when the attacked table is a copy of the real data, it is barely
+above chance (the TAPAS comparison in [docs/results.md](docs/results.md)). Every membership result
+here is at chance, and that means the attack could not tell, not that the tables are safe. The
+three legal-test attacks run on the full 20,000-row tables and carry the risk numbers.
+
 ## Tried and rejected
 
 Distance to closest record, the check most synthetic-data tools show their users, was tested as a
