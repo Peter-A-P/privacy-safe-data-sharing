@@ -22,10 +22,10 @@ Library versions: sdv 2.0.0, smartnoise-synth 1.0.8, opendp 0.14.2, lightgbm 4.7
 | MST | 4 | 0.0 (0.0 to 0.0) | 1.5 (0.2 to 2.8) | 0.0 (0.0 to 0.1) | 0.3 (0.0 to 0.6) | 1.4 (0.0 to 2.8) |  | -0.306 (worst seed lo -0.346) | -0.166 (worst seed lo -0.181) | 0.153 | 0.453 | 55 | 3 |
 | MST | 8 | 0.0 (0.0 to 0.0) | 0.3 (0.0 to 1.6) | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.3) | 0.6 (0.0 to 2.0) | pending | -0.315 (worst seed lo -0.341) | -0.169 (worst seed lo -0.181) | 0.152 | 0.447 | 56 | 3 |
 | AIM | 0.5 | 0.0 (0.0 to 0.0) | 1.4 (0.1 to 2.6) | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 1.2) |  | -0.157 (worst seed lo -0.263) | -0.175 (worst seed lo -0.198) | 0.124 | 0.483 | 952 | 3 |
-| AIM | 1 | 0.0 (0.0 to 0.0) | 1.0 (0.0 to 2.1) | 0.0 (0.0 to 0.0) | 0.1 (0.0 to 0.4) | 2.5 (0.7 to 4.4) **leak** | pending | -0.132 (worst seed lo -0.180) | -0.147 (worst seed lo -0.239) | 0.090 | 0.492 | 2,390 | 3 |
+| AIM | 1 | 0.0 (0.0 to 0.0) | 1.0 (0.0 to 2.1) | 0.0 (0.0 to 0.0) | 0.1 (0.0 to 0.4) | 2.5 (0.7 to 4.4) **leak** | 0.533 (0.440 to 0.625) | -0.132 (worst seed lo -0.180) | -0.147 (worst seed lo -0.239) | 0.090 | 0.492 | 2,390 | 3 |
 | AIM | 2 | 0.0 (0.0 to 0.0) | 0.7 (0.0 to 1.7) | 0.0 (0.0 to 0.1) | 0.2 (0.0 to 0.6) | 1.7 (0.0 to 3.7) |  | -0.102 (worst seed lo -0.140) | -0.171 (worst seed lo -0.234) | 0.070 | 0.490 | 9,533 | 3 |
 | AIM | 4 | not run: AIM at epsilon 4 needed more than 28 hours per table and up to 53 GB (SPARCS, seed 1) on a 32-vCPU, 128 GB machine; deferred (PLAN.md section 2.2) |  |  |  |  |  |  |  |  |  |  |  |
-| AIM | 8 | not run: AIM at epsilon 8 grew to 25 GB in under five hours on ACS and none of nine tables finished on a 32-vCPU, 128 GB machine; dropped for now (PLAN.md section 2.2) |  |  |  |  |  |  |  |  |  |  |  |
+| AIM | 8 | not run: AIM at epsilon 8 grew to 25 GB in under five hours on ACS and none of nine tables finished on a 32-vCPU, 128 GB machine; dropped for now (PLAN.md section 2.2) |  |  |  |  | 0.550 (0.457 to 0.641) |  |  |  |  |  |  |
 | PATE-CTGAN | 0.5 (spent 0.69) | 0.0 (0.0 to 0.0) | 0.1 (0.0 to 0.7) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.0) | 0.4 (0.0 to 1.5) |  | -0.373 (worst seed lo -0.425) | -0.326 (worst seed lo -0.347) | 0.592 | 0.521 | 13 | 3 |
 | PATE-CTGAN | 1 (spent 1.10) | 0.0 (0.0 to 0.0) | 0.5 (0.0 to 1.0) | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.3) | 0.0 (0.0 to 1.2) | pending | -0.377 (worst seed lo -0.425) | -0.313 (worst seed lo -0.356) | 0.556 | 0.515 | 25 | 3 |
 | PATE-CTGAN | 2 (spent 2.06) | 0.0 (0.0 to 0.0) | 0.3 (0.0 to 0.7) | 0.0 (0.0 to 0.0) | 0.2 (0.0 to 0.5) | 0.4 (0.0 to 1.7) |  | -0.402 (worst seed lo -0.476) | -0.316 (worst seed lo -0.350) | 0.427 | 0.510 | 68 | 3 |
@@ -45,10 +45,10 @@ Library versions: sdv 2.0.0, smartnoise-synth 1.0.8, opendp 0.14.2, lightgbm 4.7
 | MST | 4 | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.5) | 0.0 (0.0 to 0.1) | 0.1 (0.0 to 0.5) | 0.0 (0.0 to 0.0) |  | -0.193 (worst seed lo -0.232) | 0.119 | 0.538 | 88 | 3 |
 | MST | 8 | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.7) | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.3) | 0.0 (0.0 to 0.3) | pending | -0.193 (worst seed lo -0.228) | 0.118 | 0.540 | 90 | 3 |
 | AIM | 0.5 | 0.0 (0.0 to 0.0) | 0.3 (0.0 to 1.5) | 0.0 (0.0 to 0.0) | 0.3 (0.0 to 0.7) | 0.0 (0.0 to 1.9) |  | -0.262 (worst seed lo -0.451) | 0.117 | 0.519 | 1,097 | 3 |
-| AIM | 1 | 0.0 (0.0 to 0.0) | 0.2 (0.0 to 1.5) | 0.0 (0.0 to 0.1) | 0.1 (0.0 to 0.5) | 0.0 (0.0 to 1.4) | pending | -0.166 (worst seed lo -0.207) | 0.100 | 0.522 | 3,532 | 3 |
+| AIM | 1 | 0.0 (0.0 to 0.0) | 0.2 (0.0 to 1.5) | 0.0 (0.0 to 0.1) | 0.1 (0.0 to 0.5) | 0.0 (0.0 to 1.4) | 0.433 (0.343 to 0.527) | -0.166 (worst seed lo -0.207) | 0.100 | 0.522 | 3,532 | 3 |
 | AIM | 2 | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.7) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 1.8) |  | -0.148 (worst seed lo -0.209) | 0.061 | 0.507 | 33,549 | 3 |
 | AIM | 4 | not run: AIM at epsilon 4 needed more than 28 hours per table and up to 53 GB (SPARCS, seed 1) on a 32-vCPU, 128 GB machine; deferred (PLAN.md section 2.2) |  |  |  |  |  |  |  |  |  |  |
-| AIM | 8 | not run: AIM at epsilon 8 grew to 25 GB in under five hours on ACS and none of nine tables finished on a 32-vCPU, 128 GB machine; dropped for now (PLAN.md section 2.2) |  |  |  |  |  |  |  |  |  |  |
+| AIM | 8 | not run: AIM at epsilon 8 grew to 25 GB in under five hours on ACS and none of nine tables finished on a 32-vCPU, 128 GB machine; dropped for now (PLAN.md section 2.2) |  |  |  |  | 0.458 (0.367 to 0.552) |  |  |  |  |  |
 | PATE-CTGAN | 0.5 (spent 0.69) | 0.0 (0.0 to 0.0) | 0.1 (0.0 to 0.4) | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.2) | 0.2 (0.0 to 1.3) |  | -0.392 (worst seed lo -0.477) | 0.675 | 0.484 | 11 | 3 |
 | PATE-CTGAN | 1 (spent 1.10) | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.1) | 0.1 (0.0 to 0.3) | 0.0 (0.0 to 0.5) | pending | -0.378 (worst seed lo -0.439) | 0.632 | 0.497 | 22 | 3 |
 | PATE-CTGAN | 2 (spent 2.06) | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.1) | 0.1 (0.0 to 0.4) | 0.0 (0.0 to 0.9) |  | -0.318 (worst seed lo -0.429) | 0.466 | 0.493 | 63 | 3 |
@@ -68,10 +68,10 @@ Library versions: sdv 2.0.0, smartnoise-synth 1.0.8, opendp 0.14.2, lightgbm 4.7
 | MST | 4 | 0.0 (0.0 to 0.0) | 0.2 (0.0 to 1.7) | 0.0 (0.0 to 0.0) | 0.1 (0.0 to 0.5) | 0.0 (0.0 to 0.8) |  | -0.236 (worst seed lo -0.254) | -0.292 (worst seed lo -0.308) | 0.144 | 0.490 | 57 | 3 |
 | MST | 8 | 0.0 (0.0 to 0.0) | 0.9 (0.0 to 2.3) | 0.0 (0.0 to 0.1) | 0.1 (0.0 to 0.5) | 0.0 (0.0 to 0.4) | pending | -0.245 (worst seed lo -0.264) | -0.289 (worst seed lo -0.304) | 0.144 | 0.492 | 52 | 3 |
 | AIM | 0.5 | 0.0 (0.0 to 0.0) | 0.3 (0.0 to 1.7) | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.3) | 0.0 (0.0 to 0.5) |  | -0.203 (worst seed lo -0.246) | -0.206 (worst seed lo -0.296) | 0.119 | 0.500 | 1,694 | 3 |
-| AIM | 1 | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 1.2) | 0.0 (0.0 to 0.1) | 0.2 (0.0 to 0.5) | 0.9 (0.0 to 2.8) | pending | -0.124 (worst seed lo -0.155) | -0.175 (worst seed lo -0.284) | 0.097 | 0.508 | 9,736 | 3 |
+| AIM | 1 | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 1.2) | 0.0 (0.0 to 0.1) | 0.2 (0.0 to 0.5) | 0.9 (0.0 to 2.8) | 0.442 (0.351 to 0.535) | -0.124 (worst seed lo -0.155) | -0.175 (worst seed lo -0.284) | 0.097 | 0.508 | 9,736 | 3 |
 | AIM | 2 | 0.0 (0.0 to 0.0) | 0.4 (0.0 to 1.6) | 0.0 (0.0 to 0.0) | 0.1 (0.0 to 0.5) | 0.4 (0.0 to 2.3) |  | -0.144 (worst seed lo -0.167) | -0.144 (worst seed lo -0.162) | 0.074 | 0.503 | 15,603 | 3 |
 | AIM | 4 | not run: AIM at epsilon 4 needed more than 28 hours per table and up to 53 GB (SPARCS, seed 1) on a 32-vCPU, 128 GB machine; deferred (PLAN.md section 2.2) |  |  |  |  |  |  |  |  |  |  |  |
-| AIM | 8 | not run: AIM at epsilon 8 grew to 25 GB in under five hours on ACS and none of nine tables finished on a 32-vCPU, 128 GB machine; dropped for now (PLAN.md section 2.2) |  |  |  |  |  |  |  |  |  |  |  |
+| AIM | 8 | not run: AIM at epsilon 8 grew to 25 GB in under five hours on ACS and none of nine tables finished on a 32-vCPU, 128 GB machine; dropped for now (PLAN.md section 2.2) |  |  |  |  | 0.450 (0.359 to 0.543) |  |  |  |  |  |  |
 | PATE-CTGAN | 0.5 (spent 0.69) | 0.0 (0.0 to 0.0) | 0.4 (0.0 to 1.1) | 0.0 (0.0 to 0.0) | 0.1 (0.0 to 0.4) | 0.8 (0.0 to 1.6) |  | -0.378 (worst seed lo -0.434) | -0.350 (worst seed lo -0.392) | 0.548 | 0.502 | 13 | 3 |
 | PATE-CTGAN | 1 (spent 1.10) | 0.0 (0.0 to 0.0) | 0.5 (0.0 to 1.0) | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.2) | 0.9 (0.1 to 1.8) | pending | -0.389 (worst seed lo -0.442) | -0.361 (worst seed lo -0.400) | 0.502 | 0.499 | 26 | 3 |
 | PATE-CTGAN | 2 (spent 2.06) | 0.0 (0.0 to 0.0) | 0.4 (0.0 to 1.0) | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.2) | 0.2 (0.0 to 1.1) |  | -0.375 (worst seed lo -0.408) | -0.337 (worst seed lo -0.362) | 0.368 | 0.493 | 77 | 3 |

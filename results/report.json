@@ -1107,6 +1107,15 @@
     "2way": 0.08957152777777777,
     "3way": 0.1862284166666667
    },
+   "membership": {
+    "accuracy": 0.5333333333333333,
+    "lo": 0.4400555029619017,
+    "hi": 0.6249271414775546,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
    "passes_utility": false,
    "passes_risk": false
   },
@@ -1235,7 +1244,16 @@
    "seeds": [],
    "seeds_attacked": [],
    "seeds_scored": [],
-   "not_run": "not run: AIM at epsilon 8 grew to 25 GB in under five hours on ACS and none of nine tables finished on a 32-vCPU, 128 GB machine; dropped for now (PLAN.md section 2.2)"
+   "not_run": "not run: AIM at epsilon 8 grew to 25 GB in under five hours on ACS and none of nine tables finished on a 32-vCPU, 128 GB machine; dropped for now (PLAN.md section 2.2)",
+   "membership": {
+    "accuracy": 0.55,
+    "lo": 0.4565452197361518,
+    "hi": 0.6409283624620679,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   }
   },
   {
    "dataset": "acs",
@@ -2799,6 +2817,15 @@
     "2way": 0.10040490196078429,
     "3way": 0.2219299166666667
    },
+   "membership": {
+    "accuracy": 0.43333333333333335,
+    "lo": 0.3431694917061192,
+    "hi": 0.526866456765757,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
    "passes_utility": false,
    "passes_risk": true
   },
@@ -2920,7 +2947,16 @@
    "seeds": [],
    "seeds_attacked": [],
    "seeds_scored": [],
-   "not_run": "not run: AIM at epsilon 8 grew to 25 GB in under five hours on ACS and none of nine tables finished on a 32-vCPU, 128 GB machine; dropped for now (PLAN.md section 2.2)"
+   "not_run": "not run: AIM at epsilon 8 grew to 25 GB in under five hours on ACS and none of nine tables finished on a 32-vCPU, 128 GB machine; dropped for now (PLAN.md section 2.2)",
+   "membership": {
+    "accuracy": 0.4583333333333333,
+    "lo": 0.3670599277953184,
+    "hi": 0.5517119105053541,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   }
   },
   {
    "dataset": "ieeecis",
@@ -4519,6 +4555,15 @@
     "2way": 0.0967338888888889,
     "3way": 0.19575425
    },
+   "membership": {
+    "accuracy": 0.44166666666666665,
+    "lo": 0.3511081106041759,
+    "hi": 0.5351730036835876,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
    "passes_utility": false,
    "passes_risk": true
   },
@@ -4647,7 +4692,16 @@
    "seeds": [],
    "seeds_attacked": [],
    "seeds_scored": [],
-   "not_run": "not run: AIM at epsilon 8 grew to 25 GB in under five hours on ACS and none of nine tables finished on a 32-vCPU, 128 GB machine; dropped for now (PLAN.md section 2.2)"
+   "not_run": "not run: AIM at epsilon 8 grew to 25 GB in under five hours on ACS and none of nine tables finished on a 32-vCPU, 128 GB machine; dropped for now (PLAN.md section 2.2)",
+   "membership": {
+    "accuracy": 0.45,
+    "lo": 0.3590716375379321,
+    "hi": 0.5434547802638482,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   }
   },
   {
    "dataset": "sparcs",
@@ -5256,8 +5310,8 @@
     "2"
    ],
    "budgets_not_run": [
-    "4",
-    "8"
+    "8",
+    "4"
    ]
   },
   {
@@ -5335,8 +5389,8 @@
     "2"
    ],
    "budgets_not_run": [
-    "4",
-    "8"
+    "8",
+    "4"
    ]
   },
   {
@@ -5414,8 +5468,8 @@
     "2"
    ],
    "budgets_not_run": [
-    "4",
-    "8"
+    "8",
+    "4"
    ]
   },
   {
