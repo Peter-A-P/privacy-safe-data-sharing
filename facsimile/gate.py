@@ -150,7 +150,9 @@ def export(cell: Cell) -> Path:
             f"  - key: {task.name}",
             f"    source: {{kind: outcomes_file, block: {task.name}}}",
         ]
-    (out / "spec.yaml").write_text("\n".join(spec) + "\n", encoding="utf-8")
+    # LF on every platform, and kept byte for byte by .gitattributes: the ledger names each side
+    # file by the hash of its bytes, so a checkout must reproduce them exactly.
+    (out / "spec.yaml").write_text("\n".join(spec) + "\n", encoding="utf-8", newline="\n")
     eps = "no privacy" if cell.epsilon is None else f"epsilon {cell.epsilon:g}"
     files = {
         "baseline.json": side("lightgbm trained on the real training split", name, base),
@@ -162,7 +164,8 @@ def export(cell: Cell) -> Path:
         ),
     }
     for fname, payload in files.items():
-        (out / fname).write_text(json.dumps(payload, indent=1) + "\n", encoding="utf-8")
+        text = json.dumps(payload, indent=1) + "\n"
+        (out / fname).write_text(text, encoding="utf-8", newline="\n")
     return out
 
 

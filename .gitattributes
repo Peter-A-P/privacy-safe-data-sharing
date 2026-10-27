@@ -1,3 +1,5 @@
 # Shell scripts run on Linux machines; keep them LF on a Windows checkout too.
 *.sh text eol=lf
 *.yaml text eol=lf
+# The gate ledger names each side file by the SHA-256 of its bytes; keep them byte for byte.
+gate-runs/** -text
