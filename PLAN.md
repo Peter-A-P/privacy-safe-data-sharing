@@ -356,7 +356,7 @@ Whichever produces the clearest evidence becomes `docs/rejected.md`.
 - [x] Non-inferiority of the recommended configuration through the 03 gate (none was recommended; the nearest, `docs/gate.md`)
 - [x] The leak table in the README: library, version, configuration, measurement
 - [ ] privacy.peterparker.ca live with the explorer
-- [ ] Attack package released as reusable code with its own tests
+- [x] Attack package released as reusable code with its own tests (`facsimile.attacks.evaluate`, `facsimile evaluate`, `docs/attack-package.md`)
 - [x] One rejected approach documented with evidence (Rule C)
 - [ ] Repository public, `v0.1.0` tagged, the status flip logged on peterparker.ca
 

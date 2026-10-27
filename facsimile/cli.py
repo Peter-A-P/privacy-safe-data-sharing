@@ -243,6 +243,34 @@ def cmd_gate(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_evaluate(args: argparse.Namespace) -> int:
+    import json
+    from pathlib import Path
+
+    import pandas as pd
+
+    from facsimile.attacks.evaluate import evaluate
+
+    def read(path: str) -> pd.DataFrame:
+        p = Path(path)
+        return pd.read_parquet(p) if p.suffix == ".parquet" else pd.read_csv(p)
+
+    result = evaluate(
+        read(args.targets),
+        read(args.control),
+        read(args.synthetic),
+        secret=args.secret,
+        n_attacks=args.n_attacks,
+        seed=args.seed,
+    )
+    print(result.markdown())
+    if args.out:
+        Path(args.out).write_text(
+            json.dumps(result.as_dict(), indent=2, default=float) + "\n", encoding="utf-8"
+        )
+    return 0
+
+
 def cmd_report(args: argparse.Namespace) -> int:
     from facsimile import report
 
@@ -346,6 +374,16 @@ def main(argv: Sequence[str] | None = None) -> int:
     dn = sub.add_parser("dcr-null", help="DCR on unseen real rows, the yardstick for DCR")
     dn.add_argument("datasets", nargs="+")
     dn.set_defaults(func=cmd_dcr_null)
+
+    ev = sub.add_parser("evaluate", help="the attacks on any real and synthetic pair of files")
+    ev.add_argument("targets", help="real records the synthesiser was trained on (CSV or Parquet)")
+    ev.add_argument("control", help="as many real records it never saw, same population")
+    ev.add_argument("synthetic", help="the synthetic table under test")
+    ev.add_argument("--secret", required=True, help="the column the inference attack guesses")
+    ev.add_argument("--n-attacks", type=int, default=2000)
+    ev.add_argument("--seed", type=int, default=0)
+    ev.add_argument("--out", default=None, help="also write the full result as JSON")
+    ev.set_defaults(func=cmd_evaluate)
 
     gp = sub.add_parser("gate", help="project 03's gate: synthetic-trained against real-trained")
     gsub = gp.add_subparsers(dest="gate_command", required=True)

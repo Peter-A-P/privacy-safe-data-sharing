@@ -84,6 +84,24 @@ privacy measure on every table and rejected. It passed the one configuration an 
 failed eight that no attack could break, six of them differentially private. The evidence is in
 [docs/rejected.md](docs/rejected.md). DCR stays in the full tables, labelled as what it is.
 
+## Use the attacks on your own tables
+
+The attacks are a package you can point at any synthetic table, given the real records it was
+trained on and as many real records from the same population that it never saw:
+
+```python
+from facsimile.attacks.evaluate import evaluate
+
+result = evaluate(targets, control, synthetic, secret="income")
+print(result.markdown())   # singling out, linkability, inference: risk with a 95% interval
+result.detected            # the attacks whose risk interval excludes zero
+```
+
+or, from files, `facsimile evaluate targets.csv control.csv synthetic.csv --secret income`. Raw
+tables are fine: the coding is read from the control set, never from the targets. Nothing
+outside the three tables is used. The details, and what a result does and does not mean, are in
+[docs/attack-package.md](docs/attack-package.md).
+
 ## What this does not do
 
 It does not synthesise text, images or time series, and it does not defend a table after
