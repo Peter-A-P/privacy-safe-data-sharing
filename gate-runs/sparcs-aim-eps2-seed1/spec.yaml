@@ -1,0 +1,8 @@
+version: 1
+name: facsimile-sparcs-aim-eps2-seed1
+delta_points: 2.0
+suites:
+  - key: long_stay
+    source: {kind: outcomes_file, block: long_stay}
+  - key: high_charge
+    source: {kind: outcomes_file, block: high_charge}

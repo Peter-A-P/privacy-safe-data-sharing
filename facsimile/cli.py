@@ -223,6 +223,26 @@ def cmd_dcr_null(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_gate(args: argparse.Namespace) -> int:
+    import json
+
+    from facsimile import gate
+    from facsimile.synth.grid import Cell
+
+    if args.gate_command == "export":
+        report = json.loads((gate.SUMMARY.parent / "report.json").read_text(encoding="utf-8"))
+        for ds, method, eps in gate.candidates(report):
+            for seed in gate.SEEDS:
+                print(f"wrote {gate.export(Cell(ds, method, eps, seed))}")
+        return 0
+    runs = sorted(p for p in gate.RUNS.iterdir() if (p / "spec.yaml").exists())
+    for run in runs:
+        print(f"{run.name}: {'pass' if gate.compare(run) else 'block'}")
+    payload = gate.summarise()
+    print(f"wrote {gate.SUMMARY} ({len(payload['runs'])} decisions)")
+    return 0
+
+
 def cmd_report(args: argparse.Namespace) -> int:
     from facsimile import report
 
@@ -326,6 +346,12 @@ def main(argv: Sequence[str] | None = None) -> int:
     dn = sub.add_parser("dcr-null", help="DCR on unseen real rows, the yardstick for DCR")
     dn.add_argument("datasets", nargs="+")
     dn.set_defaults(func=cmd_dcr_null)
+
+    gp = sub.add_parser("gate", help="project 03's gate: synthetic-trained against real-trained")
+    gsub = gp.add_subparsers(dest="gate_command", required=True)
+    gsub.add_parser("export", help="write the spec and side files under gate-runs/")
+    gsub.add_parser("run", help="run the gate on every exported run and summarise the ledger")
+    gp.set_defaults(func=cmd_gate)
 
     rp = sub.add_parser("report", help="the README tables, docs/results.md and the site JSON")
     rp.set_defaults(func=cmd_report)

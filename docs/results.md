@@ -126,6 +126,37 @@ positive control: the attacked table is the real dataset itself.
 
 What the difference means is in `docs/attacks.md`.
 
+## Through the 03 gate: synthetic-trained against real-trained
+
+Project 03's release gate, asked whether a model trained on the synthetic table is
+non-inferior to the same model trained on the real data, at a margin of 2
+points. An item is a disjoint pair of one positive and one negative real test record,
+correct when the model scores the positive higher, so the share correct estimates the
+AUC. Difference is synthetic minus real, in points, with the gate's 95% paired bootstrap
+interval. The candidates, per dataset, are the configuration nearest the real-data
+ceiling and the nearest with a privacy budget (`facsimile/gate.py`, `docs/gate.md`).
+
+| Dataset | Candidate | Seed | Gate | Task: difference, points (95% CI), items |
+|---|---|---|---|---|
+| ACS PUMS, California 2018 | AIM, epsilon 1 | 0 | block | income: -12.5 (-14.1 to -10.8), 2,601; employment: -12.0 (-13.4 to -10.6), 4,417 |
+| ACS PUMS, California 2018 | AIM, epsilon 1 | 1 | block | income: -17.0 (-18.8 to -15.2), 2,601; employment: -9.8 (-11.1 to -8.5), 4,417 |
+| ACS PUMS, California 2018 | AIM, epsilon 1 | 2 | block | income: -9.0 (-10.6 to -7.4), 2,601; employment: -22.9 (-24.5 to -21.3), 4,417 |
+| ACS PUMS, California 2018 | TVAE, epsilon inf | 0 | block | income: -6.2 (-7.6 to -4.7), 2,601; employment: -4.5 (-5.5 to -3.3), 4,417 |
+| ACS PUMS, California 2018 | TVAE, epsilon inf | 1 | block | income: -5.1 (-6.4 to -3.8), 2,601; employment: -3.8 (-4.8 to -2.8), 4,417 |
+| ACS PUMS, California 2018 | TVAE, epsilon inf | 2 | block | income: -2.3 (-3.6 to -1.2), 2,601; employment: -5.3 (-6.4 to -4.2), 4,417 |
+| IEEE-CIS card transactions | AIM, epsilon 2 | 0 | not decided | fraud: -12.3 (-16.8 to -7.8), 333 (power screen asks 370) |
+| IEEE-CIS card transactions | AIM, epsilon 2 | 1 | not decided | fraud: -18.9 (-24.0 to -13.5), 333 (power screen asks 370) |
+| IEEE-CIS card transactions | AIM, epsilon 2 | 2 | not decided | fraud: -18.6 (-23.4 to -13.5), 333 (power screen asks 370) |
+| IEEE-CIS card transactions | TVAE, epsilon inf | 0 | not decided | fraud: -17.4 (-22.5 to -12.3), 333 (power screen asks 370) |
+| IEEE-CIS card transactions | TVAE, epsilon inf | 1 | not decided | fraud: -8.4 (-13.2 to -3.6), 333 (power screen asks 370) |
+| IEEE-CIS card transactions | TVAE, epsilon inf | 2 | not decided | fraud: -9.0 (-13.8 to -4.5), 333 (power screen asks 370) |
+| NY SPARCS discharges | AIM, epsilon 2 | 0 | block | long_stay: -17.1 (-18.9 to -15.3), 2,913; high_charge: -14.4 (-15.7 to -13.0), 4,885 |
+| NY SPARCS discharges | AIM, epsilon 2 | 1 | block | long_stay: -14.9 (-16.5 to -13.1), 2,913; high_charge: -15.3 (-16.7 to -13.9), 4,885 |
+| NY SPARCS discharges | AIM, epsilon 2 | 2 | block | long_stay: -13.0 (-14.7 to -11.2), 2,913; high_charge: -13.8 (-15.1 to -12.5), 4,885 |
+| NY SPARCS discharges | CTGAN, epsilon inf | 0 | block | long_stay: -7.6 (-9.0 to -6.1), 2,913; high_charge: -6.7 (-7.7 to -5.6), 4,885 |
+| NY SPARCS discharges | CTGAN, epsilon inf | 1 | block | long_stay: -7.4 (-8.8 to -5.9), 2,913; high_charge: -5.9 (-6.9 to -4.8), 4,885 |
+| NY SPARCS discharges | CTGAN, epsilon inf | 2 | block | long_stay: -7.0 (-8.3 to -5.5), 2,913; high_charge: -5.6 (-6.6 to -4.6), 4,885 |
+
 ## Hardware
 
 Fit times were measured on:

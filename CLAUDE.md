@@ -30,6 +30,8 @@ report written; Groundhog redone with the TAPAS encoding and checked against TAP
   the grid and the Groundhog fits wrote; `facsimile report` then fills the README section between
   the `report:start` and `report:end` markers, `docs/results.md` and `results/report.json`, and
   `facsimile site` writes `site/data.json` for the static explorer in `site/`.
+- `facsimile gate export` and `facsimile gate run` put the nearest configurations through project
+  03's release gate (a checkout at `../03-ai-release-gate` or `FACSIMILE_GATE_DIR`); `docs/gate.md`.
 - The expensive work runs through `facsimile queue` (make a job file, run it anywhere, resumable);
   `deploy/aws` holds the rented-machine scripts and their spend controls.
 

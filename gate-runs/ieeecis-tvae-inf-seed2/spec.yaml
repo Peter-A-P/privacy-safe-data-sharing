@@ -1,0 +1,6 @@
+version: 1
+name: facsimile-ieeecis-tvae-inf-seed2
+delta_points: 2.0
+suites:
+  - key: fraud
+    source: {kind: outcomes_file, block: fraud}

@@ -1,0 +1,8 @@
+version: 1
+name: facsimile-acs-aim-eps1-seed0
+delta_points: 2.0
+suites:
+  - key: income
+    source: {kind: outcomes_file, block: income}
+  - key: employment
+    source: {kind: outcomes_file, block: employment}

@@ -46,6 +46,20 @@ real, the mean over seeds (the worst seed's lower 95% bound in brackets).
 | IEEE-CIS card transactions | -0.404 (-0.453) at epsilon inf | -0.129 (-0.167) at epsilon inf | -0.101 (-0.152) at epsilon inf | -0.193 (-0.228) at epsilon 8 | -0.148 (-0.209) at epsilon 2 | -0.318 (-0.429) at epsilon 2 |
 | NY SPARCS discharges | -0.203 (-0.213) at epsilon inf | -0.075 (-0.087) at epsilon inf | -0.150 (-0.197) at epsilon inf | -0.288 (-0.311) at epsilon 2 | -0.144 (-0.167) at epsilon 2 | -0.346 (-0.401) at epsilon 8 |
 
+**Through the 03 gate.** Project 03's release gate, asked whether a model trained on the
+synthetic table is non-inferior to the same model trained on the real data, at a margin
+of 2 AUC points, on each seed's table. The gap is synthetic minus real on the
+worst task, in points, across the three seeds.
+
+| Dataset | Candidate | Gate, three seeds | Worst-task gap, points |
+|---|---|---|---|
+| ACS PUMS, California 2018 | TVAE, epsilon inf | block on 3 of 3 | -6.2 to -5.1; every interval wholly below -2 |
+| ACS PUMS, California 2018 | AIM, epsilon 1 | block on 3 of 3 | -22.9 to -12.5; every interval wholly below -2 |
+| IEEE-CIS card transactions | TVAE, epsilon inf | not decided on 3 of 3 (too few fraud cases for the power screen) | -17.4 to -8.4; every interval wholly below -2 |
+| IEEE-CIS card transactions | AIM, epsilon 2 | not decided on 3 of 3 (too few fraud cases for the power screen) | -18.9 to -12.3; every interval wholly below -2 |
+| NY SPARCS discharges | CTGAN, epsilon inf | block on 3 of 3 | -7.6 to -7.0; every interval wholly below -2 |
+| NY SPARCS discharges | AIM, epsilon 2 | block on 3 of 3 | -17.1 to -13.8; every interval wholly below -2 |
+
 **What leaked.** A risk counts when its interval at the Bonferroni level excludes zero.
 
 | Dataset | Library and version | Configuration | Attack | Risk, % (95% CI) | Success on members vs control, % |

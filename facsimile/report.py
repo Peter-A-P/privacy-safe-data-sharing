@@ -373,6 +373,20 @@ def groundhog_reference(root: Path = RESULTS) -> list[dict[str, Any]]:
     return rows
 
 
+def gate_runs(root: Path = RESULTS) -> dict[str, Any]:
+    """Project 03's decisions on synthetic-trained against real-trained (`facsimile/gate.py`)."""
+    path = root / "gate.json"
+    if not path.exists():
+        return {}
+    payload = _load(path)
+    for run in payload["runs"]:
+        verdicts = {s["verdict"] for s in run["suites"]}
+        run["outcome"] = (
+            "block" if "block" in verdicts else "not decided" if verdicts == {"warn"} else "pass"
+        )
+    return payload
+
+
 def build(root: Path = RESULTS) -> dict[str, Any]:
     from facsimile.synth import EPSILONS
 
@@ -466,6 +480,7 @@ def build(root: Path = RESULTS) -> dict[str, Any]:
         "leaks": leaks,
         "agreement": agreement(cells),
         "groundhog_reference": groundhog_reference(root),
+        "gate": gate_runs(root),
     }
 
 
@@ -555,6 +570,7 @@ def render_results_md(report: dict[str, Any]) -> str:
         out.append("")
     out += render_agreement(report.get("agreement", {}))
     out += render_groundhog_reference(report.get("groundhog_reference", []))
+    out += render_gate(report.get("gate", {}))
     hardware = sorted({h for r in report["cells"] for h in r.get("hardware", [])})
     out += ["## Hardware", "", "Fit times were measured on:", ""]
     out += [f"- {h}" for h in hardware]
@@ -638,6 +654,79 @@ def render_groundhog_reference(rows: list[dict[str, Any]]) -> list[str]:
     return [*out, "", "What the difference means is in `docs/attacks.md`.", ""]
 
 
+def _gate_config(run: dict[str, Any]) -> str:
+    return f"{METHOD_NAMES[run['method']]}, epsilon {_eps_label(run['epsilon'])}"
+
+
+def _points(x: float) -> str:
+    return f"{100 * x:+.1f}"
+
+
+def render_gate(gate: dict[str, Any]) -> list[str]:
+    out = ["## Through the 03 gate: synthetic-trained against real-trained", ""]
+    if not gate:
+        return [*out, "The gate has not been run yet.", ""]
+    out += [
+        "Project 03's release gate, asked whether a model trained on the synthetic table is",
+        f"non-inferior to the same model trained on the real data, at a margin of {gate['delta_points']:g}",
+        "points. An item is a disjoint pair of one positive and one negative real test record,",
+        "correct when the model scores the positive higher, so the share correct estimates the",
+        "AUC. Difference is synthetic minus real, in points, with the gate's 95% paired bootstrap",
+        "interval. The candidates, per dataset, are the configuration nearest the real-data",
+        "ceiling and the nearest with a privacy budget (`facsimile/gate.py`, `docs/gate.md`).",
+        "",
+        "| Dataset | Candidate | Seed | Gate | Task: difference, points (95% CI), items |",
+        "|---|---|---|---|---|",
+    ]
+    for run in gate["runs"]:
+        tasks = "; ".join(
+            f"{s['suite']}: {_points(s['difference'])} ({_points(s['lo'])} to {_points(s['hi'])}), "
+            f"{s['paired_items']:,}"
+            + (f" (power screen asks {s['items_needed']})" if s["under_powered"] else "")
+            for s in run["suites"]
+        )
+        out.append(
+            f"| {DATASET_NAMES[run['dataset']]} | {_gate_config(run)} | {run['seed']} | "
+            f"{run['outcome']} | {tasks} |"
+        )
+    return [*out, ""]
+
+
+def render_gate_summary(gate: dict[str, Any]) -> list[str]:
+    if not gate:
+        return []
+    delta = gate["delta_points"]
+    out = [
+        "**Through the 03 gate.** Project 03's release gate, asked whether a model trained on the",
+        "synthetic table is non-inferior to the same model trained on the real data, at a margin",
+        f"of {delta:g} AUC points, on each seed's table. The gap is synthetic minus real on the",
+        "worst task, in points, across the three seeds.",
+        "",
+        "| Dataset | Candidate | Gate, three seeds | Worst-task gap, points |",
+        "|---|---|---|---|",
+    ]
+    groups: dict[tuple[str, str, Any], list[dict[str, Any]]] = {}
+    for run in gate["runs"]:
+        groups.setdefault((run["dataset"], run["method"], run["epsilon"]), []).append(run)
+    for ds in DATASETS:
+        keys = sorted((k for k in groups if k[0] == ds), key=lambda k: k[2] is not None)
+        for key in keys:
+            runs = groups[key]
+            outcomes = sorted({r["outcome"] for r in runs})
+            verdict = " / ".join(outcomes) + f" on {len(runs)} of {len(runs)}"
+            if outcomes == ["not decided"]:
+                verdict += " (too few fraud cases for the power screen)"
+            worst = [min(r["suites"], key=lambda s: s["difference"]) for r in runs]
+            gap = (
+                f"{_points(min(s['difference'] for s in worst))} to "
+                f"{_points(max(s['difference'] for s in worst))}"
+            )
+            if all(s["hi"] < -delta / 100 for s in worst):
+                gap += f"; every interval wholly below -{delta:g}"
+            out.append(f"| {DATASET_NAMES[ds]} | {_gate_config(runs[0])} | {verdict} | {gap} |")
+    return [*out, ""]
+
+
 def render_readme_section(report: dict[str, Any]) -> str:
     out = [
         START,
@@ -697,6 +786,7 @@ def render_readme_section(report: dict[str, Any]) -> str:
         out.append("| " + " | ".join(row) + " |")
     out += [
         "",
+        *render_gate_summary(report.get("gate", {})),
         "**What leaked.** A risk counts when its interval at the Bonferroni level excludes zero.",
         "",
     ]

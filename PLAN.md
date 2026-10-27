@@ -144,6 +144,13 @@ held-out real test set, against the same model trained on the real training spli
 ceiling) and a majority-class or mean predictor (the floor). Paired bootstrap intervals over
 the test set. Marginal query error is reported as fidelity and never as utility. The 03 gate
 runs the non-inferiority test for the recommended configuration on each dataset.
+**Amended 2026-10-27 (Peter's decision):** the rule recommends no configuration, so the gate
+runs on the nearest ones instead, fixed by rule before it ran: per dataset, the configuration
+nearest the ceiling on its worst task over all synthesisers and over the differentially private
+ones, each on its three seeds. An item is a disjoint pair of one positive and one negative test
+record, correct when the model ranks them right, so the gate's accuracy is an AUC estimate and
+its margin is the rule's 0.02 (`docs/gate.md`). The files live in `gate-runs/`, as in 06, and
+the code in `facsimile/gate.py`.
 
 ### 2.5 Splits that make the attack arithmetic honest
 
@@ -339,18 +346,18 @@ Whichever produces the clearest evidence becomes `docs/rejected.md`.
 
 ## 11. Definition of done
 
-- [ ] Three datasets (or two, with the reason) fetched by loaders with checksums, terms quoted, subsets and splits published with the leakage check
-- [ ] Six synthesisers behind one interface, five budgets plus non-DP, three seeds, accountants and versions recorded, timings per table
-- [ ] Singling out, linkability and inference implemented from the paper with control and baseline, risks with intervals on every table
-- [ ] Groundhog membership inference and DCR on every table
-- [ ] Reference-library agreement report
-- [ ] Utility as TSTR per task against ceiling and floor, with paired intervals; marginal query error
-- [ ] The epsilon-utility-risk surface per dataset and synthesiser with the recommendation rule applied and stated
-- [ ] Non-inferiority of the recommended configuration through the 03 gate
-- [ ] The leak table in the README: library, version, configuration, measurement
+- [x] Three datasets (or two, with the reason) fetched by loaders with checksums, terms quoted, subsets and splits published with the leakage check
+- [x] Six synthesisers behind one interface, five budgets plus non-DP, three seeds, accountants and versions recorded, timings per table (AIM at epsilon 4 and 8 not run, section 2.2)
+- [x] Singling out, linkability and inference implemented from the paper with control and baseline, risks with intervals on every table
+- [x] Groundhog membership inference and DCR on every table
+- [x] Reference-library agreement report
+- [x] Utility as TSTR per task against ceiling and floor, with paired intervals; marginal query error
+- [x] The epsilon-utility-risk surface per dataset and synthesiser with the recommendation rule applied and stated
+- [x] Non-inferiority of the recommended configuration through the 03 gate (none was recommended; the nearest, `docs/gate.md`)
+- [x] The leak table in the README: library, version, configuration, measurement
 - [ ] privacy.peterparker.ca live with the explorer
 - [ ] Attack package released as reusable code with its own tests
-- [ ] One rejected approach documented with evidence (Rule C)
+- [x] One rejected approach documented with evidence (Rule C)
 - [ ] Repository public, `v0.1.0` tagged, the status flip logged on peterparker.ca
 
 ## 12. Deferred
