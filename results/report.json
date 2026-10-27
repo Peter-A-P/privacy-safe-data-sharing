@@ -1280,7 +1280,7 @@
    "seeds": [],
    "seeds_attacked": [],
    "seeds_scored": [],
-   "not_run": "not run: AIM at epsilon 4 needed more than 28 hours per table and up to 53 GB (SPARCS, seed 1) on a 32-vCPU, 128 GB machine; deferred (PLAN.md section 2.2)"
+   "not_run": "not run: AIM at epsilon 4 needed more than 28 hours per table and up to 53 GB (SPARCS, seed 1) on a 32-vCPU, 128 GB machine; left out to stay in budget (PLAN.md section 2.2)"
   },
   {
    "dataset": "acs",
@@ -3046,7 +3046,7 @@
    "seeds": [],
    "seeds_attacked": [],
    "seeds_scored": [],
-   "not_run": "not run: AIM at epsilon 4 needed more than 28 hours per table and up to 53 GB (SPARCS, seed 1) on a 32-vCPU, 128 GB machine; deferred (PLAN.md section 2.2)"
+   "not_run": "not run: AIM at epsilon 4 needed more than 28 hours per table and up to 53 GB (SPARCS, seed 1) on a 32-vCPU, 128 GB machine; left out to stay in budget (PLAN.md section 2.2)"
   },
   {
    "dataset": "ieeecis",
@@ -4854,7 +4854,7 @@
    "seeds": [],
    "seeds_attacked": [],
    "seeds_scored": [],
-   "not_run": "not run: AIM at epsilon 4 needed more than 28 hours per table and up to 53 GB (SPARCS, seed 1) on a 32-vCPU, 128 GB machine; deferred (PLAN.md section 2.2)"
+   "not_run": "not run: AIM at epsilon 4 needed more than 28 hours per table and up to 53 GB (SPARCS, seed 1) on a 32-vCPU, 128 GB machine; left out to stay in budget (PLAN.md section 2.2)"
   },
   {
    "dataset": "sparcs",

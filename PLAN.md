@@ -100,6 +100,12 @@ On the rented 32-vCPU, 128 GB machine AIM at epsilon 8 on ACS grew to 25 GB in u
 while every other cell stayed under 8 GB, and two such cells exhausted the machine; none of the
 nine had finished when they were stopped. The report shows the cell as not run, with that
 measurement, rather than leaving it blank. AIM's Groundhog fits at epsilon 8 (1,000 rows) stay.
+**Amended 2026-10-27:** AIM's epsilon 4 grid cells are not run (Peter). On the same machine each
+table ran more than 28 hours without finishing and used up to 53 GB, so the nine tables were
+estimated at CA$60 to 150 of rented time against about CA$15 left in the budget, and one seed per
+dataset at CA$25 to 45. Neither could change the recommendation: at epsilon 2 AIM is 0.10 to 0.17
+AUC short of the 0.02 bar on every task, and no doubling of its budget gained more than 0.03.
+The report shows the cell as not run, with that measurement.
 
 ### 2.3 The attacks are implemented from the papers and checked against the libraries
 
@@ -354,6 +360,7 @@ Whichever produces the clearest evidence becomes `docs/rejected.md`.
 | Defences: post-processing synthetic tables to lower a measured risk, and what it costs in utility | The attacks take any table; a defence is a step before them |
 | A second state-year or a second country's census microdata | A loader and a subset file |
 | Text and time-series synthesis | Out of the attack definitions' reach as written |
+| AIM at epsilon 4 and 8 on the full grid (amended 2026-10-18 and 2026-10-27) | The cells are in the grid and the job file; a larger machine and budget run them unchanged |
 | A write-up | Rule E names 02, 03 and 09; the leak table is a figure for the 03 post if it fits |
 
 ## 13. Name

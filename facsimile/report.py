@@ -74,7 +74,7 @@ ATTACK_NAMES = {
 NOT_RUN: dict[tuple[str, float], str] = {
     ("aim", 4.0): (
         "not run: AIM at epsilon 4 needed more than 28 hours per table and up to 53 GB "
-        "(SPARCS, seed 1) on a 32-vCPU, 128 GB machine; deferred (PLAN.md section 2.2)"
+        "(SPARCS, seed 1) on a 32-vCPU, 128 GB machine; left out to stay in budget (PLAN.md section 2.2)"
     ),
     ("aim", 8.0): (
         "not run: AIM at epsilon 8 grew to 25 GB in under five hours on ACS and none of nine "
