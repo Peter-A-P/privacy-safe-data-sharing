@@ -164,7 +164,7 @@ means the attack could not tell, not that the table is safe. The README says so.
 **Resolved 2026-10-24 (Peter's decision): adopt the encoding and rerun everything.** The feature
 map now one-hot encodes categorical attributes for the naive and correlation sets, as TAPAS
 does. Binned numeric attributes keep their bin code. Every Groundhog run, all six synthesisers
-at their three budgets, is being redone with it. The synthetic tables are now kept beside their
+at their three budgets, was redone with it (finished 2026-10-27). The synthetic tables are now kept beside their
 features, so a later change to the feature map will not need the synthesisers again. The first
 runs' features are kept under `data/groundhog-v1/` and their results in the git history (up to
 commit be0c360).
@@ -176,3 +176,20 @@ ordered column is therefore read from the wrong place. The first reference run d
 numeric attributes as `finite/ordered` and was affected. They are now described as `real`, with
 the bin code scaled to [0, 1], which TAPAS handles correctly. On the ACS positive control this
 moved TAPAS from 72 to 77 correct of 120.
+
+**After the rerun: the two agree.** With the new encoding, on the same tables (the table in
+[results.md](results.md#reference-agreement-groundhog-against-tapas)):
+
+| Tables, three datasets pooled | Correct, of 360 evaluation trials: this project | TAPAS |
+|---|---|---|
+| Copy (positive control) | 196 (0.544) | 214 (0.594) |
+| Gaussian copula | 167 (0.464) | 180 (0.500) |
+
+The gap that remains on the copy is the random forests' own noise. Both classifiers were refitted
+on the copy tables with five other seeds (seed 1000 s + target, s = 0 to 4), everything else
+unchanged. This project scored 195 to 218 correct (mean 207.4, 0.576) and TAPAS 199 to 215
+(mean 204.6, 0.568). Each published count lies inside the other's range, and the two means are
+within three trials of each other. So on these tables the feature maps are equally strong, the
+departure from the paper is closed, and the disagreement is resolved. Both stay weak at this
+scale: on a copy of the training data neither averages better than 0.58, which is the limitation
+the README states.

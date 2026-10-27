@@ -1,0 +1,179 @@
+{
+  "facsimile": "0.0.1",
+  "dataset": "ieeecis",
+  "method": "copy",
+  "epsilon": null,
+  "ours": {
+    "features": "naive, histogram and correlation of the codes (facsimile.attacks.groundhog)",
+    "classifier": "random forest, 200 trees",
+    "targets": [
+      {
+        "target": 0,
+        "kind": "outlier",
+        "ours": {
+          "target_id": -1,
+          "kind": "outlier",
+          "correct": 12,
+          "trials": 20,
+          "true_positive": 9,
+          "false_positive": 7
+        }
+      },
+      {
+        "target": 1,
+        "kind": "outlier",
+        "ours": {
+          "target_id": -1,
+          "kind": "outlier",
+          "correct": 9,
+          "trials": 20,
+          "true_positive": 6,
+          "false_positive": 7
+        }
+      },
+      {
+        "target": 2,
+        "kind": "outlier",
+        "ours": {
+          "target_id": -1,
+          "kind": "outlier",
+          "correct": 10,
+          "trials": 20,
+          "true_positive": 5,
+          "false_positive": 5
+        }
+      },
+      {
+        "target": 3,
+        "kind": "random",
+        "ours": {
+          "target_id": -1,
+          "kind": "random",
+          "correct": 10,
+          "trials": 20,
+          "true_positive": 2,
+          "false_positive": 2
+        }
+      },
+      {
+        "target": 4,
+        "kind": "random",
+        "ours": {
+          "target_id": -1,
+          "kind": "random",
+          "correct": 11,
+          "trials": 20,
+          "true_positive": 5,
+          "false_positive": 4
+        }
+      },
+      {
+        "target": 5,
+        "kind": "random",
+        "ours": {
+          "target_id": -1,
+          "kind": "random",
+          "correct": 14,
+          "trials": 20,
+          "true_positive": 6,
+          "false_positive": 2
+        }
+      }
+    ],
+    "pooled": {
+      "outlier": {
+        "accuracy": {
+          "point": 0.5166666666666667,
+          "lo": 0.38394601733159683,
+          "hi": 0.6476870699978736,
+          "n": 60
+        },
+        "advantage": 0.03333333333333344,
+        "targets": 3
+      },
+      "random": {
+        "accuracy": {
+          "point": 0.5833333333333334,
+          "lo": 0.448837797754012,
+          "hi": 0.7093193335295773,
+          "n": 60
+        },
+        "advantage": 0.16666666666666674,
+        "targets": 3
+      },
+      "all": {
+        "accuracy": {
+          "point": 0.55,
+          "lo": 0.4565452197361518,
+          "hi": 0.6409283624620679,
+          "n": 120
+        },
+        "advantage": 0.10000000000000009,
+        "targets": 6
+      }
+    }
+  },
+  "tapas": {
+    "version": "tapas 1.0.0 at a7069d7 (privacy-sdg-toolbox)",
+    "environment": {
+      "numpy": "1.26.4",
+      "pandas": "1.5.3",
+      "scikit-learn": "1.5.2",
+      "python": "3.10.21"
+    },
+    "features": "NaiveSetFeature + HistSetFeature + CorrSetFeature",
+    "classifier": "random forest, 100 trees (TAPAS's default for GroundhogAttack)",
+    "targets": [
+      {
+        "target": 0,
+        "kind": "outlier",
+        "correct": 11,
+        "trials": 20,
+        "true_positive": 8,
+        "false_positive": 7
+      },
+      {
+        "target": 1,
+        "kind": "outlier",
+        "correct": 13,
+        "trials": 20,
+        "true_positive": 7,
+        "false_positive": 4
+      },
+      {
+        "target": 2,
+        "kind": "outlier",
+        "correct": 12,
+        "trials": 20,
+        "true_positive": 5,
+        "false_positive": 3
+      },
+      {
+        "target": 3,
+        "kind": "random",
+        "correct": 10,
+        "trials": 20,
+        "true_positive": 2,
+        "false_positive": 2
+      },
+      {
+        "target": 4,
+        "kind": "random",
+        "correct": 15,
+        "trials": 20,
+        "true_positive": 7,
+        "false_positive": 2
+      },
+      {
+        "target": 5,
+        "kind": "random",
+        "correct": 13,
+        "trials": 20,
+        "true_positive": 5,
+        "false_positive": 2
+      }
+    ],
+    "correct": 74,
+    "trials": 120
+  }
+}

@@ -126,6 +126,15 @@
     "2way": 0.10657083333333332,
     "3way": 0.2342145
    },
+   "membership": {
+    "accuracy": 0.425,
+    "lo": 0.3352559480373605,
+    "hi": 0.5185349936128327,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
    "passes_utility": false,
    "passes_risk": true
   },
@@ -235,6 +244,15 @@
     "2way": 0.1674326388888889,
     "3way": 0.229059
    },
+   "membership": {
+    "accuracy": 0.4166666666666667,
+    "lo": 0.32736767000327865,
+    "hi": 0.5101784457977024,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
    "passes_utility": false,
    "passes_risk": true
   },
@@ -343,6 +361,15 @@
     "1way": 0.10809895833333333,
     "2way": 0.18944236111111112,
     "3way": 0.26277991666666667
+   },
+   "membership": {
+    "accuracy": 0.45,
+    "lo": 0.3590716375379321,
+    "hi": 0.5434547802638482,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
    },
    "passes_utility": false,
    "passes_risk": true
@@ -561,6 +588,15 @@
     "1way": 0.005334374999999995,
     "2way": 0.15754708333333334,
     "3way": 0.32325075
+   },
+   "membership": {
+    "accuracy": 0.5083333333333333,
+    "lo": 0.41550429136532024,
+    "hi": 0.6007414174615904,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
    },
    "passes_utility": false,
    "passes_risk": true
@@ -888,6 +924,15 @@
     "1way": 0.0009656249999999983,
     "2way": 0.1519284722222222,
     "3way": 0.31713341666666667
+   },
+   "membership": {
+    "accuracy": 0.4583333333333333,
+    "lo": 0.3670599277953184,
+    "hi": 0.5517119105053541,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
    },
    "passes_utility": false,
    "passes_risk": true
@@ -1470,6 +1515,15 @@
     "2way": 0.5562579166666667,
     "3way": 0.6855462500000001
    },
+   "membership": {
+    "accuracy": 0.5416666666666666,
+    "lo": 0.448288089494646,
+    "hi": 0.6329400722046816,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
    "passes_utility": false,
    "passes_risk": true
   },
@@ -1797,6 +1851,15 @@
     "2way": 0.34134902777777776,
     "3way": 0.4310969166666667
    },
+   "membership": {
+    "accuracy": 0.5083333333333333,
+    "lo": 0.41550429136532024,
+    "hi": 0.6007414174615904,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
    "passes_utility": false,
    "passes_risk": true
   },
@@ -1898,6 +1961,15 @@
     "1way": 0.004723529411764705,
     "2way": 0.07937132352941176,
     "3way": 0.16250749999999997
+   },
+   "membership": {
+    "accuracy": 0.425,
+    "lo": 0.3352559480373605,
+    "hi": 0.5185349936128327,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
    },
    "passes_utility": false,
    "passes_risk": true
@@ -2001,6 +2073,15 @@
     "2way": 0.17276384803921566,
     "3way": 0.224271
    },
+   "membership": {
+    "accuracy": 0.525,
+    "lo": 0.4318473784425151,
+    "hi": 0.6168896717992584,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
    "passes_utility": false,
    "passes_risk": true
   },
@@ -2102,6 +2183,15 @@
     "1way": 0.17925980392156862,
     "2way": 0.305646568627451,
     "3way": 0.41130858333333337
+   },
+   "membership": {
+    "accuracy": 0.5,
+    "lo": 0.40736926744019714,
+    "hi": 0.5926307325598028,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
    },
    "passes_utility": false,
    "passes_risk": true
@@ -2306,6 +2396,15 @@
     "1way": 0.003848039215686279,
     "2way": 0.1207140931372549,
     "3way": 0.2672906666666666
+   },
+   "membership": {
+    "accuracy": 0.49166666666666664,
+    "lo": 0.39925858253840957,
+    "hi": 0.5844957086346798,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
    },
    "passes_utility": false,
    "passes_risk": true
@@ -2612,6 +2711,15 @@
     "1way": 0.0006794117647058879,
     "2way": 0.11795306372549019,
     "3way": 0.26380241666666665
+   },
+   "membership": {
+    "accuracy": 0.5583333333333333,
+    "lo": 0.4648269963164124,
+    "hi": 0.6488918893958241,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
    },
    "passes_utility": false,
    "passes_risk": true
@@ -3159,6 +3267,15 @@
     "2way": 0.6315729166666667,
     "3way": 0.7628871666666667
    },
+   "membership": {
+    "accuracy": 0.4583333333333333,
+    "lo": 0.3670599277953184,
+    "hi": 0.5517119105053541,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
    "passes_utility": false,
    "passes_risk": true
   },
@@ -3465,6 +3582,15 @@
     "2way": 0.18934436274509803,
     "3way": 0.2385900833333333
    },
+   "membership": {
+    "accuracy": 0.5333333333333333,
+    "lo": 0.4400555029619017,
+    "hi": 0.6249271414775546,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
    "passes_utility": false,
    "passes_risk": true
   },
@@ -3573,6 +3699,15 @@
     "1way": 0.0071781250000000065,
     "2way": 0.10297458333333333,
     "3way": 0.20116775000000006
+   },
+   "membership": {
+    "accuracy": 0.5416666666666666,
+    "lo": 0.448288089494646,
+    "hi": 0.6329400722046816,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
    },
    "passes_utility": false,
    "passes_risk": true
@@ -3683,6 +3818,15 @@
     "2way": 0.16035708333333334,
     "3way": 0.22076616666666668
    },
+   "membership": {
+    "accuracy": 0.475,
+    "lo": 0.38311032820074165,
+    "hi": 0.5681526215574849,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
    "passes_utility": false,
    "passes_risk": true
   },
@@ -3791,6 +3935,15 @@
     "1way": 0.23557083333333337,
     "2way": 0.3891320833333334,
     "3way": 0.49398091666666666
+   },
+   "membership": {
+    "accuracy": 0.48333333333333334,
+    "lo": 0.39117225621934054,
+    "hi": 0.5763363451672925,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
    },
    "passes_utility": false,
    "passes_risk": true
@@ -4009,6 +4162,15 @@
     "1way": 0.004327083333333332,
     "2way": 0.1486701388888889,
     "3way": 0.3149281666666666
+   },
+   "membership": {
+    "accuracy": 0.5083333333333333,
+    "lo": 0.41550429136532024,
+    "hi": 0.6007414174615904,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
    },
    "passes_utility": false,
    "passes_risk": true
@@ -4336,6 +4498,15 @@
     "1way": 0.0007864583333333317,
     "2way": 0.14371236111111108,
     "3way": 0.309604
+   },
+   "membership": {
+    "accuracy": 0.5,
+    "lo": 0.40736926744019714,
+    "hi": 0.5926307325598028,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
    },
    "passes_utility": false,
    "passes_risk": true
@@ -4918,6 +5089,15 @@
     "2way": 0.5016959722222222,
     "3way": 0.6362820833333332
    },
+   "membership": {
+    "accuracy": 0.5083333333333333,
+    "lo": 0.41550429136532024,
+    "hi": 0.6007414174615904,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
    "passes_utility": false,
    "passes_risk": true
   },
@@ -5244,6 +5424,15 @@
     "1way": 0.21303645833333332,
     "2way": 0.3310161111111111,
     "3way": 0.41513625
+   },
+   "membership": {
+    "accuracy": 0.55,
+    "lo": 0.4565452197361518,
+    "hi": 0.6409283624620679,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
    },
    "passes_utility": false,
    "passes_risk": true
@@ -5739,5 +5928,114 @@
    }
   ]
  },
- "groundhog_reference": []
+ "groundhog_reference": [
+  {
+   "dataset": "acs",
+   "method": "copula",
+   "epsilon": null,
+   "ours": {
+    "point": 0.425,
+    "lo": 0.3352559480373605,
+    "hi": 0.5185349936128327,
+    "n": 120
+   },
+   "tapas": {
+    "point": 0.49166666666666664,
+    "lo": 0.39925858253840957,
+    "hi": 0.5844957086346798,
+    "n": 120
+   },
+   "tapas_version": "tapas 1.0.0 at a7069d7 (privacy-sdg-toolbox)"
+  },
+  {
+   "dataset": "acs",
+   "method": "copy",
+   "epsilon": null,
+   "ours": {
+    "point": 0.5583333333333333,
+    "lo": 0.4648269963164124,
+    "hi": 0.6488918893958241,
+    "n": 120
+   },
+   "tapas": {
+    "point": 0.6416666666666667,
+    "lo": 0.5490390361808863,
+    "hi": 0.7271215188316005,
+    "n": 120
+   },
+   "tapas_version": "tapas 1.0.0 at a7069d7 (privacy-sdg-toolbox)"
+  },
+  {
+   "dataset": "ieeecis",
+   "method": "copula",
+   "epsilon": null,
+   "ours": {
+    "point": 0.425,
+    "lo": 0.3352559480373605,
+    "hi": 0.5185349936128327,
+    "n": 120
+   },
+   "tapas": {
+    "point": 0.5166666666666667,
+    "lo": 0.42366365483270757,
+    "hi": 0.6088277437806595,
+    "n": 120
+   },
+   "tapas_version": "tapas 1.0.0 at a7069d7 (privacy-sdg-toolbox)"
+  },
+  {
+   "dataset": "ieeecis",
+   "method": "copy",
+   "epsilon": null,
+   "ours": {
+    "point": 0.55,
+    "lo": 0.4565452197361518,
+    "hi": 0.6409283624620679,
+    "n": 120
+   },
+   "tapas": {
+    "point": 0.6166666666666667,
+    "lo": 0.5235027938116095,
+    "hi": 0.7039281144182734,
+    "n": 120
+   },
+   "tapas_version": "tapas 1.0.0 at a7069d7 (privacy-sdg-toolbox)"
+  },
+  {
+   "dataset": "sparcs",
+   "method": "copula",
+   "epsilon": null,
+   "ours": {
+    "point": 0.5416666666666666,
+    "lo": 0.448288089494646,
+    "hi": 0.6329400722046816,
+    "n": 120
+   },
+   "tapas": {
+    "point": 0.49166666666666664,
+    "lo": 0.39925858253840957,
+    "hi": 0.5844957086346798,
+    "n": 120
+   },
+   "tapas_version": "tapas 1.0.0 at a7069d7 (privacy-sdg-toolbox)"
+  },
+  {
+   "dataset": "sparcs",
+   "method": "copy",
+   "epsilon": null,
+   "ours": {
+    "point": 0.525,
+    "lo": 0.4318473784425151,
+    "hi": 0.6168896717992584,
+    "n": 120
+   },
+   "tapas": {
+    "point": 0.525,
+    "lo": 0.4318473784425151,
+    "hi": 0.6168896717992584,
+    "n": 120
+   },
+   "tapas_version": "tapas 1.0.0 at a7069d7 (privacy-sdg-toolbox)"
+  }
+ ]
 }
