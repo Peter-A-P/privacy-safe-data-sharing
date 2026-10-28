@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 import re
+from typing import Any
 
 from facsimile import report
 from facsimile.paths import REPO
@@ -18,9 +19,21 @@ SITE = REPO / "site"
 TYPOGRAPHIC = {chr(c) for c in (0x2013, 0x2014, 0x2018, 0x2019, 0x201C, 0x201D)}
 
 
+def rounded(value: Any) -> Any:
+    """Floats to six significant digits: the intervals come from scipy, whose last digits
+    differ between the machine that wrote the file and the runner that checks it."""
+    if isinstance(value, float):
+        return float(f"{value:.6g}")
+    if isinstance(value, dict):
+        return {k: rounded(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [rounded(v) for v in value]
+    return value
+
+
 def test_the_committed_data_is_what_the_report_builds_now() -> None:
-    committed = json.loads((SITE / "data.json").read_text(encoding="utf-8"))
-    built = json.loads(json.dumps(report.build()))
+    committed = rounded(json.loads((SITE / "data.json").read_text(encoding="utf-8")))
+    built = rounded(json.loads(json.dumps(report.build())))
     for key in ("cells", "surface", "leaks", "agreement", "groundhog_reference", "gate"):
         assert committed[key] == built[key], (
             f"site/data.json is stale in {key!r}: run facsimile site"
