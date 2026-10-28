@@ -54,6 +54,11 @@ BUDGETS: dict[str, tuple[float | None, ...]] = {
     "aim": (1.0, 8.0),
     "mst": (1.0, 8.0),
     "pate_ctgan": (1.0, 8.0),
+    # The leakage ladder (PLAN.md section 2.10): no privacy budget to vary.
+    "perturb": (None,),
+    "smote": (None,),
+    "kanon": (None,),
+    "tvae_overfit": (None,),
 }
 """PLAN.md section 2.3 as amended: epsilon 1, 8 and infinity."""
 

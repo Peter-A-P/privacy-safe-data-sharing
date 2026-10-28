@@ -31,11 +31,23 @@ def attack_path(cell: Cell) -> Path:
 
 
 def attack_table(
-    built: Built, synthetic: pd.DataFrame, *, seed: int = 0, reference: bool = False
+    built: Built,
+    synthetic: pd.DataFrame,
+    *,
+    seed: int = 0,
+    reference: bool = False,
+    targets: pd.DataFrame | None = None,
+    control: pd.DataFrame | None = None,
+    dcr_too: bool = True,
 ) -> dict[str, Any]:
+    """Every attack on one table. `targets` and `control` replace the build's own for an attack
+    on a subset of them (`exposed.py`); singling out then makes no more attacks than there are
+    targets."""
     cfg = CONFIGS[built.name]
     domain = built.domain
-    targets, control = built.targets, built.control
+    targets = built.targets if targets is None else targets
+    control = built.control if control is None else control
+    n_attacks = min(cfg.n_attacks, len(targets))
     out: dict[str, Any] = {"attacks": {}, "timings": {}}
 
     def timed(name: str, fn: Any) -> Any:
@@ -53,7 +65,7 @@ def attack_table(
                 synthetic,
                 domain,
                 mode=mode,
-                n_attacks=cfg.n_attacks,
+                n_attacks=n_attacks,
                 n_cols=cfg.n_cols,
                 seed=seed,
             ),
@@ -72,7 +84,8 @@ def attack_table(
         lambda: inference(targets, control, synthetic, domain, secret=cfg.secret, seed=seed),
     )
     out["attacks"]["inference"] = res.as_dict()
-    out["dcr"] = timed("dcr", lambda: dcr(targets, control, synthetic, domain, seed=seed))
+    if dcr_too:
+        out["dcr"] = timed("dcr", lambda: dcr(targets, control, synthetic, domain, seed=seed))
     if reference:
         from facsimile.attacks.reference import anonymeter_all
 

@@ -898,3 +898,27 @@ td.not-run { white-space: normal; color: var(--ink-faint); font-size: 0.84rem; }
 .budget-label { fill: var(--warn); font-size: 10.5px; font-weight: 600; letter-spacing: 0.04em; }
 #explorer th, #explorer td { vertical-align: top; }
 #explorer thead th[title] { cursor: help; }
+
+/* The leakage ladder: four positive controls in four hues of their own, so that they never
+   read as one of the six synthesisers. */
+:root { --l-perturb: #c0392b; --l-smote: #d35400; --l-kanon: #8e44ad; --l-tvae: #2c3e50; }
+@media (prefers-color-scheme: dark) {
+  :root { --l-perturb: #f0736a; --l-smote: #f39c5a; --l-kanon: #c39be0; --l-tvae: #c9d4df; }
+}
+.dot.l-perturb { fill: var(--l-perturb); stroke: var(--l-perturb); }
+.dot.l-smote { fill: var(--l-smote); stroke: var(--l-smote); }
+.dot.l-kanon { fill: var(--l-kanon); stroke: var(--l-kanon); }
+.dot.l-tvae { fill: var(--l-tvae); stroke: var(--l-tvae); }
+.dot.hollow { fill: var(--paper-soft); stroke-width: 1.75; }
+.whisker.l-perturb { stroke: var(--l-perturb); }
+.whisker.l-smote { stroke: var(--l-smote); }
+.whisker.l-kanon { stroke: var(--l-kanon); }
+.whisker.l-tvae { stroke: var(--l-tvae); }
+.sw-l-perturb { background: var(--l-perturb); }
+.sw-l-smote { background: var(--l-smote); }
+.sw-l-kanon { background: var(--l-kanon); }
+.sw-l-tvae { background: var(--l-tvae); }
+.grid-max { stroke: var(--ink-faint); stroke-width: 3; stroke-linecap: round; opacity: 0.6; }
+.sw-grid-max { background: var(--ink-faint); }
+.card-result { color: var(--ink) !important; font-weight: 600; }
+#ladder-cards { margin-bottom: 0.5rem; }

@@ -26,6 +26,15 @@ const METHODS = {
 };
 const METHOD_ORDER = ["copula", "ctgan", "tvae", "mst", "aim", "pate_ctgan"];
 
+/* The leakage ladder: positive controls, never on the surface. */
+const LADDER = {
+  perturb: { name: "Perturbed copy", cls: "l-perturb", what: "the training records themselves, numbers jittered by a bin and 10% of values swapped, the classic disclosure-control release" },
+  smote: { name: "SMOTE-NC", cls: "l-smote", what: "each record interpolated between a real record and one of its five nearest real neighbours, as SMOTE is used for 'synthetic' data" },
+  kanon: { name: "k-anonymity, k = 5", cls: "l-kanon", what: "every attribute but the secret generalised until each record matches four others, the secret released as is" },
+  tvae_overfit: { name: "TVAE, 3,000 epochs", cls: "l-tvae", what: "the grid's TVAE trained ten times longer than its default, the way a model ends up overfitted" },
+};
+const LADDER_ORDER = ["perturb", "smote", "kanon", "tvae_overfit"];
+
 const ATTACKS = {
   singling_out_univariate: "Singling out, one attribute",
   singling_out_multivariate: "Singling out, several attributes",
@@ -379,6 +388,97 @@ function leak(data) {
   ]);
 }
 
+/* ---------------------------------------------------------------- the leakage ladder */
+
+function ladderControls(data) {
+  const select = $("ladder-dataset");
+  for (const ds of ORDER) select.append(el("option", { value: ds }, DATASETS[ds].name));
+  select.addEventListener("change", () => ladder(data));
+}
+
+function ladder(data) {
+  const rows = data.ladder || [];
+  const ds = $("ladder-dataset").value;
+  const own = LADDER_ORDER.map((m) => rows.find((r) => r.dataset === ds && r.method === m)).filter((r) => r && r.risk);
+  const grid = cellsOf(data, ds).filter(scored);
+  const attacks = Object.keys(ATTACKS);
+  const W = 760;
+  const rowH = 58;
+  const m = { l: 210, r: 18, t: 10, b: 40 };
+  const H = m.t + rowH * attacks.length + m.b;
+  const highest = Math.max(0.05, ...own.flatMap((r) => attacks.map((a) => r.risk[a].hi)));
+  const xMax = Math.ceil(highest * 20) / 20;
+  const x = (v) => m.l + (v / xMax) * (W - m.l - m.r);
+  const svg = svgRoot(W, H, `Risk on each attack for the four leaky methods on ${DATASETS[ds].name}, beside the largest risk any grid synthesiser showed`);
+  const step = xMax > 0.4 ? 0.1 : 0.05;
+  for (let v = 0; v <= xMax + 1e-9; v += step) {
+    svg.append(sv("line", { class: v === 0 ? "zero" : "gridline", x1: x(v), x2: x(v), y1: m.t, y2: H - m.b }));
+    svg.append(sv("text", { class: "tick", x: x(v), y: H - m.b + 16, "text-anchor": "middle" }, `${fmt(100 * v, 0)}%`));
+  }
+  svg.append(sv("text", { class: "axis-title", x: m.l + (W - m.l - m.r) / 2, y: H - 6, "text-anchor": "middle" }, "risk: excess success on training records over control"));
+  const readout = $("ladder-readout");
+  attacks.forEach((a, i) => {
+    const top = m.t + i * rowH;
+    const mid = top + rowH / 2;
+    svg.append(sv("text", { class: "row-label", x: 8, y: mid + 4 }, ATTACKS[a]));
+    const gridMax = Math.max(0, ...grid.map((c) => c.risk[a].value));
+    svg.append(sv("line", { class: "grid-max", x1: x(gridMax), x2: x(gridMax), y1: top + 8, y2: top + rowH - 8 }));
+    own.forEach((r, k) => {
+      const risk = r.risk[a];
+      const cy = top + 12 + k * ((rowH - 24) / Math.max(own.length - 1, 1));
+      svg.append(sv("line", { class: `whisker ${LADDER[r.method].cls}`, x1: x(risk.lo), x2: x(risk.hi), y1: cy, y2: cy }));
+      const dot = sv("circle", { class: `dot ${LADDER[r.method].cls}${risk.detected ? "" : " hollow"}`, cx: x(risk.value), cy, r: 5, tabindex: 0 });
+      const show = () => fill(readout, [
+        el("span", { class: "when" }, `${LADDER[r.method].name}, ${ATTACKS[a].toLowerCase()}`),
+        el("span", { class: "pair" }, `risk ${pct(risk.value)} (${pct(risk.lo)} to ${pct(risk.hi)}), ${pct(risk.main_rate)} of training records against ${pct(risk.control_rate)} of control`),
+        el("span", { class: "pair" }, risk.detected ? "detected" : "not detected"),
+      ]);
+      dot.addEventListener("mouseenter", show);
+      dot.addEventListener("focus", show);
+      svg.append(dot);
+    });
+  });
+  const node = $("ladder-chart");
+  node.textContent = "";
+  node.append(svg);
+  readout.textContent = own.length ? "Point at a mark to read it." : "The ladder's tables are still being attacked.";
+  legend($("ladder-legend"), [
+    ...LADDER_ORDER.map((mm) => [`sw-${LADDER[mm].cls}`, LADDER[mm].name, "dot"]),
+    ["sw-grid-max", "largest risk among the six synthesisers", "solid"],
+  ]);
+  $("ladder-caption").textContent = "Risks pooled over three seeds, 6,000 attacks each, with 95% intervals. A filled mark is a detected risk at the corrected level the leak table uses; a hollow one is not.";
+
+  const cards = $("ladder-cards");
+  cards.textContent = "";
+  for (const mm of LADDER_ORDER) {
+    const r = own.find((x) => x.method === mm);
+    const card = el("article", { class: "guide-card" });
+    const found = r ? Object.entries(r.risk).filter(([, v]) => v.detected).map(([a]) => ATTACKS[a].toLowerCase()) : [];
+    if (r && r.membership && r.membership.detected) found.push("membership inference");
+    const gap = r && r.utility ? worstTask(r).u.delta : null;
+    card.append(
+      el("h3", {}, LADDER[mm].name),
+      el("p", {}, LADDER[mm].what + "."),
+      el("p", { class: "card-result" }, r ? `${found.length ? `Caught by ${found.join(", ")}` : "Caught by no attack"}${gap !== null ? `; usefulness ${signed(gap, 3)} AUC` : ""}.` : "Still being attacked."),
+    );
+    cards.append(card);
+  }
+
+  const all = rows.filter((r) => r.risk);
+  const caught = all.filter((r) => Object.values(r.risk).some((v) => v.detected));
+  fill($("ladder-verdict"), all.length ? [
+    strong(`The attacks catch ${caught.length} of the ${all.length} leaky tables they were given. `),
+    "On the same attacks, the six synthesisers sit near zero, with one exception. So a result at control level on the grid is the attacks failing to find a leak that they would have found in a table like these, not attacks too weak to find anything.",
+  ] : ["The ladder's tables are still being attacked."]);
+
+  const exposed = (data.exposed_leaks || []).filter((l) => METHODS[l.method]);
+  const gridExposed = data.cells.filter((c) => c.risk_exposed);
+  fill($("exposed-note"), gridExposed.length ? [
+    strong("And on the most exposed people? "),
+    `Each grid table was attacked again on the quarter of its targets that are most unusual, against the most unusual quarter of the control, ranked by distance to people in the test split. ${exposed.length ? `That found ${exposed.length} more detected risk${exposed.length === 1 ? "" : "s"}: ${exposed.map((l) => `${METHODS[l.method].name} at ${epsLabel(l.epsilon)} on ${DATASETS[l.dataset].short}, ${l.attack.replace(/_/g, " ")}, ${pct(l.risk)}`).join("; ")}.` : `Across ${gridExposed.length} configurations it found no detected risk that the full targets did not already show.`}`,
+  ] : ["The attacks on the most exposed records are still running."]);
+}
+
 /* ---------------------------------------------------------------- distance to closest record */
 
 function dcrChart(data) {
@@ -728,6 +828,8 @@ function render(data) {
   surface(data);
   fidelity(data);
   leak(data);
+  ladderControls(data);
+  ladder(data);
   dcrChart(data);
   gate(data);
   membership(data);

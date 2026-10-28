@@ -7,7 +7,7 @@ import pandas as pd
 import pytest
 
 from facsimile.prep import Categorical, Domain, encode, fit_domain
-from facsimile.synth import EPSILONS, methods
+from facsimile.synth import EPSILONS, GRID, LADDER, methods
 from facsimile.synth.base import Fitted, Wrapped
 from facsimile.synth.grid import Cell, cells
 
@@ -22,7 +22,9 @@ def _tiny() -> tuple[pd.DataFrame, Domain]:
 
 def test_six_methods_three_dp() -> None:
     registry = methods()
-    assert sorted(registry) == ["aim", "copula", "ctgan", "mst", "pate_ctgan", "tvae"]
+    assert sorted(GRID) == ["aim", "copula", "ctgan", "mst", "pate_ctgan", "tvae"]
+    assert sorted(registry) == sorted(GRID + LADDER)
+    assert not any(registry[n].dp for n in LADDER), "the ladder has no privacy guarantee"
     assert sorted(n for n, m in registry.items() if m.dp) == ["aim", "mst", "pate_ctgan"]
 
 
@@ -58,9 +60,16 @@ def test_a_method_that_edits_its_training_frame_is_refused() -> None:
 
 
 def test_the_grid_is_six_methods_five_budgets_plus_non_dp_three_seeds() -> None:
-    grid = cells(["acs"])
+    grid = cells(["acs"], methods=GRID)
     assert len(grid) == (3 * 1 + 3 * len(EPSILONS)) * 3
     assert Cell("acs", "copula", None, 0) in grid and Cell("acs", "aim", 0.5, 2) in grid
+
+
+def test_the_ladder_runs_beside_the_grid_at_no_privacy() -> None:
+    every = cells(["acs"])
+    ladder = [c for c in every if c.method in LADDER]
+    assert len(ladder) == len(LADDER) * 3 and all(c.epsilon is None for c in ladder)
+    assert len(every) == len(cells(["acs"], methods=GRID)) + len(ladder)
 
 
 @pytest.mark.slow

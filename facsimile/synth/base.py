@@ -27,7 +27,16 @@ from facsimile.prep import CODE_DTYPE, Domain, check_codes
 DELTA: Final = 1e-5
 """PLAN.md section 2.2. Below 1/n for every train split here (n = 20,000)."""
 
-Family = Literal["non-dp statistical", "non-dp deep", "dp marginal", "dp deep"]
+Family = Literal[
+    "non-dp statistical",
+    "non-dp deep",
+    "dp marginal",
+    "dp deep",
+    # The leakage ladder (`ladder.py`, PLAN.md section 2.10), the grid's positive controls.
+    "non-dp perturbation",
+    "non-dp interpolation",
+    "non-dp generalisation",
+]
 
 
 @dataclass(frozen=True, slots=True)

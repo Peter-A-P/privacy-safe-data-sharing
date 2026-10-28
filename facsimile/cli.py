@@ -86,6 +86,21 @@ def cmd_attack(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_attack_exposed(args: argparse.Namespace) -> int:
+    from facsimile.attacks.exposed import run_exposed
+
+    ready = _done_cells(args)
+    print(f"attacking the exposed records of {len(ready)} tables")
+    for i, cell in enumerate(ready, 1):
+        payload = run_exposed(cell, force=args.force)
+        risks = ", ".join(f"{k} {a['risk']['value']:.3f}" for k, a in payload["attacks"].items())
+        print(
+            f"[{i}/{len(ready)}] {cell.dataset} {cell.method} {cell.eps_tag} seed{cell.seed}: {risks}",
+            flush=True,
+        )
+    return 0
+
+
 def cmd_utility(args: argparse.Namespace) -> int:
     from facsimile.utility.run import run_utility
 
@@ -340,6 +355,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     for name, func, helptext in (
         ("attack", cmd_attack, "the three criteria and DCR on every finished table"),
         ("utility", cmd_utility, "TSTR and marginal error on every finished table"),
+        ("attack-exposed", cmd_attack_exposed, "the attacks on each table's most unusual records"),
     ):
         p = sub.add_parser(name, help=helptext)
         p.add_argument("datasets", nargs="+")

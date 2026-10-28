@@ -40,6 +40,9 @@ DATASET_NAMES = {
     "sparcs": "NY SPARCS discharges",
 }
 METHODS = ("copula", "ctgan", "tvae", "mst", "aim", "pate_ctgan")
+LADDER = ("perturb", "smote", "kanon", "tvae_overfit")
+"""The leakage ladder (PLAN.md section 2.10): reported beside the grid, never in its surface,
+its leak table or its gate candidates."""
 METHOD_NAMES = {
     "copula": "Gaussian copula",
     "ctgan": "CTGAN",
@@ -47,6 +50,10 @@ METHOD_NAMES = {
     "mst": "MST",
     "aim": "AIM",
     "pate_ctgan": "PATE-CTGAN",
+    "perturb": "Perturbed copy",
+    "smote": "SMOTE-NC",
+    "kanon": "k-anonymity, k = 5",
+    "tvae_overfit": "TVAE, 3,000 epochs",
 }
 LIBRARY = {
     "copula": "sdv",
@@ -55,6 +62,10 @@ LIBRARY = {
     "mst": "smartnoise-synth",
     "aim": "smartnoise-synth",
     "pate_ctgan": "smartnoise-synth",
+    "perturb": "facsimile",
+    "smote": "facsimile",
+    "kanon": "facsimile",
+    "tvae_overfit": "sdv",
 }
 ATTACKS = (
     "singling_out_univariate",
@@ -107,6 +118,7 @@ class Cell:
     synth: dict[int, dict[str, Any]] = field(default_factory=dict)
     attacks: dict[int, dict[str, Any]] = field(default_factory=dict)
     utility: dict[int, dict[str, Any]] = field(default_factory=dict)
+    exposed: dict[int, dict[str, Any]] = field(default_factory=dict)
     groundhog: dict[str, Any] | None = None
 
 
@@ -125,11 +137,16 @@ def load_cells(root: Path = RESULTS) -> dict[tuple[str, str, float | None], Cell
         return cells[key]
 
     for ds in DATASETS:
-        for kind in ("synth", "attacks", "utility"):
+        for kind, attr in (
+            ("synth", "synth"),
+            ("attacks", "attacks"),
+            ("utility", "utility"),
+            ("attacks_exposed", "exposed"),
+        ):
             for path in sorted((root / ds / kind).glob("*/*/seed*.json")):
                 record = _load(path)
                 c = cell(ds, record["method"], _epsilon_of(record))
-                getattr(c, kind)[int(record["seed"])] = record
+                getattr(c, attr)[int(record["seed"])] = record
         for path in sorted((root / ds / "groundhog").glob("*/*.json")):
             record = _load(path)
             cell(ds, record["method"], _epsilon_of(record)).groundhog = record
@@ -184,6 +201,20 @@ def _mean(xs: list[float]) -> float:
     return sum(xs) / len(xs)
 
 
+def _risks(seeds: list[dict[str, Any]]) -> dict[str, Any]:
+    """Each attack's risk pooled over the seeds, shown at 95% and called at the Bonferroni level."""
+    bonferroni = 1.0 - ALPHA / len(ATTACKS)
+    out: dict[str, Any] = {}
+    for a in ATTACKS:
+        per_seed = [s["attacks"][a] for s in seeds]
+        shown = pooled_risk(per_seed, 0.95)
+        call = pooled_risk(per_seed, bonferroni)
+        shown["detected"] = call["lo"] > 0.0
+        shown["lo_bonferroni"] = call["lo"]
+        out[a] = shown
+    return out
+
+
 def summarise(c: Cell) -> dict[str, Any]:
     out: dict[str, Any] = {
         "dataset": c.dataset,
@@ -206,15 +237,7 @@ def summarise(c: Cell) -> dict[str, Any]:
         out["device"] = sorted({str(r.get("device", "")) for r in recs})
     if c.attacks:
         seeds = [c.attacks[s] for s in sorted(c.attacks)]
-        bonferroni = 1.0 - ALPHA / len(ATTACKS)
-        out["risk"] = {}
-        for a in ATTACKS:
-            per_seed = [s["attacks"][a] for s in seeds]
-            shown = pooled_risk(per_seed, 0.95)
-            call = pooled_risk(per_seed, bonferroni)
-            shown["detected"] = call["lo"] > 0.0
-            shown["lo_bonferroni"] = call["lo"]
-            out["risk"][a] = shown
+        out["risk"] = _risks(seeds)
         dcr = [s["dcr"] for s in seeds if "dcr" in s]
         if dcr:
             out["dcr"] = {
@@ -225,6 +248,9 @@ def summarise(c: Cell) -> dict[str, Any]:
                 ),
                 "closer_lo_min": min(d["closer_to_training_share"]["lo"] for d in dcr),
             }
+    if c.exposed:
+        out["risk_exposed"] = _risks([c.exposed[s] for s in sorted(c.exposed)])
+        out["seeds_exposed"] = sorted(c.exposed)
     if c.utility:
         seeds = [c.utility[s] for s in sorted(c.utility)]
         out["utility"] = {
@@ -387,6 +413,51 @@ def gate_runs(root: Path = RESULTS) -> dict[str, Any]:
     return payload
 
 
+def leaks_of(
+    rows: list[dict[str, Any]], vs: dict[str, str], key: str = "risk"
+) -> list[dict[str, Any]]:
+    """Every detected risk in these rows, named by library, version, configuration and attack.
+    `key` is "risk" for the attacks on all targets, "risk_exposed" for the exposed records; the
+    membership leaks come with the first."""
+    leaks: list[dict[str, Any]] = []
+    seeds_key = "seeds_exposed" if key == "risk_exposed" else "seeds_attacked"
+    for r in rows:
+        named = {
+            "dataset": r["dataset"],
+            "library": LIBRARY[r["method"]],
+            "version": vs.get(LIBRARY[r["method"]], "unknown"),
+            "method": r["method"],
+            "epsilon": r["epsilon"],
+        }
+        for a, risk in r.get(key, {}).items():
+            if risk["detected"]:
+                leaks.append(
+                    {
+                        **named,
+                        "attack": a,
+                        "risk": risk["value"],
+                        "lo": risk["lo"],
+                        "hi": risk["hi"],
+                        "lo_bonferroni": risk["lo_bonferroni"],
+                        "main_rate": risk["main_rate"],
+                        "control_rate": risk["control_rate"],
+                        "seeds": len(r[seeds_key]),
+                    }
+                )
+        mem = r.get("membership")
+        if key == "risk" and mem and mem["detected"]:
+            leaks.append(
+                {
+                    **named,
+                    "attack": "membership",
+                    "risk": mem["accuracy"],
+                    "lo": mem["lo"],
+                    "hi": mem["hi"],
+                }
+            )
+    return leaks
+
+
 def build(root: Path = RESULTS) -> dict[str, Any]:
     from facsimile.synth import EPSILONS
 
@@ -397,13 +468,17 @@ def build(root: Path = RESULTS) -> dict[str, Any]:
                 continue
             for eps in EPSILONS:
                 cells.setdefault((ds, m, eps), Cell(ds, m, eps))
-    rows = [
-        summarise(c)
-        for c in sorted(
-            cells.values(),
-            key=lambda c: (DATASETS.index(c.dataset), METHODS.index(c.method), _eps_key(c.epsilon)),
+    order = METHODS + LADDER
+
+    def ranked(group: tuple[str, ...]) -> list[dict[str, Any]]:
+        chosen = [c for c in cells.values() if c.method in group]
+        chosen.sort(
+            key=lambda c: (DATASETS.index(c.dataset), order.index(c.method), _eps_key(c.epsilon))
         )
-    ]
+        return [summarise(c) for c in chosen]
+
+    rows = ranked(METHODS)
+    ladder = ranked(LADDER)
     surface = []
     for ds in DATASETS:
         for m in METHODS:
@@ -435,49 +510,17 @@ def build(root: Path = RESULTS) -> dict[str, Any]:
                 }
             )
     vs = versions()
-    leaks = []
-    for r in rows:
-        for a, risk in r.get("risk", {}).items():
-            if risk["detected"]:
-                leaks.append(
-                    {
-                        "dataset": r["dataset"],
-                        "library": LIBRARY[r["method"]],
-                        "version": vs.get(LIBRARY[r["method"]], "unknown"),
-                        "method": r["method"],
-                        "epsilon": r["epsilon"],
-                        "attack": a,
-                        "risk": risk["value"],
-                        "lo": risk["lo"],
-                        "hi": risk["hi"],
-                        "lo_bonferroni": risk["lo_bonferroni"],
-                        "main_rate": risk["main_rate"],
-                        "control_rate": risk["control_rate"],
-                        "seeds": len(r["seeds_attacked"]),
-                    }
-                )
-        mem = r.get("membership")
-        if mem and mem["detected"]:
-            leaks.append(
-                {
-                    "dataset": r["dataset"],
-                    "library": LIBRARY[r["method"]],
-                    "version": vs.get(LIBRARY[r["method"]], "unknown"),
-                    "method": r["method"],
-                    "epsilon": r["epsilon"],
-                    "attack": "membership",
-                    "risk": mem["accuracy"],
-                    "lo": mem["lo"],
-                    "hi": mem["hi"],
-                }
-            )
+    vs["facsimile"] = __version__
     return {
         "facsimile": __version__,
         "rule": {"delta_auc": DELTA, "alpha": ALPHA, "attacks": list(ATTACKS)},
         "versions": vs,
         "cells": rows,
         "surface": surface,
-        "leaks": leaks,
+        "leaks": leaks_of(rows, vs),
+        "ladder": ladder,
+        "ladder_leaks": leaks_of(ladder, vs),
+        "exposed_leaks": leaks_of(rows, vs, "risk_exposed") + leaks_of(ladder, vs, "risk_exposed"),
         "agreement": agreement(cells),
         "groundhog_reference": groundhog_reference(root),
         "gate": gate_runs(root),
@@ -568,6 +611,8 @@ def render_results_md(report: dict[str, Any]) -> str:
             )
             out.append("| " + " | ".join(cells) + " |")
         out.append("")
+    out += render_ladder(report.get("ladder", []))
+    out += render_exposed(report["cells"] + report.get("ladder", []))
     out += render_agreement(report.get("agreement", {}))
     out += render_groundhog_reference(report.get("groundhog_reference", []))
     out += render_gate(report.get("gate", {}))
@@ -737,6 +782,127 @@ def render_gate_summary(gate: dict[str, Any]) -> list[str]:
     return [*out, ""]
 
 
+def _detected(risks: dict[str, Any]) -> list[str]:
+    return [ATTACK_NAMES[a] for a in ATTACKS if risks.get(a, {}).get("detected")]
+
+
+def _worst_gap(r: dict[str, Any]) -> str:
+    util = r.get("utility")
+    if not util:
+        return "pending"
+    task, u = min(util.items(), key=lambda kv: kv[1]["delta"])
+    return f"{u['delta']:+.3f} ({task})"
+
+
+def render_ladder(rows: list[dict[str, Any]]) -> list[str]:
+    out = ["## The leakage ladder", ""]
+    if not rows:
+        return [*out, "No ladder table has been made yet.", ""]
+    out += [
+        "Four methods people use as synthetic or anonymised data, expected to leak, run through the",
+        "same pipeline as the grid as its positive controls (PLAN.md section 2.10). They are not on",
+        "the surface, in the leak table or among the gate's candidates.",
+        "",
+        "| Dataset | Method | "
+        + " | ".join(ATTACK_NAMES[a] for a in ATTACKS)
+        + " | Membership | Utility, worst task | Seeds |",
+        "|---|---|" + "---|" * (len(ATTACKS) + 3),
+    ]
+    for r in rows:
+        risk = r.get("risk", {})
+        mem = r.get("membership")
+        cells = (
+            [DATASET_NAMES[r["dataset"]], METHOD_NAMES[r["method"]]]
+            + [_risk_cell(risk[a]) if a in risk else "pending" for a in ATTACKS]
+            + [
+                f"{mem['accuracy']:.3f} ({mem['lo']:.3f} to {mem['hi']:.3f})" if mem else "pending",
+                _worst_gap(r),
+                str(len(r.get("seeds_attacked", []))),
+            ]
+        )
+        out.append("| " + " | ".join(cells) + " |")
+    return [*out, ""]
+
+
+def render_exposed(rows: list[dict[str, Any]]) -> list[str]:
+    out = ["## The most exposed records", ""]
+    scored = [r for r in rows if "risk_exposed" in r]
+    if not scored:
+        return [*out, "No table has been attacked on its exposed records yet.", ""]
+    out += [
+        "The same attacks on the same tables, on the quarter of the targets most unusual against",
+        "the quarter of the control most unusual, ranked by mean distance to 2,000 test-split",
+        "records (`facsimile/attacks/exposed.py`): 500 against 500 per seed, seeds pooled.",
+        "",
+        "| Dataset | Configuration | " + " | ".join(ATTACK_NAMES[a] for a in ATTACKS) + " |",
+        "|---|---|" + "---|" * len(ATTACKS),
+    ]
+    for r in scored:
+        risk = r["risk_exposed"]
+        conf = f"{METHOD_NAMES[r['method']]}, epsilon {_eps_label(r['epsilon'])}"
+        out.append(
+            f"| {DATASET_NAMES[r['dataset']]} | {conf} | "
+            + " | ".join(_risk_cell(risk[a]) for a in ATTACKS)
+            + " |"
+        )
+    return [*out, ""]
+
+
+def render_ladder_summary(report: dict[str, Any]) -> list[str]:
+    rows = report.get("ladder", [])
+    if not rows:
+        return []
+    out = [
+        "**The leakage ladder.** Four methods people use as synthetic or anonymised data, expected",
+        "to leak, through the same attacks as the positive controls of the grid (PLAN.md section",
+        "2.10). The attacks that detect a risk on each, at the same Bonferroni level:",
+        "",
+        "| Dataset | " + " | ".join(METHOD_NAMES[m] for m in LADDER) + " |",
+        "|---|" + "---|" * len(LADDER),
+    ]
+    by = {(r["dataset"], r["method"]): r for r in rows}
+    for ds in DATASETS:
+        row = [DATASET_NAMES[ds]]
+        for m in LADDER:
+            r = by.get((ds, m))
+            if r is None or "risk" not in r:
+                row.append("pending")
+                continue
+            found = _detected(r["risk"])
+            mem = r.get("membership")
+            if mem and mem["detected"]:
+                found.append("membership")
+            row.append(", ".join(found) if found else "none")
+        out.append("| " + " | ".join(row) + " |")
+    return [*out, ""]
+
+
+def render_exposed_summary(report: dict[str, Any]) -> list[str]:
+    grid = [r for r in report["cells"] if "risk_exposed" in r]
+    if not grid:
+        return []
+    found = [lk for lk in report.get("exposed_leaks", []) if lk["method"] in METHODS]
+    out = [
+        "**The most exposed records.** The same attacks on each grid table's most unusual quarter of",
+        f"targets against its most unusual quarter of control records: {len(found)} detected risks",
+        f"across {len(grid)} configurations.",
+    ]
+    if found:
+        out += [
+            "",
+            "| Dataset | Configuration | Attack | Risk, % (95% CI) | Success on members vs control, % |",
+            "|---|---|---|---|---|",
+        ]
+        for lk in found:
+            out.append(
+                f"| {DATASET_NAMES[lk['dataset']]} | {METHOD_NAMES[lk['method']]}, epsilon "
+                f"{_eps_label(lk['epsilon'])} | {ATTACK_NAMES[lk['attack']]} | {_pct(lk['risk'])} "
+                f"({_pct(lk['lo'])} to {_pct(lk['hi'])}) | {_pct(lk['main_rate'])} vs "
+                f"{_pct(lk['control_rate'])} |"
+            )
+    return [*out, ""]
+
+
 def render_readme_section(report: dict[str, Any]) -> str:
     out = [
         START,
@@ -797,6 +963,8 @@ def render_readme_section(report: dict[str, Any]) -> str:
     out += [
         "",
         *render_gate_summary(report.get("gate", {})),
+        *render_ladder_summary(report),
+        *render_exposed_summary(report),
         "**What leaked.** A risk counts when its interval at the Bonferroni level excludes zero.",
         "",
     ]

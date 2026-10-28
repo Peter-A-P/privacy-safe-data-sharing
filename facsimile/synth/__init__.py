@@ -1,4 +1,5 @@
-"""Six synthesisers behind one interface (`base.Wrapped`), and the grid that runs them."""
+"""Six synthesisers behind one interface (`base.Wrapped`), the grid that runs them, and the four
+methods of the leakage ladder beside it (`ladder.py`, PLAN.md section 2.10)."""
 
 from __future__ import annotations
 
@@ -9,9 +10,13 @@ from facsimile.synth.base import Wrapped
 EPSILONS: Final = (0.5, 1.0, 2.0, 4.0, 8.0)
 """PLAN.md section 2.2; the non-DP methods sit at epsilon infinity."""
 
+GRID: Final = ("copula", "ctgan", "tvae", "aim", "mst", "pate_ctgan")
+LADDER: Final = ("perturb", "smote", "kanon", "tvae_overfit")
+"""The positive controls: reported beside the grid, never on its surface or in its gate."""
+
 
 def methods() -> dict[str, Wrapped]:
-    from facsimile.synth import aim, copula, ctgan, mst, pate_ctgan, tvae
+    from facsimile.synth import aim, copula, ctgan, ladder, mst, pate_ctgan, tvae
 
     return {
         m.name: m
@@ -22,5 +27,9 @@ def methods() -> dict[str, Wrapped]:
             aim.METHOD,
             mst.METHOD,
             pate_ctgan.METHOD,
+            ladder.PERTURB_METHOD,
+            ladder.SMOTE_METHOD,
+            ladder.KANON_METHOD,
+            ladder.TVAE_OVERFIT_METHOD,
         )
     }

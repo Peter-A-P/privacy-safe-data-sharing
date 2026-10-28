@@ -20,6 +20,7 @@
     <a href="#method-panel">Method</a>
     <a href="#surface-panel">Trade-off</a>
     <a href="#leak-panel">The leak</a>
+    <a href="#ladder-panel">The ladder</a>
     <a href="#dcr-panel">The usual check</a>
     <a href="#gate-panel">The gate</a>
     <a href="#membership-panel">Membership</a>
@@ -208,6 +209,37 @@
         It is not a claim that AIM is unsafe in general, and the tables with no detected risk are
         not proven safe: they are tables these attacks, at this scale, could not break.
       </p>
+    </div>
+  </section>
+
+  <section class="section" id="ladder-panel">
+    <h2>Do the attacks catch what they should?</h2>
+    <p class="section-lead">
+      A result at control level means something only if the same attacks catch a table that does
+      leak. So four methods people really use as "synthetic" or "anonymised" data, each expected to
+      leak, went through exactly the same pipeline: the same splits, targets, control, attacks and
+      seeds. Their settings and expected outcomes were written into the plan before any of them
+      ran. Each mark is one method's risk on one attack, with its 95 percent interval; the grey
+      tick is the largest risk any of the six synthesisers showed on that attack.
+    </p>
+    <div class="controls">
+      <div class="control">
+        <label for="ladder-dataset">Dataset</label>
+        <select id="ladder-dataset"></select>
+      </div>
+    </div>
+    <figure class="chart-figure">
+      <div id="ladder-chart" class="chart"></div>
+      <p class="readout" id="ladder-readout"></p>
+      <div class="legend" id="ladder-legend"></div>
+      <figcaption id="ladder-caption"></figcaption>
+    </figure>
+    <div class="guide" id="ladder-cards"></div>
+    <div class="verdict">
+      <p id="ladder-verdict"></p>
+    </div>
+    <div class="assumption">
+      <p id="exposed-note"></p>
     </div>
   </section>
 
