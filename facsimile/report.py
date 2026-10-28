@@ -89,7 +89,7 @@ NOT_RUN: dict[tuple[str, float], str] = {
     ),
     ("aim", 8.0): (
         "not run: AIM at epsilon 8 grew to 25 GB in under five hours on ACS and none of nine "
-        "tables finished on a 32-vCPU, 128 GB machine; dropped for now (PLAN.md section 2.2)"
+        "tables finished on a 32-vCPU, 128 GB machine; left out to stay in budget (PLAN.md section 2.2)"
     ),
 }
 

@@ -1917,7 +1917,7 @@
    "seeds": [],
    "seeds_attacked": [],
    "seeds_scored": [],
-   "not_run": "not run: AIM at epsilon 8 grew to 25 GB in under five hours on ACS and none of nine tables finished on a 32-vCPU, 128 GB machine; dropped for now (PLAN.md section 2.2)",
+   "not_run": "not run: AIM at epsilon 8 grew to 25 GB in under five hours on ACS and none of nine tables finished on a 32-vCPU, 128 GB machine; left out to stay in budget (PLAN.md section 2.2)",
    "membership": {
     "accuracy": 0.55,
     "lo": 0.4565452197361518,
@@ -4595,7 +4595,7 @@
    "seeds": [],
    "seeds_attacked": [],
    "seeds_scored": [],
-   "not_run": "not run: AIM at epsilon 8 grew to 25 GB in under five hours on ACS and none of nine tables finished on a 32-vCPU, 128 GB machine; dropped for now (PLAN.md section 2.2)",
+   "not_run": "not run: AIM at epsilon 8 grew to 25 GB in under five hours on ACS and none of nine tables finished on a 32-vCPU, 128 GB machine; left out to stay in budget (PLAN.md section 2.2)",
    "membership": {
     "accuracy": 0.4583333333333333,
     "lo": 0.3670599277953184,
@@ -7315,7 +7315,7 @@
    "seeds": [],
    "seeds_attacked": [],
    "seeds_scored": [],
-   "not_run": "not run: AIM at epsilon 8 grew to 25 GB in under five hours on ACS and none of nine tables finished on a 32-vCPU, 128 GB machine; dropped for now (PLAN.md section 2.2)",
+   "not_run": "not run: AIM at epsilon 8 grew to 25 GB in under five hours on ACS and none of nine tables finished on a 32-vCPU, 128 GB machine; left out to stay in budget (PLAN.md section 2.2)",
    "membership": {
     "accuracy": 0.45,
     "lo": 0.3590716375379321,

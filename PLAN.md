@@ -95,7 +95,7 @@ training data without charging for it (`docs/synthesisers.md`). Budgets: epsilon
 delta 1e-5, with the non-DP methods reported at epsilon infinity; three seeds per cell. The
 accountant each library uses is named in `docs/synthesisers.md` with the version, because a
 wrong epsilon is worse than none and the plan does not roll its own.
-**Amended 2026-10-18:** AIM's epsilon 8 grid cells are dropped for now, to be revisited (Peter).
+**Amended 2026-10-18:** AIM's epsilon 8 grid cells are dropped (Peter; final 2026-10-28, below).
 On the rented 32-vCPU, 128 GB machine AIM at epsilon 8 on ACS grew to 25 GB in under five hours
 while every other cell stayed under 8 GB, and two such cells exhausted the machine; none of the
 nine had finished when they were stopped. The report shows the cell as not run, with that
@@ -106,6 +106,11 @@ estimated at CA$60 to 150 of rented time against about CA$15 left in the budget,
 dataset at CA$25 to 45. Neither could change the recommendation: at epsilon 2 AIM is 0.10 to 0.17
 AUC short of the 0.02 bar on every task, and no doubling of its budget gained more than 0.03.
 The report shows the cell as not run, with that measurement.
+**Amended 2026-10-28:** the epsilon 8 cells are not revisited either (Peter). Running both
+budgets on every seed was estimated at CA$310 to 800 of rented time (epsilon 8 on a 256 GB
+machine, since no table had finished), and one seed per dataset of each at CA$110 to 260,
+against the same CA$15 left; for the same reason as epsilon 4, neither could change the
+recommendation.
 
 ### 2.3 The attacks are implemented from the papers and checked against the libraries
 
