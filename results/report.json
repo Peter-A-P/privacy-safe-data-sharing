@@ -9120,6 +9120,15 @@
     "2way": 0.2499472222222222,
     "3way": 0.3386525
    },
+   "membership": {
+    "accuracy": 0.5,
+    "lo": 0.40736926744019714,
+    "hi": 0.5926307325598028,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
    "passes_utility": false,
    "passes_risk": true
   },
@@ -9782,6 +9791,15 @@
     "1way": 0.17842450980392158,
     "2way": 0.3052731617647059,
     "3way": 0.40559375
+   },
+   "membership": {
+    "accuracy": 0.49166666666666664,
+    "lo": 0.39925858253840957,
+    "hi": 0.5844957086346798,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
    },
    "passes_utility": false,
    "passes_risk": true
@@ -10473,6 +10491,15 @@
     "1way": 0.20630208333333333,
     "2way": 0.34424486111111113,
     "3way": 0.4417171666666666
+   },
+   "membership": {
+    "accuracy": 0.575,
+    "lo": 0.4814650063871672,
+    "hi": 0.6647440519626395,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
    },
    "passes_utility": false,
    "passes_risk": true

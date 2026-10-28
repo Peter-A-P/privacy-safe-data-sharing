@@ -242,8 +242,10 @@ the ones the grid contains ([rejected.md](rejected.md)).
 
 **Membership inference at 1,000 rows sees none of the crude tables.** All nine are at chance.
 This is the attack's weakness at this scale, already visible on the copy control. It is not
-evidence about the rungs. Its 1,080 fits for the overfitted TVAE, the rung the plan named as the
-likeliest to show up there, are running; the result goes in the tables when they finish.
+evidence about the rungs. Nor does it see the overfitted TVAE, the rung the plan named as the
+likeliest to show up there: over its 1,080 fits, six targets per dataset, accuracy is 0.500
+(0.407 to 0.593) on ACS, 0.492 (0.399 to 0.584) on IEEE-CIS and 0.575 (0.481 to 0.665) on SPARCS,
+none above chance at 95%.
 
 ## The most exposed records
 
