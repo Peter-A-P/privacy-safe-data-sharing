@@ -83,7 +83,8 @@ not test this explanation further.
 ## Where it does work
 
 On the leakage ladder (PLAN.md section 2.10, `docs/attacks.md`), DCR flags all nine tables of
-the perturbed copy, SMOTE-NC and k-anonymity: every seed's interval sits above one half. So DCR
+the perturbed copy, SMOTE-NC and k-anonymity: every seed's interval sits above one half. It does
+not flag the overfitted TVAE, which no attack catches on its full target sets either. So DCR
 does catch copies and near-copies, which is the case it was designed for. The rejection stands
 for the cases that matter here: tables that are not copies, where it flagged differentially
 private ones no attack could break and passed the one an attack broke.

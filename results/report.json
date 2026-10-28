@@ -8966,8 +8966,16 @@
     1,
     2
    ],
-   "seeds_attacked": [],
-   "seeds_scored": [],
+   "seeds_attacked": [
+    0,
+    1,
+    2
+   ],
+   "seeds_scored": [
+    0,
+    1,
+    2
+   ],
    "epsilon_spent": null,
    "fit_seconds_median": 2331.028,
    "hardware": [
@@ -8975,7 +8983,145 @@
    ],
    "device": [
     "cuda"
-   ]
+   ],
+   "risk": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.00045257538448505234,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.014596024894367508,
+     "lo": 0.0018040017694447887,
+     "hi": 0.027388048019290227,
+     "main_rate": 0.12266666666666666,
+     "control_rate": 0.10966666666666666,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0005579741067337997,
+     "main_rate": 0.00016666666666666666,
+     "control_rate": 0.0003333333333333333,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0033776816714123706,
+     "main_rate": 0.010333333333333333,
+     "control_rate": 0.010666666666666666,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.01647329219454318,
+     "main_rate": 0.19233333333333333,
+     "control_rate": 0.19316666666666665,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "dcr": {
+    "exact_copy_targets": 0.011166666666666667,
+    "exact_copy_control": 0.011166666666666667,
+    "closer_to_training_share": 0.4979166666666666,
+    "closer_lo_min": 0.472375
+   },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0012557179701557085,
+     "main_rate": 0.0,
+     "control_rate": 0.0013333333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.01796079293293565,
+     "lo": 0.0,
+     "hi": 0.03899015442625017,
+     "main_rate": 0.09,
+     "control_rate": 0.07333333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.002161600403738001,
+     "main_rate": 0.009333333333333334,
+     "control_rate": 0.015333333333333332,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.04135297727839054,
+     "lo": 0.004060825436081175,
+     "hi": 0.0786451291206999,
+     "main_rate": 0.244,
+     "control_rate": 0.21133333333333335,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
+   "utility": {
+    "income": {
+     "auc_synthetic": 0.8336898992547402,
+     "auc_ceiling": 0.8953818045518164,
+     "delta": -0.061691905297076056,
+     "delta_lo_worst": -0.08708490337495554,
+     "delta_hi_best": -0.03494343607591969
+    },
+    "employment": {
+     "auc_synthetic": 0.7666194901404669,
+     "auc_ceiling": 0.8346707404758781,
+     "delta": -0.06805125033541115,
+     "delta_lo_worst": -0.1142151086111131,
+     "delta_hi_best": -0.031476631185100516
+    }
+   },
+   "marginal_error": {
+    "1way": 0.14350833333333335,
+    "2way": 0.2499472222222222,
+    "3way": 0.3386525
+   },
+   "passes_utility": false,
+   "passes_risk": true
   },
   {
    "dataset": "ieeecis",
@@ -9480,6 +9626,165 @@
    },
    "passes_utility": false,
    "passes_risk": false
+  },
+  {
+   "dataset": "ieeecis",
+   "method": "tvae_overfit",
+   "epsilon": null,
+   "seeds": [
+    0,
+    1,
+    2
+   ],
+   "seeds_attacked": [
+    0,
+    1,
+    2
+   ],
+   "seeds_scored": [
+    0,
+    1,
+    2
+   ],
+   "epsilon_spent": null,
+   "fit_seconds_median": 1373.769,
+   "hardware": [
+    "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz with NVIDIA GeForce GTX 1650"
+   ],
+   "device": [
+    "cuda"
+   ],
+   "risk": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.00045257538448505234,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.007228150757446179,
+     "main_rate": 0.065,
+     "control_rate": 0.06716666666666667,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0007947696579801627,
+     "main_rate": 0.0003333333333333333,
+     "control_rate": 0.0003333333333333333,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0012217469964864395,
+     "main_rate": 0.013333333333333334,
+     "control_rate": 0.0165,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.014132826588084142,
+     "lo": 0.0,
+     "hi": 0.03839771852091872,
+     "main_rate": 0.326,
+     "control_rate": 0.31633333333333336,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "dcr": {
+    "exact_copy_targets": 0.011166666666666667,
+    "exact_copy_control": 0.013166666666666667,
+    "closer_to_training_share": 0.5134166666666666,
+    "closer_lo_min": 0.489871875
+   },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.002585234316175458,
+     "main_rate": 0.0006666666666666666,
+     "control_rate": 0.0006666666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.021608204459979845,
+     "main_rate": 0.098,
+     "control_rate": 0.1,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.002585234316175458,
+     "main_rate": 0.0006666666666666666,
+     "control_rate": 0.0006666666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.004155352768188472,
+     "lo": 0.0,
+     "hi": 0.018930158690847597,
+     "main_rate": 0.042666666666666665,
+     "control_rate": 0.03866666666666667,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.08439058165971801,
+     "lo": 0.03693486070018612,
+     "hi": 0.1318463026192499,
+     "main_rate": 0.372,
+     "control_rate": 0.314,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 0.021925870444476234
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
+   "utility": {
+    "fraud": {
+     "auc_synthetic": 0.7149915509799651,
+     "auc_ceiling": 0.8460635560563149,
+     "delta": -0.13107200507634972,
+     "delta_lo_worst": -0.22386071617416478,
+     "delta_hi_best": -0.043410910180294436
+    }
+   },
+   "marginal_error": {
+    "1way": 0.17842450980392158,
+    "2way": 0.3052731617647059,
+    "3way": 0.40559375
+   },
+   "passes_utility": false,
+   "passes_risk": true
   },
   {
    "dataset": "sparcs",
@@ -10005,6 +10310,172 @@
    },
    "passes_utility": false,
    "passes_risk": false
+  },
+  {
+   "dataset": "sparcs",
+   "method": "tvae_overfit",
+   "epsilon": null,
+   "seeds": [
+    0,
+    1,
+    2
+   ],
+   "seeds_attacked": [
+    0,
+    1,
+    2
+   ],
+   "seeds_scored": [
+    0,
+    1,
+    2
+   ],
+   "epsilon_spent": null,
+   "fit_seconds_median": 1377.444,
+   "hardware": [
+    "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz with NVIDIA GeForce GTX 1650"
+   ],
+   "device": [
+    "cuda"
+   ],
+   "risk": {
+    "singling_out_univariate": {
+     "value": 0.0003332266602922108,
+     "lo": 0.0,
+     "hi": 0.0009797272031017209,
+     "main_rate": 0.0003333333333333333,
+     "control_rate": 0.0,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.009914101364882352,
+     "lo": 0.0,
+     "hi": 0.022613784707707505,
+     "main_rate": 0.11816666666666667,
+     "control_rate": 0.10933333333333334,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0003332266602922108,
+     "lo": 0.0,
+     "hi": 0.0009797272031017209,
+     "main_rate": 0.0003333333333333333,
+     "control_rate": 0.0,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0023030276618108817,
+     "main_rate": 0.010333333333333333,
+     "control_rate": 0.011833333333333333,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.010537689691058592,
+     "main_rate": 0.22016666666666668,
+     "control_rate": 0.227,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "dcr": {
+    "exact_copy_targets": 0.0029999999999999996,
+    "exact_copy_control": 0.0013333333333333333,
+    "closer_to_training_share": 0.533,
+    "closer_lo_min": 0.498
+   },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0006658141008497828,
+     "lo": 0.0,
+     "hi": 0.0028952864062306675,
+     "main_rate": 0.0006666666666666666,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0014728400242247292,
+     "lo": 0.0,
+     "hi": 0.02490239465932452,
+     "main_rate": 0.09733333333333333,
+     "control_rate": 0.096,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0015661863966192368,
+     "main_rate": 0.0,
+     "control_rate": 0.0006666666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "main_rate": 0.010666666666666666,
+     "control_rate": 0.02,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.01236160024917899,
+     "main_rate": 0.256,
+     "control_rate": 0.2793333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
+   "utility": {
+    "long_stay": {
+     "auc_synthetic": 0.776950783159552,
+     "auc_ceiling": 0.855305021484971,
+     "delta": -0.07835423832541888,
+     "delta_lo_worst": -0.10674558934094047,
+     "delta_hi_best": -0.052708544975075156
+    },
+    "high_charge": {
+     "auc_synthetic": 0.820630827040838,
+     "auc_ceiling": 0.8768128539997658,
+     "delta": -0.0561820269589279,
+     "delta_lo_worst": -0.08535756811033343,
+     "delta_hi_best": -0.038916129439249346
+    }
+   },
+   "marginal_error": {
+    "1way": 0.20630208333333333,
+    "2way": 0.34424486111111113,
+    "3way": 0.4417171666666666
+   },
+   "passes_utility": false,
+   "passes_risk": true
   }
  ],
  "ladder_leaks": [
@@ -10728,6 +11199,21 @@
    "lo_bonferroni": 0.0024793092357076538,
    "main_rate": 0.3526666666666667,
    "control_rate": 0.308,
+   "seeds": 3
+  },
+  {
+   "dataset": "ieeecis",
+   "library": "sdv",
+   "version": "2.0.0",
+   "method": "tvae_overfit",
+   "epsilon": null,
+   "attack": "inference",
+   "risk": 0.08439058165971801,
+   "lo": 0.03693486070018612,
+   "hi": 0.1318463026192499,
+   "lo_bonferroni": 0.021925870444476234,
+   "main_rate": 0.372,
+   "control_rate": 0.314,
    "seeds": 3
   },
   {

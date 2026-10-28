@@ -46,6 +46,12 @@ FIT_SECONDS = {
     ("mst", 8.0): 90,
     ("aim", 1.0): 279,
     ("aim", 8.0): 1822,
+    # The leakage ladder (2026-10-27): the three rule-based methods take about a second; TVAE at
+    # 3,000 epochs is ten times the default's 19.
+    ("perturb", None): 1,
+    ("smote", None): 2,
+    ("kanon", None): 1,
+    ("tvae_overfit", None): 190,
 }
 
 # Peak GB per job, rounded up from the build desktop and the rented machine (2026-10-17).

@@ -68,9 +68,9 @@ detected are named in [docs/results.md](docs/results.md#the-leakage-ladder).
 
 | Dataset | Perturbed copy | SMOTE-NC | k-anonymity, k = 5 | TVAE, 3,000 epochs |
 |---|---|---|---|---|
-| ACS PUMS, California 2018 | 4 of 5, up to 18.5% (linkability, 10 neighbours); utility -0.014 (employment) | 4 of 5, up to 27.8% (inference); utility -0.009 (employment) | 2 of 5, up to 9.3% (inference); utility -0.019 (employment) | pending |
-| IEEE-CIS card transactions | 3 of 5, up to 7.7% (inference); utility -0.050 (fraud) | 4 of 5, up to 38.6% (inference); utility -0.043 (fraud) | 2 of 5, up to 6.1% (inference); utility -0.082 (fraud) | pending |
-| NY SPARCS discharges | 3 of 5, up to 57.6% (inference); utility -0.010 (high_charge) | 3 of 5, up to 32.1% (inference); utility -0.009 (high_charge) | 2 of 5, up to 4.9% (inference); utility -0.033 (long_stay) | pending |
+| ACS PUMS, California 2018 | 4 of 5, up to 18.5% (linkability, 10 neighbours); utility -0.014 (employment) | 4 of 5, up to 27.8% (inference); utility -0.009 (employment) | 2 of 5, up to 9.3% (inference); utility -0.019 (employment) | none detected; utility -0.068 (employment) |
+| IEEE-CIS card transactions | 3 of 5, up to 7.7% (inference); utility -0.050 (fraud) | 4 of 5, up to 38.6% (inference); utility -0.043 (fraud) | 2 of 5, up to 6.1% (inference); utility -0.082 (fraud) | none detected; utility -0.131 (fraud) |
+| NY SPARCS discharges | 3 of 5, up to 57.6% (inference); utility -0.010 (high_charge) | 3 of 5, up to 32.1% (inference); utility -0.009 (high_charge) | 2 of 5, up to 4.9% (inference); utility -0.033 (long_stay) | none detected; utility -0.078 (long_stay) |
 
 **The most exposed records.** The same attacks on each grid table's most unusual quarter of
 targets against its most unusual quarter of control records: 6 detected risks
@@ -103,7 +103,9 @@ above chance (the TAPAS comparison in [docs/results.md](docs/results.md)). Every
 here is at chance, and that means the attack could not tell, not that the tables are safe. The
 three legal-test attacks run on the full 20,000-row tables and carry the risk numbers, and the
 leakage ladder shows they have the power the membership attack lacks: they catch every perturbed
-copy, SMOTE-NC and k-anonymity table they were given.
+copy, SMOTE-NC and k-anonymity table they were given. The fourth ladder method, TVAE trained
+for 3,000 epochs, escapes them on its full target sets, so an overfitted deep model at this size
+is not something these attacks are shown to catch.
 
 ## Tried and rejected
 

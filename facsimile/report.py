@@ -855,7 +855,9 @@ def render_ladder_summary(report: dict[str, Any]) -> list[str]:
     out = [
         "**The leakage ladder.** Four methods people use as synthetic or anonymised data, expected",
         "to leak, through the same attacks as the positive controls of the grid (PLAN.md section",
-        "2.10). The attacks that detect a risk on each, at the same Bonferroni level:",
+        "2.10). Each cell: how many of the five attacks detect a risk at the same Bonferroni",
+        "level, the largest of those risks, and the utility gap on the worst task. The attacks",
+        "detected are named in [docs/results.md](docs/results.md#the-leakage-ladder).",
         "",
         "| Dataset | " + " | ".join(METHOD_NAMES[m] for m in LADDER) + " |",
         "|---|" + "---|" * len(LADDER),
@@ -868,11 +870,15 @@ def render_ladder_summary(report: dict[str, Any]) -> list[str]:
             if r is None or "risk" not in r:
                 row.append("pending")
                 continue
-            found = _detected(r["risk"])
-            mem = r.get("membership")
-            if mem and mem["detected"]:
-                found.append("membership")
-            row.append(", ".join(found) if found else "none")
+            found = [a for a in ATTACKS if r["risk"][a]["detected"]]
+            if not found:
+                row.append(f"none detected; utility {_worst_gap(r)}")
+                continue
+            top = max(found, key=lambda a: r["risk"][a]["value"])
+            row.append(
+                f"{len(found)} of {len(ATTACKS)}, up to {_pct(r['risk'][top]['value'])}% "
+                f"({ATTACK_NAMES[top]}); utility {_worst_gap(r)}"
+            )
         out.append("| " + " | ".join(row) + " |")
     return [*out, ""]
 
@@ -882,10 +888,20 @@ def render_exposed_summary(report: dict[str, Any]) -> list[str]:
     if not grid:
         return []
     found = [lk for lk in report.get("exposed_leaks", []) if lk["method"] in METHODS]
+    tests = len(grid) * len(ATTACKS)
+    # At the Bonferroni level each test's interval excludes zero by chance with probability
+    # ALPHA / len(ATTACKS) / 2, one-sided.
+    chance = tests * ALPHA / len(ATTACKS) / 2
     out = [
         "**The most exposed records.** The same attacks on each grid table's most unusual quarter of",
         f"targets against its most unusual quarter of control records: {len(found)} detected risks",
-        f"across {len(grid)} configurations.",
+        f"across {len(grid)} configurations, where chance alone would give about {chance:.1f} of the",
+        f"{tests} tests."
+        + (
+            " Every one is a differentially private configuration."
+            if found and all(lk["epsilon"] is not None for lk in found)
+            else ""
+        ),
     ]
     if found:
         out += [

@@ -457,10 +457,11 @@ function ladder(data) {
     const found = r ? Object.entries(r.risk).filter(([, v]) => v.detected).map(([a]) => ATTACKS[a].toLowerCase()) : [];
     if (r && r.membership && r.membership.detected) found.push("membership inference");
     const gap = r && r.utility ? worstTask(r).u.delta : null;
+    const unusual = r && r.risk_exposed ? Object.entries(r.risk_exposed).filter(([a, v]) => v.detected && !r.risk[a].detected).map(([a]) => ATTACKS[a].toLowerCase()) : [];
     card.append(
       el("h3", {}, LADDER[mm].name),
       el("p", {}, LADDER[mm].what + "."),
-      el("p", { class: "card-result" }, r ? `${found.length ? `Caught by ${found.join(", ")}` : "Caught by no attack"}${gap !== null ? `; usefulness ${signed(gap, 3)} AUC` : ""}.` : "Still being attacked."),
+      el("p", { class: "card-result" }, r ? `${found.length ? `Caught by ${found.join(", ")}` : "Caught by no attack"}${unusual.length ? `; on its most unusual records, by ${unusual.join(", ")}` : ""}${gap !== null ? `; usefulness ${signed(gap, 3)} AUC` : ""}.` : "Still being attacked."),
     );
     cards.append(card);
   }
@@ -469,6 +470,10 @@ function ladder(data) {
   const caught = all.filter((r) => Object.values(r.risk).some((v) => v.detected));
   fill($("ladder-verdict"), all.length ? [
     strong(`The attacks catch ${caught.length} of the ${all.length} leaky tables they were given. `),
+    ...(() => {
+      const missed = [...new Set(all.filter((r) => !caught.includes(r)).map((r) => LADDER[r.method].name))];
+      return missed.length ? [`The tables they do not catch are ${missed.join(", ")}: trained ten times longer on 20,000 records, it showed no measurable memorisation, as the plan said it might not. `] : [];
+    })(),
     "On the same attacks, the six synthesisers sit near zero, with one exception. So a result at control level on the grid is the attacks failing to find a leak that they would have found in a table like these, not attacks too weak to find anything.",
   ] : ["The ladder's tables are still being attacked."]);
 
@@ -735,8 +740,9 @@ function takeaways(data) {
     ["Demand a control group, or the number means nothing", "An attack on a useful table always succeeds on someone, because predicting people is what the table is for. Only the excess over people the synthesiser never saw is a leak. Ask any vendor what their privacy score is measured against."],
     ["Test the attacks before trusting a clean result", "Four methods people really use, a perturbed copy, SMOTE, k-anonymity and an overfitted model, went through the same attacks. The three regulators' attacks caught every perturbed copy, SMOTE and k-anonymity table they were given. Without positive controls like these, 'no leak found' cannot be told apart from 'attack too weak to find one'."],
     ["Attack the unusual people separately", "Randomly chosen targets are mostly ordinary people. Attacked again on the most unusual quarter, differentially private tables at epsilon 1 and 2 gave away 4.6% to 7.2% on inference, where the full target set showed 2.5% or nothing detected."],
+    ["Training longer is not the same as memorising", "TVAE trained for 3,000 epochs instead of 300, on 20,000 records, showed no detected risk on its full target sets on any dataset; only inference on the most unusual IEEE-CIS records found one. Overfitting worries are about small tables. At this size the rule-based methods people call safe were far more dangerous."],
     ["The most useful 'synthetic' tables were the leakiest", "The only tables close enough to the real data to recommend were a perturbed copy and SMOTE output, and the attacks broke both. A usefulness score alone would have picked exactly the wrong tables."],
-    ["Do not use distance to closest record as the privacy test", `It flagged ${flagged.length} tables no attack could break and passed the one that leaked. It is the check most tools show first. It does flag crude copies, all nine ladder tables, but on the real synthesisers it answered the wrong question in both directions.`],
+    ["Do not use distance to closest record as the privacy test", `It flagged ${flagged.length} tables no attack could break and passed the one that leaked. It is the check most tools show first. It does flag crude copies, every perturbed copy, SMOTE and k-anonymity table, but on the real synthesisers it answered the wrong question in both directions.`],
     ["Differential privacy bounds a leak; it does not make it zero", l ? `${METHODS[l.method].name} at epsilon ${l.epsilon} carries a formal guarantee and still gave away ${pct(l.risk)} on income bracket. Epsilon is a promise about the mechanism. Whether a leak is measurable on your data is a separate question that only an attack answers.` : "Epsilon is a promise about the mechanism, not a measurement of a table."],
     ["Privacy has a price, and it can be measured before you pay it", `The best non-private synthesiser lost ${span(gaps.map((g) => g.open))} AUC on its worst task; the best private one, ${span(gaps.map((g) => g.dp))}. That is the conversation a privacy officer and a data scientist need to have, with numbers on the table.`],
     ["Looking like the data is not the same as being useful", "The Gaussian copula reproduces the counts better than most and trains some of the worst models. Judge a synthetic table by training on it and testing on real data, not by a similarity score."],

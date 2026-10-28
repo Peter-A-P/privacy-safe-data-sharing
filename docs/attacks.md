@@ -203,7 +203,7 @@ expected outcomes were committed to PLAN.md section 2.10 (commit `2ee5029`) befo
 ran. The methods are in `facsimile/synth/ladder.py`. The numbers are in
 [results.md](results.md#the-leakage-ladder) and the README.
 
-**The three regulators' attacks catch every rung they were given.** The perturbed copy, SMOTE-NC
+**The three regulators' attacks catch every crude rung.** The perturbed copy, SMOTE-NC
 and k-anonymity are each detected by two to four of the five attacks on every dataset. The
 largest risks range from 4.9% (k-anonymity on SPARCS) to 57.6% (the perturbed copy's inference on
 SPARCS), against at most 2.5% on any grid synthesiser. That is what makes a result at control
@@ -226,17 +226,24 @@ the rule's usefulness test: within 0.02 AUC of the real-data model on every task
 No synthesiser in the grid reached that bar. A
 release rule that looked only at usefulness would pick exactly the tables the attacks break.
 
-**Distance to closest record flags all nine.** On these crude rungs, a share closer to training
-than one half is the right warning, and every rung's interval sits above it. So the DCR check
+**The overfitted TVAE is not caught.** TVAE at 3,000 epochs instead of 300, on the same 20,000
+records, shows no detected risk on its full target sets on any dataset, and distance to closest
+record does not flag it either (every seed's interval reaches one half). On its most unusual
+records, inference on IEEE-CIS is detected: 8.4% (3.7 to 13.2). PLAN.md section 2.10 allowed
+for this ("at 20,000 rows, possibly nothing"). At this size, ten times the training did not make
+the model measurably memorise its records. Its usefulness stays in the range of the grid's TVAE,
+not the near-copies' ([results.md](results.md#the-leakage-ladder)).
+
+**Distance to closest record flags all nine crude tables.** On the perturbed copy, SMOTE-NC and
+k-anonymity, a share closer to training than one half is the right warning, and every table's
+interval sits above it. So the DCR check
 catches copies and near-copies. What it cannot do is separate the subtle cases, and those are
 the ones the grid contains ([rejected.md](rejected.md)).
 
-**Membership inference at 1,000 rows sees none of them.** All nine are at chance. This is the
-attack's weakness at this scale, already visible on the copy control. It is not evidence about
-the rungs.
-
-The fourth rung, TVAE at 3,000 epochs, is still running. It is the likeliest to show up in the
-membership attack.
+**Membership inference at 1,000 rows sees none of the crude tables.** All nine are at chance.
+This is the attack's weakness at this scale, already visible on the copy control. It is not
+evidence about the rungs. Its 1,080 fits for the overfitted TVAE, the rung the plan named as the
+likeliest to show up there, are running; the result goes in the tables when they finish.
 
 ## The most exposed records
 
