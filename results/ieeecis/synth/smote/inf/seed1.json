@@ -1,0 +1,39 @@
+{
+  "facsimile": "0.0.1",
+  "dataset": "ieeecis",
+  "method": "smote",
+  "library": "facsimile",
+  "family": "non-dp interpolation",
+  "epsilon": null,
+  "seed": 1,
+  "cell": {
+    "eps_tag": "inf"
+  },
+  "rows": 20000,
+  "params": {
+    "library": "facsimile",
+    "k": 5,
+    "distance": "mixed-type (Gower), as the attacks"
+  },
+  "accounting": {
+    "dp": false,
+    "epsilon": "inf"
+  },
+  "fitted_on_sha256": "500a68e725547e6ecf3a375fc6ff047bb8818f889135f45d6a1a52961e25960c",
+  "train_sha256": "500a68e725547e6ecf3a375fc6ff047bb8818f889135f45d6a1a52961e25960c",
+  "table_sha256": "dbd1fbf4a0072f803dc3709e39867fd61d0a6763850230a9f30aea5f0bcec6d1",
+  "fit_seconds": 472.311,
+  "sample_seconds": 0.0,
+  "device": "cpu",
+  "hardware": {
+    "cpu": "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz",
+    "logical_cores": 12,
+    "os": "Windows 11",
+    "python": "3.13.5",
+    "torch": "2.14.1+cu126",
+    "gpu": "NVIDIA GeForce GTX 1650",
+    "gpu_memory_gb": 4.0
+  },
+  "started_utc": "2026-10-28T01:03:35+00:00",
+  "notes": []
+}

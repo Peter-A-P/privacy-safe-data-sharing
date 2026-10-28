@@ -1,0 +1,73 @@
+{
+  "facsimile": "0.0.1",
+  "dataset": "ieeecis",
+  "method": "perturb",
+  "epsilon": null,
+  "seed": 0,
+  "table_sha256": "14f4c0ae57f046ec537d664b9ffe23b65705da84a310ec7b07bf6be4e04789b6",
+  "model": {
+    "library": "lightgbm",
+    "params": {
+      "n_estimators": 300,
+      "learning_rate": 0.05,
+      "num_leaves": 31,
+      "min_child_samples": 20,
+      "subsample": 0.8,
+      "subsample_freq": 1,
+      "colsample_bytree": 0.8,
+      "verbose": -1,
+      "n_jobs": 4
+    },
+    "seed": 0
+  },
+  "tasks": {
+    "fraud": {
+      "auc_synthetic": {
+        "point": 0.7926472557174947,
+        "lo": 0.7659104164145768,
+        "hi": 0.8188219669705855,
+        "n": 10000
+      },
+      "auc_real_ceiling": {
+        "point": 0.8460635560563149,
+        "lo": 0.8234896980657868,
+        "hi": 0.8684970629438746,
+        "n": 10000
+      },
+      "auc_floor": 0.5,
+      "delta_vs_ceiling": {
+        "point": -0.053416300338820166,
+        "lo": -0.07150420766437353,
+        "hi": -0.03507224408795203,
+        "n": 10000
+      },
+      "synthetic_trained": true,
+      "note": "",
+      "test_rows": 10000,
+      "test_positive_rate": 0.0333
+    }
+  },
+  "marginal_error": {
+    "1way": {
+      "point": 0.057614705882352936,
+      "lo": 0.022202867647058824,
+      "hi": 0.1005194852941176,
+      "n": 17,
+      "marginals": 17
+    },
+    "2way": {
+      "point": 0.12204044117647059,
+      "lo": 0.10700951286764705,
+      "hi": 0.13761159926470587,
+      "n": 136,
+      "marginals": 136
+    },
+    "3way": {
+      "point": 0.18591625,
+      "lo": 0.17182287499999999,
+      "hi": 0.19932103750000002,
+      "n": 200,
+      "marginals": 200
+    }
+  }
+}

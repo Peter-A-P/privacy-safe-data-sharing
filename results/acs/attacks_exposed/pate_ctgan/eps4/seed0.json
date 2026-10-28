@@ -1,0 +1,286 @@
+{
+  "facsimile": "0.0.1",
+  "dataset": "acs",
+  "method": "pate_ctgan",
+  "epsilon": 4.0,
+  "seed": 0,
+  "table_sha256": "bce2a1f52e96bc6bb949135d61cfce426e83fd105b763140424cd8e8e37c81bc",
+  "subset": {
+    "share": 0.25,
+    "targets": 500,
+    "control": 500,
+    "ranked_by": "mean mixed-type distance to 2000 test-split records"
+  },
+  "attacks": {
+    "singling_out_univariate": {
+      "attack": "singling_out_univariate",
+      "n_attacks": 500,
+      "main": {
+        "value": 0.0038121702307761206,
+        "lo": 4.336808689942018e-19,
+        "hi": 0.007624340461552241,
+        "successes": 0.0,
+        "trials": 500
+      },
+      "control": {
+        "value": 0.0038121702307761206,
+        "lo": 4.336808689942018e-19,
+        "hi": 0.007624340461552241,
+        "successes": 0.0,
+        "trials": 500
+      },
+      "baseline": {
+        "value": 0.011751175507083702,
+        "lo": 0.00311531518006224,
+        "hi": 0.020387035834105165,
+        "successes": 4.0,
+        "trials": 500
+      },
+      "risk": {
+        "value": 0.0,
+        "lo": 0.0,
+        "hi": 0.005411853750198381,
+        "detected": false
+      },
+      "beats_baseline": false,
+      "params": {
+        "mode": "univariate",
+        "n_cols": 1,
+        "predicates_found": 0,
+        "max_attempts": 1000000,
+        "unique_rows": {
+          "synthetic": 19993,
+          "targets": 498,
+          "control": 500
+        },
+        "seed": 0
+      }
+    },
+    "singling_out_multivariate": {
+      "attack": "singling_out_multivariate",
+      "n_attacks": 500,
+      "main": {
+        "value": 0.03556819133600645,
+        "lo": 0.019791513626571118,
+        "hi": 0.051344869045441784,
+        "successes": 16.0,
+        "trials": 500
+      },
+      "control": {
+        "value": 0.03556819133600645,
+        "lo": 0.019791513626571118,
+        "hi": 0.051344869045441784,
+        "successes": 16.0,
+        "trials": 500
+      },
+      "baseline": {
+        "value": 0.0574004558458523,
+        "lo": 0.03737435018105752,
+        "hi": 0.07742656151064709,
+        "successes": 27.0,
+        "trials": 500
+      },
+      "risk": {
+        "value": 0.0,
+        "lo": 0.0,
+        "hi": 0.023134441839678128,
+        "detected": false
+      },
+      "beats_baseline": false,
+      "params": {
+        "mode": "multivariate",
+        "n_cols": 3,
+        "predicates_found": 500,
+        "max_attempts": 1000000,
+        "unique_rows": {
+          "synthetic": 19993,
+          "targets": 498,
+          "control": 500
+        },
+        "seed": 0
+      }
+    },
+    "linkability_k1": {
+      "attack": "linkability",
+      "n_attacks": 500,
+      "main": {
+        "value": 0.0038121702307761206,
+        "lo": 4.336808689942018e-19,
+        "hi": 0.007624340461552241,
+        "successes": 0.0,
+        "trials": 500
+      },
+      "control": {
+        "value": 0.0038121702307761206,
+        "lo": 4.336808689942018e-19,
+        "hi": 0.007624340461552241,
+        "successes": 0.0,
+        "trials": 500
+      },
+      "baseline": {
+        "value": 0.0038121702307761206,
+        "lo": 4.336808689942018e-19,
+        "hi": 0.007624340461552241,
+        "successes": 0.0,
+        "trials": 500
+      },
+      "risk": {
+        "value": 0.0,
+        "lo": 0.0,
+        "hi": 0.005411853750198381,
+        "detected": false
+      },
+      "beats_baseline": false,
+      "params": {
+        "a": [
+          "AGEP",
+          "SEX",
+          "RAC1P",
+          "MAR",
+          "POBP",
+          "CIT",
+          "NATIVITY",
+          "RELP"
+        ],
+        "b": [
+          "SCHL",
+          "OCCP",
+          "COW",
+          "WKHP",
+          "PINCP",
+          "DIS",
+          "MIL",
+          "ESR"
+        ],
+        "k": 1,
+        "seed": 0
+      }
+    },
+    "linkability_k10": {
+      "attack": "linkability",
+      "n_attacks": 500,
+      "main": {
+        "value": 0.005796921549853016,
+        "lo": 0.00035313639455927456,
+        "hi": 0.011240706705146757,
+        "successes": 1.0,
+        "trials": 500
+      },
+      "control": {
+        "value": 0.005796921549853016,
+        "lo": 0.00035313639455927456,
+        "hi": 0.011240706705146757,
+        "successes": 1.0,
+        "trials": 500
+      },
+      "baseline": {
+        "value": 0.005796921549853016,
+        "lo": 0.00035313639455927456,
+        "hi": 0.011240706705146757,
+        "successes": 1.0,
+        "trials": 500
+      },
+      "risk": {
+        "value": 0.0,
+        "lo": 0.0,
+        "hi": 0.0077435636281303006,
+        "detected": false
+      },
+      "beats_baseline": false,
+      "params": {
+        "a": [
+          "AGEP",
+          "SEX",
+          "RAC1P",
+          "MAR",
+          "POBP",
+          "CIT",
+          "NATIVITY",
+          "RELP"
+        ],
+        "b": [
+          "SCHL",
+          "OCCP",
+          "COW",
+          "WKHP",
+          "PINCP",
+          "DIS",
+          "MIL",
+          "ESR"
+        ],
+        "k": 10,
+        "seed": 0
+      }
+    },
+    "inference": {
+      "attack": "inference",
+      "n_attacks": 500,
+      "main": {
+        "value": 0.11098874146092848,
+        "lo": 0.08372280963705037,
+        "hi": 0.1382546732848066,
+        "successes": 54.0,
+        "trials": 500
+      },
+      "control": {
+        "value": 0.10900399014185158,
+        "lo": 0.08195705027297033,
+        "hi": 0.13605093001073282,
+        "successes": 53.0,
+        "trials": 500
+      },
+      "baseline": {
+        "value": 0.12289724937538986,
+        "lo": 0.09437490012636912,
+        "hi": 0.1514195986244106,
+        "successes": 60.0,
+        "trials": 500
+      },
+      "risk": {
+        "value": 0.002227564766976768,
+        "lo": 0.0,
+        "hi": 0.045283768453066794,
+        "detected": false
+      },
+      "beats_baseline": false,
+      "params": {
+        "secret": "PINCP",
+        "aux": [
+          "AGEP",
+          "COW",
+          "SCHL",
+          "MAR",
+          "OCCP",
+          "POBP",
+          "RELP",
+          "WKHP",
+          "SEX",
+          "RAC1P",
+          "DIS",
+          "CIT",
+          "MIL",
+          "NATIVITY",
+          "ESR"
+        ],
+        "seed": 0
+      }
+    }
+  },
+  "timings": {
+    "singling_out_univariate": 0.32,
+    "singling_out_multivariate": 3.77,
+    "linkability_k1": 10.36,
+    "linkability_k10": 11.13,
+    "inference": 11.15
+  },
+  "seconds": 36.8,
+  "hardware": {
+    "cpu": "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz",
+    "logical_cores": 12,
+    "os": "Windows 11",
+    "python": "3.13.5",
+    "torch": "2.14.1+cu126",
+    "gpu": "NVIDIA GeForce GTX 1650",
+    "gpu_memory_gb": 4.0
+  }
+}

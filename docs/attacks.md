@@ -193,3 +193,81 @@ within three trials of each other. So on these tables the feature maps are equal
 departure from the paper is closed, and the disagreement is resolved. Both stay weak at this
 scale: on a copy of the training data neither averages better than 0.58, which is the limitation
 the README states.
+
+## The leakage ladder: the attacks' positive controls
+
+The grid detected one risk in 48 configurations. On its own that cannot say whether the tables
+are safe or the attacks are weak. So four methods that people use as synthetic or anonymised
+data, and that were expected to leak, went through exactly the same pipeline. Their settings and
+expected outcomes were committed to PLAN.md section 2.10 (commit `2ee5029`) before any of them
+ran. The methods are in `facsimile/synth/ladder.py`. The numbers are in
+[results.md](results.md#the-leakage-ladder) and the README.
+
+**The three regulators' attacks catch every rung they were given.** The perturbed copy, SMOTE-NC
+and k-anonymity are each detected by two to four of the five attacks on every dataset. The
+largest risks range from 4.9% (k-anonymity on SPARCS) to 57.6% (the perturbed copy's inference on
+SPARCS), against at most 2.5% on any grid synthesiser. That is what makes a result at control
+level on the grid mean something.
+
+**Where each one leaks is where its design says it should.**
+
+- **k-anonymity** is caught by inference and by linkability at ten neighbours, and never by
+  singling out. It makes every record look like four others, which is what singling out tests.
+  It leaves the secret as it was, which is what inference tests. That is the known weakness of
+  k-anonymity (Machanavajjhala et al. 2007, l-diversity).
+- **The perturbed copy and SMOTE-NC** are caught by inference and linkability everywhere. Both
+  are also caught by multivariate singling out on ACS, and SMOTE-NC on IEEE-CIS too.
+- **Univariate singling out** detects nothing anywhere, not even on the perturbed copy. In a
+  binned domain with rare categories merged, almost no single value is unique to one person.
+  That attack has no power on these coded tables, and its zeros on the grid say nothing.
+
+**The leaky rungs are the useful ones.** On ACS and SPARCS, the perturbed copy and SMOTE-NC pass
+the rule's usefulness test: within 0.02 AUC of the real-data model on every task and every seed.
+No synthesiser in the grid reached that bar. A
+release rule that looked only at usefulness would pick exactly the tables the attacks break.
+
+**Distance to closest record flags all nine.** On these crude rungs, a share closer to training
+than one half is the right warning, and every rung's interval sits above it. So the DCR check
+catches copies and near-copies. What it cannot do is separate the subtle cases, and those are
+the ones the grid contains ([rejected.md](rejected.md)).
+
+**Membership inference at 1,000 rows sees none of them.** All nine are at chance. This is the
+attack's weakness at this scale, already visible on the copy control. It is not evidence about
+the rungs.
+
+The fourth rung, TVAE at 3,000 epochs, is still running. It is the likeliest to show up in the
+membership attack.
+
+## The most exposed records
+
+The grid's targets are 2,000 training records drawn at random, so most of them are ordinary.
+Unusual people leak first. Each table was therefore attacked again on the quarter of its targets
+that are most unusual, against the quarter of its control records that are most unusual,
+measured the same way. That way the comparison stays like for like. How unusual a record is:
+its mean mixed-type distance to a fixed sample of 2,000 test-split records, which no synthesiser
+sees (`facsimile/attacks/exposed.py`). That gives 500 targets against 500 controls per seed,
+pooled over three seeds, with the same Bonferroni level as the leak table.
+
+**Six risks appear that the full target set does not show, all on differentially private
+configurations.** By chance alone about 1.2 of the 240 tests would. The strongest are
+inference on ACS:
+
+| Configuration | Risk on all targets | Risk on the most exposed |
+|---|---|---|
+| AIM, epsilon 1 | 2.5% (0.7 to 4.4) | 7.2% (3.8 to 10.7) |
+| AIM, epsilon 2 | 1.7% (0.0 to 3.7), not detected | 5.5% (2.0 to 9.0) |
+| MST, epsilon 1 | 0.2% (0.0 to 1.7), not detected | 4.6% (1.9 to 7.4) |
+
+Three smaller ones are at the edge of what chance could produce:
+- multivariate singling out on AIM at epsilon 1;
+- multivariate singling out on PATE-CTGAN at epsilon 2 on ACS;
+- linkability at ten neighbours on PATE-CTGAN at epsilon 4 on SPARCS, 0.9% against 0.1%.
+
+None of the three synthesisers without a privacy guarantee shows a risk on its exposed records.
+That is not proof that they protect unusual people better, and the project did not test why. It
+is reported as measured.
+
+What this changes: a configuration that passes on randomly chosen targets can still give
+unusual people away. Differential privacy's bound holds for every person, but at epsilon 1 and 2
+it is loose enough for the excess on the most unusual quarter to be measurable. The leak table in
+the README names the full-target leak. The exposed-records table sits beside it.

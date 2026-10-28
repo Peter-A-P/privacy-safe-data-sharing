@@ -60,6 +60,32 @@ worst task, in points, across the three seeds.
 | NY SPARCS discharges | CTGAN, epsilon inf | block on 3 of 3 | -7.6 to -7.0; every interval wholly below -2 |
 | NY SPARCS discharges | AIM, epsilon 2 | block on 3 of 3 | -17.1 to -13.8; every interval wholly below -2 |
 
+**The leakage ladder.** Four methods people use as synthetic or anonymised data, expected
+to leak, through the same attacks as the positive controls of the grid (PLAN.md section
+2.10). Each cell: how many of the five attacks detect a risk at the same Bonferroni
+level, the largest of those risks, and the utility gap on the worst task. The attacks
+detected are named in [docs/results.md](docs/results.md#the-leakage-ladder).
+
+| Dataset | Perturbed copy | SMOTE-NC | k-anonymity, k = 5 | TVAE, 3,000 epochs |
+|---|---|---|---|---|
+| ACS PUMS, California 2018 | 4 of 5, up to 18.5% (linkability, 10 neighbours); utility -0.014 (employment) | 4 of 5, up to 27.8% (inference); utility -0.009 (employment) | 2 of 5, up to 9.3% (inference); utility -0.019 (employment) | pending |
+| IEEE-CIS card transactions | 3 of 5, up to 7.7% (inference); utility -0.050 (fraud) | 4 of 5, up to 38.6% (inference); utility -0.043 (fraud) | 2 of 5, up to 6.1% (inference); utility -0.082 (fraud) | pending |
+| NY SPARCS discharges | 3 of 5, up to 57.6% (inference); utility -0.010 (high_charge) | 3 of 5, up to 32.1% (inference); utility -0.009 (high_charge) | 2 of 5, up to 4.9% (inference); utility -0.033 (long_stay) | pending |
+
+**The most exposed records.** The same attacks on each grid table's most unusual quarter of
+targets against its most unusual quarter of control records: 6 detected risks
+across 48 configurations, where chance alone would give about 1.2 of the
+240 tests. Every one is a differentially private configuration.
+
+| Dataset | Configuration | Attack | Risk, % (95% CI) | Success on members vs control, % |
+|---|---|---|---|---|
+| ACS PUMS, California 2018 | MST, epsilon 1 | inference | 4.6 (1.9 to 7.4) | 16.0 vs 11.9 |
+| ACS PUMS, California 2018 | AIM, epsilon 1 | singling out, multivariate | 2.2 (0.5 to 3.9) | 6.5 vs 4.3 |
+| ACS PUMS, California 2018 | AIM, epsilon 1 | inference | 7.2 (3.8 to 10.7) | 24.2 vs 18.3 |
+| ACS PUMS, California 2018 | AIM, epsilon 2 | inference | 5.5 (2.0 to 9.0) | 23.6 vs 19.1 |
+| ACS PUMS, California 2018 | PATE-CTGAN, epsilon 2 | singling out, multivariate | 1.0 (0.3 to 1.8) | 1.5 vs 0.5 |
+| NY SPARCS discharges | PATE-CTGAN, epsilon 4 | linkability, 10 neighbours | 0.8 (0.2 to 1.4) | 0.9 vs 0.1 |
+
 **What leaked.** A risk counts when its interval at the Bonferroni level excludes zero.
 
 | Dataset | Library and version | Configuration | Attack | Risk, % (95% CI) | Success on members vs control, % |
@@ -75,7 +101,9 @@ scale its paper used, because shadow training needs a synthesiser fit per shadow
 scale it has little power. Even when the attacked table is a copy of the real data, it is barely
 above chance (the TAPAS comparison in [docs/results.md](docs/results.md)). Every membership result
 here is at chance, and that means the attack could not tell, not that the tables are safe. The
-three legal-test attacks run on the full 20,000-row tables and carry the risk numbers.
+three legal-test attacks run on the full 20,000-row tables and carry the risk numbers, and the
+leakage ladder shows they have the power the membership attack lacks: they catch every perturbed
+copy, SMOTE-NC and k-anonymity table they were given.
 
 ## Tried and rejected
 

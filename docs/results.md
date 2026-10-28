@@ -7,7 +7,7 @@ AUC(real ceiling), the mean over seeds, with the worst seed's lower 95% bound; t
 asks that bound to sit above -0.02 on every task and seed. Membership is Groundhog
 accuracy at about 1,000 rows over six targets (chance is 0.5).
 
-Library versions: sdv 2.0.0, smartnoise-synth 1.0.8, opendp 0.14.2, lightgbm 4.7.0, scikit-learn 1.9.1, anonymeter 1.1.0.
+Library versions: sdv 2.0.0, smartnoise-synth 1.0.8, opendp 0.14.2, lightgbm 4.7.0, scikit-learn 1.9.1, anonymeter 1.1.0, facsimile 0.0.1.
 
 ## ACS PUMS, California 2018
 
@@ -77,6 +77,91 @@ Library versions: sdv 2.0.0, smartnoise-synth 1.0.8, opendp 0.14.2, lightgbm 4.7
 | PATE-CTGAN | 2 (spent 2.06) | 0.0 (0.0 to 0.0) | 0.4 (0.0 to 1.0) | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.2) | 0.2 (0.0 to 1.1) |  | -0.375 (worst seed lo -0.408) | -0.337 (worst seed lo -0.362) | 0.368 | 0.493 | 77 | 3 |
 | PATE-CTGAN | 4 (spent 4.02) | 0.0 (0.0 to 0.0) | 0.8 (0.0 to 1.7) | 0.0 (0.0 to 0.1) | 0.3 (0.0 to 0.6) | 0.0 (0.0 to 0.4) |  | -0.337 (worst seed lo -0.377) | -0.357 (worst seed lo -0.391) | 0.191 | 0.482 | 321 | 3 |
 | PATE-CTGAN | 8 (spent 8.02) | 0.0 (0.0 to 0.0) | 0.4 (0.0 to 1.8) | 0.0 (0.0 to 0.0) | 0.2 (0.0 to 0.5) | 0.0 (0.0 to 0.9) | 0.550 (0.457 to 0.641) | -0.346 (worst seed lo -0.401) | -0.291 (worst seed lo -0.316) | 0.331 | 0.476 | 1,004 | 3 |
+
+## The leakage ladder
+
+Four methods people use as synthetic or anonymised data, expected to leak, run through the
+same pipeline as the grid as its positive controls (PLAN.md section 2.10). They are not on
+the surface, in the leak table or among the gate's candidates.
+
+| Dataset | Method | singling out, univariate | singling out, multivariate | linkability, 1 neighbour | linkability, 10 neighbours | inference | Membership | Utility, worst task | Seeds |
+|---|---|---|---|---|---|---|---|---|---|
+| ACS PUMS, California 2018 | Perturbed copy | 0.0 (0.0 to 0.0) | 1.7 (0.7 to 2.7) **leak** | 3.2 (2.8 to 3.7) **leak** | 18.5 (17.5 to 19.6) **leak** | 18.5 (16.6 to 20.3) **leak** | 0.575 (0.481 to 0.665) | -0.014 (employment) | 3 |
+| ACS PUMS, California 2018 | SMOTE-NC | 0.0 (0.0 to 0.0) | 5.6 (3.7 to 7.4) **leak** | 0.6 (0.4 to 0.9) **leak** | 10.4 (9.5 to 11.3) **leak** | 27.8 (25.7 to 29.8) **leak** | 0.558 (0.465 to 0.649) | -0.009 (employment) | 3 |
+| ACS PUMS, California 2018 | k-anonymity, k = 5 | 0.0 (0.0 to 0.0) | 0.3 (0.0 to 1.3) | 0.1 (0.0 to 0.1) | 2.7 (2.0 to 3.4) **leak** | 9.3 (7.3 to 11.3) **leak** | 0.508 (0.416 to 0.601) | -0.019 (employment) | 3 |
+| ACS PUMS, California 2018 | TVAE, 3,000 epochs | pending | pending | pending | pending | pending | pending | pending | 0 |
+| IEEE-CIS card transactions | Perturbed copy | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.5) | 0.3 (0.2 to 0.5) **leak** | 5.6 (4.8 to 6.3) **leak** | 7.7 (5.7 to 9.8) **leak** | 0.508 (0.416 to 0.601) | -0.050 (fraud) | 3 |
+| IEEE-CIS card transactions | SMOTE-NC | 0.0 (0.0 to 0.0) | 1.9 (0.7 to 3.1) **leak** | 0.9 (0.6 to 1.1) **leak** | 12.5 (11.5 to 13.6) **leak** | 38.6 (36.4 to 40.8) **leak** | 0.475 (0.383 to 0.568) | -0.043 (fraud) | 3 |
+| IEEE-CIS card transactions | k-anonymity, k = 5 | 0.0 (0.0 to 0.0) | 0.2 (0.0 to 0.8) | 0.1 (0.0 to 0.2) | 4.0 (3.3 to 4.7) **leak** | 6.1 (3.8 to 8.5) **leak** | 0.458 (0.367 to 0.552) | -0.082 (fraud) | 3 |
+| NY SPARCS discharges | Perturbed copy | 0.0 (0.0 to 0.0) | 0.3 (0.0 to 1.3) | 3.9 (3.4 to 4.4) **leak** | 27.5 (26.3 to 28.7) **leak** | 57.6 (55.8 to 59.4) **leak** | 0.500 (0.407 to 0.593) | -0.010 (high_charge) | 3 |
+| NY SPARCS discharges | SMOTE-NC | 0.0 (0.0 to 0.1) | 2.1 (0.4 to 3.8) | 1.2 (0.9 to 1.5) **leak** | 14.7 (13.7 to 15.8) **leak** | 32.1 (29.8 to 34.5) **leak** | 0.433 (0.343 to 0.527) | -0.009 (high_charge) | 3 |
+| NY SPARCS discharges | k-anonymity, k = 5 | 0.0 (0.0 to 0.0) | 0.2 (0.0 to 1.7) | 0.2 (0.0 to 0.3) | 4.6 (3.8 to 5.3) **leak** | 4.9 (2.7 to 7.0) **leak** | 0.517 (0.424 to 0.609) | -0.033 (long_stay) | 3 |
+
+## The most exposed records
+
+The same attacks on the same tables, on the quarter of the targets most unusual against
+the quarter of the control most unusual, ranked by mean distance to 2,000 test-split
+records (`facsimile/attacks/exposed.py`): 500 against 500 per seed, seeds pooled.
+
+| Dataset | Configuration | singling out, univariate | singling out, multivariate | linkability, 1 neighbour | linkability, 10 neighbours | inference |
+|---|---|---|---|---|---|---|
+| ACS PUMS, California 2018 | Gaussian copula, epsilon inf | 0.0 (0.0 to 0.2) | 0.4 (0.0 to 1.7) | 0.2 (0.0 to 0.5) | 0.0 (0.0 to 0.3) | 2.2 (0.0 to 5.0) |
+| ACS PUMS, California 2018 | CTGAN, epsilon inf | 0.0 (0.0 to 0.2) | 1.5 (0.0 to 3.1) | 0.0 (0.0 to 0.2) | 0.7 (0.0 to 1.7) | 1.8 (0.0 to 5.7) |
+| ACS PUMS, California 2018 | TVAE, epsilon inf | 0.1 (0.0 to 0.3) | 2.2 (0.1 to 4.3) | 0.0 (0.0 to 0.3) | 0.0 (0.0 to 0.9) | 3.9 (0.1 to 7.8) |
+| ACS PUMS, California 2018 | MST, epsilon 0.5 | 0.0 (0.0 to 0.2) | 2.1 (0.1 to 4.2) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.7) | 0.0 (0.0 to 1.5) |
+| ACS PUMS, California 2018 | MST, epsilon 1 | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 1.6) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.2) | 4.6 (1.9 to 7.4) **leak** |
+| ACS PUMS, California 2018 | MST, epsilon 2 | 0.0 (0.0 to 0.2) | 1.2 (0.0 to 3.4) | 0.0 (0.0 to 0.2) | 0.3 (0.0 to 0.8) | 1.4 (0.0 to 4.2) |
+| ACS PUMS, California 2018 | MST, epsilon 4 | 0.0 (0.0 to 0.2) | 0.1 (0.0 to 2.1) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.4) | 3.0 (0.3 to 5.8) |
+| ACS PUMS, California 2018 | MST, epsilon 8 | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 2.1) | 0.1 (0.0 to 0.3) | 0.0 (0.0 to 0.5) | 0.8 (0.0 to 3.6) |
+| ACS PUMS, California 2018 | AIM, epsilon 0.5 | 0.0 (0.0 to 0.2) | 1.8 (0.0 to 3.8) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.4) | 1.3 (0.0 to 4.6) |
+| ACS PUMS, California 2018 | AIM, epsilon 1 | 0.0 (0.0 to 0.2) | 2.2 (0.5 to 3.9) **leak** | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.6) | 7.2 (3.8 to 10.7) **leak** |
+| ACS PUMS, California 2018 | AIM, epsilon 2 | 0.0 (0.0 to 0.2) | 0.3 (0.0 to 1.8) | 0.1 (0.0 to 0.3) | 0.1 (0.0 to 1.1) | 5.5 (2.0 to 9.0) **leak** |
+| ACS PUMS, California 2018 | PATE-CTGAN, epsilon 0.5 | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.7) | 0.0 (0.0 to 0.2) | 0.1 (0.0 to 0.5) | 0.0 (0.0 to 1.1) |
+| ACS PUMS, California 2018 | PATE-CTGAN, epsilon 1 | 0.0 (0.0 to 0.2) | 0.5 (0.0 to 1.2) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.0) |
+| ACS PUMS, California 2018 | PATE-CTGAN, epsilon 2 | 0.0 (0.0 to 0.2) | 1.0 (0.3 to 1.8) **leak** | 0.0 (0.0 to 0.2) | 0.2 (0.0 to 0.8) | 0.0 (0.0 to 2.3) |
+| ACS PUMS, California 2018 | PATE-CTGAN, epsilon 4 | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 1.3) | 0.0 (0.0 to 0.2) | 0.3 (0.0 to 0.9) | 0.0 (0.0 to 1.5) |
+| ACS PUMS, California 2018 | PATE-CTGAN, epsilon 8 | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 1.1) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.5) | 0.0 (0.0 to 0.3) |
+| IEEE-CIS card transactions | Gaussian copula, epsilon inf | 0.0 (0.0 to 0.2) | 0.7 (0.0 to 2.1) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 3.6) |
+| IEEE-CIS card transactions | CTGAN, epsilon inf | 0.0 (0.0 to 0.2) | 0.1 (0.0 to 1.4) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.6) | 0.1 (0.0 to 4.8) |
+| IEEE-CIS card transactions | TVAE, epsilon inf | 0.0 (0.0 to 0.3) | 0.0 (0.0 to 1.8) | 0.1 (0.0 to 0.3) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 4.0) |
+| IEEE-CIS card transactions | MST, epsilon 0.5 | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 1.9) | 0.1 (0.0 to 0.3) | 0.0 (0.0 to 1.5) | 1.2 (0.0 to 5.4) |
+| IEEE-CIS card transactions | MST, epsilon 1 | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 1.8) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 1.2) | 0.0 (0.0 to 3.5) |
+| IEEE-CIS card transactions | MST, epsilon 2 | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 1.1) | 0.0 (0.0 to 0.2) | 0.9 (0.0 to 2.2) | 0.0 (0.0 to 5.0) |
+| IEEE-CIS card transactions | MST, epsilon 4 | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 1.0) | 0.0 (0.0 to 0.2) | 0.4 (0.0 to 1.8) | 0.0 (0.0 to 0.0) |
+| IEEE-CIS card transactions | MST, epsilon 8 | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.7) | 0.0 (0.0 to 0.2) | 0.3 (0.0 to 1.6) | 0.0 (0.0 to 2.8) |
+| IEEE-CIS card transactions | AIM, epsilon 0.5 | 0.0 (0.0 to 0.2) | 0.5 (0.0 to 2.5) | 0.1 (0.0 to 0.3) | 0.0 (0.0 to 1.3) | 0.0 (0.0 to 2.9) |
+| IEEE-CIS card transactions | AIM, epsilon 1 | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 1.5) | 0.1 (0.0 to 0.3) | 0.0 (0.0 to 0.8) | 0.8 (0.0 to 5.5) |
+| IEEE-CIS card transactions | AIM, epsilon 2 | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.9) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 1.1) | 0.0 (0.0 to 3.0) |
+| IEEE-CIS card transactions | PATE-CTGAN, epsilon 0.5 | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.3) | 0.1 (0.0 to 0.3) | 0.1 (0.0 to 0.7) | 0.0 (0.0 to 1.6) |
+| IEEE-CIS card transactions | PATE-CTGAN, epsilon 1 | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.7) | 0.1 (0.0 to 0.3) | 0.1 (0.0 to 0.5) | 0.0 (0.0 to 1.9) |
+| IEEE-CIS card transactions | PATE-CTGAN, epsilon 2 | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.3) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.7) | 0.0 (0.0 to 0.0) |
+| IEEE-CIS card transactions | PATE-CTGAN, epsilon 4 | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.7) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.5) | 0.0 (0.0 to 0.5) |
+| IEEE-CIS card transactions | PATE-CTGAN, epsilon 8 | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.2) | 0.1 (0.0 to 0.5) | 0.3 (0.0 to 4.2) |
+| NY SPARCS discharges | Gaussian copula, epsilon inf | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 1.1) | 0.1 (0.0 to 0.3) | 0.0 (0.0 to 0.4) | 0.0 (0.0 to 0.1) |
+| NY SPARCS discharges | CTGAN, epsilon inf | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 1.5) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.7) | 0.0 (0.0 to 0.0) |
+| NY SPARCS discharges | TVAE, epsilon inf | 0.1 (0.0 to 0.3) | 1.2 (0.0 to 3.9) | 0.0 (0.0 to 0.2) | 0.1 (0.0 to 1.0) | 0.0 (0.0 to 1.0) |
+| NY SPARCS discharges | MST, epsilon 0.5 | 0.0 (0.0 to 0.2) | 0.5 (0.0 to 3.3) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.6) | 0.0 (0.0 to 0.8) |
+| NY SPARCS discharges | MST, epsilon 1 | 0.0 (0.0 to 0.2) | 1.8 (0.0 to 4.4) | 0.0 (0.0 to 0.2) | 0.1 (0.0 to 0.9) | 0.0 (0.0 to 2.0) |
+| NY SPARCS discharges | MST, epsilon 2 | 0.0 (0.0 to 0.2) | 0.4 (0.0 to 3.0) | 0.0 (0.0 to 0.2) | 0.8 (0.0 to 1.6) | 0.0 (0.0 to 0.0) |
+| NY SPARCS discharges | MST, epsilon 4 | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 1.3) | 0.0 (0.0 to 0.2) | 0.3 (0.0 to 1.1) | 0.0 (0.0 to 0.0) |
+| NY SPARCS discharges | MST, epsilon 8 | 0.0 (0.0 to 0.2) | 0.7 (0.0 to 3.0) | 0.0 (0.0 to 0.2) | 0.1 (0.0 to 0.9) | 0.0 (0.0 to 0.0) |
+| NY SPARCS discharges | AIM, epsilon 0.5 | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 1.7) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.5) | 0.0 (0.0 to 0.8) |
+| NY SPARCS discharges | AIM, epsilon 1 | 0.0 (0.0 to 0.2) | 1.3 (0.0 to 3.3) | 0.0 (0.0 to 0.2) | 0.2 (0.0 to 1.0) | 0.0 (0.0 to 0.9) |
+| NY SPARCS discharges | AIM, epsilon 2 | 0.0 (0.0 to 0.2) | 0.4 (0.0 to 2.3) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.5) | 0.0 (0.0 to 2.9) |
+| NY SPARCS discharges | PATE-CTGAN, epsilon 0.5 | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.5) | 1.5 (0.0 to 3.1) |
+| NY SPARCS discharges | PATE-CTGAN, epsilon 1 | 0.0 (0.0 to 0.2) | 0.7 (0.0 to 1.8) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.6) | 1.5 (0.0 to 3.2) |
+| NY SPARCS discharges | PATE-CTGAN, epsilon 2 | 0.0 (0.0 to 0.2) | 0.9 (0.1 to 1.8) | 0.0 (0.0 to 0.2) | 0.1 (0.0 to 0.6) | 1.2 (0.0 to 3.2) |
+| NY SPARCS discharges | PATE-CTGAN, epsilon 4 | 0.0 (0.0 to 0.2) | 0.6 (0.0 to 2.1) | 0.0 (0.0 to 0.2) | 0.8 (0.2 to 1.4) **leak** | 0.0 (0.0 to 1.5) |
+| NY SPARCS discharges | PATE-CTGAN, epsilon 8 | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 2.2) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.3) | 1.1 (0.0 to 2.9) |
+| ACS PUMS, California 2018 | Perturbed copy, epsilon inf | 0.0 (0.0 to 0.2) | 1.3 (0.0 to 2.7) | 8.9 (7.5 to 10.4) **leak** | 32.4 (29.9 to 35.0) **leak** | 22.7 (18.8 to 26.6) **leak** |
+| ACS PUMS, California 2018 | SMOTE-NC, epsilon inf | 0.0 (0.0 to 0.2) | 3.7 (1.1 to 6.4) **leak** | 1.1 (0.5 to 1.8) **leak** | 12.7 (10.6 to 14.9) **leak** | 29.9 (25.6 to 34.1) **leak** |
+| ACS PUMS, California 2018 | k-anonymity, k = 5, epsilon inf | 0.0 (0.0 to 0.2) | 0.5 (0.0 to 3.2) | 0.1 (0.0 to 0.4) | 3.0 (1.6 to 4.5) **leak** | 8.5 (4.3 to 12.7) **leak** |
+| IEEE-CIS card transactions | Perturbed copy, epsilon inf | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.2) | 0.4 (0.0 to 0.8) | 6.8 (4.9 to 8.7) **leak** | 9.0 (5.0 to 13.0) **leak** |
+| IEEE-CIS card transactions | SMOTE-NC, epsilon inf | 0.0 (0.0 to 0.2) | 2.1 (0.0 to 4.7) | 0.7 (0.1 to 1.2) | 14.3 (11.8 to 16.8) **leak** | 37.9 (33.5 to 42.3) **leak** |
+| IEEE-CIS card transactions | k-anonymity, k = 5, epsilon inf | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 2.1) | 0.0 (0.0 to 0.3) | 4.0 (2.0 to 5.9) **leak** | 6.4 (1.7 to 11.2) **leak** |
+| NY SPARCS discharges | Perturbed copy, epsilon inf | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.9) | 6.6 (5.3 to 7.9) **leak** | 36.5 (33.9 to 39.1) **leak** | 70.0 (66.7 to 73.3) **leak** |
+| NY SPARCS discharges | SMOTE-NC, epsilon inf | 0.2 (0.0 to 0.5) | 2.2 (0.0 to 4.8) | 1.4 (0.8 to 2.0) **leak** | 15.5 (13.3 to 17.6) **leak** | 29.7 (24.4 to 35.0) **leak** |
+| NY SPARCS discharges | k-anonymity, k = 5, epsilon inf | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 2.1) | 0.1 (0.0 to 0.5) | 4.8 (3.3 to 6.3) **leak** | 3.1 (0.0 to 8.0) |
 
 ## Reference agreement: this project against Anonymeter
 

@@ -171,7 +171,8 @@ function hero(data) {
   $("hero-leaks-unit").textContent = leaks.length === 1 ? "configuration where an attack detected a risk" : "configurations where an attack detected a risk";
   if (leaks.length) {
     const l = leaks[0];
-    $("hero-leaks-note").textContent = `${METHODS[l.method].name} at epsilon ${l.epsilon}, with differential privacy, on ${DATASETS[l.dataset].short}: the inference attack, ${pct(l.risk)} excess`;
+    const exposed = (data.exposed_leaks || []).filter((x) => METHODS[x.method]).length;
+    $("hero-leaks-note").textContent = `${METHODS[l.method].name} at epsilon ${l.epsilon}, with differential privacy, on ${DATASETS[l.dataset].short}: the inference attack, ${pct(l.risk)} excess.${exposed ? ` ${exposed} more on the most unusual people.` : ""}`;
   }
 
   const useful = attacked.filter((c) => c.passes_utility).length;
@@ -475,7 +476,7 @@ function ladder(data) {
   const gridExposed = data.cells.filter((c) => c.risk_exposed);
   fill($("exposed-note"), gridExposed.length ? [
     strong("And on the most exposed people? "),
-    `Each grid table was attacked again on the quarter of its targets that are most unusual, against the most unusual quarter of the control, ranked by distance to people in the test split. ${exposed.length ? `That found ${exposed.length} more detected risk${exposed.length === 1 ? "" : "s"}: ${exposed.map((l) => `${METHODS[l.method].name} at ${epsLabel(l.epsilon)} on ${DATASETS[l.dataset].short}, ${l.attack.replace(/_/g, " ")}, ${pct(l.risk)}`).join("; ")}.` : `Across ${gridExposed.length} configurations it found no detected risk that the full targets did not already show.`}`,
+    `Each grid table was attacked again on the quarter of its targets that are most unusual, against the most unusual quarter of the control, ranked by distance to people in the test split. ${exposed.length ? `That found ${exposed.length} more detected risk${exposed.length === 1 ? "" : "s"}: ${exposed.map((l) => `${METHODS[l.method].name} at ${epsLabel(l.epsilon)} on ${DATASETS[l.dataset].short}, ${ATTACKS[l.attack].toLowerCase()}, ${pct(l.risk)}`).join("; ")}.` : `Across ${gridExposed.length} configurations it found no detected risk that the full targets did not already show.`}`,
   ] : ["The attacks on the most exposed records are still running."]);
 }
 
@@ -732,7 +733,10 @@ function takeaways(data) {
   const span = (vs) => `${fmt(Math.min(...vs), 2)} to ${fmt(Math.max(...vs), 2)}`;
   const cards = [
     ["Demand a control group, or the number means nothing", "An attack on a useful table always succeeds on someone, because predicting people is what the table is for. Only the excess over people the synthesiser never saw is a leak. Ask any vendor what their privacy score is measured against."],
-    ["Do not use distance to closest record as the privacy test", `It flagged ${flagged.length} tables no attack could break and passed the one that leaked. It is the check most tools show first, and on these tables it answered the wrong question in both directions.`],
+    ["Test the attacks before trusting a clean result", "Four methods people really use, a perturbed copy, SMOTE, k-anonymity and an overfitted model, went through the same attacks. The three regulators' attacks caught every perturbed copy, SMOTE and k-anonymity table they were given. Without positive controls like these, 'no leak found' cannot be told apart from 'attack too weak to find one'."],
+    ["Attack the unusual people separately", "Randomly chosen targets are mostly ordinary people. Attacked again on the most unusual quarter, differentially private tables at epsilon 1 and 2 gave away 4.6% to 7.2% on inference, where the full target set showed 2.5% or nothing detected."],
+    ["The most useful 'synthetic' tables were the leakiest", "The only tables close enough to the real data to recommend were a perturbed copy and SMOTE output, and the attacks broke both. A usefulness score alone would have picked exactly the wrong tables."],
+    ["Do not use distance to closest record as the privacy test", `It flagged ${flagged.length} tables no attack could break and passed the one that leaked. It is the check most tools show first. It does flag crude copies, all nine ladder tables, but on the real synthesisers it answered the wrong question in both directions.`],
     ["Differential privacy bounds a leak; it does not make it zero", l ? `${METHODS[l.method].name} at epsilon ${l.epsilon} carries a formal guarantee and still gave away ${pct(l.risk)} on income bracket. Epsilon is a promise about the mechanism. Whether a leak is measurable on your data is a separate question that only an attack answers.` : "Epsilon is a promise about the mechanism, not a measurement of a table."],
     ["Privacy has a price, and it can be measured before you pay it", `The best non-private synthesiser lost ${span(gaps.map((g) => g.open))} AUC on its worst task; the best private one, ${span(gaps.map((g) => g.dp))}. That is the conversation a privacy officer and a data scientist need to have, with numbers on the table.`],
     ["Looking like the data is not the same as being useful", "The Gaussian copula reproduces the counts better than most and trains some of the worst models. Judge a synthetic table by training on it and testing on real data, not by a similarity score."],

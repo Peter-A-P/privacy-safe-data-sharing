@@ -17,7 +17,8 @@
   "opendp": "0.14.2",
   "lightgbm": "4.7.0",
   "scikit-learn": "1.9.1",
-  "anonymeter": "1.1.0"
+  "anonymeter": "1.1.0",
+  "facsimile": "0.0.1"
  },
  "cells": [
   {
@@ -105,6 +106,63 @@
     "closer_to_training_share": 0.49712500000000004,
     "closer_lo_min": 0.47912187500000003
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.00412393601844665,
+     "lo": 0.0,
+     "hi": 0.017472928783416716,
+     "main_rate": 0.035333333333333335,
+     "control_rate": 0.03133333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0019974423025493483,
+     "lo": 0.0,
+     "hi": 0.004889330367163816,
+     "main_rate": 0.002,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.003204205282700209,
+     "main_rate": 0.006,
+     "control_rate": 0.009333333333333334,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0215397749774334,
+     "lo": 0.0,
+     "hi": 0.05030441028776199,
+     "main_rate": 0.15333333333333332,
+     "control_rate": 0.13466666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "income": {
      "auc_synthetic": 0.613795664749253,
@@ -223,6 +281,63 @@
     "closer_to_training_share": 0.5091249999999999,
     "closer_lo_min": 0.491125
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.014594271644557904,
+     "lo": 0.0,
+     "hi": 0.03069908372482945,
+     "main_rate": 0.056,
+     "control_rate": 0.042,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0015661863966192368,
+     "main_rate": 0.0,
+     "control_rate": 0.0006666666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.006775431634458547,
+     "lo": 0.0,
+     "hi": 0.017252696802509543,
+     "main_rate": 0.024,
+     "control_rate": 0.017333333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.01805798062491148,
+     "lo": 0.0,
+     "hi": 0.056802735125621506,
+     "main_rate": 0.24,
+     "control_rate": 0.226,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "income": {
      "auc_synthetic": 0.8337540968494318,
@@ -341,6 +456,63 @@
     "closer_to_training_share": 0.505375,
     "closer_lo_min": 0.486625
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0006658141008497828,
+     "lo": 0.0,
+     "hi": 0.0028952864062306675,
+     "main_rate": 0.0006666666666666666,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.022239428215629988,
+     "lo": 0.0012039109717443923,
+     "hi": 0.04327494545951559,
+     "main_rate": 0.09266666666666666,
+     "control_rate": 0.072,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.002585234316175458,
+     "main_rate": 0.0006666666666666666,
+     "control_rate": 0.0006666666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.009268181710676214,
+     "main_rate": 0.018,
+     "control_rate": 0.018666666666666668,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.03941998701423715,
+     "lo": 0.0008934113484466988,
+     "hi": 0.0779465626800276,
+     "main_rate": 0.254,
+     "control_rate": 0.22333333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "income": {
      "auc_synthetic": 0.8426097575420121,
@@ -459,6 +631,63 @@
     "closer_to_training_share": 0.4415,
     "closer_lo_min": 0.407621875
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.021491191704469028,
+     "lo": 0.0006716954318508571,
+     "hi": 0.0423106879770872,
+     "main_rate": 0.09066666666666667,
+     "control_rate": 0.07066666666666667,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0015661863966192368,
+     "main_rate": 0.0,
+     "control_rate": 0.0006666666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.006927560142417877,
+     "main_rate": 0.008666666666666666,
+     "control_rate": 0.008666666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.015289501016219894,
+     "main_rate": 0.134,
+     "control_rate": 0.146,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "income": {
      "auc_synthetic": 0.5356879643341074,
@@ -568,6 +797,63 @@
     "closer_to_training_share": 0.463,
     "closer_lo_min": 0.446621875
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.016410925545468663,
+     "main_rate": 0.08933333333333333,
+     "control_rate": 0.09533333333333334,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0017223152264122495,
+     "main_rate": 0.0026666666666666666,
+     "control_rate": 0.006,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.046110094614050655,
+     "lo": 0.018517129339377013,
+     "hi": 0.0737030598887243,
+     "main_rate": 0.16,
+     "control_rate": 0.11933333333333333,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 0.009766055795226984
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "income": {
      "auc_synthetic": 0.5483361556339809,
@@ -686,6 +972,63 @@
     "closer_to_training_share": 0.44691666666666663,
     "closer_lo_min": 0.425621875
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.012337429604731182,
+     "lo": 0.0,
+     "hi": 0.03440093159223185,
+     "main_rate": 0.094,
+     "control_rate": 0.08266666666666667,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0026739384790641254,
+     "lo": 0.0,
+     "hi": 0.008200618409288093,
+     "main_rate": 0.006666666666666667,
+     "control_rate": 0.004,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.014471551537260907,
+     "lo": 0.0,
+     "hi": 0.04205817984372355,
+     "main_rate": 0.13866666666666666,
+     "control_rate": 0.126,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "income": {
      "auc_synthetic": 0.5831134715310081,
@@ -795,6 +1138,63 @@
     "closer_to_training_share": 0.4525416666666667,
     "closer_lo_min": 0.427871875
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0007174009101816264,
+     "lo": 0.0,
+     "hi": 0.020754850985113222,
+     "main_rate": 0.07266666666666667,
+     "control_rate": 0.072,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.004035380314165323,
+     "main_rate": 0.0033333333333333335,
+     "control_rate": 0.004,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.03037388591939778,
+     "lo": 0.0027062833866222935,
+     "hi": 0.058041488452173266,
+     "main_rate": 0.15,
+     "control_rate": 0.12333333333333334,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "income": {
      "auc_synthetic": 0.5897089836694996,
@@ -904,6 +1304,63 @@
     "closer_to_training_share": 0.44695833333333335,
     "closer_lo_min": 0.424371875
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.02116631619847275,
+     "main_rate": 0.08,
+     "control_rate": 0.08,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0006658141008497828,
+     "lo": 0.0,
+     "hi": 0.0028952864062306675,
+     "main_rate": 0.0006666666666666666,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.004880007262702212,
+     "main_rate": 0.004,
+     "control_rate": 0.004,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.007704630778601592,
+     "lo": 0.0,
+     "hi": 0.03631360368349925,
+     "main_rate": 0.14266666666666666,
+     "control_rate": 0.136,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "income": {
      "auc_synthetic": 0.5804376371400815,
@@ -1022,6 +1479,63 @@
     "closer_to_training_share": 0.4829583333333334,
     "closer_lo_min": 0.45875
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.01788370361354123,
+     "lo": 0.0,
+     "hi": 0.03835330130358047,
+     "main_rate": 0.086,
+     "control_rate": 0.06933333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.003695193846828597,
+     "main_rate": 0.004666666666666667,
+     "control_rate": 0.006666666666666667,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.012956297209165564,
+     "lo": 0.0,
+     "hi": 0.04644887256554738,
+     "main_rate": 0.18866666666666668,
+     "control_rate": 0.178,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "income": {
      "auc_synthetic": 0.7383704219336048,
@@ -1131,6 +1645,63 @@
     "closer_to_training_share": 0.4922083333333333,
     "closer_lo_min": 0.466871875
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.022269843662935728,
+     "lo": 0.005450504127091457,
+     "hi": 0.03908918319878,
+     "main_rate": 0.06466666666666666,
+     "control_rate": 0.043333333333333335,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 6.615847577312248e-05
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.006031562334710612,
+     "main_rate": 0.012666666666666666,
+     "control_rate": 0.015333333333333332,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0724802488208976,
+     "lo": 0.03789085138809368,
+     "hi": 0.10706964625370152,
+     "main_rate": 0.242,
+     "control_rate": 0.18266666666666667,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 0.026926944174541903
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "income": {
      "auc_synthetic": 0.7630349839449595,
@@ -1249,6 +1820,63 @@
     "closer_to_training_share": 0.49004166666666665,
     "closer_lo_min": 0.460125
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0027798612656300802,
+     "lo": 0.0,
+     "hi": 0.01806593337099135,
+     "main_rate": 0.04466666666666667,
+     "control_rate": 0.042,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0006658141008497828,
+     "lo": 0.0,
+     "hi": 0.0028952864062306675,
+     "main_rate": 0.0006666666666666666,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.001354168819066198,
+     "lo": 0.0,
+     "hi": 0.011010663228693252,
+     "main_rate": 0.018,
+     "control_rate": 0.016666666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0551476309343392,
+     "lo": 0.019822782359024273,
+     "hi": 0.09047247950965412,
+     "main_rate": 0.236,
+     "control_rate": 0.19133333333333333,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 0.008647667768723256
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "income": {
      "auc_synthetic": 0.7932053231585531,
@@ -1385,6 +2013,63 @@
     "closer_to_training_share": 0.5215,
     "closer_lo_min": 0.50349375
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0067523233939769415,
+     "main_rate": 0.017333333333333333,
+     "control_rate": 0.020666666666666667,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0013342933757322642,
+     "lo": 0.0,
+     "hi": 0.005445914149820093,
+     "main_rate": 0.0033333333333333335,
+     "control_rate": 0.002,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.010520252986242602,
+     "main_rate": 0.10333333333333333,
+     "control_rate": 0.11666666666666667,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "income": {
      "auc_synthetic": 0.5221200121289858,
@@ -1494,6 +2179,63 @@
     "closer_to_training_share": 0.5147916666666666,
     "closer_lo_min": 0.49699375
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.004701391996048165,
+     "lo": 0.0,
+     "hi": 0.01242336513467537,
+     "main_rate": 0.013333333333333334,
+     "control_rate": 0.008666666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.000882778047198135,
+     "main_rate": 0.002,
+     "control_rate": 0.006,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "main_rate": 0.09266666666666666,
+     "control_rate": 0.11733333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "income": {
      "auc_synthetic": 0.518719454425418,
@@ -1612,6 +2354,63 @@
     "closer_to_training_share": 0.5098333333333334,
     "closer_lo_min": 0.492625
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.010040693394702762,
+     "lo": 0.0025789727171955197,
+     "hi": 0.017502414072210003,
+     "main_rate": 0.015333333333333332,
+     "control_rate": 0.005333333333333333,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 2.687268899128313e-05
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.002006795371138718,
+     "lo": 0.0,
+     "hi": 0.007689941247016732,
+     "main_rate": 0.006666666666666667,
+     "control_rate": 0.004666666666666667,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.02319385150634585,
+     "main_rate": 0.116,
+     "control_rate": 0.11866666666666667,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "income": {
      "auc_synthetic": 0.4937552922411283,
@@ -1721,6 +2520,63 @@
     "closer_to_training_share": 0.5080416666666667,
     "closer_lo_min": 0.488871875
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.012963764384922045,
+     "main_rate": 0.037333333333333336,
+     "control_rate": 0.03866666666666667,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0026757271615182915,
+     "lo": 0.0,
+     "hi": 0.008504520334291405,
+     "main_rate": 0.007333333333333333,
+     "control_rate": 0.004666666666666667,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.014869279264206945,
+     "main_rate": 0.10466666666666667,
+     "control_rate": 0.114,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "income": {
      "auc_synthetic": 0.47828751864722147,
@@ -1830,6 +2686,63 @@
     "closer_to_training_share": 0.48983333333333334,
     "closer_lo_min": 0.46725
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.011426628633017237,
+     "main_rate": 0.06266666666666666,
+     "control_rate": 0.07,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.004717224377713481,
+     "main_rate": 0.004666666666666667,
+     "control_rate": 0.005333333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0034859001211536116,
+     "main_rate": 0.07866666666666666,
+     "control_rate": 0.096,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "income": {
      "auc_synthetic": 0.5562385974471958,
@@ -1948,6 +2861,63 @@
     "closer_to_training_share": 0.5066666666666667,
     "closer_lo_min": 0.483246875
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0069064554411569345,
+     "lo": 0.0,
+     "hi": 0.021392069946565985,
+     "main_rate": 0.042666666666666665,
+     "control_rate": 0.036,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "main_rate": 0.004666666666666667,
+     "control_rate": 0.012,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.035649265508587116,
+     "main_rate": 0.21266666666666667,
+     "control_rate": 0.214,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "fraud": {
      "auc_synthetic": 0.44221385966498206,
@@ -2059,6 +3029,63 @@
     "closer_to_training_share": 0.4919166666666667,
     "closer_lo_min": 0.47186875
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0006868505817655349,
+     "lo": 0.0,
+     "hi": 0.013597405097548166,
+     "main_rate": 0.03133333333333333,
+     "control_rate": 0.030666666666666665,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0015661863966192368,
+     "main_rate": 0.0,
+     "control_rate": 0.0006666666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.006238551052693918,
+     "main_rate": 0.025333333333333333,
+     "control_rate": 0.03133333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0009579271412350295,
+     "lo": 0.0,
+     "hi": 0.04838161506519825,
+     "main_rate": 0.306,
+     "control_rate": 0.30533333333333335,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "fraud": {
      "auc_synthetic": 0.7165836054322657,
@@ -2170,6 +3197,63 @@
     "closer_to_training_share": 0.5130833333333333,
     "closer_lo_min": 0.484246875
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.002585234316175458,
+     "main_rate": 0.0006666666666666666,
+     "control_rate": 0.0006666666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.01817519850791796,
+     "main_rate": 0.10333333333333333,
+     "control_rate": 0.10933333333333334,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0006658141008497828,
+     "lo": 0.0,
+     "hi": 0.0028952864062306675,
+     "main_rate": 0.0006666666666666666,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0011073816125517586,
+     "main_rate": 0.030666666666666665,
+     "control_rate": 0.043333333333333335,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.03950618036748753,
+     "main_rate": 0.3426666666666667,
+     "control_rate": 0.35133333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "fraud": {
      "auc_synthetic": 0.7455526282463284,
@@ -2281,6 +3365,63 @@
     "closer_to_training_share": 0.557875,
     "closer_lo_min": 0.51625
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0012557179701557085,
+     "main_rate": 0.0,
+     "control_rate": 0.0013333333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.018884285312315965,
+     "main_rate": 0.08266666666666667,
+     "control_rate": 0.08533333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0006658141008497828,
+     "lo": 0.0,
+     "hi": 0.0028952864062306675,
+     "main_rate": 0.0006666666666666666,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.015206420333541259,
+     "main_rate": 0.042666666666666665,
+     "control_rate": 0.042666666666666665,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.012434267914519955,
+     "lo": 0.0,
+     "hi": 0.053822160562596214,
+     "main_rate": 0.26,
+     "control_rate": 0.25066666666666665,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "fraud": {
      "auc_synthetic": 0.5881127325732685,
@@ -2383,6 +3524,63 @@
     "closer_to_training_share": 0.5417083333333333,
     "closer_lo_min": 0.51
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.01799733768862212,
+     "main_rate": 0.086,
+     "control_rate": 0.09,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0015661863966192368,
+     "main_rate": 0.0,
+     "control_rate": 0.0006666666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.011957901250293336,
+     "main_rate": 0.029333333333333333,
+     "control_rate": 0.03,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.03486016489587575,
+     "main_rate": 0.3546666666666667,
+     "control_rate": 0.36733333333333335,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "fraud": {
      "auc_synthetic": 0.5354966013908808,
@@ -2494,6 +3692,63 @@
     "closer_to_training_share": 0.5352083333333333,
     "closer_lo_min": 0.51625
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.010890855151069176,
+     "main_rate": 0.08333333333333333,
+     "control_rate": 0.094,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0015661863966192368,
+     "main_rate": 0.0,
+     "control_rate": 0.0006666666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.008922928844084356,
+     "lo": 0.0,
+     "hi": 0.02241168484925253,
+     "main_rate": 0.03866666666666667,
+     "control_rate": 0.03,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.05032060655735384,
+     "main_rate": 0.3473333333333333,
+     "control_rate": 0.3486666666666667,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "fraud": {
      "auc_synthetic": 0.6189756012348337,
@@ -2596,6 +3851,63 @@
     "closer_to_training_share": 0.5382916666666667,
     "closer_lo_min": 0.518996875
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0012557179701557085,
+     "main_rate": 0.0,
+     "control_rate": 0.0013333333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.009506530719196557,
+     "main_rate": 0.07266666666666667,
+     "control_rate": 0.08333333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.00412961277139671,
+     "lo": 0.0,
+     "hi": 0.01774730475271691,
+     "main_rate": 0.03666666666666667,
+     "control_rate": 0.03266666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "main_rate": 0.3353333333333333,
+     "control_rate": 0.372,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "fraud": {
      "auc_synthetic": 0.6528459772485841,
@@ -2698,6 +4010,63 @@
     "closer_to_training_share": 0.539625,
     "closer_lo_min": 0.517
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0005176859922931313,
+     "main_rate": 0.0,
+     "control_rate": 0.0026666666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.007068723537830111,
+     "main_rate": 0.08,
+     "control_rate": 0.094,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.002232119919938973,
+     "main_rate": 0.0006666666666666666,
+     "control_rate": 0.0013333333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.002751181628466249,
+     "lo": 0.0,
+     "hi": 0.01611810801561393,
+     "main_rate": 0.034666666666666665,
+     "control_rate": 0.032,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.027697925035590685,
+     "main_rate": 0.33866666666666667,
+     "control_rate": 0.35533333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "fraud": {
      "auc_synthetic": 0.653425433295093,
@@ -2809,6 +4178,63 @@
     "closer_to_training_share": 0.519,
     "closer_lo_min": 0.467246875
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.005014611397709447,
+     "lo": 0.0,
+     "hi": 0.025064856595735752,
+     "main_rate": 0.07533333333333334,
+     "control_rate": 0.07066666666666667,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0006658141008497828,
+     "lo": 0.0,
+     "hi": 0.0028952864062306675,
+     "main_rate": 0.0006666666666666666,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.012967188173232055,
+     "main_rate": 0.04066666666666666,
+     "control_rate": 0.042666666666666665,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.02914729698548847,
+     "main_rate": 0.29,
+     "control_rate": 0.30266666666666664,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "fraud": {
      "auc_synthetic": 0.5844264146219251,
@@ -2911,6 +4337,63 @@
     "closer_to_training_share": 0.52225,
     "closer_lo_min": 0.4605
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.015092239732994747,
+     "main_rate": 0.06533333333333333,
+     "control_rate": 0.06933333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0006658141008497828,
+     "lo": 0.0,
+     "hi": 0.0028952864062306675,
+     "main_rate": 0.0006666666666666666,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.008161679094790427,
+     "main_rate": 0.028666666666666667,
+     "control_rate": 0.03333333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.007641457251979144,
+     "lo": 0.0,
+     "hi": 0.054785908296215484,
+     "main_rate": 0.30866666666666664,
+     "control_rate": 0.30333333333333334,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "fraud": {
      "auc_synthetic": 0.6797079483538572,
@@ -3022,6 +4505,63 @@
     "closer_to_training_share": 0.5069583333333333,
     "closer_lo_min": 0.471621875
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.00923074715100434,
+     "main_rate": 0.056666666666666664,
+     "control_rate": 0.06533333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0015661863966192368,
+     "main_rate": 0.0,
+     "control_rate": 0.0006666666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.011021662093738883,
+     "main_rate": 0.030666666666666665,
+     "control_rate": 0.03266666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.030213673616128308,
+     "main_rate": 0.292,
+     "control_rate": 0.304,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "fraud": {
      "auc_synthetic": 0.6980576832133675,
@@ -3151,6 +4691,63 @@
     "closer_to_training_share": 0.4839166666666667,
     "closer_lo_min": 0.459246875
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.002727366278109159,
+     "main_rate": 0.009333333333333334,
+     "control_rate": 0.014666666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0006658141008497828,
+     "lo": 0.0,
+     "hi": 0.0028952864062306675,
+     "main_rate": 0.0006666666666666666,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0006702768989577832,
+     "lo": 0.0,
+     "hi": 0.006937526587783149,
+     "main_rate": 0.007333333333333333,
+     "control_rate": 0.006666666666666667,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.01588107005612,
+     "main_rate": 0.10733333333333334,
+     "control_rate": 0.116,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "fraud": {
      "auc_synthetic": 0.4536787226866879,
@@ -3253,6 +4850,63 @@
     "closer_to_training_share": 0.49733333333333335,
     "closer_lo_min": 0.47625
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.007309839169801796,
+     "main_rate": 0.011333333333333334,
+     "control_rate": 0.012,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0006658141008497828,
+     "lo": 0.0,
+     "hi": 0.0028952864062306675,
+     "main_rate": 0.0006666666666666666,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0006680380466064564,
+     "lo": 0.0,
+     "hi": 0.005365620358270415,
+     "main_rate": 0.004,
+     "control_rate": 0.0033333333333333335,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.018530422000969386,
+     "main_rate": 0.118,
+     "control_rate": 0.12533333333333332,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "fraud": {
      "auc_synthetic": 0.46807633121898146,
@@ -3364,6 +5018,63 @@
     "closer_to_training_share": 0.49304166666666666,
     "closer_lo_min": 0.47075
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.002556136321308408,
+     "main_rate": 0.0033333333333333335,
+     "control_rate": 0.006,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.006626342254949602,
+     "main_rate": 0.009333333333333334,
+     "control_rate": 0.01,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "main_rate": 0.146,
+     "control_rate": 0.174,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "fraud": {
      "auc_synthetic": 0.528113973081388,
@@ -3466,6 +5177,63 @@
     "closer_to_training_share": 0.526125,
     "closer_lo_min": 0.507871875
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.006830775730524983,
+     "main_rate": 0.02,
+     "control_rate": 0.024,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.004717224377713481,
+     "main_rate": 0.004666666666666667,
+     "control_rate": 0.005333333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.005249512335628634,
+     "main_rate": 0.19266666666666668,
+     "control_rate": 0.218,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "fraud": {
      "auc_synthetic": 0.5049079802881395,
@@ -3568,6 +5336,63 @@
     "closer_to_training_share": 0.5117083333333333,
     "closer_lo_min": 0.481375
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0015661863966192368,
+     "main_rate": 0.0,
+     "control_rate": 0.0006666666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0010317596169054054,
+     "main_rate": 0.059333333333333335,
+     "control_rate": 0.07666666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0006680380466064564,
+     "lo": 0.0,
+     "hi": 0.005365620358270415,
+     "main_rate": 0.004,
+     "control_rate": 0.0033333333333333335,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.002593090368022898,
+     "lo": 0.0,
+     "hi": 0.04172156412172862,
+     "main_rate": 0.232,
+     "control_rate": 0.23,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "fraud": {
      "auc_synthetic": 0.4592569708427782,
@@ -3679,6 +5504,63 @@
     "closer_to_training_share": 0.49933333333333335,
     "closer_lo_min": 0.468746875
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0009020354664962607,
+     "main_rate": 0.0,
+     "control_rate": 0.002,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.01141841757195658,
+     "main_rate": 0.05,
+     "control_rate": 0.05533333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0006658141008497828,
+     "lo": 0.0,
+     "hi": 0.0028952864062306675,
+     "main_rate": 0.0006666666666666666,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0038890272845068003,
+     "main_rate": 0.004,
+     "control_rate": 0.005333333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0008120872742199275,
+     "main_rate": 0.068,
+     "control_rate": 0.08666666666666667,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "long_stay": {
      "auc_synthetic": 0.6696306863579821,
@@ -3797,6 +5679,63 @@
     "closer_to_training_share": 0.5034583333333333,
     "closer_lo_min": 0.47625
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.01506208615950806,
+     "main_rate": 0.04533333333333334,
+     "control_rate": 0.046,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0015661863966192368,
+     "main_rate": 0.0,
+     "control_rate": 0.0006666666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.006962073010231096,
+     "main_rate": 0.012,
+     "control_rate": 0.013333333333333334,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "main_rate": 0.2633333333333333,
+     "control_rate": 0.298,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "long_stay": {
      "auc_synthetic": 0.7803578682631973,
@@ -3915,6 +5854,63 @@
     "closer_to_training_share": 0.5282916666666667,
     "closer_lo_min": 0.504875
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0006658141008497828,
+     "lo": 0.0,
+     "hi": 0.0028952864062306675,
+     "main_rate": 0.0006666666666666666,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.012103600196312002,
+     "lo": 0.0,
+     "hi": 0.03890972424325896,
+     "main_rate": 0.13066666666666665,
+     "control_rate": 0.12,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0015661863966192368,
+     "main_rate": 0.0,
+     "control_rate": 0.0006666666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0006757118676203923,
+     "lo": 0.0,
+     "hi": 0.009678981132707685,
+     "main_rate": 0.015333333333333332,
+     "control_rate": 0.014666666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.01001569941873582,
+     "main_rate": 0.24733333333333332,
+     "control_rate": 0.272,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "long_stay": {
      "auc_synthetic": 0.7052148268621853,
@@ -4033,6 +6029,63 @@
     "closer_to_training_share": 0.4754583333333333,
     "closer_lo_min": 0.448996875
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0046085755180482095,
+     "lo": 0.0,
+     "hi": 0.03282747568713436,
+     "main_rate": 0.13733333333333334,
+     "control_rate": 0.13333333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0015661863966192368,
+     "main_rate": 0.0,
+     "control_rate": 0.0006666666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.005540665306863217,
+     "main_rate": 0.005333333333333333,
+     "control_rate": 0.005333333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.00838886222854937,
+     "main_rate": 0.27666666666666667,
+     "control_rate": 0.304,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "long_stay": {
      "auc_synthetic": 0.5923457840357367,
@@ -4142,6 +6195,63 @@
     "closer_to_training_share": 0.49041666666666667,
     "closer_lo_min": 0.4725
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.01793828249494075,
+     "lo": 0.0,
+     "hi": 0.04361432958700903,
+     "main_rate": 0.12533333333333332,
+     "control_rate": 0.10933333333333334,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0006734366220324066,
+     "lo": 0.0,
+     "hi": 0.008646416785321973,
+     "main_rate": 0.012,
+     "control_rate": 0.011333333333333334,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.019724189955246735,
+     "main_rate": 0.296,
+     "control_rate": 0.316,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "long_stay": {
      "auc_synthetic": 0.613155278211995,
@@ -4260,6 +6370,63 @@
     "closer_to_training_share": 0.5084583333333333,
     "closer_lo_min": 0.488625
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0037823750613475006,
+     "lo": 0.0,
+     "hi": 0.030358924633883056,
+     "main_rate": 0.12333333333333334,
+     "control_rate": 0.12,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.008048717657005112,
+     "lo": 0.00023852003212485214,
+     "hi": 0.01585891528188537,
+     "main_rate": 0.015333333333333332,
+     "control_rate": 0.007333333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "main_rate": 0.284,
+     "control_rate": 0.32066666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "long_stay": {
      "auc_synthetic": 0.6184310835853666,
@@ -4369,6 +6536,63 @@
     "closer_to_training_share": 0.49016666666666664,
     "closer_lo_min": 0.47225
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.012620646522260052,
+     "main_rate": 0.10333333333333333,
+     "control_rate": 0.11466666666666667,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0026973795164293903,
+     "lo": 0.0,
+     "hi": 0.011386550570706852,
+     "main_rate": 0.015333333333333332,
+     "control_rate": 0.012666666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "main_rate": 0.282,
+     "control_rate": 0.32266666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "long_stay": {
      "auc_synthetic": 0.6191480323838101,
@@ -4478,6 +6702,63 @@
     "closer_to_training_share": 0.491625,
     "closer_lo_min": 0.469996875
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0015661863966192368,
+     "main_rate": 0.0,
+     "control_rate": 0.0006666666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.006598623956607001,
+     "lo": 0.0,
+     "hi": 0.02968743971705094,
+     "main_rate": 0.098,
+     "control_rate": 0.092,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0006747999269825293,
+     "lo": 0.0,
+     "hi": 0.009279946063316053,
+     "main_rate": 0.014,
+     "control_rate": 0.013333333333333334,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "main_rate": 0.2926666666666667,
+     "control_rate": 0.32866666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "long_stay": {
      "auc_synthetic": 0.6105001715313281,
@@ -4596,6 +6877,63 @@
     "closer_to_training_share": 0.50025,
     "closer_lo_min": 0.485621875
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.01675411231084359,
+     "main_rate": 0.092,
+     "control_rate": 0.098,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0050742632941485,
+     "main_rate": 0.006666666666666667,
+     "control_rate": 0.008,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.007685002439537639,
+     "main_rate": 0.2653333333333333,
+     "control_rate": 0.2926666666666667,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "long_stay": {
      "auc_synthetic": 0.6522996201735954,
@@ -4705,6 +7043,63 @@
     "closer_to_training_share": 0.5077916666666668,
     "closer_lo_min": 0.466246875
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.012830375674586739,
+     "lo": 0.0,
+     "hi": 0.032581791702948185,
+     "main_rate": 0.078,
+     "control_rate": 0.066,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0020175924248427694,
+     "lo": 0.0,
+     "hi": 0.009758878965035496,
+     "main_rate": 0.012,
+     "control_rate": 0.01,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.008663211803479766,
+     "main_rate": 0.26666666666666666,
+     "control_rate": 0.29333333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "long_stay": {
      "auc_synthetic": 0.7312905112279432,
@@ -4823,6 +7218,63 @@
     "closer_to_training_share": 0.5025833333333333,
     "closer_lo_min": 0.478875
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0035563882766683646,
+     "lo": 0.0,
+     "hi": 0.02253487541219507,
+     "main_rate": 0.06733333333333333,
+     "control_rate": 0.064,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.005338467275706364,
+     "main_rate": 0.007333333333333333,
+     "control_rate": 0.008666666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.028554457346793943,
+     "main_rate": 0.264,
+     "control_rate": 0.2753333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "long_stay": {
      "auc_synthetic": 0.7112670805345358,
@@ -4959,6 +7411,63 @@
     "closer_to_training_share": 0.5020416666666666,
     "closer_lo_min": 0.474871875
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "main_rate": 0.028666666666666667,
+     "control_rate": 0.042666666666666665,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0050281545763865045,
+     "main_rate": 0.005333333333333333,
+     "control_rate": 0.006,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.015257426813606177,
+     "lo": 0.0,
+     "hi": 0.031066230157793317,
+     "main_rate": 0.05466666666666667,
+     "control_rate": 0.04,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "long_stay": {
      "auc_synthetic": 0.4770729936804749,
@@ -5068,6 +7577,63 @@
     "closer_to_training_share": 0.49937499999999996,
     "closer_lo_min": 0.476746875
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.006789231626880076,
+     "lo": 0.0,
+     "hi": 0.01775799691249106,
+     "main_rate": 0.026,
+     "control_rate": 0.019333333333333334,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.005604933257419504,
+     "main_rate": 0.006666666666666667,
+     "control_rate": 0.007333333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.015363978988599055,
+     "lo": 0.0,
+     "hi": 0.03229175884778377,
+     "main_rate": 0.06133333333333333,
+     "control_rate": 0.04666666666666667,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "long_stay": {
      "auc_synthetic": 0.4658420875505522,
@@ -5186,6 +7752,63 @@
     "closer_to_training_share": 0.49266666666666664,
     "closer_lo_min": 0.469996875
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.009409103404015419,
+     "lo": 0.0007723562787292186,
+     "hi": 0.01804585052930162,
+     "main_rate": 0.018666666666666668,
+     "control_rate": 0.009333333333333334,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0006689317903795727,
+     "lo": 0.0,
+     "hi": 0.006048331596850401,
+     "main_rate": 0.005333333333333333,
+     "control_rate": 0.004666666666666667,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.012100326832770838,
+     "lo": 0.0,
+     "hi": 0.03162028413813951,
+     "main_rate": 0.076,
+     "control_rate": 0.06466666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "long_stay": {
      "auc_synthetic": 0.48018127342268074,
@@ -5295,6 +7918,63 @@
     "closer_to_training_share": 0.4815416666666667,
     "closer_lo_min": 0.463875
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0062373488831073,
+     "lo": 0.0,
+     "hi": 0.02128975281097357,
+     "main_rate": 0.04533333333333334,
+     "control_rate": 0.03933333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.008000422798821825,
+     "lo": 0.0024966592118717632,
+     "hi": 0.013504186385771886,
+     "main_rate": 0.009333333333333334,
+     "control_rate": 0.0013333333333333333,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 0.0004896243054001229
+    },
+    "inference": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.014536522376996274,
+     "main_rate": 0.066,
+     "control_rate": 0.07066666666666667,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "long_stay": {
      "auc_synthetic": 0.5182452594600452,
@@ -5404,6 +8084,63 @@
     "closer_to_training_share": 0.4760416666666667,
     "closer_lo_min": 0.454625
    },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.02244051735248015,
+     "main_rate": 0.12133333333333333,
+     "control_rate": 0.12533333333333332,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0031836437210165623,
+     "main_rate": 0.0026666666666666666,
+     "control_rate": 0.004,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "inference": {
+     "value": 0.01122082011292198,
+     "lo": 0.0,
+     "hi": 0.028541795727830277,
+     "main_rate": 0.06133333333333333,
+     "control_rate": 0.050666666666666665,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
    "utility": {
     "long_stay": {
      "auc_synthetic": 0.5093147154310042,
@@ -5691,6 +8428,2411 @@
    "lo_bonferroni": 0.0007794437945870397,
    "main_rate": 0.23433333333333334,
    "control_rate": 0.21433333333333332,
+   "seeds": 3
+  }
+ ],
+ "ladder": [
+  {
+   "dataset": "acs",
+   "method": "perturb",
+   "epsilon": null,
+   "seeds": [
+    0,
+    1,
+    2
+   ],
+   "seeds_attacked": [
+    0,
+    1,
+    2
+   ],
+   "seeds_scored": [
+    0,
+    1,
+    2
+   ],
+   "epsilon_spent": null,
+   "fit_seconds_median": 0.034,
+   "hardware": [
+    "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz"
+   ],
+   "device": [
+    "cpu"
+   ],
+   "risk": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.00045257538448505234,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.017027554058930576,
+     "lo": 0.007462765694214547,
+     "hi": 0.026592342423646605,
+     "main_rate": 0.07666666666666666,
+     "control_rate": 0.06066666666666667,
+     "trials": 6000,
+     "detected": true,
+     "lo_bonferroni": 0.0044447709458845675
+    },
+    "linkability_k1": {
+     "value": 0.03234454217588035,
+     "lo": 0.02775725404521964,
+     "hi": 0.036931830306541055,
+     "main_rate": 0.033,
+     "control_rate": 0.0006666666666666666,
+     "trials": 6000,
+     "detected": true,
+     "lo_bonferroni": 0.026289051531023372
+    },
+    "linkability_k10": {
+     "value": 0.18534512709020806,
+     "lo": 0.17456193519700705,
+     "hi": 0.19612831898340907,
+     "main_rate": 0.20183333333333334,
+     "control_rate": 0.020166666666666666,
+     "trials": 6000,
+     "detected": true,
+     "lo_bonferroni": 0.1711250484312717
+    },
+    "inference": {
+     "value": 0.18467061392385797,
+     "lo": 0.1658720426946395,
+     "hi": 0.20346918515307644,
+     "main_rate": 0.3586666666666667,
+     "control_rate": 0.21333333333333335,
+     "trials": 6000,
+     "detected": true,
+     "lo_bonferroni": 0.1599102614370927
+    }
+   },
+   "dcr": {
+    "exact_copy_targets": 0.09033333333333333,
+    "exact_copy_control": 0.034,
+    "closer_to_training_share": 0.530875,
+    "closer_lo_min": 0.5085
+   },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.013023325816803795,
+     "lo": 0.0,
+     "hi": 0.02659265817199872,
+     "main_rate": 0.04133333333333333,
+     "control_rate": 0.028666666666666667,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.08939765617406172,
+     "lo": 0.07456210627477615,
+     "hi": 0.10423320607334728,
+     "main_rate": 0.09133333333333334,
+     "control_rate": 0.002,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 0.06973889879620618
+    },
+    "linkability_k10": {
+     "value": 0.3242122690183261,
+     "lo": 0.29875890117885273,
+     "hi": 0.3496656368577995,
+     "main_rate": 0.344,
+     "control_rate": 0.028666666666666667,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 0.2904346087380596
+    },
+    "inference": {
+     "value": 0.226774957936259,
+     "lo": 0.18777073962950558,
+     "hi": 0.2657791762430124,
+     "main_rate": 0.408,
+     "control_rate": 0.234,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 0.1752419542008355
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
+   "utility": {
+    "income": {
+     "auc_synthetic": 0.883509916895658,
+     "auc_ceiling": 0.8953818045518164,
+     "delta": -0.01187188765615832,
+     "delta_lo_worst": -0.016605984750091583,
+     "delta_hi_best": -0.007484849619083455
+    },
+    "employment": {
+     "auc_synthetic": 0.8206824807713383,
+     "auc_ceiling": 0.8346707404758781,
+     "delta": -0.013988259704539763,
+     "delta_lo_worst": -0.018563326944682282,
+     "delta_hi_best": -0.009174974351716943
+    }
+   },
+   "marginal_error": {
+    "1way": 0.01992708333333333,
+    "2way": 0.05889972222222222,
+    "3way": 0.1118155
+   },
+   "membership": {
+    "accuracy": 0.575,
+    "lo": 0.4814650063871672,
+    "hi": 0.6647440519626395,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
+   "passes_utility": true,
+   "passes_risk": false
+  },
+  {
+   "dataset": "acs",
+   "method": "smote",
+   "epsilon": null,
+   "seeds": [
+    0,
+    1,
+    2
+   ],
+   "seeds_attacked": [
+    0,
+    1,
+    2
+   ],
+   "seeds_scored": [
+    0,
+    1,
+    2
+   ],
+   "epsilon_spent": null,
+   "fit_seconds_median": 454.97,
+   "hardware": [
+    "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz"
+   ],
+   "device": [
+    "cpu"
+   ],
+   "risk": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.00045257538448505234,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.05552155902508327,
+     "lo": 0.03717744010260915,
+     "hi": 0.07386567794755738,
+     "main_rate": 0.249,
+     "control_rate": 0.20483333333333334,
+     "trials": 6000,
+     "detected": true,
+     "lo_bonferroni": 0.03139595121051947
+    },
+    "linkability_k1": {
+     "value": 0.006334472768359975,
+     "lo": 0.004128473724910031,
+     "hi": 0.008540471811809919,
+     "main_rate": 0.006833333333333334,
+     "control_rate": 0.0005,
+     "trials": 6000,
+     "detected": true,
+     "lo_bonferroni": 0.003390708784819838
+    },
+    "linkability_k10": {
+     "value": 0.10402194112585283,
+     "lo": 0.09458538857696729,
+     "hi": 0.11345849367473838,
+     "main_rate": 0.1275,
+     "control_rate": 0.026166666666666668,
+     "trials": 6000,
+     "detected": true,
+     "lo_bonferroni": 0.09158841477676728
+    },
+    "inference": {
+     "value": 0.2777700982366556,
+     "lo": 0.2571143358114159,
+     "hi": 0.2984258606618953,
+     "main_rate": 0.4746666666666667,
+     "control_rate": 0.2725,
+     "trials": 6000,
+     "detected": true,
+     "lo_bonferroni": 0.2505359054161611
+    }
+   },
+   "dcr": {
+    "exact_copy_targets": 0.23283333333333334,
+    "exact_copy_control": 0.07433333333333332,
+    "closer_to_training_share": 0.5645,
+    "closer_lo_min": 0.546875
+   },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.03739937522103697,
+     "lo": 0.01108815338194116,
+     "hi": 0.06371059706013278,
+     "main_rate": 0.14333333333333334,
+     "control_rate": 0.11,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 0.0027449587284003457
+    },
+    "linkability_k1": {
+     "value": 0.01134149369372425,
+     "lo": 0.0048615138356346245,
+     "hi": 0.017821473551813873,
+     "main_rate": 0.013333333333333334,
+     "control_rate": 0.002,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 0.002586769225628843
+    },
+    "linkability_k10": {
+     "value": 0.1273556684474137,
+     "lo": 0.10552982664990673,
+     "hi": 0.14918151024492066,
+     "main_rate": 0.16533333333333333,
+     "control_rate": 0.043333333333333335,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 0.0985063054682391
+    },
+    "inference": {
+     "value": 0.2985156906919226,
+     "lo": 0.25604886740854405,
+     "hi": 0.3409825139753011,
+     "main_rate": 0.5046666666666667,
+     "control_rate": 0.29333333333333333,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 0.24232214829365134
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
+   "utility": {
+    "income": {
+     "auc_synthetic": 0.887835176411229,
+     "auc_ceiling": 0.8953818045518164,
+     "delta": -0.007546628140587412,
+     "delta_lo_worst": -0.012054671561510471,
+     "delta_hi_best": -0.002857302738316517
+    },
+    "employment": {
+     "auc_synthetic": 0.8258792786445167,
+     "auc_ceiling": 0.8346707404758781,
+     "delta": -0.008791461831361369,
+     "delta_lo_worst": -0.014698143361864868,
+     "delta_hi_best": -0.0028848247587250635
+    }
+   },
+   "marginal_error": {
+    "1way": 0.04749791666666667,
+    "2way": 0.08347027777777777,
+    "3way": 0.11439816666666668
+   },
+   "membership": {
+    "accuracy": 0.5583333333333333,
+    "lo": 0.4648269963164124,
+    "hi": 0.6488918893958241,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
+   "passes_utility": true,
+   "passes_risk": false
+  },
+  {
+   "dataset": "acs",
+   "method": "kanon",
+   "epsilon": null,
+   "seeds": [
+    0,
+    1,
+    2
+   ],
+   "seeds_attacked": [
+    0,
+    1,
+    2
+   ],
+   "seeds_scored": [
+    0,
+    1,
+    2
+   ],
+   "epsilon_spent": null,
+   "fit_seconds_median": 5.798,
+   "hardware": [
+    "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz"
+   ],
+   "device": [
+    "cpu"
+   ],
+   "risk": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.00045257538448505234,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.002886564824047573,
+     "lo": 0.0,
+     "hi": 0.013260628863277163,
+     "main_rate": 0.07916666666666666,
+     "control_rate": 0.0765,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0005000066059697476,
+     "lo": 0.0,
+     "hi": 0.0014752499586242484,
+     "main_rate": 0.0008333333333333334,
+     "control_rate": 0.0003333333333333333,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.026916888197205967,
+     "lo": 0.020238121724295725,
+     "hi": 0.03359565467011621,
+     "main_rate": 0.04833333333333333,
+     "control_rate": 0.022,
+     "trials": 6000,
+     "detected": true,
+     "lo_bonferroni": 0.018120270345621966
+    },
+    "inference": {
+     "value": 0.09281006314238646,
+     "lo": 0.07259815573417415,
+     "hi": 0.11302197055059877,
+     "main_rate": 0.31283333333333335,
+     "control_rate": 0.2425,
+     "trials": 6000,
+     "detected": true,
+     "lo_bonferroni": 0.06621873897883562
+    }
+   },
+   "dcr": {
+    "exact_copy_targets": 0.12,
+    "exact_copy_control": 0.06233333333333333,
+    "closer_to_training_share": 0.535375,
+    "closer_lo_min": 0.515
+   },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.004576935786726628,
+     "lo": 0.0,
+     "hi": 0.03207208758464321,
+     "main_rate": 0.13133333333333333,
+     "control_rate": 0.12733333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0013316282016995655,
+     "lo": 0.0,
+     "hi": 0.003913859067643779,
+     "main_rate": 0.0013333333333333333,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.03007681763982857,
+     "lo": 0.015646745140897665,
+     "hi": 0.044506890138759476,
+     "main_rate": 0.05533333333333333,
+     "control_rate": 0.026,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 0.010991352990733384
+    },
+    "inference": {
+     "value": 0.08528434518880726,
+     "lo": 0.04327990510178398,
+     "hi": 0.12728878527583054,
+     "main_rate": 0.322,
+     "control_rate": 0.25866666666666666,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 0.029978741486817
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
+   "utility": {
+    "income": {
+     "auc_synthetic": 0.8789503660784491,
+     "auc_ceiling": 0.8953818045518164,
+     "delta": -0.016431438473367182,
+     "delta_lo_worst": -0.021472031059352085,
+     "delta_hi_best": -0.011320131377383262
+    },
+    "employment": {
+     "auc_synthetic": 0.8157393869914382,
+     "auc_ceiling": 0.8346707404758781,
+     "delta": -0.0189313534844399,
+     "delta_lo_worst": -0.02529471626000449,
+     "delta_hi_best": -0.013678319577653138
+    }
+   },
+   "marginal_error": {
+    "1way": 0.05471770833333334,
+    "2way": 0.09960638888888888,
+    "3way": 0.14022058333333334
+   },
+   "membership": {
+    "accuracy": 0.5083333333333333,
+    "lo": 0.41550429136532024,
+    "hi": 0.6007414174615904,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
+   "passes_utility": false,
+   "passes_risk": false
+  },
+  {
+   "dataset": "acs",
+   "method": "tvae_overfit",
+   "epsilon": null,
+   "seeds": [
+    0,
+    1,
+    2
+   ],
+   "seeds_attacked": [],
+   "seeds_scored": [],
+   "epsilon_spent": null,
+   "fit_seconds_median": 2331.028,
+   "hardware": [
+    "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz with NVIDIA GeForce GTX 1650"
+   ],
+   "device": [
+    "cuda"
+   ]
+  },
+  {
+   "dataset": "ieeecis",
+   "method": "perturb",
+   "epsilon": null,
+   "seeds": [
+    0,
+    1,
+    2
+   ],
+   "seeds_attacked": [
+    0,
+    1,
+    2
+   ],
+   "seeds_scored": [
+    0,
+    1,
+    2
+   ],
+   "epsilon_spent": null,
+   "fit_seconds_median": 0.03,
+   "hardware": [
+    "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz"
+   ],
+   "device": [
+    "cpu"
+   ],
+   "risk": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.00045257538448505234,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.005401166459859601,
+     "main_rate": 0.04066666666666666,
+     "control_rate": 0.042666666666666665,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.003332266602922108,
+     "lo": 0.0018058944661224904,
+     "hi": 0.004858638739721726,
+     "main_rate": 0.0033333333333333335,
+     "control_rate": 0.0,
+     "trials": 6000,
+     "detected": true,
+     "lo_bonferroni": 0.001263058230271983
+    },
+    "linkability_k10": {
+     "value": 0.05555630606358906,
+     "lo": 0.04777010089488299,
+     "hi": 0.06334251123229512,
+     "main_rate": 0.07666666666666666,
+     "control_rate": 0.022333333333333334,
+     "trials": 6000,
+     "detected": true,
+     "lo_bonferroni": 0.04530025124404121
+    },
+    "inference": {
+     "value": 0.07733115886463134,
+     "lo": 0.057035341823059416,
+     "hi": 0.09762697590620326,
+     "main_rate": 0.30233333333333334,
+     "control_rate": 0.24383333333333335,
+     "trials": 6000,
+     "detected": true,
+     "lo_bonferroni": 0.05063425512000936
+    }
+   },
+   "dcr": {
+    "exact_copy_targets": 0.025166666666666667,
+    "exact_copy_control": 0.010833333333333334,
+    "closer_to_training_share": 0.53675,
+    "closer_lo_min": 0.514875
+   },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0020066590788618277,
+     "main_rate": 0.02266666666666667,
+     "control_rate": 0.03266666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.003994884605098697,
+     "lo": 0.0003295466029721197,
+     "hi": 0.007660222607225273,
+     "main_rate": 0.004,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.06801206894990228,
+     "lo": 0.049028860638743926,
+     "hi": 0.08699527726106063,
+     "main_rate": 0.106,
+     "control_rate": 0.04066666666666666,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 0.04293837511478496
+    },
+    "inference": {
+     "value": 0.09004120421271944,
+     "lo": 0.04997758238857446,
+     "hi": 0.1301048260368644,
+     "main_rate": 0.30733333333333335,
+     "control_rate": 0.23866666666666667,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 0.03727909408172917
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
+   "utility": {
+    "fraud": {
+     "auc_synthetic": 0.7962537379626445,
+     "auc_ceiling": 0.8460635560563149,
+     "delta": -0.04980981809367032,
+     "delta_lo_worst": -0.07483944193663206,
+     "delta_hi_best": -0.021815770644329137
+    }
+   },
+   "marginal_error": {
+    "1way": 0.05744215686274509,
+    "2way": 0.12174632352941177,
+    "3way": 0.18561508333333335
+   },
+   "membership": {
+    "accuracy": 0.5083333333333333,
+    "lo": 0.41550429136532024,
+    "hi": 0.6007414174615904,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
+   "passes_utility": false,
+   "passes_risk": false
+  },
+  {
+   "dataset": "ieeecis",
+   "method": "smote",
+   "epsilon": null,
+   "seeds": [
+    0,
+    1,
+    2
+   ],
+   "seeds_attacked": [
+    0,
+    1,
+    2
+   ],
+   "seeds_scored": [
+    0,
+    1,
+    2
+   ],
+   "epsilon_spent": null,
+   "fit_seconds_median": 472.904,
+   "hardware": [
+    "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz"
+   ],
+   "device": [
+    "cpu"
+   ],
+   "risk": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.00045257538448505234,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.01907934552026593,
+     "lo": 0.007334873473276438,
+     "hi": 0.03082381756725542,
+     "main_rate": 0.10916666666666666,
+     "control_rate": 0.09183333333333334,
+     "trials": 6000,
+     "detected": true,
+     "lo_bonferroni": 0.0036336176624073464
+    },
+    "linkability_k1": {
+     "value": 0.008671116785816335,
+     "lo": 0.006071398384499517,
+     "hi": 0.011270835187133153,
+     "main_rate": 0.0095,
+     "control_rate": 0.0008333333333333334,
+     "trials": 6000,
+     "detected": true,
+     "lo_bonferroni": 0.0052161095731840385
+    },
+    "linkability_k10": {
+     "value": 0.12543304747267683,
+     "lo": 0.1150554395391072,
+     "hi": 0.13581065540624648,
+     "main_rate": 0.1555,
+     "control_rate": 0.034333333333333334,
+     "trials": 6000,
+     "detected": true,
+     "lo_bonferroni": 0.11175862854213273
+    },
+    "inference": {
+     "value": 0.386113920835182,
+     "lo": 0.3643035730764854,
+     "hi": 0.40792426859387854,
+     "main_rate": 0.5938333333333333,
+     "control_rate": 0.33816666666666667,
+     "trials": 6000,
+     "detected": true,
+     "lo_bonferroni": 0.3573159553705335
+    }
+   },
+   "dcr": {
+    "exact_copy_targets": 0.333,
+    "exact_copy_control": 0.06233333333333333,
+    "closer_to_training_share": 0.5571666666666667,
+    "closer_lo_min": 0.537125
+   },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.02092799624409754,
+     "lo": 0.0,
+     "hi": 0.04669267829771798,
+     "main_rate": 0.128,
+     "control_rate": 0.10933333333333334,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.006667018999018187,
+     "lo": 0.0014757778091989615,
+     "hi": 0.011858260188837413,
+     "main_rate": 0.008,
+     "control_rate": 0.0013333333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.1429673574744304,
+     "lo": 0.11814381897181245,
+     "hi": 0.16779089597704835,
+     "main_rate": 0.202,
+     "control_rate": 0.06866666666666667,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 0.11016958326134338
+    },
+    "inference": {
+     "value": 0.3789246608857312,
+     "lo": 0.3351476109431445,
+     "hi": 0.42270171082831787,
+     "main_rate": 0.5893333333333334,
+     "control_rate": 0.338,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 0.3208721074766084
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
+   "utility": {
+    "fraud": {
+     "auc_synthetic": 0.8029918301460661,
+     "auc_ceiling": 0.8460635560563149,
+     "delta": -0.043071725910248694,
+     "delta_lo_worst": -0.06107607926772797,
+     "delta_hi_best": -0.02448312522368281
+    }
+   },
+   "marginal_error": {
+    "1way": 0.022220588235294127,
+    "2way": 0.04127328431372549,
+    "3way": 0.06283066666666666
+   },
+   "membership": {
+    "accuracy": 0.475,
+    "lo": 0.38311032820074165,
+    "hi": 0.5681526215574849,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
+   "passes_utility": false,
+   "passes_risk": false
+  },
+  {
+   "dataset": "ieeecis",
+   "method": "kanon",
+   "epsilon": null,
+   "seeds": [
+    0,
+    1,
+    2
+   ],
+   "seeds_attacked": [
+    0,
+    1,
+    2
+   ],
+   "seeds_scored": [
+    0,
+    1,
+    2
+   ],
+   "epsilon_spent": null,
+   "fit_seconds_median": 5.628,
+   "hardware": [
+    "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz"
+   ],
+   "device": [
+    "cpu"
+   ],
+   "risk": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.00045257538448505234,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0017241614957411032,
+     "lo": 0.0,
+     "hi": 0.008490801447173787,
+     "main_rate": 0.035333333333333335,
+     "control_rate": 0.033666666666666664,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0009998465686430692,
+     "lo": 0.0,
+     "hi": 0.0020279425963633346,
+     "main_rate": 0.0011666666666666668,
+     "control_rate": 0.00016666666666666666,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.04031352197255618,
+     "lo": 0.033231820769417504,
+     "hi": 0.047395223175694855,
+     "main_rate": 0.06,
+     "control_rate": 0.0205,
+     "trials": 6000,
+     "detected": true,
+     "lo_bonferroni": 0.030985378668334784
+    },
+    "inference": {
+     "value": 0.06120125542902353,
+     "lo": 0.03788420566987326,
+     "hi": 0.0845183051881738,
+     "main_rate": 0.3458333333333333,
+     "control_rate": 0.30316666666666664,
+     "trials": 6000,
+     "detected": true,
+     "lo_bonferroni": 0.030538831117984677
+    }
+   },
+   "dcr": {
+    "exact_copy_targets": 0.13316666666666668,
+    "exact_copy_control": 0.050833333333333335,
+    "closer_to_training_share": 0.554875,
+    "closer_lo_min": 0.531496875
+   },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.020975437966258306,
+     "main_rate": 0.07866666666666666,
+     "control_rate": 0.07866666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0031781302955698016,
+     "main_rate": 0.0013333333333333333,
+     "control_rate": 0.0013333333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.03952232389408577,
+     "lo": 0.01978665807816347,
+     "hi": 0.05925798971000806,
+     "main_rate": 0.094,
+     "control_rate": 0.056666666666666664,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 0.013486186003895818
+    },
+    "inference": {
+     "value": 0.06442798773517104,
+     "lo": 0.01734473475480868,
+     "hi": 0.1115112407155334,
+     "main_rate": 0.3526666666666667,
+     "control_rate": 0.308,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 0.0024793092357076538
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
+   "utility": {
+    "fraud": {
+     "auc_synthetic": 0.7641582308490346,
+     "auc_ceiling": 0.8460635560563149,
+     "delta": -0.08190532520728029,
+     "delta_lo_worst": -0.10935707389489925,
+     "delta_hi_best": -0.05548963999873677
+    }
+   },
+   "marginal_error": {
+    "1way": 0.042209803921568624,
+    "2way": 0.07908884803921568,
+    "3way": 0.11851541666666666
+   },
+   "membership": {
+    "accuracy": 0.4583333333333333,
+    "lo": 0.3670599277953184,
+    "hi": 0.5517119105053541,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
+   "passes_utility": false,
+   "passes_risk": false
+  },
+  {
+   "dataset": "sparcs",
+   "method": "perturb",
+   "epsilon": null,
+   "seeds": [
+    0,
+    1,
+    2
+   ],
+   "seeds_attacked": [
+    0,
+    1,
+    2
+   ],
+   "seeds_scored": [
+    0,
+    1,
+    2
+   ],
+   "epsilon_spent": null,
+   "fit_seconds_median": 0.016,
+   "hardware": [
+    "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz"
+   ],
+   "device": [
+    "cpu"
+   ],
+   "risk": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0002248437045151234,
+     "main_rate": 0.0,
+     "control_rate": 0.0005,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0025153071128059595,
+     "lo": 0.0,
+     "hi": 0.012601740357448328,
+     "main_rate": 0.075,
+     "control_rate": 0.07266666666666667,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.03866717752832715,
+     "lo": 0.03372848698662806,
+     "hi": 0.04360586807002624,
+     "main_rate": 0.039,
+     "control_rate": 0.0003333333333333333,
+     "trials": 6000,
+     "detected": true,
+     "lo_bonferroni": 0.03215010192989294
+    },
+    "linkability_k10": {
+     "value": 0.275147614479113,
+     "lo": 0.2632816354782656,
+     "hi": 0.2870135934799604,
+     "main_rate": 0.28683333333333333,
+     "control_rate": 0.016,
+     "trials": 6000,
+     "detected": true,
+     "lo_bonferroni": 0.25948515672889516
+    },
+    "inference": {
+     "value": 0.5756171254181993,
+     "lo": 0.5576841097174838,
+     "hi": 0.5935501411189148,
+     "main_rate": 0.7028333333333333,
+     "control_rate": 0.29933333333333334,
+     "trials": 6000,
+     "detected": true,
+     "lo_bonferroni": 0.5518577017437581
+    }
+   },
+   "dcr": {
+    "exact_copy_targets": 0.078,
+    "exact_copy_control": 0.012000000000000002,
+    "closer_to_training_share": 0.5437500000000001,
+    "closer_lo_min": 0.5247468750000001
+   },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0009020354664962607,
+     "main_rate": 0.0,
+     "control_rate": 0.002,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.008687426372116978,
+     "main_rate": 0.04133333333333333,
+     "control_rate": 0.048,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.06600348809028005,
+     "lo": 0.05308488350737267,
+     "hi": 0.07892209267318742,
+     "main_rate": 0.06733333333333333,
+     "control_rate": 0.0013333333333333333,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 0.04886683416616988
+    },
+    "linkability_k10": {
+     "value": 0.364773849616222,
+     "lo": 0.33901471445523124,
+     "hi": 0.39053298477721277,
+     "main_rate": 0.38133333333333336,
+     "control_rate": 0.025333333333333333,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 0.3305596520286322
+    },
+    "inference": {
+     "value": 0.6999532903568272,
+     "lo": 0.6666222799752972,
+     "hi": 0.7332843007383572,
+     "main_rate": 0.8106666666666666,
+     "control_rate": 0.366,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 0.6551073371105981
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
+   "utility": {
+    "long_stay": {
+     "auc_synthetic": 0.8503814337790822,
+     "auc_ceiling": 0.855305021484971,
+     "delta": -0.004923587705888632,
+     "delta_lo_worst": -0.008518397354823648,
+     "delta_hi_best": -0.0011991778805011354
+    },
+    "high_charge": {
+     "auc_synthetic": 0.8672116416250862,
+     "auc_ceiling": 0.8768128539997658,
+     "delta": -0.009601212374679516,
+     "delta_lo_worst": -0.014991262852262904,
+     "delta_hi_best": -0.004135316689365092
+    }
+   },
+   "marginal_error": {
+    "1way": 0.011143750000000001,
+    "2way": 0.041145416666666663,
+    "3way": 0.07551100000000001
+   },
+   "membership": {
+    "accuracy": 0.5,
+    "lo": 0.40736926744019714,
+    "hi": 0.5926307325598028,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
+   "passes_utility": true,
+   "passes_risk": false
+  },
+  {
+   "dataset": "sparcs",
+   "method": "smote",
+   "epsilon": null,
+   "seeds": [
+    0,
+    1,
+    2
+   ],
+   "seeds_attacked": [
+    0,
+    1,
+    2
+   ],
+   "seeds_scored": [
+    0,
+    1,
+    2
+   ],
+   "epsilon_spent": null,
+   "fit_seconds_median": 426.162,
+   "hardware": [
+    "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz"
+   ],
+   "device": [
+    "cpu"
+   ],
+   "risk": {
+    "singling_out_univariate": {
+     "value": 0.0004999232843215345,
+     "lo": 0.0,
+     "hi": 0.0013588491969020208,
+     "main_rate": 0.0006666666666666666,
+     "control_rate": 0.00016666666666666666,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.021311485564040427,
+     "lo": 0.00445741831824728,
+     "hi": 0.038165552809833574,
+     "main_rate": 0.19666666666666666,
+     "control_rate": 0.17916666666666667,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.012333496280587108,
+     "lo": 0.009432151431251892,
+     "hi": 0.015234841129922325,
+     "main_rate": 0.012666666666666666,
+     "control_rate": 0.0003333333333333333,
+     "trials": 6000,
+     "detected": true,
+     "lo_bonferroni": 0.008485309081456477
+    },
+    "linkability_k10": {
+     "value": 0.1471769992800131,
+     "lo": 0.13661264374285192,
+     "hi": 0.15774135481717427,
+     "main_rate": 0.17266666666666666,
+     "control_rate": 0.029833333333333333,
+     "trials": 6000,
+     "detected": true,
+     "lo_bonferroni": 0.13325254741805992
+    },
+    "inference": {
+     "value": 0.32149948145520413,
+     "lo": 0.29832626462277123,
+     "hi": 0.344672698287637,
+     "main_rate": 0.561,
+     "control_rate": 0.35283333333333333,
+     "trials": 6000,
+     "detected": true,
+     "lo_bonferroni": 0.290931203735697
+    }
+   },
+   "dcr": {
+    "exact_copy_targets": 0.16466666666666666,
+    "exact_copy_control": 0.03466666666666667,
+    "closer_to_training_share": 0.57525,
+    "closer_lo_min": 0.5569937500000001
+   },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0019987731138729646,
+     "lo": 0.0,
+     "hi": 0.005429327284162197,
+     "main_rate": 0.0026666666666666666,
+     "control_rate": 0.0006666666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.021838652984110907,
+     "lo": 0.0,
+     "hi": 0.04842968888804605,
+     "main_rate": 0.13533333333333333,
+     "control_rate": 0.116,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.013991411797110751,
+     "lo": 0.007522166120855661,
+     "hi": 0.02046065747336584,
+     "main_rate": 0.014666666666666666,
+     "control_rate": 0.0006666666666666666,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 0.0052491810675378905
+    },
+    "linkability_k10": {
+     "value": 0.15475396660122673,
+     "lo": 0.1330944529870101,
+     "hi": 0.17641348021544337,
+     "main_rate": 0.182,
+     "control_rate": 0.032,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 0.12610080314932862
+    },
+    "inference": {
+     "value": 0.29666687944202064,
+     "lo": 0.2436980268219742,
+     "hi": 0.34963573206206705,
+     "main_rate": 0.5966666666666667,
+     "control_rate": 0.426,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 0.22660456464564047
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
+   "utility": {
+    "long_stay": {
+     "auc_synthetic": 0.8470076587078941,
+     "auc_ceiling": 0.855305021484971,
+     "delta": -0.008297362777076897,
+     "delta_lo_worst": -0.013334449849522196,
+     "delta_hi_best": -0.0032567967104789584
+    },
+    "high_charge": {
+     "auc_synthetic": 0.867346046058365,
+     "auc_ceiling": 0.8768128539997658,
+     "delta": -0.009466807941400942,
+     "delta_lo_worst": -0.013576073716554591,
+     "delta_hi_best": -0.005485097258716223
+    }
+   },
+   "marginal_error": {
+    "1way": 0.03778229166666667,
+    "2way": 0.06687347222222222,
+    "3way": 0.09746941666666668
+   },
+   "membership": {
+    "accuracy": 0.43333333333333335,
+    "lo": 0.3431694917061192,
+    "hi": 0.526866456765757,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
+   "passes_utility": true,
+   "passes_risk": false
+  },
+  {
+   "dataset": "sparcs",
+   "method": "kanon",
+   "epsilon": null,
+   "seeds": [
+    0,
+    1,
+    2
+   ],
+   "seeds_attacked": [
+    0,
+    1,
+    2
+   ],
+   "seeds_scored": [
+    0,
+    1,
+    2
+   ],
+   "epsilon_spent": null,
+   "fit_seconds_median": 6.13,
+   "hardware": [
+    "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz"
+   ],
+   "device": [
+    "cpu"
+   ],
+   "risk": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.00045257538448505234,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0017864512927843108,
+     "lo": 0.0,
+     "hi": 0.017461320818581264,
+     "main_rate": 0.16216666666666665,
+     "control_rate": 0.16066666666666668,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.001666966517989467,
+     "lo": 0.0002855236838700747,
+     "hi": 0.0030484093521088596,
+     "main_rate": 0.0021666666666666666,
+     "control_rate": 0.0005,
+     "trials": 6000,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.04571100520865368,
+     "lo": 0.03819950153993011,
+     "hi": 0.05322250887737724,
+     "main_rate": 0.06783333333333333,
+     "control_rate": 0.023166666666666665,
+     "trials": 6000,
+     "detected": true,
+     "lo_bonferroni": 0.03581761893819043
+    },
+    "inference": {
+     "value": 0.048591302283104265,
+     "lo": 0.026767142038357762,
+     "hi": 0.07041546252785078,
+     "main_rate": 0.3085,
+     "control_rate": 0.27316666666666667,
+     "trials": 6000,
+     "detected": true,
+     "lo_bonferroni": 0.019894826993524146
+    }
+   },
+   "dcr": {
+    "exact_copy_targets": 0.05933333333333333,
+    "exact_copy_control": 0.02033333333333333,
+    "closer_to_training_share": 0.5596666666666666,
+    "closer_lo_min": 0.542
+   },
+   "risk_exposed": {
+    "singling_out_univariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.0018085652115795217,
+     "main_rate": 0.0,
+     "control_rate": 0.0,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "singling_out_multivariate": {
+     "value": 0.0,
+     "lo": 0.0,
+     "hi": 0.021272103068905913,
+     "main_rate": 0.10066666666666667,
+     "control_rate": 0.10333333333333333,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k1": {
+     "value": 0.0013325154092486428,
+     "lo": 0.0,
+     "hi": 0.004506768722169183,
+     "main_rate": 0.002,
+     "control_rate": 0.0006666666666666666,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    },
+    "linkability_k10": {
+     "value": 0.047686498730839834,
+     "lo": 0.03253589815132828,
+     "hi": 0.06283709931035139,
+     "main_rate": 0.06933333333333333,
+     "control_rate": 0.02266666666666667,
+     "trials": 1500,
+     "detected": true,
+     "lo_bonferroni": 0.027645993382053213
+    },
+    "inference": {
+     "value": 0.031374987366420366,
+     "lo": 0.0,
+     "hi": 0.0802418126826171,
+     "main_rate": 0.3426666666666667,
+     "control_rate": 0.32133333333333336,
+     "trials": 1500,
+     "detected": false,
+     "lo_bonferroni": 0.0
+    }
+   },
+   "seeds_exposed": [
+    0,
+    1,
+    2
+   ],
+   "utility": {
+    "long_stay": {
+     "auc_synthetic": 0.8220781268646574,
+     "auc_ceiling": 0.855305021484971,
+     "delta": -0.033226894620313474,
+     "delta_lo_worst": -0.03943116860352707,
+     "delta_hi_best": -0.027079027159220777
+    },
+    "high_charge": {
+     "auc_synthetic": 0.8543897788596834,
+     "auc_ceiling": 0.8768128539997658,
+     "delta": -0.022423075140082387,
+     "delta_lo_worst": -0.02962555261456301,
+     "delta_hi_best": -0.015181323559263164
+    }
+   },
+   "marginal_error": {
+    "1way": 0.04785208333333333,
+    "2way": 0.08697680555555555,
+    "3way": 0.12928958333333332
+   },
+   "membership": {
+    "accuracy": 0.5166666666666667,
+    "lo": 0.42366365483270757,
+    "hi": 0.6088277437806595,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
+   "passes_utility": false,
+   "passes_risk": false
+  }
+ ],
+ "ladder_leaks": [
+  {
+   "dataset": "acs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "perturb",
+   "epsilon": null,
+   "attack": "singling_out_multivariate",
+   "risk": 0.017027554058930576,
+   "lo": 0.007462765694214547,
+   "hi": 0.026592342423646605,
+   "lo_bonferroni": 0.0044447709458845675,
+   "main_rate": 0.07666666666666666,
+   "control_rate": 0.06066666666666667,
+   "seeds": 3
+  },
+  {
+   "dataset": "acs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "perturb",
+   "epsilon": null,
+   "attack": "linkability_k1",
+   "risk": 0.03234454217588035,
+   "lo": 0.02775725404521964,
+   "hi": 0.036931830306541055,
+   "lo_bonferroni": 0.026289051531023372,
+   "main_rate": 0.033,
+   "control_rate": 0.0006666666666666666,
+   "seeds": 3
+  },
+  {
+   "dataset": "acs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "perturb",
+   "epsilon": null,
+   "attack": "linkability_k10",
+   "risk": 0.18534512709020806,
+   "lo": 0.17456193519700705,
+   "hi": 0.19612831898340907,
+   "lo_bonferroni": 0.1711250484312717,
+   "main_rate": 0.20183333333333334,
+   "control_rate": 0.020166666666666666,
+   "seeds": 3
+  },
+  {
+   "dataset": "acs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "perturb",
+   "epsilon": null,
+   "attack": "inference",
+   "risk": 0.18467061392385797,
+   "lo": 0.1658720426946395,
+   "hi": 0.20346918515307644,
+   "lo_bonferroni": 0.1599102614370927,
+   "main_rate": 0.3586666666666667,
+   "control_rate": 0.21333333333333335,
+   "seeds": 3
+  },
+  {
+   "dataset": "acs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "smote",
+   "epsilon": null,
+   "attack": "singling_out_multivariate",
+   "risk": 0.05552155902508327,
+   "lo": 0.03717744010260915,
+   "hi": 0.07386567794755738,
+   "lo_bonferroni": 0.03139595121051947,
+   "main_rate": 0.249,
+   "control_rate": 0.20483333333333334,
+   "seeds": 3
+  },
+  {
+   "dataset": "acs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "smote",
+   "epsilon": null,
+   "attack": "linkability_k1",
+   "risk": 0.006334472768359975,
+   "lo": 0.004128473724910031,
+   "hi": 0.008540471811809919,
+   "lo_bonferroni": 0.003390708784819838,
+   "main_rate": 0.006833333333333334,
+   "control_rate": 0.0005,
+   "seeds": 3
+  },
+  {
+   "dataset": "acs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "smote",
+   "epsilon": null,
+   "attack": "linkability_k10",
+   "risk": 0.10402194112585283,
+   "lo": 0.09458538857696729,
+   "hi": 0.11345849367473838,
+   "lo_bonferroni": 0.09158841477676728,
+   "main_rate": 0.1275,
+   "control_rate": 0.026166666666666668,
+   "seeds": 3
+  },
+  {
+   "dataset": "acs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "smote",
+   "epsilon": null,
+   "attack": "inference",
+   "risk": 0.2777700982366556,
+   "lo": 0.2571143358114159,
+   "hi": 0.2984258606618953,
+   "lo_bonferroni": 0.2505359054161611,
+   "main_rate": 0.4746666666666667,
+   "control_rate": 0.2725,
+   "seeds": 3
+  },
+  {
+   "dataset": "acs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "kanon",
+   "epsilon": null,
+   "attack": "linkability_k10",
+   "risk": 0.026916888197205967,
+   "lo": 0.020238121724295725,
+   "hi": 0.03359565467011621,
+   "lo_bonferroni": 0.018120270345621966,
+   "main_rate": 0.04833333333333333,
+   "control_rate": 0.022,
+   "seeds": 3
+  },
+  {
+   "dataset": "acs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "kanon",
+   "epsilon": null,
+   "attack": "inference",
+   "risk": 0.09281006314238646,
+   "lo": 0.07259815573417415,
+   "hi": 0.11302197055059877,
+   "lo_bonferroni": 0.06621873897883562,
+   "main_rate": 0.31283333333333335,
+   "control_rate": 0.2425,
+   "seeds": 3
+  },
+  {
+   "dataset": "ieeecis",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "perturb",
+   "epsilon": null,
+   "attack": "linkability_k1",
+   "risk": 0.003332266602922108,
+   "lo": 0.0018058944661224904,
+   "hi": 0.004858638739721726,
+   "lo_bonferroni": 0.001263058230271983,
+   "main_rate": 0.0033333333333333335,
+   "control_rate": 0.0,
+   "seeds": 3
+  },
+  {
+   "dataset": "ieeecis",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "perturb",
+   "epsilon": null,
+   "attack": "linkability_k10",
+   "risk": 0.05555630606358906,
+   "lo": 0.04777010089488299,
+   "hi": 0.06334251123229512,
+   "lo_bonferroni": 0.04530025124404121,
+   "main_rate": 0.07666666666666666,
+   "control_rate": 0.022333333333333334,
+   "seeds": 3
+  },
+  {
+   "dataset": "ieeecis",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "perturb",
+   "epsilon": null,
+   "attack": "inference",
+   "risk": 0.07733115886463134,
+   "lo": 0.057035341823059416,
+   "hi": 0.09762697590620326,
+   "lo_bonferroni": 0.05063425512000936,
+   "main_rate": 0.30233333333333334,
+   "control_rate": 0.24383333333333335,
+   "seeds": 3
+  },
+  {
+   "dataset": "ieeecis",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "smote",
+   "epsilon": null,
+   "attack": "singling_out_multivariate",
+   "risk": 0.01907934552026593,
+   "lo": 0.007334873473276438,
+   "hi": 0.03082381756725542,
+   "lo_bonferroni": 0.0036336176624073464,
+   "main_rate": 0.10916666666666666,
+   "control_rate": 0.09183333333333334,
+   "seeds": 3
+  },
+  {
+   "dataset": "ieeecis",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "smote",
+   "epsilon": null,
+   "attack": "linkability_k1",
+   "risk": 0.008671116785816335,
+   "lo": 0.006071398384499517,
+   "hi": 0.011270835187133153,
+   "lo_bonferroni": 0.0052161095731840385,
+   "main_rate": 0.0095,
+   "control_rate": 0.0008333333333333334,
+   "seeds": 3
+  },
+  {
+   "dataset": "ieeecis",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "smote",
+   "epsilon": null,
+   "attack": "linkability_k10",
+   "risk": 0.12543304747267683,
+   "lo": 0.1150554395391072,
+   "hi": 0.13581065540624648,
+   "lo_bonferroni": 0.11175862854213273,
+   "main_rate": 0.1555,
+   "control_rate": 0.034333333333333334,
+   "seeds": 3
+  },
+  {
+   "dataset": "ieeecis",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "smote",
+   "epsilon": null,
+   "attack": "inference",
+   "risk": 0.386113920835182,
+   "lo": 0.3643035730764854,
+   "hi": 0.40792426859387854,
+   "lo_bonferroni": 0.3573159553705335,
+   "main_rate": 0.5938333333333333,
+   "control_rate": 0.33816666666666667,
+   "seeds": 3
+  },
+  {
+   "dataset": "ieeecis",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "kanon",
+   "epsilon": null,
+   "attack": "linkability_k10",
+   "risk": 0.04031352197255618,
+   "lo": 0.033231820769417504,
+   "hi": 0.047395223175694855,
+   "lo_bonferroni": 0.030985378668334784,
+   "main_rate": 0.06,
+   "control_rate": 0.0205,
+   "seeds": 3
+  },
+  {
+   "dataset": "ieeecis",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "kanon",
+   "epsilon": null,
+   "attack": "inference",
+   "risk": 0.06120125542902353,
+   "lo": 0.03788420566987326,
+   "hi": 0.0845183051881738,
+   "lo_bonferroni": 0.030538831117984677,
+   "main_rate": 0.3458333333333333,
+   "control_rate": 0.30316666666666664,
+   "seeds": 3
+  },
+  {
+   "dataset": "sparcs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "perturb",
+   "epsilon": null,
+   "attack": "linkability_k1",
+   "risk": 0.03866717752832715,
+   "lo": 0.03372848698662806,
+   "hi": 0.04360586807002624,
+   "lo_bonferroni": 0.03215010192989294,
+   "main_rate": 0.039,
+   "control_rate": 0.0003333333333333333,
+   "seeds": 3
+  },
+  {
+   "dataset": "sparcs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "perturb",
+   "epsilon": null,
+   "attack": "linkability_k10",
+   "risk": 0.275147614479113,
+   "lo": 0.2632816354782656,
+   "hi": 0.2870135934799604,
+   "lo_bonferroni": 0.25948515672889516,
+   "main_rate": 0.28683333333333333,
+   "control_rate": 0.016,
+   "seeds": 3
+  },
+  {
+   "dataset": "sparcs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "perturb",
+   "epsilon": null,
+   "attack": "inference",
+   "risk": 0.5756171254181993,
+   "lo": 0.5576841097174838,
+   "hi": 0.5935501411189148,
+   "lo_bonferroni": 0.5518577017437581,
+   "main_rate": 0.7028333333333333,
+   "control_rate": 0.29933333333333334,
+   "seeds": 3
+  },
+  {
+   "dataset": "sparcs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "smote",
+   "epsilon": null,
+   "attack": "linkability_k1",
+   "risk": 0.012333496280587108,
+   "lo": 0.009432151431251892,
+   "hi": 0.015234841129922325,
+   "lo_bonferroni": 0.008485309081456477,
+   "main_rate": 0.012666666666666666,
+   "control_rate": 0.0003333333333333333,
+   "seeds": 3
+  },
+  {
+   "dataset": "sparcs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "smote",
+   "epsilon": null,
+   "attack": "linkability_k10",
+   "risk": 0.1471769992800131,
+   "lo": 0.13661264374285192,
+   "hi": 0.15774135481717427,
+   "lo_bonferroni": 0.13325254741805992,
+   "main_rate": 0.17266666666666666,
+   "control_rate": 0.029833333333333333,
+   "seeds": 3
+  },
+  {
+   "dataset": "sparcs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "smote",
+   "epsilon": null,
+   "attack": "inference",
+   "risk": 0.32149948145520413,
+   "lo": 0.29832626462277123,
+   "hi": 0.344672698287637,
+   "lo_bonferroni": 0.290931203735697,
+   "main_rate": 0.561,
+   "control_rate": 0.35283333333333333,
+   "seeds": 3
+  },
+  {
+   "dataset": "sparcs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "kanon",
+   "epsilon": null,
+   "attack": "linkability_k10",
+   "risk": 0.04571100520865368,
+   "lo": 0.03819950153993011,
+   "hi": 0.05322250887737724,
+   "lo_bonferroni": 0.03581761893819043,
+   "main_rate": 0.06783333333333333,
+   "control_rate": 0.023166666666666665,
+   "seeds": 3
+  },
+  {
+   "dataset": "sparcs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "kanon",
+   "epsilon": null,
+   "attack": "inference",
+   "risk": 0.048591302283104265,
+   "lo": 0.026767142038357762,
+   "hi": 0.07041546252785078,
+   "lo_bonferroni": 0.019894826993524146,
+   "main_rate": 0.3085,
+   "control_rate": 0.27316666666666667,
+   "seeds": 3
+  }
+ ],
+ "exposed_leaks": [
+  {
+   "dataset": "acs",
+   "library": "smartnoise-synth",
+   "version": "1.0.8",
+   "method": "mst",
+   "epsilon": 1.0,
+   "attack": "inference",
+   "risk": 0.046110094614050655,
+   "lo": 0.018517129339377013,
+   "hi": 0.0737030598887243,
+   "lo_bonferroni": 0.009766055795226984,
+   "main_rate": 0.16,
+   "control_rate": 0.11933333333333333,
+   "seeds": 3
+  },
+  {
+   "dataset": "acs",
+   "library": "smartnoise-synth",
+   "version": "1.0.8",
+   "method": "aim",
+   "epsilon": 1.0,
+   "attack": "singling_out_multivariate",
+   "risk": 0.022269843662935728,
+   "lo": 0.005450504127091457,
+   "hi": 0.03908918319878,
+   "lo_bonferroni": 6.615847577312248e-05,
+   "main_rate": 0.06466666666666666,
+   "control_rate": 0.043333333333333335,
+   "seeds": 3
+  },
+  {
+   "dataset": "acs",
+   "library": "smartnoise-synth",
+   "version": "1.0.8",
+   "method": "aim",
+   "epsilon": 1.0,
+   "attack": "inference",
+   "risk": 0.0724802488208976,
+   "lo": 0.03789085138809368,
+   "hi": 0.10706964625370152,
+   "lo_bonferroni": 0.026926944174541903,
+   "main_rate": 0.242,
+   "control_rate": 0.18266666666666667,
+   "seeds": 3
+  },
+  {
+   "dataset": "acs",
+   "library": "smartnoise-synth",
+   "version": "1.0.8",
+   "method": "aim",
+   "epsilon": 2.0,
+   "attack": "inference",
+   "risk": 0.0551476309343392,
+   "lo": 0.019822782359024273,
+   "hi": 0.09047247950965412,
+   "lo_bonferroni": 0.008647667768723256,
+   "main_rate": 0.236,
+   "control_rate": 0.19133333333333333,
+   "seeds": 3
+  },
+  {
+   "dataset": "acs",
+   "library": "smartnoise-synth",
+   "version": "1.0.8",
+   "method": "pate_ctgan",
+   "epsilon": 2.0,
+   "attack": "singling_out_multivariate",
+   "risk": 0.010040693394702762,
+   "lo": 0.0025789727171955197,
+   "hi": 0.017502414072210003,
+   "lo_bonferroni": 2.687268899128313e-05,
+   "main_rate": 0.015333333333333332,
+   "control_rate": 0.005333333333333333,
+   "seeds": 3
+  },
+  {
+   "dataset": "sparcs",
+   "library": "smartnoise-synth",
+   "version": "1.0.8",
+   "method": "pate_ctgan",
+   "epsilon": 4.0,
+   "attack": "linkability_k10",
+   "risk": 0.008000422798821825,
+   "lo": 0.0024966592118717632,
+   "hi": 0.013504186385771886,
+   "lo_bonferroni": 0.0004896243054001229,
+   "main_rate": 0.009333333333333334,
+   "control_rate": 0.0013333333333333333,
+   "seeds": 3
+  },
+  {
+   "dataset": "acs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "perturb",
+   "epsilon": null,
+   "attack": "linkability_k1",
+   "risk": 0.08939765617406172,
+   "lo": 0.07456210627477615,
+   "hi": 0.10423320607334728,
+   "lo_bonferroni": 0.06973889879620618,
+   "main_rate": 0.09133333333333334,
+   "control_rate": 0.002,
+   "seeds": 3
+  },
+  {
+   "dataset": "acs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "perturb",
+   "epsilon": null,
+   "attack": "linkability_k10",
+   "risk": 0.3242122690183261,
+   "lo": 0.29875890117885273,
+   "hi": 0.3496656368577995,
+   "lo_bonferroni": 0.2904346087380596,
+   "main_rate": 0.344,
+   "control_rate": 0.028666666666666667,
+   "seeds": 3
+  },
+  {
+   "dataset": "acs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "perturb",
+   "epsilon": null,
+   "attack": "inference",
+   "risk": 0.226774957936259,
+   "lo": 0.18777073962950558,
+   "hi": 0.2657791762430124,
+   "lo_bonferroni": 0.1752419542008355,
+   "main_rate": 0.408,
+   "control_rate": 0.234,
+   "seeds": 3
+  },
+  {
+   "dataset": "acs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "smote",
+   "epsilon": null,
+   "attack": "singling_out_multivariate",
+   "risk": 0.03739937522103697,
+   "lo": 0.01108815338194116,
+   "hi": 0.06371059706013278,
+   "lo_bonferroni": 0.0027449587284003457,
+   "main_rate": 0.14333333333333334,
+   "control_rate": 0.11,
+   "seeds": 3
+  },
+  {
+   "dataset": "acs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "smote",
+   "epsilon": null,
+   "attack": "linkability_k1",
+   "risk": 0.01134149369372425,
+   "lo": 0.0048615138356346245,
+   "hi": 0.017821473551813873,
+   "lo_bonferroni": 0.002586769225628843,
+   "main_rate": 0.013333333333333334,
+   "control_rate": 0.002,
+   "seeds": 3
+  },
+  {
+   "dataset": "acs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "smote",
+   "epsilon": null,
+   "attack": "linkability_k10",
+   "risk": 0.1273556684474137,
+   "lo": 0.10552982664990673,
+   "hi": 0.14918151024492066,
+   "lo_bonferroni": 0.0985063054682391,
+   "main_rate": 0.16533333333333333,
+   "control_rate": 0.043333333333333335,
+   "seeds": 3
+  },
+  {
+   "dataset": "acs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "smote",
+   "epsilon": null,
+   "attack": "inference",
+   "risk": 0.2985156906919226,
+   "lo": 0.25604886740854405,
+   "hi": 0.3409825139753011,
+   "lo_bonferroni": 0.24232214829365134,
+   "main_rate": 0.5046666666666667,
+   "control_rate": 0.29333333333333333,
+   "seeds": 3
+  },
+  {
+   "dataset": "acs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "kanon",
+   "epsilon": null,
+   "attack": "linkability_k10",
+   "risk": 0.03007681763982857,
+   "lo": 0.015646745140897665,
+   "hi": 0.044506890138759476,
+   "lo_bonferroni": 0.010991352990733384,
+   "main_rate": 0.05533333333333333,
+   "control_rate": 0.026,
+   "seeds": 3
+  },
+  {
+   "dataset": "acs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "kanon",
+   "epsilon": null,
+   "attack": "inference",
+   "risk": 0.08528434518880726,
+   "lo": 0.04327990510178398,
+   "hi": 0.12728878527583054,
+   "lo_bonferroni": 0.029978741486817,
+   "main_rate": 0.322,
+   "control_rate": 0.25866666666666666,
+   "seeds": 3
+  },
+  {
+   "dataset": "ieeecis",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "perturb",
+   "epsilon": null,
+   "attack": "linkability_k10",
+   "risk": 0.06801206894990228,
+   "lo": 0.049028860638743926,
+   "hi": 0.08699527726106063,
+   "lo_bonferroni": 0.04293837511478496,
+   "main_rate": 0.106,
+   "control_rate": 0.04066666666666666,
+   "seeds": 3
+  },
+  {
+   "dataset": "ieeecis",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "perturb",
+   "epsilon": null,
+   "attack": "inference",
+   "risk": 0.09004120421271944,
+   "lo": 0.04997758238857446,
+   "hi": 0.1301048260368644,
+   "lo_bonferroni": 0.03727909408172917,
+   "main_rate": 0.30733333333333335,
+   "control_rate": 0.23866666666666667,
+   "seeds": 3
+  },
+  {
+   "dataset": "ieeecis",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "smote",
+   "epsilon": null,
+   "attack": "linkability_k10",
+   "risk": 0.1429673574744304,
+   "lo": 0.11814381897181245,
+   "hi": 0.16779089597704835,
+   "lo_bonferroni": 0.11016958326134338,
+   "main_rate": 0.202,
+   "control_rate": 0.06866666666666667,
+   "seeds": 3
+  },
+  {
+   "dataset": "ieeecis",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "smote",
+   "epsilon": null,
+   "attack": "inference",
+   "risk": 0.3789246608857312,
+   "lo": 0.3351476109431445,
+   "hi": 0.42270171082831787,
+   "lo_bonferroni": 0.3208721074766084,
+   "main_rate": 0.5893333333333334,
+   "control_rate": 0.338,
+   "seeds": 3
+  },
+  {
+   "dataset": "ieeecis",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "kanon",
+   "epsilon": null,
+   "attack": "linkability_k10",
+   "risk": 0.03952232389408577,
+   "lo": 0.01978665807816347,
+   "hi": 0.05925798971000806,
+   "lo_bonferroni": 0.013486186003895818,
+   "main_rate": 0.094,
+   "control_rate": 0.056666666666666664,
+   "seeds": 3
+  },
+  {
+   "dataset": "ieeecis",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "kanon",
+   "epsilon": null,
+   "attack": "inference",
+   "risk": 0.06442798773517104,
+   "lo": 0.01734473475480868,
+   "hi": 0.1115112407155334,
+   "lo_bonferroni": 0.0024793092357076538,
+   "main_rate": 0.3526666666666667,
+   "control_rate": 0.308,
+   "seeds": 3
+  },
+  {
+   "dataset": "sparcs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "perturb",
+   "epsilon": null,
+   "attack": "linkability_k1",
+   "risk": 0.06600348809028005,
+   "lo": 0.05308488350737267,
+   "hi": 0.07892209267318742,
+   "lo_bonferroni": 0.04886683416616988,
+   "main_rate": 0.06733333333333333,
+   "control_rate": 0.0013333333333333333,
+   "seeds": 3
+  },
+  {
+   "dataset": "sparcs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "perturb",
+   "epsilon": null,
+   "attack": "linkability_k10",
+   "risk": 0.364773849616222,
+   "lo": 0.33901471445523124,
+   "hi": 0.39053298477721277,
+   "lo_bonferroni": 0.3305596520286322,
+   "main_rate": 0.38133333333333336,
+   "control_rate": 0.025333333333333333,
+   "seeds": 3
+  },
+  {
+   "dataset": "sparcs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "perturb",
+   "epsilon": null,
+   "attack": "inference",
+   "risk": 0.6999532903568272,
+   "lo": 0.6666222799752972,
+   "hi": 0.7332843007383572,
+   "lo_bonferroni": 0.6551073371105981,
+   "main_rate": 0.8106666666666666,
+   "control_rate": 0.366,
+   "seeds": 3
+  },
+  {
+   "dataset": "sparcs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "smote",
+   "epsilon": null,
+   "attack": "linkability_k1",
+   "risk": 0.013991411797110751,
+   "lo": 0.007522166120855661,
+   "hi": 0.02046065747336584,
+   "lo_bonferroni": 0.0052491810675378905,
+   "main_rate": 0.014666666666666666,
+   "control_rate": 0.0006666666666666666,
+   "seeds": 3
+  },
+  {
+   "dataset": "sparcs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "smote",
+   "epsilon": null,
+   "attack": "linkability_k10",
+   "risk": 0.15475396660122673,
+   "lo": 0.1330944529870101,
+   "hi": 0.17641348021544337,
+   "lo_bonferroni": 0.12610080314932862,
+   "main_rate": 0.182,
+   "control_rate": 0.032,
+   "seeds": 3
+  },
+  {
+   "dataset": "sparcs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "smote",
+   "epsilon": null,
+   "attack": "inference",
+   "risk": 0.29666687944202064,
+   "lo": 0.2436980268219742,
+   "hi": 0.34963573206206705,
+   "lo_bonferroni": 0.22660456464564047,
+   "main_rate": 0.5966666666666667,
+   "control_rate": 0.426,
+   "seeds": 3
+  },
+  {
+   "dataset": "sparcs",
+   "library": "facsimile",
+   "version": "0.0.1",
+   "method": "kanon",
+   "epsilon": null,
+   "attack": "linkability_k10",
+   "risk": 0.047686498730839834,
+   "lo": 0.03253589815132828,
+   "hi": 0.06283709931035139,
+   "lo_bonferroni": 0.027645993382053213,
+   "main_rate": 0.06933333333333333,
+   "control_rate": 0.02266666666666667,
    "seeds": 3
   }
  ],

@@ -1,0 +1,40 @@
+{
+  "facsimile": "0.0.1",
+  "dataset": "sparcs",
+  "method": "kanon",
+  "library": "facsimile",
+  "family": "non-dp generalisation",
+  "epsilon": null,
+  "seed": 2,
+  "cell": {
+    "eps_tag": "inf"
+  },
+  "rows": 20000,
+  "params": {
+    "library": "facsimile",
+    "k": 5,
+    "quasi_identifiers": "every attribute but the secret",
+    "secret": "apr_mdc_code"
+  },
+  "accounting": {
+    "dp": false,
+    "epsilon": "inf"
+  },
+  "fitted_on_sha256": "82b4c6bde25b37b5b1a6c5572247ae4d23efa23d7a400a92b256162f9c74b810",
+  "train_sha256": "82b4c6bde25b37b5b1a6c5572247ae4d23efa23d7a400a92b256162f9c74b810",
+  "table_sha256": "7da8f4af89e9eef42f161b3a9594703fca0e1542963de91b6f7e1d20b09ccb5b",
+  "fit_seconds": 6.218,
+  "sample_seconds": 0.0,
+  "device": "cpu",
+  "hardware": {
+    "cpu": "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz",
+    "logical_cores": 12,
+    "os": "Windows 11",
+    "python": "3.13.5",
+    "torch": "2.14.1+cu126",
+    "gpu": "NVIDIA GeForce GTX 1650",
+    "gpu_memory_gb": 4.0
+  },
+  "started_utc": "2026-10-28T01:19:27+00:00",
+  "notes": []
+}

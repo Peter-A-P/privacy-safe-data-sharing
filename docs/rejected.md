@@ -80,6 +80,14 @@ what any one record changes, not how close the table is to the population. That 
 why MST on IEEE-CIS fails DCR at every budget while no attack detects anything. The project did
 not test this explanation further.
 
+## Where it does work
+
+On the leakage ladder (PLAN.md section 2.10, `docs/attacks.md`), DCR flags all nine tables of
+the perturbed copy, SMOTE-NC and k-anonymity: every seed's interval sits above one half. So DCR
+does catch copies and near-copies, which is the case it was designed for. The rejection stands
+for the cases that matter here: tables that are not copies, where it flagged differentially
+private ones no attack could break and passed the one an attack broke.
+
 ## What the project does instead
 
 DCR stays in the tables beside the attacks, labelled as what it is, so the comparison can be

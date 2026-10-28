@@ -1,0 +1,98 @@
+{
+  "facsimile": "0.0.1",
+  "dataset": "sparcs",
+  "method": "smote",
+  "epsilon": null,
+  "seed": 0,
+  "table_sha256": "56f52970639f86b78379a31d017ab67bdbb2cdde2d57bdb789f7e85dfa4de433",
+  "model": {
+    "library": "lightgbm",
+    "params": {
+      "n_estimators": 300,
+      "learning_rate": 0.05,
+      "num_leaves": 31,
+      "min_child_samples": 20,
+      "subsample": 0.8,
+      "subsample_freq": 1,
+      "colsample_bytree": 0.8,
+      "verbose": -1,
+      "n_jobs": 4
+    },
+    "seed": 0
+  },
+  "tasks": {
+    "long_stay": {
+      "auc_synthetic": {
+        "point": 0.8465991385279643,
+        "lo": 0.8386754660611337,
+        "hi": 0.8547904720540508,
+        "n": 10000
+      },
+      "auc_real_ceiling": {
+        "point": 0.8553050214849709,
+        "lo": 0.8475853375121932,
+        "hi": 0.863326517499206,
+        "n": 10000
+      },
+      "auc_floor": 0.5,
+      "delta_vs_ceiling": {
+        "point": -0.008705882957006583,
+        "lo": -0.011714581963135448,
+        "hi": -0.005786898840413921,
+        "n": 10000
+      },
+      "synthetic_trained": true,
+      "note": "",
+      "test_rows": 10000,
+      "test_positive_rate": 0.2913
+    },
+    "high_charge": {
+      "auc_synthetic": {
+        "point": 0.8676834645527484,
+        "lo": 0.8604238128201496,
+        "hi": 0.8742909921848436,
+        "n": 10000
+      },
+      "auc_real_ceiling": {
+        "point": 0.8768128539997658,
+        "lo": 0.8700447967745587,
+        "hi": 0.8832976830672273,
+        "n": 10000
+      },
+      "auc_floor": 0.5,
+      "delta_vs_ceiling": {
+        "point": -0.009129389447017466,
+        "lo": -0.01183321351394942,
+        "hi": -0.006457200045732822,
+        "n": 10000
+      },
+      "synthetic_trained": true,
+      "note": "",
+      "test_rows": 10000,
+      "test_positive_rate": 0.4885
+    }
+  },
+  "marginal_error": {
+    "1way": {
+      "point": 0.03833125,
+      "lo": 0.025804375000000004,
+      "hi": 0.052104609374999986,
+      "n": 16,
+      "marginals": 16
+    },
+    "2way": {
+      "point": 0.06677708333333333,
+      "lo": 0.060843062499999996,
+      "hi": 0.07254253124999999,
+      "n": 120,
+      "marginals": 120
+    },
+    "3way": {
+      "point": 0.09679375,
+      "lo": 0.091123725,
+      "hi": 0.10244834374999999,
+      "n": 200,
+      "marginals": 200
+    }
+  }
+}
