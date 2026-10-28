@@ -291,8 +291,17 @@ def cmd_site(args: argparse.Namespace) -> int:
     from facsimile import report
     from facsimile.paths import REPO
 
+    payload = report.build()
+    # The yardstick for distance to closest record: unseen real rows in place of a synthetic
+    # table (`facsimile dcr-null`), the share each draw scored.
+    payload["dcr_null"] = {}
+    for ds in report.DATASETS:
+        null = REPO / "results" / ds / "dcr_null.json"
+        if null.exists():
+            draws = json.loads(null.read_text(encoding="utf-8"))
+            payload["dcr_null"][ds] = [d["closer_to_training_share"]["point"] for d in draws]
     path = REPO / "site" / "data.json"
-    path.write_text(json.dumps(report.build(), separators=(",", ":")) + "\n", encoding="utf-8")
+    path.write_text(json.dumps(payload, separators=(",", ":")) + "\n", encoding="utf-8")
     print(f"wrote {path} ({path.stat().st_size:,} bytes); serve site/ as static files")
     return 0
 

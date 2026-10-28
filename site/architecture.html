@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How it's built: Share the Data, Not the People</title>
+<meta name="description" content="How synthetic data is generated, attacked and scored in Share the Data, Not the People, in four diagrams.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="https://peterparker.ca"><span class="mono-mark" aria-hidden="true">P</span>Peter Parker</a>
+    <p class="top-nav"><a href="https://peterparker.ca/projects/privacy-safe-data-sharing/">Project 15: Share the Data, Not the People</a></p>
+  </div>
+</header>
+<nav class="tabs" aria-label="This site">
+  <div class="tabs-inner">
+    <a href="index.html">Overview</a>
+    <a href="index.html#method-panel">Method</a>
+    <a href="index.html#surface-panel">Trade-off</a>
+    <a href="index.html#leak-panel">The leak</a>
+    <a href="index.html#dcr-panel">The usual check</a>
+    <a href="index.html#gate-panel">The gate</a>
+    <a href="index.html#membership-panel">Membership</a>
+    <a href="index.html#takeaways">Takeaways</a>
+    <a href="index.html#explorer">All results</a>
+    <a href="architecture.html" aria-current="page">How it's built</a>
+  </div>
+</nav>
+<main>
+
+  <header class="hero">
+    <p class="eyebrow">Architecture</p>
+    <h1>How it's built</h1>
+    <p class="lead">
+      How synthetic data is generated, attacked and scored here, in four pictures. They were
+      drawn before the first line of code, so that the design could not be shaped to fit the
+      result. Select a diagram to open it full size.
+    </p>
+    <p class="hero-note"><a href="index.html">Back to the findings</a></p>
+  </header>
+
+  <section class="section" id="the-pipeline">
+    <h2>The pipeline</h2>
+    <figure class="arch-figure">
+      <a href="architecture/system.svg"><img src="architecture/system.svg" width="1226" height="986" alt="Three public datasets of real people are prepared and split three ways, synthesised six ways at six privacy budgets and three seeds, attacked with the three legal criteria and membership inference checked against the reference libraries, scored for train-on-synthetic, test-on-real utility, and summarised as a surface with a recommendation rule that the release gate confirms."></a>
+    </figure>
+    <div class="prose">
+      <p>Three real datasets come in, each with its terms read and quoted before the first download: California census responses, card transactions from a public fraud competition, and New York hospital discharges. Each is reduced to sixteen or seventeen attributes and coded the same way, with numeric columns in fixed bins and rare categories merged. The coding spends no privacy budget, because it is read from public bounds and from the test split, never from the people the guarantee protects.</p>
+      <p>Each dataset is split once, and six synthesisers each make a table at every budget, three seeds apiece. The Gaussian copula, CTGAN and TVAE come from SDV and carry no guarantee. AIM, MST and PATE-CTGAN come from SmartNoise, with every epsilon taken from the library's own accountant. The project never adds noise of its own.</p>
+      <p>Every table is attacked and scored. The attacks are singling out, linkability and inference, each implemented from the paper that defines the legal test, plus membership inference and distance to closest record. Each is run beside the reference library on the same tables. The score is a model trained on the synthetic table and tested on real records. A rule fixed in advance reads the results, and one command writes the README tables, the leak table and the data behind this site.</p>
+      <p class="where">Where it lives: <code>facsimile.data</code>, <code>facsimile.prep</code>, <code>facsimile.synth</code>, <code>facsimile.attacks</code>, <code>facsimile.utility</code>, <code>facsimile.surface</code>, <code>facsimile.gate</code> and <code>facsimile.report</code>.</p>
+    </div>
+  </section>
+
+  <section class="section" id="the-split">
+    <h2>The three-way split</h2>
+    <figure class="arch-figure">
+      <a href="architecture/split.svg"><img src="architecture/split.svg" width="1176" height="768" alt="The attack's success on records the synthesiser never saw is what the synthetic table reveals about anyone; the excess on the records it did see is the leak; a random guess that ignores the table is the sanity floor."></a>
+    </figure>
+    <div class="prose">
+      <p>This is the idea the whole measurement rests on. The synthesisers see only the training split. From it, 2,000 attack targets are drawn, and 2,000 control records come from people no synthesiser ever saw. The test split is kept for usefulness and takes no part in any attack.</p>
+      <p>Every attack runs twice against the same synthetic table, once on the targets and once on the control. Its success on the control is what the table reveals about anyone, which is the table doing its job. Only the excess on the targets is a leak. A random guess that ignores the table is the floor that shows the attack works at all.</p>
+      <p class="where">Where it lives: <code>facsimile.data.split</code> and <code>facsimile.attacks.risk</code>.</p>
+    </div>
+  </section>
+
+  <section class="section" id="one-attack">
+    <h2>One attack: inference</h2>
+    <figure class="arch-figure">
+      <a href="architecture/one-attack.svg"><img src="architecture/one-attack.svg" width="1176" height="860" alt="The shape every attack follows: a target or control record, the quasi-identifiers an attacker is assumed to know, its nearest neighbours in the synthetic table, a guess at the secret attribute, and a success rate on targets against controls against a random baseline, checked against the reference library on the same inputs."></a>
+    </figure>
+    <div class="prose">
+      <p>Every attack has the same shape; only the predicates and the search change. In the inference attack, the attacker knows everything about a person but one attribute, here the income bracket. They find that person's nearest records in the synthetic table and guess the missing attribute from them.</p>
+      <p>Right or wrong is counted over the targets, over the control and for the random guess. The risk is the targets' excess over the control, as a share of what was left to gain, with a 95% interval. The authors' library, Anonymeter, runs on the same inputs. On 48 configurations and five attacks, every one of the 240 pairs of intervals overlaps.</p>
+      <p class="where">Where it lives: <code>facsimile.attacks.inference</code>, <code>facsimile.attacks.neighbours</code> and <code>facsimile.attacks.reference</code>.</p>
+    </div>
+  </section>
+
+  <section class="section" id="the-surface">
+    <h2>The surface and the rule</h2>
+    <figure class="arch-figure">
+      <a href="architecture/surface.svg"><img src="architecture/surface.svg" width="1220" height="788" alt="Each privacy budget is one cell with three seeds; utility against the real ceiling and the four risks are read for every cell; the rule picks the smallest epsilon where utility is within delta of the ceiling and every risk is within its interval of the control, or says there is no such point; the release gate confirms the recommended table."></a>
+    </figure>
+    <div class="prose">
+      <p>For each dataset and synthesiser, every budget is one cell with three seeds, read for usefulness and for each risk. The rule picks the smallest epsilon where every task is within 0.02 AUC of the model trained on real data and no attack detects a risk, or it says plainly that no such point exists.</p>
+      <p>It said that everywhere. So the release gate from project 03 was given the nearest configurations instead, under a selection rule written down before it ran. It blocked every one it could decide.</p>
+      <p class="where">Where it lives: <code>facsimile.surface</code>, <code>facsimile.gate</code> and project 03's <code>gate compare</code>.</p>
+    </div>
+  </section>
+
+  <p class="arch-back"><a href="index.html">Back to the findings</a></p>
+</main>
+<footer class="foot">
+  <div class="foot-inner">
+    <p>
+      The same four diagrams are in the repository's docs/architecture.md. Source, method and
+      every measurement: <a href="https://github.com/Peter-A-P/privacy-safe-data-sharing">github.com/Peter-A-P/privacy-safe-data-sharing</a>
+    </p>
+    <ul>
+      <li>Type: Newsreader and Inter, SIL Open Font License, served from this host</li>
+    </ul>
+  </div>
+</footer>
+</body>
+</html>

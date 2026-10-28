@@ -572,6 +572,16 @@ def render_results_md(report: dict[str, Any]) -> str:
     out += render_groundhog_reference(report.get("groundhog_reference", []))
     out += render_gate(report.get("gate", {}))
     hardware = sorted({h for r in report["cells"] for h in r.get("hardware", [])})
+    out += [
+        "## Data",
+        "",
+        "SPARCS: source New York State Department of Health, Hospital Inpatient Discharges",
+        "(SPARCS De-Identified): 2024, Health Data NY dataset `sf4k-39ay`, published 2025-10-10,",
+        "accessed 2026-10-16. The New York State Department of Health makes no representation,",
+        "warranty or guarantee relating to the data or analyses derived from these data. The terms",
+        "of all three sets are in `docs/data.md`.",
+        "",
+    ]
     out += ["## Hardware", "", "Fit times were measured on:", ""]
     out += [f"- {h}" for h in hardware]
     out.append("")

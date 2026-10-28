@@ -104,7 +104,7 @@ What they bind here, as they bound 09:
 
 Hospital Inpatient Discharges (SPARCS De-Identified): 2024, dataset `sf4k-39ay` on Health Data NY
 (https://health.data.ny.gov/d/sf4k-39ay), 2,196,737 discharges, published by the New York State
-Department of Health. The public de-identified tier needs no application. The dataset's licence
+Department of Health on 2025-10-10 (the dataset's publication date in its metadata, read 2026-10-27). The public de-identified tier needs no application. The dataset's licence
 field reads "See Terms of Use", and the Department's Data Use Policy Statement
 (https://www.health.ny.gov/about/data_use.htm, revised February 2013, read 2026-10-16 at
 `healthweb-back.health.ny.gov` because the main host's CDN refused this machine) is the text that

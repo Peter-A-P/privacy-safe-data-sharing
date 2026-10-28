@@ -29,7 +29,7 @@ report written; Groundhog redone with the TAPAS encoding and checked against TAP
 - `facsimile attack all`, `facsimile utility all`, `facsimile groundhog-assemble all` score what
   the grid and the Groundhog fits wrote; `facsimile report` then fills the README section between
   the `report:start` and `report:end` markers, `docs/results.md` and `results/report.json`, and
-  `facsimile site` writes `site/data.json` for the static explorer in `site/`.
+  `facsimile site` writes `site/data.json` for the static site in `site/`, deployed as `docs/deploy.md` says.
 - `facsimile evaluate TARGETS CONTROL SYNTHETIC --secret COL` (or `facsimile.attacks.evaluate`) runs the
   attacks on any real and synthetic pair; `docs/attack-package.md`.
 - `facsimile gate export` and `facsimile gate run` put the nearest configurations through project

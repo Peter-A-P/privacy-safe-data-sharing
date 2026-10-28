@@ -157,6 +157,14 @@ ceiling and the nearest with a privacy budget (`facsimile/gate.py`, `docs/gate.m
 | NY SPARCS discharges | CTGAN, epsilon inf | 1 | block | long_stay: -7.4 (-8.8 to -5.9), 2,913; high_charge: -5.9 (-6.9 to -4.8), 4,885 |
 | NY SPARCS discharges | CTGAN, epsilon inf | 2 | block | long_stay: -7.0 (-8.3 to -5.5), 2,913; high_charge: -5.6 (-6.6 to -4.6), 4,885 |
 
+## Data
+
+SPARCS: source New York State Department of Health, Hospital Inpatient Discharges
+(SPARCS De-Identified): 2024, Health Data NY dataset `sf4k-39ay`, published 2025-10-10,
+accessed 2026-10-16. The New York State Department of Health makes no representation,
+warranty or guarantee relating to the data or analyses derived from these data. The terms
+of all three sets are in `docs/data.md`.
+
 ## Hardware
 
 Fit times were measured on:

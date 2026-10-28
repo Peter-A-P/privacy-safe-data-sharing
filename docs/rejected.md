@@ -5,7 +5,7 @@ the one with the clearest evidence: using distance to closest record (DCR) to de
 synthetic table is safe to release. DCR is the check most synthetic-data tools put in front of
 their users. On these 48 configurations (three datasets, six synthesisers, the budgets that were
 run, three seeds each), it failed in both directions. It passed the only configuration an attack
-broke, and it flagged eight configurations that no attack could break, six of them carrying a
+broke, and it flagged eight configurations that no attack could break, seven of them carrying a
 differential-privacy guarantee.
 
 The numbers come from `results/report.json` (written by `facsimile report`) and
@@ -56,7 +56,7 @@ share whose interval sits above one half on every seed:
 | ACS | PATE-CTGAN, epsilon 0.5 | 0.521 (0.503) | 0.0 vs 0.0 | none detected |
 | SPARCS | TVAE, no privacy | 0.528 (0.505) | 0.0 vs 0.0 | none detected |
 
-Six of the eight are differentially private. MST at epsilon 0.5 is among the smallest budgets in
+Seven of the eight are differentially private. MST at epsilon 0.5 is among the smallest budgets in
 the grid, and its guarantee comes from the library's own accountant (`docs/synthesisers.md`). A
 release gate built on DCR would have stopped every MST table on IEEE-CIS and passed the one table
 the inference attack breaks.

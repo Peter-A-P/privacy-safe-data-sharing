@@ -81,7 +81,7 @@ three legal-test attacks run on the full 20,000-row tables and carry the risk nu
 
 Distance to closest record, the check most synthetic-data tools show their users, was tested as a
 privacy measure on every table and rejected. It passed the one configuration an attack broke and
-failed eight that no attack could break, six of them differentially private. The evidence is in
+failed eight that no attack could break, seven of them differentially private. The evidence is in
 [docs/rejected.md](docs/rejected.md). DCR stays in the full tables, labelled as what it is.
 
 ## Use the attacks on your own tables
@@ -121,6 +121,19 @@ libraries. Utility is a model trained on synthetic data and scored on real data,
 real-data ceiling. The result is a surface of privacy against usefulness with a stated rule
 for where to sit. The design, the data terms and the week-by-week order are in
 [PLAN.md](PLAN.md); the diagrams are in [docs/architecture.md](docs/architecture.md).
+
+## Data and credits
+
+- **ACS PUMS**, California 2018 one-year person file, US Census Bureau, through folktables. The
+  Census Bureau does not endorse this project.
+- **IEEE-CIS Fraud Detection**, Vesta Corporation for the IEEE Computational Intelligence
+  Society, under the competition's rules. No row or row id is redistributed.
+- **NY SPARCS**: source New York State Department of Health, Hospital Inpatient Discharges
+  (SPARCS De-Identified): 2024, Health Data NY dataset `sf4k-39ay`, published 2025-10-10,
+  accessed 2026-10-16. The New York State Department of Health makes no representation,
+  warranty or guarantee relating to the data or analyses derived from these data.
+
+The terms each set is used under are quoted in [docs/data.md](docs/data.md).
 
 ## Part of a portfolio
 
