@@ -199,6 +199,33 @@ browser, no uploads. The pattern of 01, 08 and 16.
 - A general synthetic-data product. The deliverable is the attack package and the surface.
 - Federated or multi-party settings.
 
+### 2.10 The leakage ladder and the exposed records (added 2026-10-27, Peter's decision)
+
+Written before any ladder table was made or any exposed-records number computed. The grid's
+attacks detected one risk in 48 configurations. That alone cannot say whether the tables are
+safe or the attacks are weak. The membership attack has a positive control (the copy); the three
+regulators' attacks do not. So four methods that people use as "synthetic" or "anonymised" data,
+and that are expected to leak, are run through exactly the same pipeline: the same splits,
+targets, control, attacks, seeds, utility and Groundhog scale. They are reported beside the grid
+as a ladder, never mixed into its surface, its recommendation or its gate candidates.
+
+| Rung | Method, as people use it | Settings, fixed here | Expected |
+|---|---|---|---|
+| 1 | **Perturbed copy**: the training records themselves, numbers jittered and values swapped, the classic statistical-disclosure-control release | Every training record once; Gaussian noise of one bin's width on each binned numeric attribute, rounded and clipped; 10% of records swap each categorical attribute with another record | Detected by singling out, linkability and inference; utility near the ceiling |
+| 2 | **SMOTE-NC** (Chawla et al. 2002) used as a synthesiser: each record interpolated between a real record and one of its five nearest real neighbours | k = 5; numeric attributes interpolated and rounded to a bin; categorical attributes the most frequent value among the five neighbours; the project's mixed-type distance | Detected by inference and linkability |
+| 3 | **k-anonymity** (Mondrian, LeFevre et al. 2006): every attribute but the secret generalised until each record matches at least k-1 others, then released at the group's representative values | k = 5; numeric attributes at the group median, categorical at the group mode; the secret released as is, the usual k-anonymity release | Detected by inference (k-anonymity does not protect the secret); singling out not detected |
+| 4 | **An overfitted deep model**: TVAE trained ten times longer than SDV's default | 3,000 epochs instead of 300, everything else as the grid's TVAE | The likeliest rung for membership inference at 1,000 rows; at 20,000 rows, possibly nothing |
+
+**Exposed records.** Every grid and ladder table is also attacked on its most unusual records:
+the quarter of targets, and separately the quarter of control records, farthest on average from
+a fixed sample of 2,000 test-split records (the test split stands in for public knowledge, as in
+the domain). Same attacks, same table, 500 targets against 500 controls per seed. Expected:
+risks at least as large as on all targets, with wider intervals; a detection here that the full
+target set does not show is reported as a property of the exposed records.
+
+The ladder is reported whatever it shows. A rung that is expected to leak and does not is a
+finding about the attacks' power, and is written up as one.
+
 ## 3. Data
 
 | Source | Size | What it gives | Access and terms |
