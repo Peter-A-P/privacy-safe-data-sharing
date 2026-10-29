@@ -30,6 +30,10 @@ data/synth/
 data/runs*/
 # Groundhog pools (coded real rows) and the feature vectors of every shadow fit.
 data/groundhog/
+# The first Groundhog run, before the TAPAS encoding, kept for comparison; and the tables the
+# TAPAS cross-check reads.
+data/groundhog-v1/
+data/tapas/
 
 # Models and caches
 models/
