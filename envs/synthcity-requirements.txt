@@ -1,0 +1,11 @@
+# The synthcity environment (Python 3.12), for TabDDPM (PLAN.md section 2.11). synthcity 0.2.12
+# depends on decaf-synthetic-data, which needs torchtext, and torchtext has no Python 3.13 wheel,
+# so it cannot share the project's 3.13 environment. Resolved 2026-10-28 for Windows with CUDA
+# 12.1 (the GTX 1650); on Linux drop the index line and torch resolves to the CPU build:
+#   uv venv --python 3.12 .venv-synthcity
+#   uv pip install --no-config --python .venv-synthcity/Scripts/python.exe --index-strategy unsafe-best-match --extra-index-url https://download.pytorch.org/whl/cu121 -r envs/synthcity-requirements.txt
+synthcity==0.2.12
+torch==2.2.2
+numpy==1.26.4
+pandas==2.3.3
+pyarrow==26.0.0

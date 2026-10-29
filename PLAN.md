@@ -248,17 +248,27 @@ tables is the question.
 
 | Arm | Method | Settings | Expected |
 |---|---|---|---|
-| Non-DP, deep | TabDDPM (Kotelnikov et al. 2023), through synthcity | Library defaults, as every other arm; the same coded domain, so its multinomial diffusion runs on every column; epsilon infinity, three seeds | Utility near CTGAN and TVAE; the deep arm most likely to be detected, on the exposed records and by Groundhog if anywhere |
+| Non-DP, deep | TabDDPM (Kotelnikov et al. 2023), through synthcity | Library defaults, as every other arm, on the same coded domain; epsilon infinity, three seeds | Utility near CTGAN and TVAE; the deep arm most likely to be detected, on the exposed records and by Groundhog if anywhere |
 
 - **Non-DP only.** No library packages a differentially private tabular diffusion model with its
   own accountant, and adding DP-SGD to one by hand is the hand-rolled privacy this plan rules out.
 - **The same pipeline as the grid**: 9 tables, the five attacks, the exposed records, DCR, utility,
   the surface and the recommendation, and Groundhog at its 1,000-row scale (6 targets times 60
   fits per dataset, 1,080 fits). It is a grid arm, so it can become a gate candidate.
-- **First step, a timing spike**: install, fit one ACS table, time one 1,000-row fit. A diffusion
-  model trains for a fixed number of steps, so a small fit may cost nearly as much as a large one,
-  and the Groundhog fits decide the wall-clock. If synthcity does not install beside Python 3.13
-  and torch 2.14, it runs in its own environment on exported tables, as TAPAS does.
+- **First step, a timing spike**: install, fit one ACS table, time one 1,000-row fit; the
+  Groundhog fits decide the wall-clock.
+- **Its own environment (amended 2026-10-28, before the spike).** synthcity 0.2.12 cannot be
+  installed on Python 3.13: it depends on decaf-synthetic-data, which needs torchtext, which has
+  no 3.13 wheel. It runs in a Python 3.12 environment with torch 2.2.2
+  (`envs/synthcity-requirements.txt`), called in a subprocess by `facsimile/synth/tabddpm.py`.
+  Read from its source the same day: its default `n_iter` of 1,000 counts epochs, not steps, so a
+  1,000-row fit is about 20 times cheaper than a 20,000-row one, as for TVAE. And a column with
+  more than 10 distinct values is diffused as a number, not a category. By the domains' sizes that
+  is two to four nominal columns per dataset (ACS occupation, schooling, birthplace and
+  relationship; IEEE-CIS address and the two email domains; SPARCS zip code and diagnostic
+  category), whose codes have no order. The library's default is kept and the columns are named
+  in each record, as PATE-CTGAN's properties are; the project rounds and clips them back into the
+  domain and counts what the clipping moved.
 - **Cost**: the desktop GPU, CA$0. A rented GPU only on Peter's go, within what is left of the
   budget, if the spike puts the Groundhog fits beyond three days on the desktop.
 - **Docs in the same commit as the code**: `docs/synthesisers.md` (version, licence, defaults,

@@ -109,6 +109,35 @@ Recorded, not patched: the project measures what the library does.
 Items 1 and 2 are measurements on these tables; they go in the leak table as properties of
 smartnoise-synth 1.0.8 PATE-CTGAN at its default settings.
 
+## Next: TabDDPM, prepared and not yet run
+
+The seventh synthesiser (PLAN.md section 2.11), a diffusion model beside the GAN and the VAE:
+TabDDPM through synthcity 0.2.12 (Apache 2.0), non-DP, at synthcity's defaults. It is not in the
+registry or the grid yet; it joins them after the timing spike, in the commit that adds it to the
+report. What is in place, checked 2026-10-28 without fitting anything:
+
+- **Its own environment.** synthcity depends on decaf-synthetic-data, which needs torchtext, and
+  torchtext has no Python 3.13 wheel, so no version of synthcity resolves beside this project.
+  On Python 3.12 it resolves to synthcity 0.2.12 with torch 2.2.2 (CUDA 12.1 on the desktop),
+  pinned in `envs/synthcity-requirements.txt` with the commands that create it.
+- **The bridge.** `facsimile/synth/tabddpm.py` is the method behind the usual interface. It writes
+  the training codes to a temporary directory, runs `envs/synthcity_tabddpm.py` in that
+  environment (`.venv-synthcity`, or `FACSIMILE_SYNTHCITY_PYTHON`), and reads back the table and
+  a record: synthcity's and torch's versions, the plugin's defaults as its signature declares
+  them, the fit and sample times and the device.
+- **What the defaults are**, from `synthcity/plugins/generic/plugin_ddpm.py`: `n_iter` 1,000
+  epochs, batch 1,024, 1,000 diffusion timesteps, cosine schedule, an MLP denoiser, learning rate
+  0.002. `n_iter` counts epochs, so the cost scales with the rows, as TVAE's does.
+- **Which columns are categories.** synthcity decides by count: a column with at most 10 distinct
+  values in the training data gets multinomial diffusion, any other is quantile-transformed and
+  gets Gaussian diffusion on its code, and comes back as a float. The threshold is not a
+  parameter of the plugin. By the domains' sizes that is ACS `OCCP`, `SCHL`, `POBP` and `RELP`,
+  IEEE-CIS `addr1`, `P_emaildomain`, `R_emaildomain` (and `TransactionAmt`, which is ordered),
+  and SPARCS `zip_code` and `apr_mdc_code`. The default is kept, as every other default is, and
+  each record names the columns treated as numbers. The bridge rounds them to the nearest code and
+  clips them into the column's range, and the record counts the values the clipping moved
+  (`to_codes`, `tests/test_tabddpm.py`).
+
 ## SDV's licence
 
 SDV 2.0, ctgan and rdt are under the Business Source License 1.1, which is not an open-source

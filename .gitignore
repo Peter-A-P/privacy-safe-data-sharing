@@ -13,6 +13,7 @@ __pycache__/
 *.py[cod]
 .venv/
 .venv-tapas/
+.venv-synthcity/
 .mypy_cache/
 .ruff_cache/
 .pytest_cache/
