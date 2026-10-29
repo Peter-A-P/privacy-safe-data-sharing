@@ -155,11 +155,29 @@ def classify(
     kind: str,
 ) -> TargetResult:
     """Train the random forest on the shadow features and score it on the evaluation features."""
+    return score(forest_guesses(shadow, evaluation, seed=seed), evaluation, target_id, kind)
+
+
+def forest_guesses(
+    shadow: list[tuple[NDArray[np.float64], int]],
+    evaluation: list[tuple[NDArray[np.float64], int]],
+    *,
+    seed: int,
+) -> NDArray[np.int64]:
+    """The random forest's in-or-out guess for each evaluation table."""
     from sklearn.ensemble import RandomForestClassifier
 
     model = RandomForestClassifier(n_estimators=200, random_state=seed, n_jobs=2)
     model.fit(np.vstack([x for x, _ in shadow]), np.asarray([y for _, y in shadow]))
-    guesses = model.predict(np.vstack([x for x, _ in evaluation]))
+    return np.asarray(model.predict(np.vstack([x for x, _ in evaluation])), dtype=np.int64)
+
+
+def score(
+    guesses: NDArray[np.int64],
+    evaluation: list[tuple[NDArray[np.float64], int]],
+    target_id: int,
+    kind: str,
+) -> TargetResult:
     labels = np.asarray([y for _, y in evaluation])
     return TargetResult(
         target_id,

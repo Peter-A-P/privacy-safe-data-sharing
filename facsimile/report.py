@@ -120,6 +120,7 @@ class Cell:
     utility: dict[int, dict[str, Any]] = field(default_factory=dict)
     exposed: dict[int, dict[str, Any]] = field(default_factory=dict)
     groundhog: dict[str, Any] | None = None
+    groundhog_fm: dict[str, Any] | None = None
 
 
 def _epsilon_of(record: dict[str, Any]) -> float | None:
@@ -150,6 +151,10 @@ def load_cells(root: Path = RESULTS) -> dict[tuple[str, str, float | None], Cell
         for path in sorted((root / ds / "groundhog").glob("*/*.json")):
             record = _load(path)
             cell(ds, record["method"], _epsilon_of(record)).groundhog = record
+        for path in sorted((root / ds / "groundhog_tabfm").glob("*/*.json")):
+            record = _load(path)
+            if record["method"] != "copy" and record.get("pooled"):
+                cell(ds, record["method"], _epsilon_of(record)).groundhog_fm = record
     return cells
 
 
@@ -215,6 +220,49 @@ def _risks(seeds: list[dict[str, Any]]) -> dict[str, Any]:
     return out
 
 
+def _membership_fm(record: dict[str, Any], forest: dict[str, Any] | None) -> dict[str, Any]:
+    """TabFM as the membership attacker beside the forest, on the same evaluation tables."""
+    pool = record["pooled"]
+    fm = pool["tabfm"]["accuracy"]
+    narrow = pool["forest_selected"]["accuracy"]
+    detected = bool(pool["detected"])
+    return {
+        "accuracy": fm["point"],
+        "lo": fm["lo"],
+        "hi": fm["hi"],
+        "forest_selected": {k: narrow[k] for k in ("point", "lo", "hi")},
+        "delta": pool["delta"]["point"],
+        "delta_lo": pool["delta"]["lo"],
+        "delta_hi": pool["delta"]["hi"],
+        "detected": detected,
+        # A verdict that flips: no membership risk under the forest, a detected one under TabFM.
+        "flips": detected and not (forest or {}).get("detected", False),
+        "targets": record["targets_complete"],
+        "tabfm": record["tabfm"],
+        "device": record["device"],
+        "seconds_median": record["tabfm_seconds_median"],
+    }
+
+
+def membership_fm_controls(root: Path = RESULTS) -> list[dict[str, Any]]:
+    """The copy control under both attackers: the attacked table is the real dataset itself."""
+    rows = []
+    for ds in DATASETS:
+        path = root / ds / "groundhog_tabfm" / "copy" / "inf.json"
+        if path.exists():
+            rec = _load(path)
+            if rec.get("pooled"):
+                forest = rec["pooled"]["forest"]["accuracy"]
+                rows.append(
+                    {
+                        "dataset": ds,
+                        "forest": {k: forest[k] for k in ("point", "lo", "hi")},
+                        **_membership_fm(rec, {"detected": forest["lo"] > 0.5}),
+                    }
+                )
+    return rows
+
+
 def summarise(c: Cell) -> dict[str, Any]:
     out: dict[str, Any] = {
         "dataset": c.dataset,
@@ -278,6 +326,8 @@ def summarise(c: Cell) -> dict[str, Any]:
             "rows": c.groundhog["scale"]["n"],
             "detected": acc["lo"] > 0.5,
         }
+    if c.groundhog_fm:
+        out["membership_tabfm"] = _membership_fm(c.groundhog_fm, out.get("membership"))
     p = _point(c)
     if p is not None and len(p.utility_lo[next(iter(p.utility_lo))]) == 3:
         out["passes_utility"] = utility_ok(p)
@@ -444,17 +494,18 @@ def leaks_of(
                         "seeds": len(r[seeds_key]),
                     }
                 )
-        mem = r.get("membership")
-        if key == "risk" and mem and mem["detected"]:
-            leaks.append(
-                {
-                    **named,
-                    "attack": "membership",
-                    "risk": mem["accuracy"],
-                    "lo": mem["lo"],
-                    "hi": mem["hi"],
-                }
-            )
+        for attack in ("membership", "membership_tabfm"):
+            mem = r.get(attack)
+            if key == "risk" and mem and mem["detected"]:
+                leaks.append(
+                    {
+                        **named,
+                        "attack": attack,
+                        "risk": mem["accuracy"],
+                        "lo": mem["lo"],
+                        "hi": mem["hi"],
+                    }
+                )
     return leaks
 
 
@@ -523,6 +574,7 @@ def build(root: Path = RESULTS) -> dict[str, Any]:
         "exposed_leaks": leaks_of(rows, vs, "risk_exposed") + leaks_of(ladder, vs, "risk_exposed"),
         "agreement": agreement(cells),
         "groundhog_reference": groundhog_reference(root),
+        "membership_tabfm_controls": membership_fm_controls(root),
         "gate": gate_runs(root),
     }
 
@@ -615,6 +667,7 @@ def render_results_md(report: dict[str, Any]) -> str:
     out += render_exposed(report["cells"] + report.get("ladder", []))
     out += render_agreement(report.get("agreement", {}))
     out += render_groundhog_reference(report.get("groundhog_reference", []))
+    out += render_membership_fm(report)
     out += render_gate(report.get("gate", {}))
     hardware = sorted({h for r in report["cells"] for h in r.get("hardware", [])})
     out += [
@@ -707,6 +760,97 @@ def render_groundhog_reference(rows: list[dict[str, Any]]) -> list[str]:
             + " |"
         )
     return [*out, "", "What the difference means is in `docs/attacks.md`.", ""]
+
+
+def _acc(a: dict[str, Any], point: str = "point") -> str:
+    return f"{a[point]:.3f} ({a['lo']:.3f} to {a['hi']:.3f})"
+
+
+def _fm_rows(report: dict[str, Any]) -> list[dict[str, Any]]:
+    return [r for r in report["cells"] + report.get("ladder", []) if "membership_tabfm" in r]
+
+
+def render_membership_fm(report: dict[str, Any]) -> list[str]:
+    out = ["## Membership inference with a foundation-model attacker", ""]
+    rows = _fm_rows(report)
+    controls = report.get("membership_tabfm_controls", [])
+    if not rows and not controls:
+        return [*out, "No Groundhog run has been classified by TabFM yet.", ""]
+    first = (rows or controls)[0]
+    tabfm = first["membership_tabfm"]["tabfm"] if rows else first["tabfm"]
+    out += [
+        f"The Groundhog evidence, the same shadow and evaluation tables, classified by TabFM {tabfm}",
+        "(`facsimile/attacks/groundhog_fm.py`) in place of the random forest, on the 500 features",
+        "that best separate in from out on the shadow tables. *Forest, 500* is the forest on those",
+        "same 500, which separates the classifier's effect from the selection's. Accuracy over six",
+        "targets and 20 evaluation tables each, exact 95% intervals; chance is 0.5. The difference",
+        "is TabFM's accuracy minus the forest's on the same tables, paired, 95% bootstrap interval.",
+        "",
+        "| Dataset | Tables | Forest | Forest, 500 | TabFM | TabFM minus forest | Verdict |",
+        "|---|---|---|---|---|---|---|",
+    ]
+    for r in controls:
+        out.append(
+            f"| {DATASET_NAMES[r['dataset']]} | copy (control) | {_acc(r['forest'])} | "
+            f"{_acc(r['forest_selected'])} | {_acc(r, 'accuracy')} | "
+            f"{r['delta']:+.3f} ({r['delta_lo']:+.3f} to {r['delta_hi']:+.3f}) | "
+            f"{'detected' if r['detected'] else 'not detected'} |"
+        )
+    for r in rows:
+        m = r["membership_tabfm"]
+        forest = r["membership"]
+        verdict = (
+            "flips to detected" if m["flips"] else ("detected" if m["detected"] else "not detected")
+        )
+        out.append(
+            f"| {DATASET_NAMES[r['dataset']]} | {METHOD_NAMES[r['method']]}, epsilon "
+            f"{_eps_label(r['epsilon'])} | {forest['accuracy']:.3f} ({forest['lo']:.3f} to "
+            f"{forest['hi']:.3f}) | {_acc(m['forest_selected'])} | {_acc(m, 'accuracy')} | "
+            f"{m['delta']:+.3f} ({m['delta_lo']:+.3f} to {m['delta_hi']:+.3f}) | {verdict} |"
+        )
+    return [*out, ""]
+
+
+def render_membership_fm_summary(report: dict[str, Any]) -> list[str]:
+    rows = [r for r in _fm_rows(report) if r["method"] in METHODS]
+    if not rows:
+        return []
+    flips = [r for r in rows if r["membership_tabfm"]["flips"]]
+    better = [r for r in rows if r["membership_tabfm"]["delta_lo"] > 0]
+    worse = [r for r in rows if r["membership_tabfm"]["delta_hi"] < 0]
+    out = [
+        "**A foundation model as the membership attacker.** The same Groundhog evidence classified",
+        f"by TabFM instead of the random forest, on {len(rows)} grid configurations: TabFM is",
+        f"better on {len(better)}, worse on {len(worse)} and indistinguishable on",
+        f"{len(rows) - len(better) - len(worse)} (paired 95% intervals), and "
+        + (
+            "no configuration with no membership risk under the forest has a detected one under TabFM."
+            if not flips
+            else f"{len(flips)} configuration{'s' if len(flips) != 1 else ''} with no membership "
+            "risk under the forest "
+            + ("has" if len(flips) == 1 else "have")
+            + " a detected one under TabFM: "
+            + "; ".join(
+                f"{DATASET_NAMES[r['dataset']]}, {METHOD_NAMES[r['method']]} at epsilon "
+                f"{_eps_label(r['epsilon'])}, accuracy {_acc(r['membership_tabfm'], 'accuracy')}"
+                for r in flips
+            )
+            + "."
+        ),
+    ]
+    controls = report.get("membership_tabfm_controls", [])
+    if controls:
+        out += [
+            "On the copy control, TabFM scores "
+            + "; ".join(
+                f"{_acc(c, 'accuracy')} on {DATASET_NAMES[c['dataset']]} against the forest's "
+                f"{_acc(c['forest'])}"
+                for c in controls
+            )
+            + ". The table by table numbers are in",
+            "[docs/results.md](docs/results.md#membership-inference-with-a-foundation-model-attacker).",
+        ]
+    return [*out, ""]
 
 
 def _gate_config(run: dict[str, Any]) -> str:
@@ -981,6 +1125,7 @@ def render_readme_section(report: dict[str, Any]) -> str:
         *render_gate_summary(report.get("gate", {})),
         *render_ladder_summary(report),
         *render_exposed_summary(report),
+        *render_membership_fm_summary(report),
         "**What leaked.** A risk counts when its interval at the Bonferroni level excludes zero.",
         "",
     ]
@@ -994,11 +1139,12 @@ def render_readme_section(report: dict[str, Any]) -> str:
         ]
         for lk in leaks:
             conf = f"{METHOD_NAMES[lk['method']]}, epsilon {_eps_label(lk['epsilon'])}, 20,000 rows"
-            if lk["attack"] == "membership":
+            if lk["attack"] in ("membership", "membership_tabfm"):
                 meas = f"accuracy {lk['risk']:.3f} ({lk['lo']:.3f} to {lk['hi']:.3f})"
+                who = "membership" if lk["attack"] == "membership" else "membership, TabFM"
                 out.append(
                     f"| {DATASET_NAMES[lk['dataset']]} | {lk['library']} {lk['version']} | "
-                    f"{conf.replace('20,000', 'about 1,000')} | membership | {meas} | |"
+                    f"{conf.replace('20,000', 'about 1,000')} | {who} | {meas} | |"
                 )
                 continue
             out.append(
