@@ -231,6 +231,39 @@ target set does not show is reported as a property of the exposed records.
 The ladder is reported whatever it shows. A rung that is expected to leak and does not is a
 finding about the attacks' power, and is written up as one.
 
+### 2.11 Next: a second attacker, then a diffusion synthesiser (added 2026-10-28, Peter's decision)
+
+Two additions, in this order. Neither is in the definition of done (section 11).
+
+**First, TabFM as a second membership attacker.** The Groundhog attack with a pretrained tabular
+foundation model in place of the random forest, on the same shadow and evaluation tables, so the
+two attackers are paired. The report already reads its results when they exist. TabFM's licence
+forbids distributing a work that uses the model, so the results ship and the code that calls it
+does not; the docs say so.
+
+**Then, a diffusion model as a seventh synthesiser.** The grid has a GAN (CTGAN) and a VAE (TVAE)
+but no diffusion model, the third family of deep generative model and the one the literature
+most often finds memorising its training data. Whether it leaks more than the other two on these
+tables is the question.
+
+| Arm | Method | Settings | Expected |
+|---|---|---|---|
+| Non-DP, deep | TabDDPM (Kotelnikov et al. 2023), through synthcity | Library defaults, as every other arm; the same coded domain, so its multinomial diffusion runs on every column; epsilon infinity, three seeds | Utility near CTGAN and TVAE; the deep arm most likely to be detected, on the exposed records and by Groundhog if anywhere |
+
+- **Non-DP only.** No library packages a differentially private tabular diffusion model with its
+  own accountant, and adding DP-SGD to one by hand is the hand-rolled privacy this plan rules out.
+- **The same pipeline as the grid**: 9 tables, the five attacks, the exposed records, DCR, utility,
+  the surface and the recommendation, and Groundhog at its 1,000-row scale (6 targets times 60
+  fits per dataset, 1,080 fits). It is a grid arm, so it can become a gate candidate.
+- **First step, a timing spike**: install, fit one ACS table, time one 1,000-row fit. A diffusion
+  model trains for a fixed number of steps, so a small fit may cost nearly as much as a large one,
+  and the Groundhog fits decide the wall-clock. If synthcity does not install beside Python 3.13
+  and torch 2.14, it runs in its own environment on exported tables, as TAPAS does.
+- **Cost**: the desktop GPU, CA$0. A rented GPU only on Peter's go, within what is left of the
+  budget, if the spike puts the Groundhog fits beyond three days on the desktop.
+- **Docs in the same commit as the code**: `docs/synthesisers.md` (version, licence, defaults,
+  device), the report's seventh column, the site.
+
 ## 3. Data
 
 | Source | Size | What it gives | Access and terms |
@@ -331,6 +364,7 @@ The deep-synthesiser GPU line is not needed; the desktop card was enough.
 | Marginal synthesisers | CPU on the desktop, about 40 hours of wall-clock across the grid | 0 | 0 |
 | AIM grid cells and Groundhog AIM fits (amended 2026-10-17) | One m6a.8xlarge spot instance in ca-central-1, about 50 hours at US$0.50, capped at 72 hours and US$0.55 an hour | 25 to 40 | 34 to 54 |
 | Attacks and utility | CPU | 0 | 0 |
+| The diffusion arm (section 2.11, added 2026-10-28) | The desktop GPU; rented only on Peter's go | 0 | 0 |
 | Storage for the table grid | Local; nothing raw is committed | 0 | 0 |
 | Demo site | Azure Static Web Apps free tier | 0 | 0 |
 | **Total** | | **25 to 40** | **34 to 54** |
