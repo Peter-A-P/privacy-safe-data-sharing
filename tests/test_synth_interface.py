@@ -20,9 +20,9 @@ def _tiny() -> tuple[pd.DataFrame, Domain]:
     return encode(raw, domain), domain
 
 
-def test_six_methods_three_dp() -> None:
+def test_seven_methods_three_dp() -> None:
     registry = methods()
-    assert sorted(GRID) == ["aim", "copula", "ctgan", "mst", "pate_ctgan", "tvae"]
+    assert sorted(GRID) == ["aim", "copula", "ctgan", "mst", "pate_ctgan", "tabddpm", "tvae"]
     assert sorted(registry) == sorted(GRID + LADDER)
     assert not any(registry[n].dp for n in LADDER), "the ladder has no privacy guarantee"
     assert sorted(n for n, m in registry.items() if m.dp) == ["aim", "mst", "pate_ctgan"]
@@ -59,9 +59,9 @@ def test_a_method_that_edits_its_training_frame_is_refused() -> None:
         _fake(train.head(10).copy(), mutate=True).run(train, domain, seed=0, epsilon=None, n=10)
 
 
-def test_the_grid_is_six_methods_five_budgets_plus_non_dp_three_seeds() -> None:
+def test_the_grid_is_seven_methods_five_budgets_plus_non_dp_three_seeds() -> None:
     grid = cells(["acs"], methods=GRID)
-    assert len(grid) == (3 * 1 + 3 * len(EPSILONS)) * 3
+    assert len(grid) == (4 * 1 + 3 * len(EPSILONS)) * 3
     assert Cell("acs", "copula", None, 0) in grid and Cell("acs", "aim", 0.5, 2) in grid
 
 

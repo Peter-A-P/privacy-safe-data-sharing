@@ -46,6 +46,6 @@ def test_without_its_environment_it_says_where_to_get_one(
         tabddpm.METHOD.run(train, domain, seed=0, epsilon=None, n=10)
 
 
-def test_not_in_the_grid_until_the_spike() -> None:
-    assert "tabddpm" not in GRID and "tabddpm" not in methods()
+def test_a_non_dp_grid_arm() -> None:
+    assert "tabddpm" in GRID and methods()["tabddpm"] is tabddpm.METHOD
     assert tabddpm.METHOD.family == "non-dp deep" and not tabddpm.METHOD.dp

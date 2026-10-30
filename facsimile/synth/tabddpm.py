@@ -1,8 +1,5 @@
 """TabDDPM (synthcity): the diffusion model, the seventh synthesiser (PLAN.md section 2.11).
 
-Prepared, not yet in the registry: it joins `methods()` and `GRID` after the timing spike, in the
-commit that adds it to the report, the Groundhog budgets and the queue's timings.
-
 synthcity cannot be installed on Python 3.13, so it runs in its own environment
 (`envs/synthcity-requirements.txt`) and this wrapper calls `envs/synthcity_tabddpm.py` there in a
 subprocess, as the TAPAS cross-check does. The training codes go to it as a parquet file in a

@@ -271,6 +271,11 @@ tables is the question.
   domain and counts what the clipping moved.
 - **Cost**: the desktop GPU, CA$0. A rented GPU only on Peter's go, within what is left of the
   budget, if the spike puts the Groundhog fits beyond three days on the desktop.
+- **The spike (2026-10-29)**: 1,420 s a table at 20,000 rows, so the 9 grid tables take about
+  3.5 hours, and 104 s a fit at 1,000 rows, so the 1,080 Groundhog fits take about 31 hours. Both
+  on the desktop, inside the three days: no rented GPU. At 1,000 rows the defaults train for a
+  twentieth of the steps and the model has not learned the marginals (`docs/synthesisers.md`);
+  the Groundhog result is reported as a property of that model, as it is for every method.
 - **Docs in the same commit as the code**: `docs/synthesisers.md` (version, licence, defaults,
   device), the report's seventh column, the site.
 

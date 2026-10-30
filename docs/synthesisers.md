@@ -1,19 +1,20 @@
 # Synthesisers: versions, accountants, and what each library does with a budget
 
-Six methods behind one interface (`facsimile/synth/base.py`): fit on the training split with a
+Seven methods behind one interface (`facsimile/synth/base.py`): fit on the training split with a
 seed and, where it applies, a budget; sample as many rows as the training split has. Every table
 in the grid has a record under `results/<dataset>/synth/` with the versions, the hyperparameters
 as passed, what the accountant says, the hash of the frame it was fitted on, wall-clock and the
 hardware. **No epsilon in this project is computed by this project**: each comes from the
 library's own accountant, observed as it runs (`facsimile/synth/accounting.py`).
 
-## The six
+## The seven
 
 | Arm | Method | Library and version | Licence | Accountant | Device |
 |---|---|---|---|---|---|
 | Non-DP, statistical | Gaussian copula | SDV 2.0.0 | Business Source License 1.1 (below) | none; epsilon infinity | CPU |
 | Non-DP, deep | CTGAN | SDV 2.0.0 (ctgan 0.12.1) | BSL 1.1 | none; epsilon infinity | GPU |
 | Non-DP, deep | TVAE | SDV 2.0.0 (ctgan 0.12.1) | BSL 1.1 | none; epsilon infinity | GPU |
+| Non-DP, deep | TabDDPM (added 2026-10-29) | synthcity 0.2.12, in its own Python 3.12 environment (below) | Apache 2.0 | none; epsilon infinity | GPU |
 | DP, marginal | AIM | smartnoise-synth 1.0.8 on Private-PGM (mbi 1.1.0) | MIT, Apache 2.0 | zCDP; rho from `snsynth.utils.cdp_rho` (OpenDP 0.14.2) | CPU |
 | DP, marginal | MST | smartnoise-synth 1.0.8 on Private-PGM (mbi 1.1.0) | MIT, Apache 2.0 | zCDP; rho from `snsynth.utils.cdp_rho` (OpenDP 0.14.2) | CPU |
 | DP, deep | PATE-CTGAN | smartnoise-synth 1.0.8 | MIT | PATE moments accountant, data-dependent | GPU |
@@ -109,17 +110,18 @@ Recorded, not patched: the project measures what the library does.
 Items 1 and 2 are measurements on these tables; they go in the leak table as properties of
 smartnoise-synth 1.0.8 PATE-CTGAN at its default settings.
 
-## Next: TabDDPM, prepared and not yet run
+## TabDDPM, the diffusion model
 
-The seventh synthesiser (PLAN.md section 2.11), a diffusion model beside the GAN and the VAE:
-TabDDPM through synthcity 0.2.12 (Apache 2.0), non-DP, at synthcity's defaults. It is not in the
-registry or the grid yet; it joins them after the timing spike, in the commit that adds it to the
-report. What is in place, checked 2026-10-28 without fitting anything:
+The seventh synthesiser (PLAN.md section 2.11), added 2026-10-29: a diffusion model beside the GAN
+and the VAE, TabDDPM through synthcity 0.2.12 (Apache 2.0), non-DP, at synthcity's defaults.
 
 - **Its own environment.** synthcity depends on decaf-synthetic-data, which needs torchtext, and
   torchtext has no Python 3.13 wheel, so no version of synthcity resolves beside this project.
   On Python 3.12 it resolves to synthcity 0.2.12 with torch 2.2.2 (CUDA 12.1 on the desktop),
-  pinned in `envs/synthcity-requirements.txt` with the commands that create it.
+  pinned in `envs/synthcity-requirements.txt` with the commands that create it. Two pins below
+  what the resolver picks, found when the environment was first built: opacus 1.4.1, because
+  1.5 needs a torch newer than synthcity allows, and pyarrow 20, because 26 needs numpy 2 and
+  synthcity holds numpy below 2.
 - **The bridge.** `facsimile/synth/tabddpm.py` is the method behind the usual interface. It writes
   the training codes to a temporary directory, runs `envs/synthcity_tabddpm.py` in that
   environment (`.venv-synthcity`, or `FACSIMILE_SYNTHCITY_PYTHON`), and reads back the table and
@@ -137,6 +139,22 @@ report. What is in place, checked 2026-10-28 without fitting anything:
   each record names the columns treated as numbers. The bridge rounds them to the nearest code and
   clips them into the column's range, and the record counts the values the clipping moved
   (`to_codes`, `tests/test_tabddpm.py`).
+
+**The timing spike**, ACS, seed 0, on the build desktop's GTX 1650 (2026-10-29), before the grid:
+
+| Rows | Fit | Sample | Wall-clock, with the environment's start-up | Values clipped | Largest marginal distance |
+|---:|---:|---:|---:|---:|---:|
+| 1,000 | 46 s | 37 s | 104 s | 0 | 0.83 (`SCHL`) |
+| 20,000 | 1,055 s | 345 s | 1,420 s | 0 | 0.08 (`OCCP`) |
+
+The marginal distance is the total variation distance between a column's distribution in the
+training data and in the table, a spike check and not a reported number. At 20,000 rows every
+column is within 0.08 of the training data and `SEX` within 0.004. At 1,000 rows the same
+defaults give a model that has not learned the marginals: `n_iter` counts epochs, a batch of
+1,024 takes the whole 1,000 rows, so it trains for 1,000 steps against 20,000. That is the model
+the Groundhog attack's shadow and evaluation fits produce at its 1,000-row scale, and its
+membership result is reported as a property of that model. TVAE's defaults count epochs too.
+Sampling is a quarter of the cost: 1,000 denoising steps for every batch of rows.
 
 ## SDV's licence
 

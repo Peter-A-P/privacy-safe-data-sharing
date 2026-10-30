@@ -39,7 +39,7 @@ DATASET_NAMES = {
     "ieeecis": "IEEE-CIS card transactions",
     "sparcs": "NY SPARCS discharges",
 }
-METHODS = ("copula", "ctgan", "tvae", "mst", "aim", "pate_ctgan")
+METHODS = ("copula", "ctgan", "tvae", "tabddpm", "mst", "aim", "pate_ctgan")
 LADDER = ("perturb", "smote", "kanon", "tvae_overfit")
 """The leakage ladder (PLAN.md section 2.10): reported beside the grid, never in its surface,
 its leak table or its gate candidates."""
@@ -47,6 +47,7 @@ METHOD_NAMES = {
     "copula": "Gaussian copula",
     "ctgan": "CTGAN",
     "tvae": "TVAE",
+    "tabddpm": "TabDDPM",
     "mst": "MST",
     "aim": "AIM",
     "pate_ctgan": "PATE-CTGAN",
@@ -59,6 +60,7 @@ LIBRARY = {
     "copula": "sdv",
     "ctgan": "sdv",
     "tvae": "sdv",
+    "tabddpm": "synthcity",
     "mst": "smartnoise-synth",
     "aim": "smartnoise-synth",
     "pate_ctgan": "smartnoise-synth",
@@ -515,7 +517,7 @@ def build(root: Path = RESULTS) -> dict[str, Any]:
     cells = load_cells(root)
     for ds in DATASETS:
         for m in METHODS:
-            if m in ("copula", "ctgan", "tvae"):
+            if m in ("copula", "ctgan", "tvae", "tabddpm"):
                 continue
             for eps in EPSILONS:
                 cells.setdefault((ds, m, eps), Cell(ds, m, eps))

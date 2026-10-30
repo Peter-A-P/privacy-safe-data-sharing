@@ -34,12 +34,16 @@ from typing import IO
 from facsimile.paths import REPO
 
 # Rough seconds per job on the build desktop (2026-10-16 and 17), used only to order the queue.
-GRID_SECONDS = {"copula": 10, "mst": 70, "ctgan": 700, "tvae": 190, "pate_ctgan": 300}
+GRID_SECONDS = {
+    "copula": 10, "mst": 70, "ctgan": 700, "tvae": 190, "tabddpm": 1420, "pate_ctgan": 300
+}  # fmt: skip
 AIM_GRID_SECONDS = {0.5: 900, 1.0: 2700, 2.0: 12_000, 4.0: 40_000, 8.0: 80_000}
 FIT_SECONDS = {
     ("copula", None): 3,
     ("ctgan", None): 115,
     ("tvae", None): 19,
+    # TabDDPM (2026-10-29): fit and sample at 1,000 rows, with its environment's start-up.
+    ("tabddpm", None): 104,
     ("pate_ctgan", 1.0): 13,
     ("pate_ctgan", 8.0): 246,
     ("mst", 1.0): 55,

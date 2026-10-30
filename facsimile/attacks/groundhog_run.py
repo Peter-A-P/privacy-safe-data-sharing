@@ -51,6 +51,7 @@ BUDGETS: dict[str, tuple[float | None, ...]] = {
     "copula": (None,),
     "ctgan": (None,),
     "tvae": (None,),
+    "tabddpm": (None,),
     "aim": (1.0, 8.0),
     "mst": (1.0, 8.0),
     "pate_ctgan": (1.0, 8.0),
