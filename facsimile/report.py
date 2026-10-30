@@ -780,7 +780,7 @@ def render_membership_fm(report: dict[str, Any]) -> list[str]:
     tabfm = first["membership_tabfm"]["tabfm"] if rows else first["tabfm"]
     out += [
         f"The Groundhog evidence, the same shadow and evaluation tables, classified by TabFM {tabfm}",
-        "(`facsimile/attacks/groundhog_fm.py`) in place of the random forest, on the 500 features",
+        "in place of the random forest (the code is not published; docs/attacks.md says why), on the 500 features",
         "that best separate in from out on the shadow tables. *Forest, 500* is the forest on those",
         "same 500, which separates the classifier's effect from the selection's. Accuracy over six",
         "targets and 20 evaluation tables each, exact 95% intervals; chance is 0.5. The difference",
@@ -835,7 +835,8 @@ def render_membership_fm_summary(report: dict[str, Any]) -> list[str]:
                 f"{_eps_label(r['epsilon'])}, accuracy {_acc(r['membership_tabfm'], 'accuracy')}"
                 for r in flips
             )
-            + "."
+            + f". Each verdict is a one-sided test at 2.5 percent, so over {len(rows)} configurations"
+            f" about {0.025 * len(rows):.1f} would be detected by chance alone."
         ),
     ]
     controls = report.get("membership_tabfm_controls", [])
@@ -844,10 +845,19 @@ def render_membership_fm_summary(report: dict[str, Any]) -> list[str]:
             "On the copy control, TabFM scores "
             + "; ".join(
                 f"{_acc(c, 'accuracy')} on {DATASET_NAMES[c['dataset']]} against the forest's "
-                f"{_acc(c['forest'])}"
+                f"{_acc(c['forest'])}, and the forest on the same 500 features "
+                f"{_acc(c['forest_selected'])}"
                 for c in controls
             )
-            + ". The table by table numbers are in",
+            + (
+                "; most of the gain on the copies is the feature selection, not the model."
+                if sum(c["forest_selected"]["point"] - c["forest"]["point"] for c in controls)
+                >= sum(c["accuracy"] - c["forest_selected"]["point"] for c in controls)
+                else "."
+            ),
+            "TabFM's weights were trained on synthetic tables drawn from structural causal models and",
+            "are licensed for non-commercial, non-production use only, so the code that calls them is",
+            "not published and nothing here depends on it. The table by table numbers are in",
             "[docs/results.md](docs/results.md#membership-inference-with-a-foundation-model-attacker).",
         ]
     return [*out, ""]

@@ -59,6 +59,55 @@ its marginals and pairwise correlations. Outliers by mean distance are not all o
 single attribute, so a low score on such a target is a statement about the features as well as
 the synthesiser.
 
+### A foundation model as the attacker
+
+Would a stronger classifier find what the forest misses? The same evidence, every feature vector
+the Groundhog runs wrote (never refitted), was classified a second time by Google's TabFM 1.0
+(`tabfm` 1.0.1, weights `google/tabfm-1.0.0-pytorch`), zero-shot: the 40 shadow vectors are its
+context, the 20 evaluation vectors its queries, its default ensemble of 32 members. TabFM reads
+at most 500 columns and the vectors have 6,600 to 13,500, so the attacker keeps the 500 with the
+largest standardised difference in means between in and out on its own shadow vectors, which
+uses nothing the forest's attacker lacks. A third arm runs the same forest on the same 500, to
+tell the model's effect from the selection's. The forest is retrained from the seeds of the
+published runs and must reproduce their counts exactly, or the run stops; all 39 did. The two
+attackers are scored on the same evaluation tables, so their difference is paired (bootstrap
+over trials, conditional on the six targets). Results are in
+[results.md](results.md#membership-inference-with-a-foundation-model-attacker).
+
+What it found, on the 42 runs (27 grid configurations, 12 ladder tables, 3 copy controls):
+
+- **On the copy controls the selection does most of the work.** TabFM catches the copy on ACS
+  (0.642) and SPARCS (0.783) where the forest on every feature does not (0.558, 0.525); the
+  forest on the 500 selected features catches both as well (0.683, 0.717). Neither catches it on
+  IEEE-CIS. So part of the forest's weakness at this scale is the paper's feature vector itself:
+  thousands of columns that do not move with the target dilute the few that do.
+- **One grid verdict flips.** AIM at epsilon 1 on ACS: forest 0.533, forest on the 500 0.542,
+  TabFM 0.650 (0.558 to 0.735), TabFM minus forest +0.117 (+0.033 to +0.217), the only grid
+  configuration where TabFM is better at 95%. It is also the configuration the inference attack
+  detects at 20,000 rows. It is not secure evidence of a membership leak: each verdict is a
+  one-sided test at 2.5 percent, so 27 configurations give about 0.7 detections by chance alone,
+  and AIM at epsilon 8 on the same data, which spends more budget, scores 0.558. Rerun twice on
+the same evidence with TabFM's ensemble reseeded, it stays detected, at 0.600 (0.507 to 0.688)
+and 0.650 (0.558 to 0.735), but its lead over the forest is +0.067 (-0.025 to +0.167) and
++0.117 (+0.033 to +0.208): the detection does not hang on the ensemble's seed, the margin over
+the forest partly does. A membership risk on this configuration would need new evaluation
+fits to confirm, which were not run.
+- **Two ladder verdicts flip.** The perturbed copy on ACS (0.608, forest 0.575) and on SPARCS
+  (0.600, forest 0.500) are detected by TabFM; the overfitted TVAE is still not caught (0.483,
+  0.425, 0.542).
+- **Everything else is indistinguishable.** On the other 26 grid configurations the paired
+  interval contains zero, and no difference is negative at 95%.
+
+TabFM took 351 to 422 seconds per target on the build desktop's GTX 1650 (4 GB, CUDA 12.6), about
+25 hours for all 42 runs at a peak of 4.4 GB of GPU memory, so it spilled into shared memory; at
+one ensemble member it takes 14 seconds. It cost nothing.
+
+**Licence.** TabFM's weights are under the TabFM Non-Commercial License v1.0: research and
+non-production use only, and no distribution of the model or a work that uses it. Its outputs are
+not restricted. So the numbers are published and the code that calls TabFM is not: it is not in
+this repository, no command here imports it, and nothing a reader would run depends on it. Its
+weights were trained on synthetic tables drawn from structural causal models, not on real data.
+
 ## Choices where the paper is silent, and what the reference does
 
 **Ties between nearest neighbours.** The attributes are bins and categories, so many synthetic
@@ -94,6 +143,8 @@ domain's whenever both tables use the end bins.
 Anonymeter is under the Clear BSD licence; its authors, at Statice (now Anonos), have filed a
 patent application on the method, and the README of the library says so. This project
 reimplements the method from the paper for measurement and publishes no product. TAPAS is MIT.
+TabFM's weights are licensed for non-commercial, non-production use only, so only its results
+are published here (above, under "A foundation model as the attacker").
 
 ## Reference agreement
 

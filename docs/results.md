@@ -216,6 +216,60 @@ positive control: the attacked table is the real dataset itself.
 
 What the difference means is in `docs/attacks.md`.
 
+## Membership inference with a foundation-model attacker
+
+The Groundhog evidence, the same shadow and evaluation tables, classified by TabFM 1.0.1
+in place of the random forest (the code is not published; docs/attacks.md says why), on the 500 features
+that best separate in from out on the shadow tables. *Forest, 500* is the forest on those
+same 500, which separates the classifier's effect from the selection's. Accuracy over six
+targets and 20 evaluation tables each, exact 95% intervals; chance is 0.5. The difference
+is TabFM's accuracy minus the forest's on the same tables, paired, 95% bootstrap interval.
+
+| Dataset | Tables | Forest | Forest, 500 | TabFM | TabFM minus forest | Verdict |
+|---|---|---|---|---|---|---|
+| ACS PUMS, California 2018 | copy (control) | 0.558 (0.465 to 0.649) | 0.683 (0.592 to 0.765) | 0.642 (0.549 to 0.727) | +0.083 (-0.017 to +0.192) | detected |
+| IEEE-CIS card transactions | copy (control) | 0.550 (0.457 to 0.641) | 0.533 (0.440 to 0.625) | 0.558 (0.465 to 0.649) | +0.008 (-0.083 to +0.100) | not detected |
+| NY SPARCS discharges | copy (control) | 0.525 (0.432 to 0.617) | 0.717 (0.627 to 0.795) | 0.783 (0.699 to 0.853) | +0.258 (+0.167 to +0.358) | detected |
+| ACS PUMS, California 2018 | Gaussian copula, epsilon inf | 0.425 (0.335 to 0.519) | 0.475 (0.383 to 0.568) | 0.483 (0.391 to 0.576) | +0.058 (-0.058 to +0.158) | not detected |
+| ACS PUMS, California 2018 | CTGAN, epsilon inf | 0.417 (0.327 to 0.510) | 0.433 (0.343 to 0.527) | 0.467 (0.375 to 0.560) | +0.050 (-0.059 to +0.167) | not detected |
+| ACS PUMS, California 2018 | TVAE, epsilon inf | 0.450 (0.359 to 0.543) | 0.425 (0.335 to 0.519) | 0.475 (0.383 to 0.568) | +0.025 (-0.058 to +0.117) | not detected |
+| ACS PUMS, California 2018 | MST, epsilon 1 | 0.508 (0.416 to 0.601) | 0.475 (0.383 to 0.568) | 0.492 (0.399 to 0.584) | -0.017 (-0.108 to +0.075) | not detected |
+| ACS PUMS, California 2018 | MST, epsilon 8 | 0.458 (0.367 to 0.552) | 0.483 (0.391 to 0.576) | 0.517 (0.424 to 0.609) | +0.058 (-0.033 to +0.142) | not detected |
+| ACS PUMS, California 2018 | AIM, epsilon 1 | 0.533 (0.440 to 0.625) | 0.542 (0.448 to 0.633) | 0.650 (0.558 to 0.735) | +0.117 (+0.033 to +0.217) | flips to detected |
+| ACS PUMS, California 2018 | AIM, epsilon 8 | 0.550 (0.457 to 0.641) | 0.475 (0.383 to 0.568) | 0.558 (0.465 to 0.649) | +0.008 (-0.075 to +0.092) | not detected |
+| ACS PUMS, California 2018 | PATE-CTGAN, epsilon 1 | 0.542 (0.448 to 0.633) | 0.483 (0.391 to 0.576) | 0.542 (0.448 to 0.633) | +0.000 (-0.117 to +0.117) | not detected |
+| ACS PUMS, California 2018 | PATE-CTGAN, epsilon 8 | 0.508 (0.416 to 0.601) | 0.475 (0.383 to 0.568) | 0.508 (0.416 to 0.601) | +0.000 (-0.125 to +0.117) | not detected |
+| IEEE-CIS card transactions | Gaussian copula, epsilon inf | 0.425 (0.335 to 0.519) | 0.475 (0.383 to 0.568) | 0.500 (0.407 to 0.593) | +0.075 (-0.033 to +0.175) | not detected |
+| IEEE-CIS card transactions | CTGAN, epsilon inf | 0.525 (0.432 to 0.617) | 0.550 (0.457 to 0.641) | 0.500 (0.407 to 0.593) | -0.025 (-0.108 to +0.067) | not detected |
+| IEEE-CIS card transactions | TVAE, epsilon inf | 0.500 (0.407 to 0.593) | 0.508 (0.416 to 0.601) | 0.525 (0.432 to 0.617) | +0.025 (-0.058 to +0.108) | not detected |
+| IEEE-CIS card transactions | MST, epsilon 1 | 0.492 (0.399 to 0.584) | 0.425 (0.335 to 0.519) | 0.483 (0.391 to 0.576) | -0.008 (-0.083 to +0.067) | not detected |
+| IEEE-CIS card transactions | MST, epsilon 8 | 0.558 (0.465 to 0.649) | 0.542 (0.448 to 0.633) | 0.517 (0.424 to 0.609) | -0.042 (-0.150 to +0.058) | not detected |
+| IEEE-CIS card transactions | AIM, epsilon 1 | 0.433 (0.343 to 0.527) | 0.492 (0.399 to 0.584) | 0.433 (0.343 to 0.527) | +0.000 (-0.108 to +0.108) | not detected |
+| IEEE-CIS card transactions | AIM, epsilon 8 | 0.458 (0.367 to 0.552) | 0.525 (0.432 to 0.617) | 0.517 (0.424 to 0.609) | +0.058 (-0.042 to +0.158) | not detected |
+| IEEE-CIS card transactions | PATE-CTGAN, epsilon 1 | 0.458 (0.367 to 0.552) | 0.542 (0.448 to 0.633) | 0.475 (0.383 to 0.568) | +0.017 (-0.083 to +0.117) | not detected |
+| IEEE-CIS card transactions | PATE-CTGAN, epsilon 8 | 0.533 (0.440 to 0.625) | 0.567 (0.473 to 0.657) | 0.542 (0.448 to 0.633) | +0.008 (-0.100 to +0.125) | not detected |
+| NY SPARCS discharges | Gaussian copula, epsilon inf | 0.542 (0.448 to 0.633) | 0.492 (0.399 to 0.584) | 0.533 (0.440 to 0.625) | -0.008 (-0.125 to +0.108) | not detected |
+| NY SPARCS discharges | CTGAN, epsilon inf | 0.475 (0.383 to 0.568) | 0.558 (0.465 to 0.649) | 0.533 (0.440 to 0.625) | +0.058 (-0.042 to +0.167) | not detected |
+| NY SPARCS discharges | TVAE, epsilon inf | 0.483 (0.391 to 0.576) | 0.475 (0.383 to 0.568) | 0.483 (0.391 to 0.576) | +0.000 (-0.108 to +0.100) | not detected |
+| NY SPARCS discharges | MST, epsilon 1 | 0.508 (0.416 to 0.601) | 0.475 (0.383 to 0.568) | 0.458 (0.367 to 0.552) | -0.050 (-0.142 to +0.042) | not detected |
+| NY SPARCS discharges | MST, epsilon 8 | 0.500 (0.407 to 0.593) | 0.517 (0.424 to 0.609) | 0.450 (0.359 to 0.543) | -0.050 (-0.142 to +0.042) | not detected |
+| NY SPARCS discharges | AIM, epsilon 1 | 0.442 (0.351 to 0.535) | 0.442 (0.351 to 0.535) | 0.483 (0.391 to 0.576) | +0.042 (-0.067 to +0.158) | not detected |
+| NY SPARCS discharges | AIM, epsilon 8 | 0.450 (0.359 to 0.543) | 0.533 (0.440 to 0.625) | 0.517 (0.424 to 0.609) | +0.067 (-0.025 to +0.158) | not detected |
+| NY SPARCS discharges | PATE-CTGAN, epsilon 1 | 0.508 (0.416 to 0.601) | 0.500 (0.407 to 0.593) | 0.433 (0.343 to 0.527) | -0.075 (-0.192 to +0.033) | not detected |
+| NY SPARCS discharges | PATE-CTGAN, epsilon 8 | 0.550 (0.457 to 0.641) | 0.558 (0.465 to 0.649) | 0.533 (0.440 to 0.625) | -0.017 (-0.117 to +0.092) | not detected |
+| ACS PUMS, California 2018 | Perturbed copy, epsilon inf | 0.575 (0.481 to 0.665) | 0.658 (0.566 to 0.742) | 0.608 (0.515 to 0.696) | +0.033 (-0.058 to +0.125) | flips to detected |
+| ACS PUMS, California 2018 | SMOTE-NC, epsilon inf | 0.558 (0.465 to 0.649) | 0.533 (0.440 to 0.625) | 0.542 (0.448 to 0.633) | -0.017 (-0.117 to +0.092) | not detected |
+| ACS PUMS, California 2018 | k-anonymity, k = 5, epsilon inf | 0.508 (0.416 to 0.601) | 0.508 (0.416 to 0.601) | 0.475 (0.383 to 0.568) | -0.033 (-0.142 to +0.075) | not detected |
+| ACS PUMS, California 2018 | TVAE, 3,000 epochs, epsilon inf | 0.500 (0.407 to 0.593) | 0.508 (0.416 to 0.601) | 0.483 (0.391 to 0.576) | -0.017 (-0.100 to +0.067) | not detected |
+| IEEE-CIS card transactions | Perturbed copy, epsilon inf | 0.508 (0.416 to 0.601) | 0.467 (0.375 to 0.560) | 0.483 (0.391 to 0.576) | -0.025 (-0.133 to +0.075) | not detected |
+| IEEE-CIS card transactions | SMOTE-NC, epsilon inf | 0.475 (0.383 to 0.568) | 0.492 (0.399 to 0.584) | 0.533 (0.440 to 0.625) | +0.058 (-0.033 to +0.150) | not detected |
+| IEEE-CIS card transactions | k-anonymity, k = 5, epsilon inf | 0.458 (0.367 to 0.552) | 0.492 (0.399 to 0.584) | 0.492 (0.399 to 0.584) | +0.033 (-0.042 to +0.108) | not detected |
+| IEEE-CIS card transactions | TVAE, 3,000 epochs, epsilon inf | 0.492 (0.399 to 0.584) | 0.458 (0.367 to 0.552) | 0.425 (0.335 to 0.519) | -0.067 (-0.158 to +0.025) | not detected |
+| NY SPARCS discharges | Perturbed copy, epsilon inf | 0.500 (0.407 to 0.593) | 0.500 (0.407 to 0.593) | 0.600 (0.507 to 0.688) | +0.100 (-0.017 to +0.217) | flips to detected |
+| NY SPARCS discharges | SMOTE-NC, epsilon inf | 0.433 (0.343 to 0.527) | 0.400 (0.312 to 0.493) | 0.425 (0.335 to 0.519) | -0.008 (-0.092 to +0.083) | not detected |
+| NY SPARCS discharges | k-anonymity, k = 5, epsilon inf | 0.517 (0.424 to 0.609) | 0.525 (0.432 to 0.617) | 0.575 (0.481 to 0.665) | +0.058 (-0.050 to +0.167) | not detected |
+| NY SPARCS discharges | TVAE, 3,000 epochs, epsilon inf | 0.575 (0.481 to 0.665) | 0.542 (0.448 to 0.633) | 0.542 (0.448 to 0.633) | -0.033 (-0.125 to +0.058) | not detected |
+
 ## Through the 03 gate: synthetic-trained against real-trained
 
 Project 03's release gate, asked whether a model trained on the synthetic table is

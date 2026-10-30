@@ -386,6 +386,7 @@ function leak(data) {
     strong("Differential privacy bounds a leak; it does not promise there is none. "),
     `At epsilon ${l.epsilon} the guarantee still lets one person's presence shift what the table says, and here the shift was measurable. It is small: the attack is right about ${pct(l.control_rate)} of strangers anyway, because the table is useful, and only ${fmt(100 * (l.main_rate - l.control_rate), 1)} percentage points better on the people it was trained on. `,
     cell && cell.dcr ? `Its distance-to-closest-record share is ${fmt(cell.dcr.closer_to_training_share, 3)}, the safest kind of reading, which is the next section.` : "",
+    ...data.membershipFm.map((m) => ` A second membership attacker, Google's TabFM foundation model in place of the random forest, detects ${METHODS[m.method].name} at epsilon ${m.epsilon} on ${DATASETS[m.dataset].short} at about 1,000 rows: it tells whether a person was in the training data ${pct(m.risk)} of the time against a coin's 50%, 95% interval ${pct(m.lo)} to ${pct(m.hi)}, where the forest saw nothing.`),
   ]);
 }
 
@@ -833,6 +834,10 @@ function footer(data) {
 /* ---------------------------------------------------------------- start */
 
 function render(data) {
+  // The cards and the hero are about the 20,000-row grid. The second membership attacker's
+  // detections are at about 1,000 rows and are told beside the leak, not counted as more leaks.
+  data.membershipFm = data.leaks.filter((l) => l.attack === "membership_tabfm");
+  data.leaks = data.leaks.filter((l) => l.attack !== "membership_tabfm");
   hero(data);
   surfaceControls(data);
   surface(data);
