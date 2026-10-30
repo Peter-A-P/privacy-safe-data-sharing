@@ -149,21 +149,37 @@ are published here (above, under "A foundation model as the attacker").
 ## Reference agreement
 
 Anonymeter 1.1.0 was run beside this project's implementations on seed 0 of every configuration
-attacked (48 tables), with the same targets, control, synthetic table, secret, attribute halves,
+attacked (48 tables), and on all three seeds of TabDDPM's when it joined the grid (9 tables), with
+the same targets, control, synthetic table, secret, attribute halves,
 number of attacks and search budget (`facsimile attack --reference`). The table, written by
 `facsimile report`, is in [results.md](results.md#reference-agreement-this-project-against-anonymeter).
 
-**The intervals agree everywhere.** For all five attacks on all 48 tables, the two risks' 95%
+**The intervals agree everywhere.** For all five attacks on all 57 tables, the two risks' 95%
 intervals overlap. The mean difference between the two risks is under 0.6 percentage points
 for every attack. The largest is 3.5 points, the inference risk on IEEE-CIS MST at epsilon 0.5:
 0.0% (0.0 to 2.5) here and 3.5% (0.0 to 7.3) in Anonymeter. Neither detects a risk there.
 
-**The calls differ on 8 of 240 pairs, and every one is a borderline case.** In each of them one
-implementation's lower bound is above zero by at most 0.18 points and the other's touches zero.
-Five are linkability with ten neighbours, two are inference and one is multivariate singling
-out. None is a leak in the README's sense, which pools the three seeds and tests at the
-Bonferroni level. The one leak there (AIM, epsilon 1, ACS, inference) is detected by both on this
-seed: 5.1% (1.8 to 8.3) here and 4.0% (0.7 to 7.3) in Anonymeter.
+**The calls differ on 11 of 285 pairs.** On the first 48 tables they differ on 8 of 240, and
+every one is a borderline case: one implementation's lower bound is above zero by at most 0.18
+points and the other's touches zero. Five are linkability with ten neighbours, two are inference
+and one is multivariate singling out. None is a leak in the README's sense, which pools the three
+seeds and tests at the Bonferroni level. The leak there on those tables (AIM, epsilon 1, ACS,
+inference) is detected by both on this seed: 5.1% (1.8 to 8.3) here and 4.0% (0.7 to 7.3) in
+Anonymeter.
+
+**TabDDPM's leak is one implementation's call, not both (recorded 2026-10-30).** Three of the
+nine TabDDPM tables differ, by more than the earlier ones: linkability with ten neighbours on
+IEEE-CIS seed 0 (0.1% here, 1.3% (0.2 to 2.5) in Anonymeter), and multivariate singling out on
+ACS seeds 0 and 2, in opposite directions (1.4% (0.0 to 3.3) here against 2.2% (0.4 to 4.0); 2.7%
+(0.8 to 4.6) here against 0.8% (0.0 to 2.8)). That second attack is the leak in the README:
+pooled over the three seeds, 1.8% (0.7 to 2.9) here, with a lower bound of 0.35 points at the
+Bonferroni level. Pooled the same way from Anonymeter's rates (its success rates times the 2,000
+attacks, since it does not report counts), it is 1.1% (0.0 to 2.2), and the Bonferroni lower bound
+touches zero. The success rates on the training records agree, 9.5% here and 9.3% in Anonymeter;
+the control rates do not, 7.9% against 8.3%. That is the singling-out search below: the two draw
+different predicates and score them on different control records. So the leak is reported as this
+project's measurement, as every number here is, and this paragraph is the record that the
+reference library, on the same tables, puts it at the edge of detection rather than inside it.
 
 **The causes are the two choices recorded above.**
 
@@ -177,8 +193,9 @@ seed: 5.1% (1.8 to 8.3) here and 4.0% (0.7 to 7.3) in Anonymeter.
 - *The singling-out search.* Both search with the same budget of 1,000,000 attempts, but they
   draw candidate predicates in a different order. On some tables neither finds all 2,000
   predicates (Anonymeter reported 972 to 1,491 on three SPARCS tables), and the two then score
-  different predicate sets. The one multivariate singling-out disagreement (IEEE-CIS MST at
-  epsilon 0.5) comes from the control rate: 8.2% here against 10.2% in Anonymeter.
+  different predicate sets. The multivariate singling-out disagreements (IEEE-CIS MST at epsilon
+  0.5, and TabDDPM on ACS above) come from the control rate: 8.2% here against 10.2% in
+  Anonymeter on IEEE-CIS MST.
 
 Neither difference is a defect in either implementation. Both follow the paper, which leaves
 these choices open. The project keeps its own choices for the reasons given above and reports its

@@ -278,6 +278,12 @@ tables is the question.
   the Groundhog result is reported as a property of that model, as it is for every method.
 - **Docs in the same commit as the code**: `docs/synthesisers.md` (version, licence, defaults,
   device), the report's seventh column, the site.
+- **What it showed (2026-10-30), against what was expected:** utility better than expected, the
+  nearest of all seven to the real-data ceiling on every dataset (worst-task gap -0.022 on ACS,
+  -0.061 on IEEE-CIS, -0.015 on SPARCS), still outside the 0.02 rule on every dataset's worst
+  seed and blocked by the 03 gate; and, as expected, the deep arm an attack detects: multivariate
+  singling out on ACS, 1.8% (0.7 to 2.9), the grid's first leak without differential privacy,
+  which Anonymeter puts at the edge of detection (`docs/attacks.md`). Groundhog is still running.
 
 ## 3. Data
 

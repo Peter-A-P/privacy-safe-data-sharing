@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Share the Data, Not the People: synthetic data, attacked the way an adversary would</title>
-<meta name="description" content="Synthetic versions of three datasets of real people, generated six ways with and without differential privacy, attacked with the three tests regulators use to judge anonymity, and measured for whether a model trained on them still works. Every number carries a confidence interval and is reproducible from the repository.">
+<meta name="description" content="Synthetic versions of three datasets of real people, generated seven ways with and without differential privacy, attacked with the three tests regulators use to judge anonymity, and measured for whether a model trained on them still works. Every number carries a confidence interval and is reproducible from the repository.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -46,7 +46,7 @@
       popular answer is synthetic data: a generated table with the same patterns and none of the
       people. <strong>Whether it really contains none of the people is usually asserted, not
       measured.</strong> Here, synthetic versions of three public datasets of real people were
-      made six ways, with and without differential privacy, then attacked with the three tests
+      made seven ways, with and without differential privacy, then attacked with the three tests
       European regulators use to judge whether data is anonymous, and scored on the question a
       data scientist cares about: does a model trained on it still work on real data?
     </p>
@@ -54,7 +54,7 @@
       <div class="point">
         <span class="point-figure" id="hero-tables">-</span>
         <span class="point-unit">synthetic tables attacked</span>
-        <span class="point-label" id="hero-tables-note">three datasets, six synthesisers, budgets from epsilon 0.5 to no privacy, three seeds each</span>
+        <span class="point-label" id="hero-tables-note">three datasets, seven synthesisers, budgets from epsilon 0.5 to no privacy, three seeds each</span>
       </div>
       <div class="point warnline">
         <span class="point-figure down" id="hero-leaks">-</span>
@@ -134,7 +134,7 @@
     </p>
     <ol class="steps">
       <li><span class="step-n">1</span><span class="step-body"><strong>Split three ways, once.</strong> A training set the synthesisers see, a control set of real people they never see, and a test set for usefulness.</span></li>
-      <li><span class="step-n">2</span><span class="step-body"><strong>Synthesise six ways.</strong> Gaussian copula, CTGAN and TVAE with no privacy guarantee; AIM, MST and PATE-CTGAN with differential privacy at epsilon 0.5 to 8. Three seeds each, every epsilon from the library's own accountant.</span></li>
+      <li><span class="step-n">2</span><span class="step-body"><strong>Synthesise seven ways.</strong> Gaussian copula, CTGAN, TVAE and the diffusion model TabDDPM with no privacy guarantee; AIM, MST and PATE-CTGAN with differential privacy at epsilon 0.5 to 8. Three seeds each, every epsilon from the library's own accountant.</span></li>
       <li><span class="step-n">3</span><span class="step-body"><strong>Attack every table.</strong> Singling out, linkability and inference, the three criteria of the EU's anonymisation guidance, implemented from the paper that turned them into measurements, plus shadow-model membership inference.</span></li>
       <li><span class="step-n">4</span><span class="step-body"><strong>Subtract what the table tells about anyone.</strong> Each attack runs identically on the control set. Only the excess success on the training records is risk.</span></li>
       <li><span class="step-n">5</span><span class="step-body"><strong>Train on synthetic, test on real.</strong> A LightGBM model trained on each table, scored on real records it never saw, against the same model trained on the real data.</span></li>
@@ -196,8 +196,8 @@
     <h2>What leaked</h2>
     <p class="section-lead">
       A risk counts only when its interval excludes zero at a level corrected for running five
-      attacks on every configuration, with the three seeds pooled. Across every configuration
-      measured, one crossed that line.
+      attacks on every configuration, with the three seeds pooled. These are the configurations
+      that crossed that line.
     </p>
     <div class="leak-card" id="leak-card"></div>
     <div class="verdict">
@@ -220,7 +220,7 @@
       leak, went through exactly the same pipeline: the same splits, targets, control, attacks and
       seeds. Their settings and expected outcomes were written into the plan before any of them
       ran. Each mark is one method's risk on one attack, with its 95 percent interval; the grey
-      tick is the largest risk any of the six synthesisers showed on that attack.
+      tick is the largest risk any of the seven synthesisers showed on that attack.
     </p>
     <div class="controls">
       <div class="control">
@@ -283,7 +283,7 @@
       way it would for a model change. Here the candidate is a model trained on synthetic data
       and the baseline the same model trained on the real data, with a margin of 2 AUC points.
       No configuration met the rule, so the gate was given the nearest ones: per dataset, the
-      closest of all six synthesisers and the closest with a privacy guarantee. Each bar is the
+      closest of all seven synthesisers and the closest with a privacy guarantee. Each bar is the
       gap on the worst task, averaged over three seeds, with the range of the gate's 95 percent
       intervals across them.
     </p>

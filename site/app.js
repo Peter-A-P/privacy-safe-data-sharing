@@ -20,11 +20,12 @@ const METHODS = {
   copula: { name: "Gaussian copula", dp: false, cls: "s-copula" },
   ctgan: { name: "CTGAN", dp: false, cls: "s-ctgan" },
   tvae: { name: "TVAE", dp: false, cls: "s-tvae" },
+  tabddpm: { name: "TabDDPM", dp: false, cls: "s-ddpm" },
   mst: { name: "MST", dp: true, cls: "s-mst" },
   aim: { name: "AIM", dp: true, cls: "s-aim" },
   pate_ctgan: { name: "PATE-CTGAN", dp: true, cls: "s-pate" },
 };
-const METHOD_ORDER = ["copula", "ctgan", "tvae", "mst", "aim", "pate_ctgan"];
+const METHOD_ORDER = ["copula", "ctgan", "tvae", "tabddpm", "mst", "aim", "pate_ctgan"];
 
 /* The leakage ladder: positive controls, never on the surface. */
 const LADDER = {
@@ -164,7 +165,7 @@ function hero(data) {
   const attacked = data.cells.filter(scored);
   const tables = attacked.reduce((n, c) => n + c.seeds_attacked.length, 0);
   $("hero-tables").textContent = String(tables);
-  $("hero-tables-note").textContent = `${attacked.length} configurations: three datasets, six synthesisers, budgets from epsilon 0.5 to no privacy, three seeds each`;
+  $("hero-tables-note").textContent = `${attacked.length} configurations: three datasets, seven synthesisers, budgets from epsilon 0.5 to no privacy, three seeds each`;
 
   const leaks = data.leaks;
   $("hero-leaks").textContent = `${leaks.length} of ${attacked.length}`;
@@ -355,17 +356,38 @@ function fidelity(data) {
 
 /* ---------------------------------------------------------------- the leak */
 
+/* What each attack's success rate counts, for the leak card's captions. */
+const LEAK_WORDS = {
+  inference: {
+    how: "guessing a person's income bracket from their other attributes",
+    main: "of the people the synthesiser was trained on had their income bracket guessed right",
+    control: "of people it never saw, with the same attack on the same table",
+  },
+  singling_out_multivariate: {
+    how: "combinations of attributes read off the table, each meant to fit exactly one person",
+    main: "of those combinations picked out exactly one of the people the synthesiser was trained on",
+    control: "picked out exactly one of the people it never saw",
+  },
+};
+
 function leak(data) {
   const card = $("leak-card");
   card.textContent = "";
-  if (!data.leaks.length) {
+  const leaks = data.leaks.filter((l) => ATTACKS[l.attack] && METHODS[l.method]);
+  if (!leaks.length) {
     card.append(el("p", {}, "No attack detected a risk on any configuration."));
     return;
   }
-  for (const l of data.leaks) {
+  const at = (l) => (l.epsilon === null ? "no privacy" : `epsilon ${l.epsilon}`);
+  for (const l of leaks) {
+    const words = LEAK_WORDS[l.attack] || {
+      how: ATTACKS[l.attack].toLowerCase(),
+      main: "success on the people the synthesiser was trained on",
+      control: "success on people it never saw",
+    };
     const head = el("div", { class: "leak-head" });
-    head.append(el("span", { class: "eyebrow" }, "The one leak"), el("h3", {}, `${METHODS[l.method].name} at epsilon ${l.epsilon}, ${DATASETS[l.dataset].name}`));
-    head.append(el("p", { class: "note" }, `${l.library} ${l.version}, 20,000 rows, ${l.seeds} seeds pooled. The attack: ${l.attack}, guessing a person's income bracket from their other attributes.`));
+    head.append(el("span", { class: "eyebrow" }, leaks.length === 1 ? "The one leak" : "A leak"), el("h3", {}, `${METHODS[l.method].name} at ${at(l)}, ${DATASETS[l.dataset].name}`));
+    head.append(el("p", { class: "note" }, `${l.library} ${l.version}, 20,000 rows, ${l.seeds} seeds pooled. The attack: ${ATTACKS[l.attack].toLowerCase()}, ${words.how}.`));
     const stats = el("div", { class: "headline" });
     const stat = (figure, caption, cls, range) => {
       const s = el("div", { class: `stat ${cls || ""}` });
@@ -374,20 +396,35 @@ function leak(data) {
       return s;
     };
     stats.append(
-      stat(pct(l.main_rate), "of the people the synthesiser was trained on had their income bracket guessed right"),
-      stat(pct(l.control_rate), "of people it never saw, with the same attack on the same table"),
+      stat(pct(l.main_rate), words.main),
+      stat(pct(l.control_rate), words.control),
       stat(pct(l.risk), "excess: what the table gives away about the people in it", "down", `95% interval ${pct(l.lo)} to ${pct(l.hi)}`),
     );
     card.append(head, stats);
   }
-  const l = data.leaks[0];
-  const cell = data.cells.find((c) => c.dataset === l.dataset && c.method === l.method && c.epsilon === l.epsilon);
-  fill($("leak-verdict"), [
-    strong("Differential privacy bounds a leak; it does not promise there is none. "),
-    `At epsilon ${l.epsilon} the guarantee still lets one person's presence shift what the table says, and here the shift was measurable. It is small: the attack is right about ${pct(l.control_rate)} of strangers anyway, because the table is useful, and only ${fmt(100 * (l.main_rate - l.control_rate), 1)} percentage points better on the people it was trained on. `,
-    cell && cell.dcr ? `Its distance-to-closest-record share is ${fmt(cell.dcr.closer_to_training_share, 3)}, the safest kind of reading, which is the next section.` : "",
-    ...data.membershipFm.map((m) => ` A second membership attacker, Google's TabFM foundation model in place of the random forest, detects ${METHODS[m.method].name} at epsilon ${m.epsilon} on ${DATASETS[m.dataset].short} at about 1,000 rows: it tells whether a person was in the training data ${pct(m.risk)} of the time against a coin's 50%, 95% interval ${pct(m.lo)} to ${pct(m.hi)}, where the forest saw nothing.`),
-  ]);
+  const dcrOf = (l) => {
+    const cell = data.cells.find((c) => c.dataset === l.dataset && c.method === l.method && c.epsilon === l.epsilon);
+    return cell && cell.dcr ? cell.dcr.closer_to_training_share : null;
+  };
+  const verdict = [];
+  for (const l of leaks.filter((x) => x.epsilon !== null)) {
+    const dcr = dcrOf(l);
+    verdict.push(
+      strong("Differential privacy bounds a leak; it does not promise there is none. "),
+      `At epsilon ${l.epsilon} the guarantee still lets one person's presence shift what the table says, and here the shift was measurable. It is small: the attack is right about ${pct(l.control_rate)} of strangers anyway, because the table is useful, and only ${fmt(100 * (l.main_rate - l.control_rate), 1)} percentage points better on the people it was trained on. `,
+      dcr !== null ? `Its distance-to-closest-record share is ${fmt(dcr, 3)}, the safest kind of reading, which is the next section. ` : "",
+    );
+  }
+  for (const l of leaks.filter((x) => x.epsilon === null)) {
+    const dcr = dcrOf(l);
+    verdict.push(
+      strong(`${METHODS[l.method].name} has no guarantee, and here it shows. `),
+      `It is the synthesiser whose tables come nearest the real data for training models, and the one configuration without privacy that an attack breaks on all its targets: ${ATTACKS[l.attack].toLowerCase()}, ${fmt(100 * (l.main_rate - l.control_rate), 1)} percentage points more often on the people it was trained on than on strangers. `,
+      dcr !== null ? `Distance to closest record passes it too, at ${fmt(dcr, 3)}. ` : "",
+    );
+  }
+  verdict.push(...data.membershipFm.map((m) => ` A second membership attacker, Google's TabFM foundation model in place of the random forest, detects ${METHODS[m.method].name} at epsilon ${m.epsilon} on ${DATASETS[m.dataset].short} at about 1,000 rows: it tells whether a person was in the training data ${pct(m.risk)} of the time against a coin's 50%, 95% interval ${pct(m.lo)} to ${pct(m.hi)}, where the forest saw nothing.`));
+  fill($("leak-verdict"), verdict);
 }
 
 /* ---------------------------------------------------------------- the leakage ladder */
@@ -446,7 +483,7 @@ function ladder(data) {
   readout.textContent = own.length ? "Point at a mark to read it." : "The ladder's tables are still being attacked.";
   legend($("ladder-legend"), [
     ...LADDER_ORDER.map((mm) => [`sw-${LADDER[mm].cls}`, LADDER[mm].name, "dot"]),
-    ["sw-grid-max", "largest risk among the six synthesisers", "solid"],
+    ["sw-grid-max", "largest risk among the seven synthesisers", "solid"],
   ]);
   $("ladder-caption").textContent = "Risks pooled over three seeds, 6,000 attacks each, with 95% intervals. A filled mark is a detected risk at the corrected level the leak table uses; a hollow one is not.";
 
@@ -475,7 +512,7 @@ function ladder(data) {
       const missed = [...new Set(all.filter((r) => !caught.includes(r)).map((r) => LADDER[r.method].name))];
       return missed.length ? [`The tables they do not catch are ${missed.join(", ")}: trained ten times longer on 20,000 records, it showed no measurable memorisation, as the plan said it might not. `] : [];
     })(),
-    "On the same attacks, the six synthesisers sit near zero, with one exception. So a result at control level on the grid is the attacks failing to find a leak that they would have found in a table like these, not attacks too weak to find anything.",
+    "On the same attacks, the seven synthesisers sit near zero, with the exceptions in the leak table. So a result at control level on the grid is the attacks failing to find a leak that they would have found in a table like these, not attacks too weak to find anything.",
   ] : ["The ladder's tables are still being attacked."]);
 
   const exposed = (data.exposed_leaks || []).filter((l) => METHODS[l.method]);
@@ -604,7 +641,7 @@ function gate(data) {
   node.textContent = "";
   node.append(svg);
   legend($("gate-legend"), [
-    ["sw-gate-open", "nearest of all six, no privacy guarantee"],
+    ["sw-gate-open", "nearest of all seven, no privacy guarantee"],
     ["sw-gate-dp", "nearest with differential privacy"],
   ]);
   $("gate-caption").textContent = "An item is a pair of real test records, one positive and one negative, never reused; it is correct when the model scores the positive one higher, so the share correct estimates the AUC. Paired bootstrap, 2,000 resamples, Holm's adjustment across a dataset's tasks.";

@@ -784,12 +784,13 @@ tbody tr.reference { background: var(--accent-soft); }
 
 /* ---------------------------------------------------------------- this page's own */
 
-/* Six synthesisers, six hues that stay apart in both themes: the three with no privacy
+/* Seven synthesisers, seven hues that stay apart in both themes: the four with no privacy
    guarantee warm and blue, the three differentially private ones green, violet and magenta. */
 :root {
   --c-copula: #9a6a14;
   --c-ctgan: #0f5c6e;
   --c-tvae: #3a6fc4;
+  --c-ddpm: #c0522b;
   --c-mst: #1e7a4c;
   --c-aim: #6d3f9e;
   --c-pate: #b03a73;
@@ -801,6 +802,7 @@ tbody tr.reference { background: var(--accent-soft); }
     --c-copula: #e0b45e;
     --c-ctgan: #7cc7d6;
     --c-tvae: #8fb3f0;
+    --c-ddpm: #f39272;
     --c-mst: #58c286;
     --c-aim: #b191e0;
     --c-pate: #e98bb8;
@@ -811,20 +813,23 @@ tbody tr.reference { background: var(--accent-soft); }
 .series.s-copula, .whisker.s-copula { stroke: var(--c-copula); }
 .series.s-ctgan, .whisker.s-ctgan { stroke: var(--c-ctgan); }
 .series.s-tvae, .whisker.s-tvae { stroke: var(--c-tvae); }
+.series.s-ddpm, .whisker.s-ddpm { stroke: var(--c-ddpm); }
 .series.s-mst, .whisker.s-mst { stroke: var(--c-mst); }
 .series.s-aim, .whisker.s-aim { stroke: var(--c-aim); }
 .series.s-pate, .whisker.s-pate { stroke: var(--c-pate); }
 .series { stroke-width: 2; }
-.whisker.s-copula, .whisker.s-ctgan, .whisker.s-tvae, .whisker.s-mst, .whisker.s-aim, .whisker.s-pate { stroke-width: 1.5; stroke-opacity: 0.55; }
+.whisker.s-copula, .whisker.s-ctgan, .whisker.s-tvae, .whisker.s-ddpm, .whisker.s-mst, .whisker.s-aim, .whisker.s-pate { stroke-width: 1.5; stroke-opacity: 0.55; }
 .dot.s-copula { fill: var(--c-copula); }
 .dot.s-ctgan { fill: var(--c-ctgan); }
 .dot.s-tvae { fill: var(--c-tvae); }
+.dot.s-ddpm { fill: var(--c-ddpm); }
 .dot.s-mst { fill: var(--c-mst); }
 .dot.s-aim { fill: var(--c-aim); }
 .dot.s-pate { fill: var(--c-pate); }
 .sw-s-copula { background: var(--c-copula); }
 .sw-s-ctgan { background: var(--c-ctgan); }
 .sw-s-tvae { background: var(--c-tvae); }
+.sw-s-ddpm { background: var(--c-ddpm); }
 .sw-s-mst { background: var(--c-mst); }
 .sw-s-aim { background: var(--c-aim); }
 .sw-s-pate { background: var(--c-pate); }

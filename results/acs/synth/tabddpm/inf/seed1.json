@@ -1,0 +1,58 @@
+{
+  "facsimile": "0.0.1",
+  "dataset": "acs",
+  "method": "tabddpm",
+  "library": "synthcity",
+  "family": "non-dp deep",
+  "epsilon": null,
+  "seed": 1,
+  "cell": {
+    "eps_tag": "inf"
+  },
+  "rows": 20000,
+  "params": {
+    "library_version": "0.2.12",
+    "torch": "2.2.2+cu121",
+    "python": "3.12.14",
+    "is_classification": false,
+    "n_iter": 1000,
+    "lr": 0.002,
+    "weight_decay": 0.0001,
+    "batch_size": 1024,
+    "num_timesteps": 1000,
+    "gaussian_loss_type": "mse",
+    "scheduler": "cosine",
+    "log_interval": 100,
+    "model_type": "mlp",
+    "dim_embed": 128,
+    "continuous_encoder": "quantile",
+    "validation_size": 0,
+    "random_state": 0,
+    "compress_dataset": false,
+    "sampling_patience": 500
+  },
+  "accounting": {
+    "dp": false,
+    "epsilon": "inf"
+  },
+  "fitted_on_sha256": "65a4f56e371436e76d4a3ddbd524208223033a8f22830e715ee7c7fa625628de",
+  "train_sha256": "65a4f56e371436e76d4a3ddbd524208223033a8f22830e715ee7c7fa625628de",
+  "table_sha256": "4731f4c1410d04f745ced9dcf2a1a90599cb97ba55c93784416df6628b3fb658",
+  "fit_seconds": 801.074,
+  "sample_seconds": 258.052,
+  "device": "cuda",
+  "hardware": {
+    "cpu": "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz",
+    "logical_cores": 12,
+    "os": "Windows 11",
+    "python": "3.13.5",
+    "torch": "2.14.1+cu126",
+    "gpu": "NVIDIA GeForce GTX 1650",
+    "gpu_memory_gb": 4.0
+  },
+  "started_utc": "2026-10-30T03:14:46+00:00",
+  "notes": [
+    "diffused as numbers (more than 10 values in training): SCHL, OCCP, POBP, RELP",
+    "values clipped into the domain: 0 ({'AGEP': 0, 'COW': 0, 'SCHL': 0, 'MAR': 0, 'OCCP': 0, 'POBP': 0, 'RELP': 0, 'WKHP': 0, 'SEX': 0, 'RAC1P': 0, 'DIS': 0, 'CIT': 0, 'MIL': 0, 'NATIVITY': 0, 'PINCP': 0, 'ESR': 0})"
+  ]
+}

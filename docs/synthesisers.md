@@ -133,9 +133,10 @@ and the VAE, TabDDPM through synthcity 0.2.12 (Apache 2.0), non-DP, at synthcity
 - **Which columns are categories.** synthcity decides by count: a column with at most 10 distinct
   values in the training data gets multinomial diffusion, any other is quantile-transformed and
   gets Gaussian diffusion on its code, and comes back as a float. The threshold is not a
-  parameter of the plugin. By the domains' sizes that is ACS `OCCP`, `SCHL`, `POBP` and `RELP`,
-  IEEE-CIS `addr1`, `P_emaildomain`, `R_emaildomain` (and `TransactionAmt`, which is ordered),
-  and SPARCS `zip_code` and `apr_mdc_code`. The default is kept, as every other default is, and
+  parameter of the plugin. In the grid's tables that is ACS `OCCP`, `SCHL`, `POBP` and `RELP`,
+  IEEE-CIS `addr1`, `P_emaildomain` and `R_emaildomain`, and SPARCS `zip_code` and
+  `apr_mdc_code`, as each record's notes say; none of them has an order. In all nine tables the
+  clipping moved no value. The default is kept, as every other default is, and
   each record names the columns treated as numbers. The bridge rounds them to the nearest code and
   clips them into the column's range, and the record counts the values the clipping moved
   (`to_codes`, `tests/test_tabddpm.py`).

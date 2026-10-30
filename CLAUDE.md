@@ -1,7 +1,7 @@
 # Working notes for Claude Code
 
 This repository is Share the Data, Not the People, package `facsimile`: synthetic
-versions of three public datasets of real people, generated six ways with and without
+versions of three public datasets of real people, generated seven ways with and without
 differential privacy, attacked with the three criteria regulators use to judge anonymity and
 with membership inference, and measured for usefulness as train-on-synthetic, test-on-real.
 The plan is in [PLAN.md](PLAN.md); the diagrams in [docs/architecture.md](docs/architecture.md).

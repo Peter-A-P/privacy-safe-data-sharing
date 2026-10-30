@@ -7,7 +7,7 @@ AUC(real ceiling), the mean over seeds, with the worst seed's lower 95% bound; t
 asks that bound to sit above -0.02 on every task and seed. Membership is Groundhog
 accuracy at about 1,000 rows over six targets (chance is 0.5).
 
-Library versions: sdv 2.0.0, smartnoise-synth 1.0.8, opendp 0.14.2, lightgbm 4.7.0, scikit-learn 1.9.1, anonymeter 1.1.0, facsimile 0.0.1.
+Library versions: sdv 2.0.0, smartnoise-synth 1.0.8, opendp 0.14.2, lightgbm 4.7.0, scikit-learn 1.9.1, anonymeter 1.1.0, synthcity 0.2.12, facsimile 0.0.1.
 
 ## ACS PUMS, California 2018
 
@@ -16,6 +16,7 @@ Library versions: sdv 2.0.0, smartnoise-synth 1.0.8, opendp 0.14.2, lightgbm 4.7
 | Gaussian copula | inf | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.9) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.0) | 1.7 (0.4 to 3.0) | 0.425 (0.335 to 0.519) | -0.282 (worst seed lo -0.296) | -0.245 (worst seed lo -0.257) | 0.107 | 0.497 | 7 | 3 |
 | CTGAN | inf | 0.0 (0.0 to 0.0) | 0.6 (0.0 to 1.7) | 0.0 (0.0 to 0.1) | 0.2 (0.0 to 0.7) | 0.1 (0.0 to 2.0) | 0.417 (0.327 to 0.510) | -0.062 (worst seed lo -0.075) | -0.047 (worst seed lo -0.062) | 0.167 | 0.509 | 706 | 3 |
 | TVAE | inf | 0.0 (0.0 to 0.1) | 0.7 (0.0 to 2.1) | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.2) | 0.2 (0.0 to 2.1) | 0.450 (0.359 to 0.543) | -0.053 (worst seed lo -0.077) | -0.043 (worst seed lo -0.052) | 0.189 | 0.505 | 185 | 3 |
+| TabDDPM | inf | 0.0 (0.0 to 0.1) | 1.8 (0.7 to 2.9) **leak** | 0.0 (0.0 to 0.0) | 0.5 (0.0 to 0.9) | 1.4 (0.0 to 3.4) | pending | -0.022 (worst seed lo -0.029) | -0.013 (worst seed lo -0.018) | 0.048 | 0.504 | 803 | 3 |
 | MST | 0.5 | 0.0 (0.0 to 0.0) | 1.5 (0.2 to 2.7) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.3) | 0.0 (0.0 to 0.6) |  | -0.360 (worst seed lo -0.410) | -0.228 (worst seed lo -0.251) | 0.166 | 0.442 | 68 | 3 |
 | MST | 1 | 0.0 (0.0 to 0.0) | 0.7 (0.0 to 2.1) | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.3) | 0.2 (0.0 to 1.7) | 0.508 (0.416 to 0.601) | -0.347 (worst seed lo -0.396) | -0.148 (worst seed lo -0.166) | 0.158 | 0.463 | 57 | 3 |
 | MST | 2 | 0.0 (0.0 to 0.0) | 1.4 (0.0 to 2.7) | 0.0 (0.0 to 0.0) | 0.1 (0.0 to 0.3) | 0.3 (0.0 to 1.7) |  | -0.312 (worst seed lo -0.333) | -0.162 (worst seed lo -0.183) | 0.154 | 0.447 | 56 | 3 |
@@ -39,6 +40,7 @@ Library versions: sdv 2.0.0, smartnoise-synth 1.0.8, opendp 0.14.2, lightgbm 4.7
 | Gaussian copula | inf | 0.0 (0.0 to 0.0) | 0.4 (0.0 to 1.2) | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 1.4) | 0.425 (0.335 to 0.519) | -0.404 (worst seed lo -0.453) | 0.079 | 0.507 | 9 | 3 |
 | CTGAN | inf | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.8) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 1.8) | 0.525 (0.432 to 0.617) | -0.129 (worst seed lo -0.167) | 0.173 | 0.492 | 843 | 3 |
 | TVAE | inf | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.9) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 1.9) | 0.500 (0.407 to 0.593) | -0.101 (worst seed lo -0.152) | 0.306 | 0.513 | 185 | 3 |
+| TabDDPM | inf | 0.0 (0.0 to 0.1) | 0.5 (0.0 to 1.5) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.2) | 0.2 (0.0 to 2.5) | pending | -0.061 (worst seed lo -0.105) | 0.043 | 0.504 | 860 | 3 |
 | MST | 0.5 | 0.0 (0.0 to 0.0) | 0.5 (0.0 to 1.7) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.4) |  | -0.258 (worst seed lo -0.317) | 0.131 | 0.558 | 88 | 3 |
 | MST | 1 | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 1.0) | 0.0 (0.0 to 0.1) | 0.3 (0.0 to 0.7) | 0.0 (0.0 to 2.2) | 0.492 (0.399 to 0.584) | -0.311 (worst seed lo -0.354) | 0.121 | 0.542 | 79 | 3 |
 | MST | 2 | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.5) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.4) | 0.1 (0.0 to 2.4) |  | -0.227 (worst seed lo -0.318) | 0.120 | 0.535 | 98 | 3 |
@@ -62,6 +64,7 @@ Library versions: sdv 2.0.0, smartnoise-synth 1.0.8, opendp 0.14.2, lightgbm 4.7
 | Gaussian copula | inf | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.8) | 0.0 (0.0 to 0.1) | 0.2 (0.0 to 0.5) | 0.3 (0.0 to 1.4) | 0.542 (0.448 to 0.633) | -0.186 (worst seed lo -0.197) | -0.203 (worst seed lo -0.213) | 0.103 | 0.499 | 9 | 3 |
 | CTGAN | inf | 0.0 (0.0 to 0.0) | 0.1 (0.0 to 1.1) | 0.0 (0.0 to 0.0) | 0.4 (0.0 to 0.8) | 0.0 (0.0 to 0.5) | 0.475 (0.383 to 0.568) | -0.075 (worst seed lo -0.087) | -0.061 (worst seed lo -0.071) | 0.160 | 0.503 | 1,013 | 3 |
 | TVAE | inf | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.4) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.3) | 0.8 (0.0 to 2.7) | 0.483 (0.391 to 0.576) | -0.150 (worst seed lo -0.197) | -0.123 (worst seed lo -0.162) | 0.389 | 0.528 | 188 | 3 |
+| TabDDPM | inf | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 1.1) | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.2) | pending | -0.015 (worst seed lo -0.022) | -0.013 (worst seed lo -0.018) | 0.041 | 0.512 | 853 | 3 |
 | MST | 0.5 | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 1.4) | 0.0 (0.0 to 0.1) | 0.2 (0.0 to 0.4) | 0.0 (0.0 to 0.0) |  | -0.263 (worst seed lo -0.294) | -0.358 (worst seed lo -0.389) | 0.159 | 0.475 | 69 | 3 |
 | MST | 1 | 0.0 (0.0 to 0.0) | 0.3 (0.0 to 1.8) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.4) | 0.0 (0.0 to 0.8) | 0.508 (0.416 to 0.601) | -0.242 (worst seed lo -0.264) | -0.305 (worst seed lo -0.334) | 0.149 | 0.490 | 62 | 3 |
 | MST | 2 | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 1.5) | 0.0 (0.0 to 0.0) | 0.3 (0.0 to 0.6) | 0.0 (0.0 to 0.0) |  | -0.237 (worst seed lo -0.251) | -0.288 (worst seed lo -0.311) | 0.145 | 0.508 | 59 | 3 |
@@ -110,6 +113,7 @@ records (`facsimile/attacks/exposed.py`): 500 against 500 per seed, seeds pooled
 | ACS PUMS, California 2018 | Gaussian copula, epsilon inf | 0.0 (0.0 to 0.2) | 0.4 (0.0 to 1.7) | 0.2 (0.0 to 0.5) | 0.0 (0.0 to 0.3) | 2.2 (0.0 to 5.0) |
 | ACS PUMS, California 2018 | CTGAN, epsilon inf | 0.0 (0.0 to 0.2) | 1.5 (0.0 to 3.1) | 0.0 (0.0 to 0.2) | 0.7 (0.0 to 1.7) | 1.8 (0.0 to 5.7) |
 | ACS PUMS, California 2018 | TVAE, epsilon inf | 0.1 (0.0 to 0.3) | 2.2 (0.1 to 4.3) | 0.0 (0.0 to 0.3) | 0.0 (0.0 to 0.9) | 3.9 (0.1 to 7.8) |
+| ACS PUMS, California 2018 | TabDDPM, epsilon inf | 0.0 (0.0 to 0.2) | 1.3 (0.0 to 2.9) | 0.0 (0.0 to 0.3) | 0.8 (0.0 to 1.9) | 8.5 (4.3 to 12.6) **leak** |
 | ACS PUMS, California 2018 | MST, epsilon 0.5 | 0.0 (0.0 to 0.2) | 2.1 (0.1 to 4.2) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.7) | 0.0 (0.0 to 1.5) |
 | ACS PUMS, California 2018 | MST, epsilon 1 | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 1.6) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.2) | 4.6 (1.9 to 7.4) **leak** |
 | ACS PUMS, California 2018 | MST, epsilon 2 | 0.0 (0.0 to 0.2) | 1.2 (0.0 to 3.4) | 0.0 (0.0 to 0.2) | 0.3 (0.0 to 0.8) | 1.4 (0.0 to 4.2) |
@@ -126,6 +130,7 @@ records (`facsimile/attacks/exposed.py`): 500 against 500 per seed, seeds pooled
 | IEEE-CIS card transactions | Gaussian copula, epsilon inf | 0.0 (0.0 to 0.2) | 0.7 (0.0 to 2.1) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 3.6) |
 | IEEE-CIS card transactions | CTGAN, epsilon inf | 0.0 (0.0 to 0.2) | 0.1 (0.0 to 1.4) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.6) | 0.1 (0.0 to 4.8) |
 | IEEE-CIS card transactions | TVAE, epsilon inf | 0.0 (0.0 to 0.3) | 0.0 (0.0 to 1.8) | 0.1 (0.0 to 0.3) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 4.0) |
+| IEEE-CIS card transactions | TabDDPM, epsilon inf | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 2.0) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 1.4) | 1.2 (0.0 to 6.1) |
 | IEEE-CIS card transactions | MST, epsilon 0.5 | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 1.9) | 0.1 (0.0 to 0.3) | 0.0 (0.0 to 1.5) | 1.2 (0.0 to 5.4) |
 | IEEE-CIS card transactions | MST, epsilon 1 | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 1.8) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 1.2) | 0.0 (0.0 to 3.5) |
 | IEEE-CIS card transactions | MST, epsilon 2 | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 1.1) | 0.0 (0.0 to 0.2) | 0.9 (0.0 to 2.2) | 0.0 (0.0 to 5.0) |
@@ -142,6 +147,7 @@ records (`facsimile/attacks/exposed.py`): 500 against 500 per seed, seeds pooled
 | NY SPARCS discharges | Gaussian copula, epsilon inf | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 1.1) | 0.1 (0.0 to 0.3) | 0.0 (0.0 to 0.4) | 0.0 (0.0 to 0.1) |
 | NY SPARCS discharges | CTGAN, epsilon inf | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 1.5) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.7) | 0.0 (0.0 to 0.0) |
 | NY SPARCS discharges | TVAE, epsilon inf | 0.1 (0.0 to 0.3) | 1.2 (0.0 to 3.9) | 0.0 (0.0 to 0.2) | 0.1 (0.0 to 1.0) | 0.0 (0.0 to 1.0) |
+| NY SPARCS discharges | TabDDPM, epsilon inf | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 1.2) | 0.1 (0.0 to 0.3) | 0.8 (0.0 to 1.8) | 0.0 (0.0 to 0.7) |
 | NY SPARCS discharges | MST, epsilon 0.5 | 0.0 (0.0 to 0.2) | 0.5 (0.0 to 3.3) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.6) | 0.0 (0.0 to 0.8) |
 | NY SPARCS discharges | MST, epsilon 1 | 0.0 (0.0 to 0.2) | 1.8 (0.0 to 4.4) | 0.0 (0.0 to 0.2) | 0.1 (0.0 to 0.9) | 0.0 (0.0 to 2.0) |
 | NY SPARCS discharges | MST, epsilon 2 | 0.0 (0.0 to 0.2) | 0.4 (0.0 to 3.0) | 0.0 (0.0 to 0.2) | 0.8 (0.0 to 1.6) | 0.0 (0.0 to 0.0) |
@@ -170,27 +176,30 @@ records (`facsimile/attacks/exposed.py`): 500 against 500 per seed, seeds pooled
 
 ## Reference agreement: this project against Anonymeter
 
-48 tables attacked by both, on the same targets, control and synthetic table.
+57 tables attacked by both, on the same targets, control and synthetic table.
 A pair agrees on the call when both or neither detect a risk at 95%; the intervals
 overlap when the two risks' 95% intervals share any point. Differences are in risk
 percentage points.
 
 | Attack | Pairs | Same call | Intervals overlap | Mean difference | Largest difference |
 |---|---|---|---|---|---|
-| singling out, univariate | 48 | 100.0% | 100.0% | 0.0 | 0.0 |
-| singling out, multivariate | 48 | 97.9% | 100.0% | 0.5 | 1.7 |
-| linkability, 1 neighbour | 48 | 100.0% | 100.0% | 0.0 | 0.1 |
-| linkability, 10 neighbours | 48 | 89.6% | 100.0% | 0.1 | 0.6 |
-| inference | 48 | 95.8% | 100.0% | 0.4 | 3.5 |
+| singling out, univariate | 57 | 100.0% | 100.0% | 0.0 | 0.0 |
+| singling out, multivariate | 57 | 94.7% | 100.0% | 0.5 | 1.9 |
+| linkability, 1 neighbour | 57 | 100.0% | 100.0% | 0.0 | 0.1 |
+| linkability, 10 neighbours | 57 | 89.5% | 100.0% | 0.2 | 1.2 |
+| inference | 57 | 96.5% | 100.0% | 0.4 | 3.5 |
 
-Disagreements (8): a different call, or intervals that do not overlap.
+Disagreements (11): a different call, or intervals that do not overlap.
 
 | Table | Attack | This project, risk % | Anonymeter, risk % | Success on targets, this project vs Anonymeter, % | Control, % |
 |---|---|---|---|---|---|
 | acs pate_ctgan epsilon 2 seed 0 | linkability, 10 neighbours | 0.5 (0.0 to 1.0) | 0.5 (0.1 to 0.9) | 1.0 vs 0.7 | 0.5 vs 0.2 |
 | acs pate_ctgan epsilon 2 seed 0 | inference | 1.7 (0.0 to 3.8) | 2.3 (0.2 to 4.4) | 11.4 vs 11.7 | 9.8 vs 9.6 |
+| acs tabddpm epsilon inf seed 0 | singling out, multivariate | 1.4 (0.0 to 3.3) | 2.2 (0.4 to 4.0) | 9.3 vs 8.9 | 8.0 vs 6.9 |
+| acs tabddpm epsilon inf seed 2 | singling out, multivariate | 2.7 (0.8 to 4.6) | 0.8 (0.0 to 2.8) | 10.1 vs 9.9 | 7.6 vs 9.1 |
 | ieeecis mst epsilon 0.5 seed 0 | singling out, multivariate | 2.1 (0.1 to 4.0) | 0.7 (0.0 to 2.8) | 10.1 vs 10.8 | 8.2 vs 10.2 |
 | ieeecis pate_ctgan epsilon 1 seed 0 | linkability, 10 neighbours | 0.3 (0.0 to 0.6) | 0.4 (0.0 to 0.8) | 0.5 vs 0.6 | 0.2 vs 0.2 |
+| ieeecis tabddpm epsilon inf seed 0 | linkability, 10 neighbours | 0.1 (0.0 to 1.1) | 1.3 (0.2 to 2.5) | 2.7 vs 3.9 | 2.6 vs 2.6 |
 | sparcs mst epsilon 8 seed 0 | linkability, 10 neighbours | 0.0 (0.0 to 0.6) | 0.6 (0.0 to 1.1) | 1.1 vs 1.1 | 1.1 vs 0.5 |
 | sparcs pate_ctgan epsilon 2 seed 0 | inference | 1.8 (0.2 to 3.4) | 1.3 (0.0 to 2.9) | 7.5 vs 7.2 | 5.8 vs 6.0 |
 | sparcs pate_ctgan epsilon 4 seed 0 | linkability, 10 neighbours | 0.6 (0.1 to 1.0) | 0.0 (0.0 to 0.4) | 0.8 vs 0.5 | 0.3 vs 0.5 |
@@ -285,12 +294,18 @@ ceiling and the nearest with a privacy budget (`facsimile/gate.py`, `docs/gate.m
 | ACS PUMS, California 2018 | AIM, epsilon 1 | 0 | block | income: -12.5 (-14.1 to -10.8), 2,601; employment: -12.0 (-13.4 to -10.6), 4,417 |
 | ACS PUMS, California 2018 | AIM, epsilon 1 | 1 | block | income: -17.0 (-18.8 to -15.2), 2,601; employment: -9.8 (-11.1 to -8.5), 4,417 |
 | ACS PUMS, California 2018 | AIM, epsilon 1 | 2 | block | income: -9.0 (-10.6 to -7.4), 2,601; employment: -22.9 (-24.5 to -21.3), 4,417 |
+| ACS PUMS, California 2018 | TabDDPM, epsilon inf | 0 | block | income: -1.3 (-2.5 to -0.2), 2,601; employment: -1.3 (-2.1 to -0.4), 4,417 |
+| ACS PUMS, California 2018 | TabDDPM, epsilon inf | 1 | block | income: -1.7 (-2.7 to -0.6), 2,601; employment: -2.1 (-2.9 to -1.2), 4,417 |
+| ACS PUMS, California 2018 | TabDDPM, epsilon inf | 2 | block | income: -2.7 (-3.8 to -1.6), 2,601; employment: -1.7 (-2.5 to -0.8), 4,417 |
 | ACS PUMS, California 2018 | TVAE, epsilon inf | 0 | block | income: -6.2 (-7.6 to -4.7), 2,601; employment: -4.5 (-5.5 to -3.3), 4,417 |
 | ACS PUMS, California 2018 | TVAE, epsilon inf | 1 | block | income: -5.1 (-6.4 to -3.8), 2,601; employment: -3.8 (-4.8 to -2.8), 4,417 |
 | ACS PUMS, California 2018 | TVAE, epsilon inf | 2 | block | income: -2.3 (-3.6 to -1.2), 2,601; employment: -5.3 (-6.4 to -4.2), 4,417 |
 | IEEE-CIS card transactions | AIM, epsilon 2 | 0 | not decided | fraud: -12.3 (-16.8 to -7.8), 333 (power screen asks 370) |
 | IEEE-CIS card transactions | AIM, epsilon 2 | 1 | not decided | fraud: -18.9 (-24.0 to -13.5), 333 (power screen asks 370) |
 | IEEE-CIS card transactions | AIM, epsilon 2 | 2 | not decided | fraud: -18.6 (-23.4 to -13.5), 333 (power screen asks 370) |
+| IEEE-CIS card transactions | TabDDPM, epsilon inf | 0 | not decided | fraud: -6.9 (-11.4 to -2.4), 333 (power screen asks 370) |
+| IEEE-CIS card transactions | TabDDPM, epsilon inf | 1 | not decided | fraud: -8.4 (-12.6 to -4.5), 333 (power screen asks 370) |
+| IEEE-CIS card transactions | TabDDPM, epsilon inf | 2 | not decided | fraud: -6.0 (-10.2 to -2.1), 333 (power screen asks 370) |
 | IEEE-CIS card transactions | TVAE, epsilon inf | 0 | not decided | fraud: -17.4 (-22.5 to -12.3), 333 (power screen asks 370) |
 | IEEE-CIS card transactions | TVAE, epsilon inf | 1 | not decided | fraud: -8.4 (-13.2 to -3.6), 333 (power screen asks 370) |
 | IEEE-CIS card transactions | TVAE, epsilon inf | 2 | not decided | fraud: -9.0 (-13.8 to -4.5), 333 (power screen asks 370) |
@@ -300,6 +315,9 @@ ceiling and the nearest with a privacy budget (`facsimile/gate.py`, `docs/gate.m
 | NY SPARCS discharges | CTGAN, epsilon inf | 0 | block | long_stay: -7.6 (-9.0 to -6.1), 2,913; high_charge: -6.7 (-7.7 to -5.6), 4,885 |
 | NY SPARCS discharges | CTGAN, epsilon inf | 1 | block | long_stay: -7.4 (-8.8 to -5.9), 2,913; high_charge: -5.9 (-6.9 to -4.8), 4,885 |
 | NY SPARCS discharges | CTGAN, epsilon inf | 2 | block | long_stay: -7.0 (-8.3 to -5.5), 2,913; high_charge: -5.6 (-6.6 to -4.6), 4,885 |
+| NY SPARCS discharges | TabDDPM, epsilon inf | 0 | block | long_stay: -1.3 (-2.4 to -0.3), 2,913; high_charge: -1.2 (-2.0 to -0.4), 4,885 |
+| NY SPARCS discharges | TabDDPM, epsilon inf | 1 | block | long_stay: -2.3 (-3.4 to -1.2), 2,913; high_charge: -1.1 (-1.9 to -0.4), 4,885 |
+| NY SPARCS discharges | TabDDPM, epsilon inf | 2 | block | long_stay: -1.1 (-2.2 to -0.1), 2,913; high_charge: -1.4 (-2.1 to -0.6), 4,885 |
 
 ## Data
 

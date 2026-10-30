@@ -352,13 +352,19 @@ def _hardware_label(record: dict[str, Any]) -> str:
 # The report
 
 
-def versions() -> dict[str, str]:
+def versions(root: Path = RESULTS) -> dict[str, str]:
     out = {}
     for pkg in ("sdv", "smartnoise-synth", "opendp", "lightgbm", "scikit-learn", "anonymeter"):
         try:
             out[pkg] = metadata.version(pkg)
         except metadata.PackageNotFoundError:
             continue
+    # synthcity lives in its own environment (docs/synthesisers.md), so its version is the one
+    # the TabDDPM tables recorded, not one installed here.
+    for record in sorted(root.glob("*/synth/tabddpm/*/seed*.json")):
+        params = json.loads(record.read_text(encoding="utf-8"))["params"]
+        out["synthcity"] = params["library_version"]
+        break
     return out
 
 
@@ -562,7 +568,7 @@ def build(root: Path = RESULTS) -> dict[str, Any]:
                     "budgets_not_run": missing,
                 }
             )
-    vs = versions()
+    vs = versions(root)
     vs["facsimile"] = __version__
     return {
         "facsimile": __version__,

@@ -4,12 +4,12 @@ Hand a synthetic copy of a sensitive dataset to a partner, a vendor or a researc
 handing over anyone in it, with the proof attached: before the copy leaves, it is attacked the
 way a regulator says and the way a researcher would, and the report says how much it gives
 away, how well models trained on it work on the real data, and which settings to use. Proven on
-three public datasets of real people, six synthesisers with and without differential privacy,
+three public datasets of real people, seven synthesisers with and without differential privacy,
 every number with its interval.
 
 Organisations under privacy law sit on data they cannot share, and synthetic data is sold to
 them as the way out. This project generates synthetic versions of three public datasets of
-real people with six methods, with and without differential privacy, and attacks every one of
+real people with seven methods, with and without differential privacy, and attacks every one of
 them the way a regulator tells you to (singling out, linkability, inference) and the way a
 researcher would (membership inference). It publishes, with intervals, how much each table
 leaks, how useful it still is for the models people will train on it, the price of privacy as
@@ -26,11 +26,11 @@ are in [docs/results.md](docs/results.md)._
 smallest epsilon at which every task is within 0.02 AUC of the real-data ceiling on
 every seed and no attack's risk is detected.
 
-| Dataset | Gaussian copula | CTGAN | TVAE | MST | AIM | PATE-CTGAN |
-|---|---|---|---|---|---|---|
-| ACS PUMS, California 2018 | none: utility | none: utility | none: utility | none: utility | none: utility | none: utility |
-| IEEE-CIS card transactions | none: utility | none: utility | none: utility | none: utility | none: utility | none: utility |
-| NY SPARCS discharges | none: utility | none: utility | none: utility | none: utility | none: utility | none: utility |
+| Dataset | Gaussian copula | CTGAN | TVAE | TabDDPM | MST | AIM | PATE-CTGAN |
+|---|---|---|---|---|---|---|---|
+| ACS PUMS, California 2018 | none: utility | none: utility | none: utility | none: utility | none: utility | none: utility | none: utility |
+| IEEE-CIS card transactions | none: utility | none: utility | none: utility | none: utility | none: utility | none: utility | none: utility |
+| NY SPARCS discharges | none: utility | none: utility | none: utility | none: utility | none: utility | none: utility | none: utility |
 
 _none: utility_ means no budget is within the margin of the ceiling on every task and seed;
 _none: risk_ means every useful budget has a detected risk; _pending_ means a budget's
@@ -40,11 +40,11 @@ tables are not all attacked and scored yet.
 ceiling, and the gap on its worst task there: AUC trained on synthetic minus trained on
 real, the mean over seeds (the worst seed's lower 95% bound in brackets).
 
-| Dataset | Gaussian copula | CTGAN | TVAE | MST | AIM | PATE-CTGAN |
-|---|---|---|---|---|---|---|
-| ACS PUMS, California 2018 | -0.282 (-0.296) at epsilon inf | -0.062 (-0.075) at epsilon inf | -0.053 (-0.077) at epsilon inf | -0.306 (-0.346) at epsilon 4 | -0.147 (-0.239) at epsilon 1 | -0.339 (-0.409) at epsilon 8 |
-| IEEE-CIS card transactions | -0.404 (-0.453) at epsilon inf | -0.129 (-0.167) at epsilon inf | -0.101 (-0.152) at epsilon inf | -0.193 (-0.228) at epsilon 8 | -0.148 (-0.209) at epsilon 2 | -0.318 (-0.429) at epsilon 2 |
-| NY SPARCS discharges | -0.203 (-0.213) at epsilon inf | -0.075 (-0.087) at epsilon inf | -0.150 (-0.197) at epsilon inf | -0.288 (-0.311) at epsilon 2 | -0.144 (-0.167) at epsilon 2 | -0.346 (-0.401) at epsilon 8 |
+| Dataset | Gaussian copula | CTGAN | TVAE | TabDDPM | MST | AIM | PATE-CTGAN |
+|---|---|---|---|---|---|---|---|
+| ACS PUMS, California 2018 | -0.282 (-0.296) at epsilon inf | -0.062 (-0.075) at epsilon inf | -0.053 (-0.077) at epsilon inf | -0.022 (-0.029) at epsilon inf | -0.306 (-0.346) at epsilon 4 | -0.147 (-0.239) at epsilon 1 | -0.339 (-0.409) at epsilon 8 |
+| IEEE-CIS card transactions | -0.404 (-0.453) at epsilon inf | -0.129 (-0.167) at epsilon inf | -0.101 (-0.152) at epsilon inf | -0.061 (-0.105) at epsilon inf | -0.193 (-0.228) at epsilon 8 | -0.148 (-0.209) at epsilon 2 | -0.318 (-0.429) at epsilon 2 |
+| NY SPARCS discharges | -0.203 (-0.213) at epsilon inf | -0.075 (-0.087) at epsilon inf | -0.150 (-0.197) at epsilon inf | -0.015 (-0.022) at epsilon inf | -0.288 (-0.311) at epsilon 2 | -0.144 (-0.167) at epsilon 2 | -0.346 (-0.401) at epsilon 8 |
 
 **Through the 03 gate.** Project 03's release gate, asked whether a model trained on the
 synthetic table is non-inferior to the same model trained on the real data, at a margin
@@ -53,11 +53,14 @@ worst task, in points, across the three seeds.
 
 | Dataset | Candidate | Gate, three seeds | Worst-task gap, points |
 |---|---|---|---|
+| ACS PUMS, California 2018 | TabDDPM, epsilon inf | block on 3 of 3 | -2.7 to -1.3 |
 | ACS PUMS, California 2018 | TVAE, epsilon inf | block on 3 of 3 | -6.2 to -5.1; every interval wholly below -2 |
 | ACS PUMS, California 2018 | AIM, epsilon 1 | block on 3 of 3 | -22.9 to -12.5; every interval wholly below -2 |
+| IEEE-CIS card transactions | TabDDPM, epsilon inf | not decided on 3 of 3 (too few fraud cases for the power screen) | -8.4 to -6.0; every interval wholly below -2 |
 | IEEE-CIS card transactions | TVAE, epsilon inf | not decided on 3 of 3 (too few fraud cases for the power screen) | -17.4 to -8.4; every interval wholly below -2 |
 | IEEE-CIS card transactions | AIM, epsilon 2 | not decided on 3 of 3 (too few fraud cases for the power screen) | -18.9 to -12.3; every interval wholly below -2 |
 | NY SPARCS discharges | CTGAN, epsilon inf | block on 3 of 3 | -7.6 to -7.0; every interval wholly below -2 |
+| NY SPARCS discharges | TabDDPM, epsilon inf | block on 3 of 3 | -2.3 to -1.3 |
 | NY SPARCS discharges | AIM, epsilon 2 | block on 3 of 3 | -17.1 to -13.8; every interval wholly below -2 |
 
 **The leakage ladder.** Four methods people use as synthetic or anonymised data, expected
@@ -73,12 +76,13 @@ detected are named in [docs/results.md](docs/results.md#the-leakage-ladder).
 | NY SPARCS discharges | 3 of 5, up to 57.6% (inference); utility -0.010 (high_charge) | 3 of 5, up to 32.1% (inference); utility -0.009 (high_charge) | 2 of 5, up to 4.9% (inference); utility -0.033 (long_stay) | none detected; utility -0.078 (long_stay) |
 
 **The most exposed records.** The same attacks on each grid table's most unusual quarter of
-targets against its most unusual quarter of control records: 6 detected risks
-across 48 configurations, where chance alone would give about 1.2 of the
-240 tests. Every one is a differentially private configuration.
+targets against its most unusual quarter of control records: 7 detected risks
+across 51 configurations, where chance alone would give about 1.3 of the
+255 tests.
 
 | Dataset | Configuration | Attack | Risk, % (95% CI) | Success on members vs control, % |
 |---|---|---|---|---|
+| ACS PUMS, California 2018 | TabDDPM, epsilon inf | inference | 8.5 (4.3 to 12.6) | 31.5 vs 25.2 |
 | ACS PUMS, California 2018 | MST, epsilon 1 | inference | 4.6 (1.9 to 7.4) | 16.0 vs 11.9 |
 | ACS PUMS, California 2018 | AIM, epsilon 1 | singling out, multivariate | 2.2 (0.5 to 3.9) | 6.5 vs 4.3 |
 | ACS PUMS, California 2018 | AIM, epsilon 1 | inference | 7.2 (3.8 to 10.7) | 24.2 vs 18.3 |
@@ -100,6 +104,7 @@ not published and nothing here depends on it. The table by table numbers are in
 
 | Dataset | Library and version | Configuration | Attack | Risk, % (95% CI) | Success on members vs control, % |
 |---|---|---|---|---|---|
+| ACS PUMS, California 2018 | synthcity 0.2.12 | TabDDPM, epsilon inf, 20,000 rows | singling out, multivariate | 1.8 (0.7 to 2.9) | 9.5 vs 7.8 |
 | ACS PUMS, California 2018 | smartnoise-synth 1.0.8 | AIM, epsilon 1, 20,000 rows | inference | 2.5 (0.7 to 4.4) | 23.4 vs 21.4 |
 | ACS PUMS, California 2018 | smartnoise-synth 1.0.8 | AIM, epsilon 1, about 1,000 rows | membership, TabFM | accuracy 0.650 (0.558 to 0.735) | |
 
@@ -125,7 +130,7 @@ is not something these attacks are shown to catch.
 ## Tried and rejected
 
 Distance to closest record, the check most synthetic-data tools show their users, was tested as a
-privacy measure on every table and rejected. It passed the one configuration an attack broke and
+privacy measure on every table and rejected. It passed both configurations an attack broke and
 failed eight that no attack could break, seven of them differentially private. The evidence is in
 [docs/rejected.md](docs/rejected.md). DCR stays in the full tables, labelled as what it is.
 
@@ -158,7 +163,7 @@ which is the risk privacy law names, and stop there. It does not call a model ve
 
 Three real datasets (census respondents, card transactions, hospital discharges where the
 terms permit) are split into a training set the synthesisers see, a control set they never
-see, and a test set for utility. Six synthesisers produce tables at six privacy budgets and
+see, and a test set for utility. Seven synthesisers produce tables at six privacy budgets and
 three seeds. Three attacks implemented from the paper that defines the legal test, plus the
 shadow-model membership inference attack and distance to closest record, run on every table
 against the control set, and the project's implementations are checked against the reference

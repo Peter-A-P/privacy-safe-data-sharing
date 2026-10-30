@@ -1,0 +1,58 @@
+{
+  "facsimile": "0.0.1",
+  "dataset": "sparcs",
+  "method": "tabddpm",
+  "library": "synthcity",
+  "family": "non-dp deep",
+  "epsilon": null,
+  "seed": 2,
+  "cell": {
+    "eps_tag": "inf"
+  },
+  "rows": 20000,
+  "params": {
+    "library_version": "0.2.12",
+    "torch": "2.2.2+cu121",
+    "python": "3.12.14",
+    "is_classification": false,
+    "n_iter": 1000,
+    "lr": 0.002,
+    "weight_decay": 0.0001,
+    "batch_size": 1024,
+    "num_timesteps": 1000,
+    "gaussian_loss_type": "mse",
+    "scheduler": "cosine",
+    "log_interval": 100,
+    "model_type": "mlp",
+    "dim_embed": 128,
+    "continuous_encoder": "quantile",
+    "validation_size": 0,
+    "random_state": 0,
+    "compress_dataset": false,
+    "sampling_patience": 500
+  },
+  "accounting": {
+    "dp": false,
+    "epsilon": "inf"
+  },
+  "fitted_on_sha256": "82b4c6bde25b37b5b1a6c5572247ae4d23efa23d7a400a92b256162f9c74b810",
+  "train_sha256": "82b4c6bde25b37b5b1a6c5572247ae4d23efa23d7a400a92b256162f9c74b810",
+  "table_sha256": "6cb37d79679cc10d2661108d72a3e65c06a416adc75428eae5d9e07f24020240",
+  "fit_seconds": 848.792,
+  "sample_seconds": 290.701,
+  "device": "cuda",
+  "hardware": {
+    "cpu": "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz",
+    "logical_cores": 12,
+    "os": "Windows 11",
+    "python": "3.13.5",
+    "torch": "2.14.1+cu126",
+    "gpu": "NVIDIA GeForce GTX 1650",
+    "gpu_memory_gb": 4.0
+  },
+  "started_utc": "2026-10-30T05:28:20+00:00",
+  "notes": [
+    "diffused as numbers (more than 10 values in training): zip_code, apr_mdc_code",
+    "values clipped into the domain: 0 ({'age_group': 0, 'gender': 0, 'race': 0, 'ethnicity': 0, 'zip_code': 0, 'health_service_area': 0, 'type_of_admission': 0, 'patient_disposition': 0, 'apr_mdc_code': 0, 'apr_severity_of_illness_code': 0, 'apr_risk_of_mortality': 0, 'apr_medical_surgical': 0, 'payment_typology_1': 0, 'emergency_department_indicator': 0, 'length_of_stay': 0, 'total_charges': 0})"
+  ]
+}

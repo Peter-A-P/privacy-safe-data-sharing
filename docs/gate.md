@@ -5,13 +5,15 @@ recommendation rule picks. The rule picked none: no synthesiser at any budget co
 AUC of the real-data ceiling on every task. So the gate was run on the nearest configurations
 instead, chosen by a rule written down before it ran (`facsimile/gate.py`):
 
-- per dataset, the configuration nearest the ceiling on its worst task, over all six
+- per dataset, the configuration nearest the ceiling on its worst task, over all the grid's
   synthesisers;
 - per dataset, the same over the differentially private configurations only;
 - each on all three seeds of its table.
 
-The candidates are TVAE (ACS, IEEE-CIS) and CTGAN (SPARCS) without privacy, and AIM at epsilon 1
-(ACS) and epsilon 2 (IEEE-CIS, SPARCS). The ACS pick at epsilon 1 is the configuration where the
+The candidates were TVAE (ACS, IEEE-CIS) and CTGAN (SPARCS) without privacy, and AIM at epsilon 1
+(ACS) and epsilon 2 (IEEE-CIS, SPARCS). TabDDPM joined the grid on 2026-10-29 (PLAN.md section
+2.11) and is now the nearest without privacy on all three datasets; it was put through the gate
+the same day, and the earlier candidates are kept beside it. The ACS pick at epsilon 1 is the configuration where the
 inference attack detects a risk; the gate is about usefulness and does not see that.
 
 ## What the gate is asked
@@ -40,26 +42,33 @@ both. An item is named by its index alone, never by a record.
 
 | Dataset | Candidate | Gate, three seeds | Worst-task gap, AUC points |
 |---|---|---|---|
+| ACS | TabDDPM, no privacy | block, 3 of 3 | -2.7 to -1.3 |
 | ACS | TVAE, no privacy | block, 3 of 3 | -6.2 to -5.1 |
 | ACS | AIM, epsilon 1 | block, 3 of 3 | -22.9 to -12.5 |
+| IEEE-CIS | TabDDPM, no privacy | not decided, 3 of 3 | -8.4 to -6.0 |
 | IEEE-CIS | TVAE, no privacy | not decided, 3 of 3 | -17.4 to -8.4 |
 | IEEE-CIS | AIM, epsilon 2 | not decided, 3 of 3 | -18.9 to -12.3 |
+| SPARCS | TabDDPM, no privacy | block, 3 of 3 | -2.3 to -1.1 |
 | SPARCS | CTGAN, no privacy | block, 3 of 3 | -7.6 to -7.0 |
 | SPARCS | AIM, epsilon 2 | block, 3 of 3 | -17.1 to -13.8 |
 
 Every task, seed and interval is in [results.md](results.md#through-the-03-gate-synthetic-trained-against-real-trained).
 The README table is filled from the same file by `facsimile report`.
 
-**On ACS and SPARCS the gate blocks every candidate on every seed.** Even the nearest
-non-private table leaves a model 5 to 8 AUC points worse than one trained on the real data, and
-the best differentially private one 13 to 23 points worse. On every seed the worst task's whole
-interval lies below minus 2 points.
+**On ACS and SPARCS the gate blocks every candidate on every seed.** TVAE and CTGAN leave a model
+5 to 8 AUC points worse than one trained on the real data, and the best differentially private
+table 13 to 23 points worse; on every seed the worst task's whole interval lies below minus 2
+points. TabDDPM comes closest: 1.1 to 2.7 points worse, with lower bounds from -1.9 to -3.8 and upper
+bounds from -0.1 to -1.6. On every seed at least one task's interval reaches below -2 points, so
+non-inferiority is not shown and the gate blocks it too. Two intervals clear the margin, both
+SPARCS high charge (seeds 0 and 1, lower bounds -1.97 and -1.92), and the other task on the same
+seed does not.
 
 **On IEEE-CIS the gate declines to decide.** The test split holds 333 fraud cases, so there are
 333 pairs. Project 03's power screen asks for at least 370 items to see a two-point drop at 80%
 power, so it warns instead of deciding, and its decision line reads "pass: 0 of 1 suites
 decided". This project reports that as *not decided*, never as a pass. The intervals themselves,
-from -24.0 to -13.5 at the lowest to -13.2 to -3.6 at the highest, lie wholly below the margin. A gate that
+from -24.0 to -13.5 at the lowest to -10.2 to -2.1 at the highest (TabDDPM, seed 2), lie wholly below the margin. A gate that
 reasoned from the interval alone would block. 03 makes the power screen a rule because a suite
 too small to see the margin can also pass by chance, and that rule holds here too.
 

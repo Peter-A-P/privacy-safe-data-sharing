@@ -1,0 +1,427 @@
+{
+  "facsimile": "0.0.1",
+  "dataset": "ieeecis",
+  "method": "tabddpm",
+  "epsilon": null,
+  "seed": 0,
+  "table_sha256": "5df1b2dd7c83fd7ff52530466f4d21cfc4505ecbc3b03f2f5b334c5c442d0002",
+  "attacks": {
+    "singling_out_univariate": {
+      "attack": "singling_out_univariate",
+      "n_attacks": 2000,
+      "main": {
+        "value": 0.0009585236406264672,
+        "lo": 1.0842021724855044e-19,
+        "hi": 0.0019170472812529344,
+        "successes": 0.0,
+        "trials": 2000
+      },
+      "control": {
+        "value": 0.001956606593345214,
+        "lo": 0.0002742789176520342,
+        "hi": 0.003638934269038394,
+        "successes": 2.0,
+        "trials": 2000
+      },
+      "baseline": {
+        "value": 0.009941270215095192,
+        "lo": 0.00570049972857741,
+        "hi": 0.014182040701612974,
+        "successes": 18.0,
+        "trials": 2000
+      },
+      "risk": {
+        "value": 0.0,
+        "lo": 0.0,
+        "hi": 0.00094145295791829,
+        "detected": false
+      },
+      "beats_baseline": false,
+      "params": {
+        "mode": "univariate",
+        "n_cols": 1,
+        "predicates_found": 2,
+        "max_attempts": 1000000,
+        "unique_rows": {
+          "synthetic": 19950,
+          "targets": 1986,
+          "control": 1979
+        },
+        "seed": 0
+      }
+    },
+    "singling_out_multivariate": {
+      "attack": "singling_out_multivariate",
+      "n_attacks": 2000,
+      "main": {
+        "value": 0.0663329570437044,
+        "lo": 0.05546852874487852,
+        "hi": 0.07719738534253028,
+        "successes": 131.0,
+        "trials": 2000
+      },
+      "control": {
+        "value": 0.0758147450945325,
+        "lo": 0.0642536480572273,
+        "hi": 0.08737584213183769,
+        "successes": 150.0,
+        "trials": 2000
+      },
+      "baseline": {
+        "value": 0.045373215036610716,
+        "lo": 0.03630266512840683,
+        "hi": 0.0544437649448146,
+        "successes": 89.0,
+        "trials": 2000
+      },
+      "risk": {
+        "value": 0.0,
+        "lo": 0.0,
+        "hi": 0.007000485295155989,
+        "detected": false
+      },
+      "beats_baseline": true,
+      "params": {
+        "mode": "multivariate",
+        "n_cols": 3,
+        "predicates_found": 1226,
+        "max_attempts": 1000000,
+        "unique_rows": {
+          "synthetic": 19950,
+          "targets": 1986,
+          "control": 1979
+        },
+        "seed": 0
+      }
+    },
+    "linkability_k1": {
+      "attack": "linkability",
+      "n_attacks": 2000,
+      "main": {
+        "value": 0.0009585236406264672,
+        "lo": 1.0842021724855044e-19,
+        "hi": 0.0019170472812529344,
+        "successes": 0.0,
+        "trials": 2000
+      },
+      "control": {
+        "value": 0.0009585236406264672,
+        "lo": 1.0842021724855044e-19,
+        "hi": 0.0019170472812529344,
+        "successes": 0.0,
+        "trials": 2000
+      },
+      "baseline": {
+        "value": 0.0009585236406264672,
+        "lo": 1.0842021724855044e-19,
+        "hi": 0.0019170472812529344,
+        "successes": 0.0,
+        "trials": 2000
+      },
+      "risk": {
+        "value": 0.0,
+        "lo": 0.0,
+        "hi": 0.0013568577126237004,
+        "detected": false
+      },
+      "beats_baseline": false,
+      "params": {
+        "a": [
+          "ProductCD",
+          "card4",
+          "card6",
+          "addr1",
+          "addr2",
+          "P_emaildomain",
+          "R_emaildomain",
+          "DeviceType"
+        ],
+        "b": [
+          "TransactionAmt",
+          "dist1",
+          "C1",
+          "C2",
+          "D1",
+          "M4",
+          "M6",
+          "hour",
+          "isFraud"
+        ],
+        "k": 1,
+        "seed": 0
+      }
+    },
+    "linkability_k10": {
+      "attack": "linkability",
+      "n_attacks": 2000,
+      "main": {
+        "value": 0.027407721887673268,
+        "lo": 0.02031692041496907,
+        "hi": 0.03449852336037747,
+        "successes": 53.0,
+        "trials": 2000
+      },
+      "control": {
+        "value": 0.02640963893495452,
+        "lo": 0.019447915824308687,
+        "hi": 0.03337136204560035,
+        "successes": 51.0,
+        "trials": 2000
+      },
+      "baseline": {
+        "value": 0.005449896927860829,
+        "lo": 0.002369280636961836,
+        "hi": 0.008530513218759823,
+        "successes": 9.0,
+        "trials": 2000
+      },
+      "risk": {
+        "value": 0.001025156978369126,
+        "lo": 0.0,
+        "hi": 0.011226630154710343,
+        "detected": false
+      },
+      "beats_baseline": true,
+      "params": {
+        "a": [
+          "ProductCD",
+          "card4",
+          "card6",
+          "addr1",
+          "addr2",
+          "P_emaildomain",
+          "R_emaildomain",
+          "DeviceType"
+        ],
+        "b": [
+          "TransactionAmt",
+          "dist1",
+          "C1",
+          "C2",
+          "D1",
+          "M4",
+          "M6",
+          "hour",
+          "isFraud"
+        ],
+        "k": 10,
+        "seed": 0
+      }
+    },
+    "inference": {
+      "attack": "inference",
+      "n_attacks": 2000,
+      "main": {
+        "value": 0.30487478274348495,
+        "lo": 0.2847220594519112,
+        "hi": 0.3250275060350587,
+        "successes": 609.0,
+        "trials": 2000
+      },
+      "control": {
+        "value": 0.3098651975070787,
+        "lo": 0.28962106096254014,
+        "hi": 0.33010933405161724,
+        "successes": 619.0,
+        "trials": 2000
+      },
+      "baseline": {
+        "value": 0.27143900382740693,
+        "lo": 0.25197306772873634,
+        "hi": 0.2909049399260775,
+        "successes": 542.0,
+        "trials": 2000
+      },
+      "risk": {
+        "value": 0.0,
+        "lo": 0.0,
+        "hi": 0.034309939038178555,
+        "detected": false
+      },
+      "beats_baseline": false,
+      "params": {
+        "secret": "TransactionAmt",
+        "aux": [
+          "ProductCD",
+          "card4",
+          "card6",
+          "addr1",
+          "addr2",
+          "dist1",
+          "P_emaildomain",
+          "R_emaildomain",
+          "C1",
+          "C2",
+          "D1",
+          "M4",
+          "M6",
+          "DeviceType",
+          "hour",
+          "isFraud"
+        ],
+        "seed": 0
+      }
+    }
+  },
+  "timings": {
+    "singling_out_univariate": 0.26,
+    "singling_out_multivariate": 32.61,
+    "linkability_k1": 24.47,
+    "linkability_k10": 26.43,
+    "inference": 21.06,
+    "dcr": 26.45,
+    "anonymeter": 109.26
+  },
+  "dcr": {
+    "exact_copy_targets": {
+      "point": 0.063,
+      "lo": 0.052748885858717086,
+      "hi": 0.07455384258951649,
+      "n": 2000
+    },
+    "exact_copy_control": {
+      "point": 0.065,
+      "lo": 0.05458983750817447,
+      "hi": 0.07670637897458914,
+      "n": 2000
+    },
+    "median_dcr_targets": 0.6607142857142856,
+    "median_dcr_control": 0.7167207792207793,
+    "mean_dcr_targets": {
+      "point": 0.7737499999999999,
+      "lo": 0.7493861810064936,
+      "hi": 0.8004974837662339,
+      "n": 2000
+    },
+    "mean_dcr_control": {
+      "point": 0.7990170454545453,
+      "lo": 0.773159760551948,
+      "hi": 0.8260225040584415,
+      "n": 2000
+    },
+    "closer_to_training_share": {
+      "point": 0.51425,
+      "lo": 0.499125,
+      "hi": 0.529753125,
+      "n": 4000
+    },
+    "synthetic_sampled": 4000
+  },
+  "hardware": {
+    "cpu": "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz",
+    "logical_cores": 12,
+    "os": "Windows 11",
+    "python": "3.13.5",
+    "torch": "2.14.1+cu126",
+    "gpu": "NVIDIA GeForce GTX 1650",
+    "gpu_memory_gb": 4.0
+  },
+  "reference": {
+    "anonymeter": {
+      "singling_out_univariate": {
+        "main": {
+          "value": 0.0009585236406264672,
+          "error": 0.0009585236406264671
+        },
+        "control": {
+          "value": 0.0014570826221695196,
+          "error": 0.0013689599304642344
+        },
+        "baseline": {
+          "value": 0.008444145786017071,
+          "error": 0.0038937683502078446
+        },
+        "risk": {
+          "value": 0.0,
+          "lo": 0.0,
+          "hi": 0.0011748857690756583
+        }
+      },
+      "singling_out_multivariate": {
+        "main": {
+          "value": 0.0628396667091888,
+          "error": 0.010592112247850546
+        },
+        "control": {
+          "value": 0.06311894910562141,
+          "error": 0.010614221606799297
+        },
+        "baseline": {
+          "value": 0.0493655468474857,
+          "error": 0.009445453404608619
+        },
+        "risk": {
+          "value": 0.0,
+          "lo": 0.0,
+          "hi": 0.015709686999524016
+        }
+      },
+      "linkability_k1": {
+        "main": {
+          "value": 0.001956606593345214,
+          "error": 0.00168232767569318
+        },
+        "control": {
+          "value": 0.0014575651169858408,
+          "error": 0.001369297386280373
+        },
+        "baseline": {
+          "value": 0.0009585236406264672,
+          "error": 0.0009585236406264671
+        },
+        "risk": {
+          "value": 0.0004997699235664826,
+          "lo": 0.0,
+          "hi": 0.002671651353372558
+        }
+      },
+      "linkability_k10": {
+        "main": {
+          "value": 0.03938471732029823,
+          "error": 0.008470389703693477
+        },
+        "control": {
+          "value": 0.02640963893495452,
+          "error": 0.006961723110645832
+        },
+        "baseline": {
+          "value": 0.005449896927860829,
+          "error": 0.0030806162908989933
+        },
+        "risk": {
+          "value": 0.013327040718798621,
+          "lo": 0.0021257195972796614,
+          "hi": 0.02452836184031758
+        }
+      },
+      "inference": {
+        "main": {
+          "value": 0.318348902605188,
+          "error": 0.020393216499535287
+        },
+        "control": {
+          "value": 0.30487478274348495,
+          "error": 0.020152723291573776
+        },
+        "baseline": {
+          "value": 0.03040197074582951,
+          "error": 0.007463118358084872
+        },
+        "risk": {
+          "value": 0.01938373048079312,
+          "lo": 0.0,
+          "hi": 0.06023621938468293
+        }
+      }
+    }
+  },
+  "reference_hardware": {
+    "cpu": "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz",
+    "logical_cores": 12,
+    "os": "Windows 11",
+    "python": "3.13.5",
+    "torch": "2.14.1+cu126",
+    "gpu": "NVIDIA GeForce GTX 1650",
+    "gpu_memory_gb": 4.0
+  }
+}

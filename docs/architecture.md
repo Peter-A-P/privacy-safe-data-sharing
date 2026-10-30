@@ -7,7 +7,7 @@ measured yet; the module names are the plan's.
 
 ## The pipeline
 
-![Three public datasets of real people are prepared and split three ways, synthesised six ways at six privacy budgets and three seeds, attacked with the three legal criteria and membership inference checked against the reference libraries, scored for train-on-synthetic, test-on-real utility, and summarised as a surface with a recommendation rule that the release gate confirms.](architecture/system.svg)
+![Three public datasets of real people are prepared and split three ways, synthesised seven ways at six privacy budgets and three seeds, attacked with the three legal criteria and membership inference checked against the reference libraries, scored for train-on-synthetic, test-on-real utility, and summarised as a surface with a recommendation rule that the release gate confirms.](architecture/system.svg)
 
 Three real datasets, their terms quoted in `docs/data.md` before the first fetch, come in:
 ACS PUMS census microdata via folktables, IEEE-CIS transactions under the terms project 09
@@ -15,8 +15,9 @@ recorded, and NY SPARCS hospital discharges only if its terms permit (`facsimile
 is prepared with a recorded attribute subset, uniform binning and rare-category merging, and
 split three ways: a training set the synthesisers see, a control set they never see, and a
 test set for utility, with the attack targets drawn and a leakage check (`facsimile.split`).
-The synthesiser grid is six methods at six privacy budgets and three seeds: Gaussian copula,
-CTGAN and TVAE through SDV, and AIM, MST and PATE-CTGAN through SmartNoise, every epsilon from
+The synthesiser grid is seven methods at six privacy budgets and three seeds: Gaussian copula,
+CTGAN and TVAE through SDV, TabDDPM through synthcity, and AIM, MST and PATE-CTGAN through
+SmartNoise, every epsilon from
 a library's own accountant (`facsimile.synth`), one table per cell. Every table is attacked
 with singling out, linkability and inference implemented from the paper that defines the legal
 test, the Groundhog membership inference attack and distance to closest record, each checked
