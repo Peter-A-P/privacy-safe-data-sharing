@@ -16,7 +16,7 @@ Library versions: sdv 2.0.0, smartnoise-synth 1.0.8, opendp 0.14.2, lightgbm 4.7
 | Gaussian copula | inf | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.9) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.0) | 1.7 (0.4 to 3.0) | 0.425 (0.335 to 0.519) | -0.282 (worst seed lo -0.296) | -0.245 (worst seed lo -0.257) | 0.107 | 0.497 | 7 | 3 |
 | CTGAN | inf | 0.0 (0.0 to 0.0) | 0.6 (0.0 to 1.7) | 0.0 (0.0 to 0.1) | 0.2 (0.0 to 0.7) | 0.1 (0.0 to 2.0) | 0.417 (0.327 to 0.510) | -0.062 (worst seed lo -0.075) | -0.047 (worst seed lo -0.062) | 0.167 | 0.509 | 706 | 3 |
 | TVAE | inf | 0.0 (0.0 to 0.1) | 0.7 (0.0 to 2.1) | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.2) | 0.2 (0.0 to 2.1) | 0.450 (0.359 to 0.543) | -0.053 (worst seed lo -0.077) | -0.043 (worst seed lo -0.052) | 0.189 | 0.505 | 185 | 3 |
-| TabDDPM | inf | 0.0 (0.0 to 0.1) | 1.8 (0.7 to 2.9) **leak** | 0.0 (0.0 to 0.0) | 0.5 (0.0 to 0.9) | 1.4 (0.0 to 3.4) | pending | -0.022 (worst seed lo -0.029) | -0.013 (worst seed lo -0.018) | 0.048 | 0.504 | 803 | 3 |
+| TabDDPM | inf | 0.0 (0.0 to 0.1) | 1.8 (0.7 to 2.9) **leak** | 0.0 (0.0 to 0.0) | 0.5 (0.0 to 0.9) | 1.4 (0.0 to 3.4) | 0.542 (0.448 to 0.633) | -0.022 (worst seed lo -0.029) | -0.013 (worst seed lo -0.018) | 0.048 | 0.504 | 803 | 3 |
 | MST | 0.5 | 0.0 (0.0 to 0.0) | 1.5 (0.2 to 2.7) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.3) | 0.0 (0.0 to 0.6) |  | -0.360 (worst seed lo -0.410) | -0.228 (worst seed lo -0.251) | 0.166 | 0.442 | 68 | 3 |
 | MST | 1 | 0.0 (0.0 to 0.0) | 0.7 (0.0 to 2.1) | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.3) | 0.2 (0.0 to 1.7) | 0.508 (0.416 to 0.601) | -0.347 (worst seed lo -0.396) | -0.148 (worst seed lo -0.166) | 0.158 | 0.463 | 57 | 3 |
 | MST | 2 | 0.0 (0.0 to 0.0) | 1.4 (0.0 to 2.7) | 0.0 (0.0 to 0.0) | 0.1 (0.0 to 0.3) | 0.3 (0.0 to 1.7) |  | -0.312 (worst seed lo -0.333) | -0.162 (worst seed lo -0.183) | 0.154 | 0.447 | 56 | 3 |
@@ -40,7 +40,7 @@ Library versions: sdv 2.0.0, smartnoise-synth 1.0.8, opendp 0.14.2, lightgbm 4.7
 | Gaussian copula | inf | 0.0 (0.0 to 0.0) | 0.4 (0.0 to 1.2) | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 1.4) | 0.425 (0.335 to 0.519) | -0.404 (worst seed lo -0.453) | 0.079 | 0.507 | 9 | 3 |
 | CTGAN | inf | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.8) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 1.8) | 0.525 (0.432 to 0.617) | -0.129 (worst seed lo -0.167) | 0.173 | 0.492 | 843 | 3 |
 | TVAE | inf | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.9) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 1.9) | 0.500 (0.407 to 0.593) | -0.101 (worst seed lo -0.152) | 0.306 | 0.513 | 185 | 3 |
-| TabDDPM | inf | 0.0 (0.0 to 0.1) | 0.5 (0.0 to 1.5) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.2) | 0.2 (0.0 to 2.5) | pending | -0.061 (worst seed lo -0.105) | 0.043 | 0.504 | 860 | 3 |
+| TabDDPM | inf | 0.0 (0.0 to 0.1) | 0.5 (0.0 to 1.5) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.2) | 0.2 (0.0 to 2.5) | 0.483 (0.391 to 0.576) | -0.061 (worst seed lo -0.105) | 0.043 | 0.504 | 860 | 3 |
 | MST | 0.5 | 0.0 (0.0 to 0.0) | 0.5 (0.0 to 1.7) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.4) |  | -0.258 (worst seed lo -0.317) | 0.131 | 0.558 | 88 | 3 |
 | MST | 1 | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 1.0) | 0.0 (0.0 to 0.1) | 0.3 (0.0 to 0.7) | 0.0 (0.0 to 2.2) | 0.492 (0.399 to 0.584) | -0.311 (worst seed lo -0.354) | 0.121 | 0.542 | 79 | 3 |
 | MST | 2 | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.5) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.4) | 0.1 (0.0 to 2.4) |  | -0.227 (worst seed lo -0.318) | 0.120 | 0.535 | 98 | 3 |
@@ -64,7 +64,7 @@ Library versions: sdv 2.0.0, smartnoise-synth 1.0.8, opendp 0.14.2, lightgbm 4.7
 | Gaussian copula | inf | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.8) | 0.0 (0.0 to 0.1) | 0.2 (0.0 to 0.5) | 0.3 (0.0 to 1.4) | 0.542 (0.448 to 0.633) | -0.186 (worst seed lo -0.197) | -0.203 (worst seed lo -0.213) | 0.103 | 0.499 | 9 | 3 |
 | CTGAN | inf | 0.0 (0.0 to 0.0) | 0.1 (0.0 to 1.1) | 0.0 (0.0 to 0.0) | 0.4 (0.0 to 0.8) | 0.0 (0.0 to 0.5) | 0.475 (0.383 to 0.568) | -0.075 (worst seed lo -0.087) | -0.061 (worst seed lo -0.071) | 0.160 | 0.503 | 1,013 | 3 |
 | TVAE | inf | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.4) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.3) | 0.8 (0.0 to 2.7) | 0.483 (0.391 to 0.576) | -0.150 (worst seed lo -0.197) | -0.123 (worst seed lo -0.162) | 0.389 | 0.528 | 188 | 3 |
-| TabDDPM | inf | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 1.1) | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.2) | pending | -0.015 (worst seed lo -0.022) | -0.013 (worst seed lo -0.018) | 0.041 | 0.512 | 853 | 3 |
+| TabDDPM | inf | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 1.1) | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 0.2) | 0.0 (0.0 to 0.2) | 0.500 (0.407 to 0.593) | -0.015 (worst seed lo -0.022) | -0.013 (worst seed lo -0.018) | 0.041 | 0.512 | 853 | 3 |
 | MST | 0.5 | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 1.4) | 0.0 (0.0 to 0.1) | 0.2 (0.0 to 0.4) | 0.0 (0.0 to 0.0) |  | -0.263 (worst seed lo -0.294) | -0.358 (worst seed lo -0.389) | 0.159 | 0.475 | 69 | 3 |
 | MST | 1 | 0.0 (0.0 to 0.0) | 0.3 (0.0 to 1.8) | 0.0 (0.0 to 0.1) | 0.0 (0.0 to 0.4) | 0.0 (0.0 to 0.8) | 0.508 (0.416 to 0.601) | -0.242 (worst seed lo -0.264) | -0.305 (worst seed lo -0.334) | 0.149 | 0.490 | 62 | 3 |
 | MST | 2 | 0.0 (0.0 to 0.0) | 0.0 (0.0 to 1.5) | 0.0 (0.0 to 0.0) | 0.3 (0.0 to 0.6) | 0.0 (0.0 to 0.0) |  | -0.237 (worst seed lo -0.251) | -0.288 (worst seed lo -0.311) | 0.145 | 0.508 | 59 | 3 |
@@ -242,6 +242,7 @@ is TabFM's accuracy minus the forest's on the same tables, paired, 95% bootstrap
 | ACS PUMS, California 2018 | Gaussian copula, epsilon inf | 0.425 (0.335 to 0.519) | 0.475 (0.383 to 0.568) | 0.483 (0.391 to 0.576) | +0.058 (-0.058 to +0.158) | not detected |
 | ACS PUMS, California 2018 | CTGAN, epsilon inf | 0.417 (0.327 to 0.510) | 0.433 (0.343 to 0.527) | 0.467 (0.375 to 0.560) | +0.050 (-0.059 to +0.167) | not detected |
 | ACS PUMS, California 2018 | TVAE, epsilon inf | 0.450 (0.359 to 0.543) | 0.425 (0.335 to 0.519) | 0.475 (0.383 to 0.568) | +0.025 (-0.058 to +0.117) | not detected |
+| ACS PUMS, California 2018 | TabDDPM, epsilon inf | 0.542 (0.448 to 0.633) | 0.508 (0.416 to 0.601) | 0.525 (0.432 to 0.617) | -0.017 (-0.100 to +0.075) | not detected |
 | ACS PUMS, California 2018 | MST, epsilon 1 | 0.508 (0.416 to 0.601) | 0.475 (0.383 to 0.568) | 0.492 (0.399 to 0.584) | -0.017 (-0.108 to +0.075) | not detected |
 | ACS PUMS, California 2018 | MST, epsilon 8 | 0.458 (0.367 to 0.552) | 0.483 (0.391 to 0.576) | 0.517 (0.424 to 0.609) | +0.058 (-0.033 to +0.142) | not detected |
 | ACS PUMS, California 2018 | AIM, epsilon 1 | 0.533 (0.440 to 0.625) | 0.542 (0.448 to 0.633) | 0.650 (0.558 to 0.735) | +0.117 (+0.033 to +0.217) | flips to detected |
@@ -251,6 +252,7 @@ is TabFM's accuracy minus the forest's on the same tables, paired, 95% bootstrap
 | IEEE-CIS card transactions | Gaussian copula, epsilon inf | 0.425 (0.335 to 0.519) | 0.475 (0.383 to 0.568) | 0.500 (0.407 to 0.593) | +0.075 (-0.033 to +0.175) | not detected |
 | IEEE-CIS card transactions | CTGAN, epsilon inf | 0.525 (0.432 to 0.617) | 0.550 (0.457 to 0.641) | 0.500 (0.407 to 0.593) | -0.025 (-0.108 to +0.067) | not detected |
 | IEEE-CIS card transactions | TVAE, epsilon inf | 0.500 (0.407 to 0.593) | 0.508 (0.416 to 0.601) | 0.525 (0.432 to 0.617) | +0.025 (-0.058 to +0.108) | not detected |
+| IEEE-CIS card transactions | TabDDPM, epsilon inf | 0.483 (0.391 to 0.576) | 0.475 (0.383 to 0.568) | 0.458 (0.367 to 0.552) | -0.025 (-0.117 to +0.067) | not detected |
 | IEEE-CIS card transactions | MST, epsilon 1 | 0.492 (0.399 to 0.584) | 0.425 (0.335 to 0.519) | 0.483 (0.391 to 0.576) | -0.008 (-0.083 to +0.067) | not detected |
 | IEEE-CIS card transactions | MST, epsilon 8 | 0.558 (0.465 to 0.649) | 0.542 (0.448 to 0.633) | 0.517 (0.424 to 0.609) | -0.042 (-0.150 to +0.058) | not detected |
 | IEEE-CIS card transactions | AIM, epsilon 1 | 0.433 (0.343 to 0.527) | 0.492 (0.399 to 0.584) | 0.433 (0.343 to 0.527) | +0.000 (-0.108 to +0.108) | not detected |
@@ -260,6 +262,7 @@ is TabFM's accuracy minus the forest's on the same tables, paired, 95% bootstrap
 | NY SPARCS discharges | Gaussian copula, epsilon inf | 0.542 (0.448 to 0.633) | 0.492 (0.399 to 0.584) | 0.533 (0.440 to 0.625) | -0.008 (-0.125 to +0.108) | not detected |
 | NY SPARCS discharges | CTGAN, epsilon inf | 0.475 (0.383 to 0.568) | 0.558 (0.465 to 0.649) | 0.533 (0.440 to 0.625) | +0.058 (-0.042 to +0.167) | not detected |
 | NY SPARCS discharges | TVAE, epsilon inf | 0.483 (0.391 to 0.576) | 0.475 (0.383 to 0.568) | 0.483 (0.391 to 0.576) | +0.000 (-0.108 to +0.100) | not detected |
+| NY SPARCS discharges | TabDDPM, epsilon inf | 0.500 (0.407 to 0.593) | 0.433 (0.343 to 0.527) | 0.567 (0.473 to 0.657) | +0.067 (-0.033 to +0.167) | not detected |
 | NY SPARCS discharges | MST, epsilon 1 | 0.508 (0.416 to 0.601) | 0.475 (0.383 to 0.568) | 0.458 (0.367 to 0.552) | -0.050 (-0.142 to +0.042) | not detected |
 | NY SPARCS discharges | MST, epsilon 8 | 0.500 (0.407 to 0.593) | 0.517 (0.424 to 0.609) | 0.450 (0.359 to 0.543) | -0.050 (-0.142 to +0.042) | not detected |
 | NY SPARCS discharges | AIM, epsilon 1 | 0.442 (0.351 to 0.535) | 0.442 (0.351 to 0.535) | 0.483 (0.391 to 0.576) | +0.042 (-0.067 to +0.158) | not detected |

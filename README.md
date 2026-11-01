@@ -91,9 +91,9 @@ across 51 configurations, where chance alone would give about 1.3 of the
 | NY SPARCS discharges | PATE-CTGAN, epsilon 4 | linkability, 10 neighbours | 0.8 (0.2 to 1.4) | 0.9 vs 0.1 |
 
 **A foundation model as the membership attacker.** The same Groundhog evidence classified
-by TabFM instead of the random forest, on 27 grid configurations: TabFM is
+by TabFM instead of the random forest, on 30 grid configurations: TabFM is
 better on 1, worse on 0 and indistinguishable on
-26 (paired 95% intervals), and 1 configuration with no membership risk under the forest has a detected one under TabFM: ACS PUMS, California 2018, AIM at epsilon 1, accuracy 0.650 (0.558 to 0.735). Each verdict is a one-sided test at 2.5 percent, so over 27 configurations about 0.7 would be detected by chance alone.
+29 (paired 95% intervals), and 1 configuration with no membership risk under the forest has a detected one under TabFM: ACS PUMS, California 2018, AIM at epsilon 1, accuracy 0.650 (0.558 to 0.735). Each verdict is a one-sided test at 2.5 percent, so over 30 configurations about 0.8 would be detected by chance alone.
 On the copy control, TabFM scores 0.642 (0.549 to 0.727) on ACS PUMS, California 2018 against the forest's 0.558 (0.465 to 0.649), and the forest on the same 500 features 0.683 (0.592 to 0.765); 0.558 (0.465 to 0.649) on IEEE-CIS card transactions against the forest's 0.550 (0.457 to 0.641), and the forest on the same 500 features 0.533 (0.440 to 0.625); 0.783 (0.699 to 0.853) on NY SPARCS discharges against the forest's 0.525 (0.432 to 0.617), and the forest on the same 500 features 0.717 (0.627 to 0.795); most of the gain on the copies is the feature selection, not the model.
 TabFM's weights were trained on synthetic tables drawn from structural causal models and
 are licensed for non-commercial, non-production use only, so the code that calls them is

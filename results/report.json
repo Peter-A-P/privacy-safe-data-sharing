@@ -767,6 +767,34 @@
     "2way": 0.048048749999999994,
     "3way": 0.08168749999999998
    },
+   "membership": {
+    "accuracy": 0.5416666666666666,
+    "lo": 0.448288089494646,
+    "hi": 0.6329400722046816,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
+   "membership_tabfm": {
+    "accuracy": 0.525,
+    "lo": 0.4318473784425151,
+    "hi": 0.6168896717992584,
+    "forest_selected": {
+     "point": 0.5083333333333333,
+     "lo": 0.41550429136532024,
+     "hi": 0.6007414174615904
+    },
+    "delta": -0.016666666666666666,
+    "delta_lo": -0.10020833333333333,
+    "delta_hi": 0.075,
+    "detected": false,
+    "flips": false,
+    "targets": 6,
+    "tabfm": "1.0.1",
+    "device": "cuda",
+    "seconds_median": 402.747653850005
+   },
    "passes_utility": false,
    "passes_risk": false
   },
@@ -3831,6 +3859,34 @@
     "2way": 0.042694730392156856,
     "3way": 0.06870975
    },
+   "membership": {
+    "accuracy": 0.48333333333333334,
+    "lo": 0.39117225621934054,
+    "hi": 0.5763363451672925,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
+   "membership_tabfm": {
+    "accuracy": 0.4583333333333333,
+    "lo": 0.3670599277953184,
+    "hi": 0.5517119105053541,
+    "forest_selected": {
+     "point": 0.475,
+     "lo": 0.38311032820074165,
+     "hi": 0.5681526215574849
+    },
+    "delta": -0.025,
+    "delta_lo": -0.11666666666666667,
+    "delta_hi": 0.06666666666666667,
+    "detected": false,
+    "flips": false,
+    "targets": 6,
+    "tabfm": "1.0.1",
+    "device": "cuda",
+    "seconds_median": 398.7888594500255
+   },
    "passes_utility": false,
    "passes_risk": true
   },
@@ -6831,6 +6887,34 @@
     "1way": 0.017895833333333333,
     "2way": 0.041030555555555556,
     "3way": 0.07308875
+   },
+   "membership": {
+    "accuracy": 0.5,
+    "lo": 0.40736926744019714,
+    "hi": 0.5926307325598028,
+    "trials": 120,
+    "targets": 6,
+    "rows": 1000,
+    "detected": false
+   },
+   "membership_tabfm": {
+    "accuracy": 0.5666666666666667,
+    "lo": 0.473133543234243,
+    "hi": 0.6568305082938808,
+    "forest_selected": {
+     "point": 0.43333333333333335,
+     "lo": 0.3431694917061192,
+     "hi": 0.526866456765757
+    },
+    "delta": 0.06666666666666667,
+    "delta_lo": -0.03333333333333333,
+    "delta_hi": 0.16666666666666666,
+    "detected": false,
+    "flips": false,
+    "targets": 6,
+    "tabfm": "1.0.1",
+    "device": "cuda",
+    "seconds_median": 395.00873185001547
    },
    "passes_utility": false,
    "passes_risk": true

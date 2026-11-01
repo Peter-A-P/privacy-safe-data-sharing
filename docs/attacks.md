@@ -69,12 +69,12 @@ at most 500 columns and the vectors have 6,600 to 13,500, so the attacker keeps 
 largest standardised difference in means between in and out on its own shadow vectors, which
 uses nothing the forest's attacker lacks. A third arm runs the same forest on the same 500, to
 tell the model's effect from the selection's. The forest is retrained from the seeds of the
-published runs and must reproduce their counts exactly, or the run stops; all 39 did. The two
+published runs and must reproduce their counts exactly, or the run stops; all 42 did. The two
 attackers are scored on the same evaluation tables, so their difference is paired (bootstrap
 over trials, conditional on the six targets). Results are in
 [results.md](results.md#membership-inference-with-a-foundation-model-attacker).
 
-What it found, on the 42 runs (27 grid configurations, 12 ladder tables, 3 copy controls):
+What it found, on the 45 runs (30 grid configurations, 12 ladder tables, 3 copy controls):
 
 - **On the copy controls the selection does most of the work.** TabFM catches the copy on ACS
   (0.642) and SPARCS (0.783) where the forest on every feature does not (0.558, 0.525); the
@@ -85,7 +85,7 @@ What it found, on the 42 runs (27 grid configurations, 12 ladder tables, 3 copy 
   TabFM 0.650 (0.558 to 0.735), TabFM minus forest +0.117 (+0.033 to +0.217), the only grid
   configuration where TabFM is better at 95%. It is also the configuration the inference attack
   detects at 20,000 rows. It is not secure evidence of a membership leak: each verdict is a
-  one-sided test at 2.5 percent, so 27 configurations give about 0.7 detections by chance alone,
+  one-sided test at 2.5 percent, so 30 configurations give about 0.8 detections by chance alone,
   and AIM at epsilon 8 on the same data, which spends more budget, scores 0.558. Rerun twice on
 the same evidence with TabFM's ensemble reseeded, it stays detected, at 0.600 (0.507 to 0.688)
 and 0.650 (0.558 to 0.735), but its lead over the forest is +0.067 (-0.025 to +0.167) and
@@ -95,11 +95,11 @@ fits to confirm, which were not run.
 - **Two ladder verdicts flip.** The perturbed copy on ACS (0.608, forest 0.575) and on SPARCS
   (0.600, forest 0.500) are detected by TabFM; the overfitted TVAE is still not caught (0.483,
   0.425, 0.542).
-- **Everything else is indistinguishable.** On the other 26 grid configurations the paired
+- **Everything else is indistinguishable.** On the other 29 grid configurations the paired
   interval contains zero, and no difference is negative at 95%.
 
 TabFM took 351 to 422 seconds per target on the build desktop's GTX 1650 (4 GB, CUDA 12.6), about
-25 hours for all 42 runs at a peak of 4.4 GB of GPU memory, so it spilled into shared memory; at
+27 hours for all 45 runs at a peak of 4.4 GB of GPU memory, so it spilled into shared memory; at
 one ensemble member it takes 14 seconds. It cost nothing.
 
 **Licence.** TabFM's weights are under the TabFM Non-Commercial License v1.0: research and

@@ -283,7 +283,11 @@ tables is the question.
   -0.061 on IEEE-CIS, -0.015 on SPARCS), still outside the 0.02 rule on every dataset's worst
   seed and blocked by the 03 gate; and, as expected, the deep arm an attack detects: multivariate
   singling out on ACS, 1.8% (0.7 to 2.9), the grid's first leak without differential privacy,
-  which Anonymeter puts at the edge of detection (`docs/attacks.md`). Groundhog is still running.
+  which Anonymeter puts at the edge of detection (`docs/attacks.md`). Not expected: Groundhog does
+  not detect it on any dataset (finished 2026-11-01): 0.542 (0.448 to 0.633) on ACS, 0.483 (0.391
+  to 0.576) on IEEE-CIS, 0.500 (0.407 to 0.593) on SPARCS, and the TabFM attacker on the same
+  evidence agrees. At 1,000 rows the defaults give an under-trained model, so this says the attack
+  could not tell on that model, not that the 20,000-row tables are safe.
 
 ## 3. Data
 

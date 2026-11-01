@@ -154,7 +154,9 @@ column is within 0.08 of the training data and `SEX` within 0.004. At 1,000 rows
 defaults give a model that has not learned the marginals: `n_iter` counts epochs, a batch of
 1,024 takes the whole 1,000 rows, so it trains for 1,000 steps against 20,000. That is the model
 the Groundhog attack's shadow and evaluation fits produce at its 1,000-row scale, and its
-membership result is reported as a property of that model. TVAE's defaults count epochs too.
+membership result is reported as a property of that model: over 1,080 fits it is at chance on
+every dataset, 0.542 (0.448 to 0.633) on ACS, 0.483 (0.391 to 0.576) on IEEE-CIS and 0.500
+(0.407 to 0.593) on SPARCS, and the TabFM attacker agrees. TVAE's defaults count epochs too.
 Sampling is a quarter of the cost: 1,000 denoising steps for every batch of rows.
 
 ## SDV's licence
