@@ -289,6 +289,49 @@ tables is the question.
   evidence agrees. At 1,000 rows the defaults give an under-trained model, so this says the attack
   could not tell on that model, not that the 20,000-row tables are safe.
 
+### 2.12 Singling out averaged over five searches (added 2026-11-01, Peter's decision)
+
+**Why.** TabDDPM's multivariate singling-out leak on ACS is detected by this project's
+implementation, 1.8% (0.7 to 2.9) pooled with a Bonferroni lower bound of 0.35 points, and not by
+Anonymeter on the same tables, 1.1% (0.0 to 2.2) with the bound at zero (`docs/attacks.md`). The
+two agree on the training records (9.5% against 9.3%) and differ on the control (7.9% against
+8.3%), and the seed-level differences run in opposite directions (seed 0: 1.4% here, 2.2% in
+Anonymeter; seed 2: 2.7% against 0.8%). That is the noise of the predicate search: each draws its
+own random combinations of attributes. Section 2.3 asks that a disagreement be resolved before a
+number ships; recording it did not resolve it, and neither would keeping or dropping the row.
+This reduces the cause instead. It was decided after the results were seen, so it is fixed here
+before anything is rerun and applies to every table, in both directions.
+
+**The rule.**
+
+- Every singling-out attack, univariate and multivariate, runs five independent predicate
+  searches on the same table, targets and control, with seeds s, s + 1,000, s + 2,000,
+  s + 3,000 and s + 4,000, where s is the table's seed as before (so the first search is the run
+  already published, and is checked to reproduce exactly).
+- The successes on the targets, the control and the baseline are each the mean over the five
+  searches. The number of trials stays at the number of attacks, not five times it: the five
+  searches reuse the same records, so they are not independent trials, and counting them as such
+  would narrow the interval without new evidence. Pooling over the three seeds, the Wilson rates,
+  the residual and the Bonferroni call are unchanged.
+- It applies to every attacked table: the grid, the leakage ladder and the exposed records, and to
+  `facsimile evaluate`, so the package does what the report does.
+- Anonymeter runs the same five searches, seeded the same way, on every grid table and every seed
+  (until now: seed 0, and all seeds for TabDDPM), averaged the same way from its success counts.
+  Its other attacks run on every seed too, so the agreement covers all 153 grid tables.
+- Linkability and inference are not changed: they involve no search, and their disagreements
+  with Anonymeter are the tie-break and scaling choices already recorded.
+- **How a remaining disagreement is settled, fixed now.** The leak table reports this project's
+  averaged measurement, as before, and shows beside every leak Anonymeter's averaged result pooled
+  the same way. A leak Anonymeter does not detect at the Bonferroni level stays in the table,
+  marked as not reproduced by the reference library, and the README says so. A risk Anonymeter
+  detects and this project does not is listed in `docs/attacks.md`.
+- The ACS TabDDPM row may stay, go, or be joined by others. Whatever the averaged numbers say
+  is what ships.
+
+**Cost.** CA$0: the desktop CPU, an estimated 10 to 17 hours of compute before running tables in
+parallel, from the recorded attack timings (this project's multivariate search 24 to 32 s a
+table, Anonymeter's five attacks 55 s a table, median).
+
 ## 3. Data
 
 | Source | Size | What it gives | Access and terms |
@@ -390,6 +433,7 @@ The deep-synthesiser GPU line is not needed; the desktop card was enough.
 | AIM grid cells and Groundhog AIM fits (amended 2026-10-17) | One m6a.8xlarge spot instance in ca-central-1, about 50 hours at US$0.50, capped at 72 hours and US$0.55 an hour | 25 to 40 | 34 to 54 |
 | Attacks and utility | CPU | 0 | 0 |
 | The diffusion arm (section 2.11, added 2026-10-28) | The desktop GPU; rented only on Peter's go | 0 | 0 |
+| Singling out over five searches (section 2.12, added 2026-11-01) | The desktop CPU | 0 | 0 |
 | Storage for the table grid | Local; nothing raw is committed | 0 | 0 |
 | Demo site | Azure Static Web Apps free tier | 0 | 0 |
 | **Total** | | **25 to 40** | **34 to 54** |
