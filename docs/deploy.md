@@ -24,8 +24,8 @@ subscription, `PAP-POCs 2`, created for it the same day under the same billing a
 subscription holding the other project pages (`rg-portfolio`) had reached Azure's limit of ten
 Free static web apps, and every one of the ten serves a live site. The Free plan costs nothing in
 either subscription. The deploy token is the repository secret, `SITE` is `on`, and the first
-upload ran from `.github/workflows/site.yml`. The custom domain waits on the CNAME at Cloudflare
-(step 2).
+upload ran from `.github/workflows/site.yml`. The CNAME went in at Cloudflare on 2026-11-02 (step 2), and
+`privacy.peterparker.ca` validated and serves over HTTPS with Azure's certificate the same day.
 
 ## 0. Check the subscription before creating anything
 
