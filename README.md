@@ -118,7 +118,7 @@ above chance (the TAPAS comparison in [docs/results.md](docs/results.md)). Every
 under the paper's random forest is at chance, and that means the attack could not tell, not that
 the tables are safe: a second attacker, a tabular foundation model on the same evidence, catches
 the copy on two of the three datasets where the forest misses it, and detects one grid configuration the forest called clean (AIM at
-epsilon 1 on ACS, within what chance gives over 27 tests), and the forest itself catches the
+epsilon 1 on ACS, within what chance gives over 30 tests), and the forest itself catches the
 copies once it is given only the 500 features that move with the target. The
 three legal-test attacks run on the full 20,000-row tables and carry the risk numbers, and the
 leakage ladder shows they have the power the membership attack lacks: they catch every perturbed

@@ -219,7 +219,8 @@ function surface(data) {
   const y = (v) => m.t + ((yMax - v) / (yMax - yMin)) * (H - m.t - m.b);
   const colW = (W - m.l - m.r) / BUDGETS.length;
   const x = (i) => m.l + colW * (i + 0.5);
-  const offsets = { copula: -14, ctgan: 0, tvae: 14, mst: -14, aim: 0, pate_ctgan: 14 };
+  // The no-privacy column holds four synthesisers, the budget columns three.
+  const offsets = { copula: -21, ctgan: -7, tvae: 7, tabddpm: 21, mst: -14, aim: 0, pate_ctgan: 14 };
 
   const svg = svgRoot(W, H, `How much usefulness each synthesiser loses on ${DATASETS[ds].name}, by privacy budget`);
   // The strip the rule accepts, and the zero line: as good as real.
@@ -680,7 +681,7 @@ function membership(data) {
   }
   const W = 760;
   const rowH = 19;
-  const m = { l: 250, r: 18, t: 10, b: 40 };
+  const m = { l: 250, r: 18, t: 24, b: 40 };
   const gap = 12;
   const H = m.t + rows.length * rowH + gap * (ORDER.length - 1) + m.b;
   const x = (v) => m.l + ((v - 0.2) / 0.6) * (W - m.l - m.r);
@@ -689,7 +690,7 @@ function membership(data) {
     svg.append(sv("line", { class: Math.abs(v - 0.5) < 1e-9 ? "zero" : "gridline", x1: x(v), x2: x(v), y1: m.t, y2: H - m.b }));
     svg.append(sv("text", { class: "tick", x: x(v), y: H - m.b + 16, "text-anchor": "middle" }, fmt(v, 1)));
   }
-  svg.append(sv("text", { class: "zero-label", x: x(0.5) + 4, y: H - m.b - 4 }, "chance"));
+  svg.append(sv("text", { class: "zero-label", x: x(0.5), y: m.t - 8, "text-anchor": "middle" }, "chance"));
   svg.append(sv("text", { class: "axis-title", x: m.l + (W - m.l - m.r) / 2, y: H - 6, "text-anchor": "middle" }, "accuracy telling members from non-members"));
   const readout = $("membership-readout");
   let yy = m.t;
@@ -737,8 +738,9 @@ function membership(data) {
     stat(fmt(tapas.correct / tapas.trials, 3), "the reference library, TAPAS, on the same tables", `${tapas.correct} of ${tapas.trials} right`),
   );
   fill($("membership-verdict"), [
-    strong("At chance everywhere, and that says less than it seems. "),
+    strong("The paper's attack is at chance everywhere, and that says less than it seems. "),
     "Even when the 'synthetic' table is the training data itself, the attack is right only a little more than half the time at this scale, by this project's implementation and by the authors' library alike. So a result at chance here means the attack could not tell, not that the table is safe. The three regulators' attacks run on the full 20,000-row tables, and they carry the risk numbers.",
+    ...data.membershipFm.map((m) => ` A stronger classifier on the same evidence, the TabFM foundation model, does see one: ${METHODS[m.method].name} at epsilon ${m.epsilon} on ${DATASETS[m.dataset].short}, ${fmt(m.risk, 3)} against a coin's 0.5, the configuration in the leak card above.`),
   ]);
 }
 
@@ -764,7 +766,9 @@ function checked(data) {
   );
   fill($("checked-verdict"), [
     strong("Agreeing with the authors is what shows the implementation is theirs. "),
-    "The one disagreement found, a weaker feature encoding for membership inference, was fixed and every membership run redone, which took 9,720 synthesiser fits on a rented machine and the desktop. On the way, the check found a bug in the reference library itself: TAPAS 1.0.0 misreads ordered columns in its histogram features. Both are written up in the repository.",
+    "On membership inference the check found this project's features weaker than the library's, so they were fixed and every membership run redone: 9,720 synthesiser fits on a rented machine and the desktop. On the way it found a bug in the reference library itself: TAPAS 1.0.0 misreads ordered columns in its histogram features. ",
+    strong("It also took back a leak. "),
+    "The diffusion model TabDDPM was first reported as leaking on the census data through singling out. Anonymeter, on the same tables, did not agree, and the two disagreed in opposite directions seed by seed: the sign of a random search, not of a leak. The fix was decided and written into the plan before anything was rerun: every singling-out attack now averages five independent searches, in both implementations, on all 153 tables. The leak disappeared in both, and was withdrawn. Every step is written up in the repository.",
   ]);
 }
 
@@ -790,7 +794,8 @@ function takeaways(data) {
     ["Differential privacy bounds a leak; it does not make it zero", l ? `${METHODS[l.method].name} at epsilon ${l.epsilon} carries a formal guarantee and still gave away ${pct(l.risk)} on income bracket. Epsilon is a promise about the mechanism. Whether a leak is measurable on your data is a separate question that only an attack answers.` : "Epsilon is a promise about the mechanism, not a measurement of a table."],
     ["Privacy has a price, and it can be measured before you pay it", `The best non-private synthesiser lost ${span(gaps.map((g) => g.open))} AUC on its worst task; the best private one, ${span(gaps.map((g) => g.dp))}. That is the conversation a privacy officer and a data scientist need to have, with numbers on the table.`],
     ["Looking like the data is not the same as being useful", "The Gaussian copula reproduces the counts better than most and trains some of the worst models. Judge a synthetic table by training on it and testing on real data, not by a similarity score."],
-    ["A null result is only as good as the attack's power", "Membership inference found nothing anywhere, and could barely tell a copy of the training data apart. Stating that is the difference between 'we found no leak' and 'there is no leak'."],
+    ["A null result is only as good as the attack's power", "The paper's membership attack found nothing anywhere, and could barely tell a copy of the training data apart. A stronger classifier on the same evidence found one leak it missed. Stating that is the difference between 'we found no leak' and 'there is no leak'."],
+    ["A leak claim deserves the same scrutiny as a safety claim", "One leak reported here did not survive a second look: run against the authors' library, it turned out to be the noise of a random search. The rule for settling it was fixed before the rerun, and applied to every table, so it could have added leaks as easily as removed one."],
   ];
   const node = $("takeaway-cards");
   node.textContent = "";
