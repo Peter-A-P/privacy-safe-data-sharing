@@ -18,6 +18,15 @@ When the results change, run `facsimile report`, then `facsimile site`, and comm
 Steps 1 to 3 are done once, by Peter, in the Azure portal, the Cloudflare dashboard and GitHub.
 Step 4 is automatic after that.
 
+**Deployed 2026-11-01.** The app is `privacy-peterparker-ca` in resource group `rg-portfolio-2`
+(East US 2, Free), served at `delightful-grass-0b492c10f.5.azurestaticapps.net`. It is in its own
+subscription, `PAP-POCs 2`, created for it the same day under the same billing account: the
+subscription holding the other project pages (`rg-portfolio`) had reached Azure's limit of ten
+Free static web apps, and every one of the ten serves a live site. The Free plan costs nothing in
+either subscription. The deploy token is the repository secret, `SITE` is `on`, and the first
+upload ran from `.github/workflows/site.yml`. The custom domain waits on the CNAME at Cloudflare
+(step 2).
+
 ## 0. Check the subscription before creating anything
 
 ```powershell
