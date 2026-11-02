@@ -47,51 +47,125 @@
           "targets": 1996,
           "control": 1997
         },
-        "seed": 2
+        "seed": 2,
+        "searches": {
+          "seeds": [
+            2,
+            1002,
+            2002,
+            3002,
+            4002
+          ],
+          "main": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "baseline": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "predicates_found": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
       }
     },
     "singling_out_multivariate": {
       "attack": "singling_out_multivariate",
       "n_attacks": 2000,
       "main": {
-        "value": 0.10625627515245428,
-        "lo": 0.0927847041684807,
-        "hi": 0.11972784613642787,
-        "successes": 211.0,
+        "value": 0.1042601092470168,
+        "lo": 0.0909013566877964,
+        "hi": 0.1176188618062372,
+        "successes": 207.0,
         "trials": 2000
       },
       "control": {
-        "value": 0.11024860696332928,
-        "lo": 0.09655586386639292,
-        "hi": 0.12394135006026563,
-        "successes": 219.0,
+        "value": 0.09956911936923868,
+        "lo": 0.0864816186919201,
+        "hi": 0.11265662004655726,
+        "successes": 197.6,
         "trials": 2000
       },
       "baseline": {
-        "value": 0.04138088322573573,
-        "lo": 0.03270494331440328,
-        "hi": 0.05005682313706818,
-        "successes": 81.0,
+        "value": 0.04217934958791072,
+        "lo": 0.03342278519105137,
+        "hi": 0.05093591398477006,
+        "successes": 82.6,
         "trials": 2000
       },
       "risk": {
-        "value": 0.0,
+        "value": 0.005209716790801348,
         "lo": 0.0,
-        "hi": 0.017151105935532342,
+        "hi": 0.025926084398920565,
         "detected": false
       },
       "beats_baseline": true,
       "params": {
         "mode": "multivariate",
         "n_cols": 3,
-        "predicates_found": 1382,
+        "predicates_found": 1284,
         "max_attempts": 1000000,
         "unique_rows": {
           "synthetic": 19058,
           "targets": 1996,
           "control": 1997
         },
-        "seed": 2
+        "seed": 2,
+        "searches": {
+          "seeds": [
+            2,
+            1002,
+            2002,
+            3002,
+            4002
+          ],
+          "main": [
+            211,
+            214,
+            236,
+            201,
+            173
+          ],
+          "control": [
+            219,
+            218,
+            192,
+            189,
+            170
+          ],
+          "baseline": [
+            81,
+            80,
+            79,
+            85,
+            88
+          ],
+          "predicates_found": [
+            1382,
+            1401,
+            1390,
+            1319,
+            1284
+          ]
+        }
       }
     },
     "linkability_k1": {
@@ -261,12 +335,13 @@
     }
   },
   "timings": {
-    "singling_out_univariate": 0.26,
-    "singling_out_multivariate": 34.01,
+    "singling_out_univariate": 2.26,
+    "singling_out_multivariate": 344.83,
     "linkability_k1": 25.03,
     "linkability_k10": 36.44,
     "inference": 32.99,
-    "dcr": 51.5
+    "dcr": 51.5,
+    "anonymeter": 1035.81
   },
   "dcr": {
     "exact_copy_targets": {
@@ -304,6 +379,204 @@
     "synthetic_sampled": 4000
   },
   "hardware": {
+    "cpu": "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz",
+    "logical_cores": 12,
+    "os": "Windows 11",
+    "python": "3.13.5",
+    "torch": "2.14.1+cu126",
+    "gpu": "NVIDIA GeForce GTX 1650",
+    "gpu_memory_gb": 4.0
+  },
+  "reference": {
+    "anonymeter": {
+      "singling_out_univariate": {
+        "main": {
+          "value": 0.0009585236406264672,
+          "error": 0.0009585236406264671
+        },
+        "control": {
+          "value": 0.0009585236406264672,
+          "error": 0.0009585236406264671
+        },
+        "baseline": {
+          "value": 0.0009585236406264672,
+          "error": 0.0009585236406264671
+        },
+        "risk": {
+          "value": 0.0,
+          "lo": 0.0,
+          "hi": 0.0013568577126237004
+        },
+        "counts": {
+          "main": 0.0,
+          "control": 0.0,
+          "baseline": 0.0,
+          "trials": 2000
+        },
+        "searches": {
+          "seeds": [
+            2,
+            1002,
+            2002,
+            3002,
+            4002
+          ],
+          "main": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "control": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "baseline": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "singling_out_multivariate": {
+        "main": {
+          "value": 0.10266317652266681,
+          "error": 0.013267391795086668
+        },
+        "control": {
+          "value": 0.10071693975442338,
+          "error": 0.013154686055363886
+        },
+        "baseline": {
+          "value": 0.043476857426445095,
+          "error": 0.008885725204144022
+        },
+        "risk": {
+          "value": 0.002164209306591355,
+          "lo": 0.0,
+          "hi": 0.022917815427533343
+        },
+        "counts": {
+          "main": 203.8,
+          "control": 199.90005007511263,
+          "baseline": 85.2,
+          "trials": 2000
+        },
+        "searches": {
+          "seeds": [
+            2,
+            1002,
+            2002,
+            3002,
+            4002
+          ],
+          "main": [
+            180.0,
+            230.0,
+            201.0,
+            209.0,
+            199.0
+          ],
+          "control": [
+            206.10315473209812,
+            201.10065097646466,
+            186.09313970956433,
+            197.09864797195792,
+            209.1046569854782
+          ],
+          "baseline": [
+            87.0,
+            80.0,
+            72.0,
+            104.0,
+            83.0
+          ]
+        }
+      },
+      "linkability_k1": {
+        "main": {
+          "value": 0.0009585236406264672,
+          "error": 0.0009585236406264671
+        },
+        "control": {
+          "value": 0.0009585236406264672,
+          "error": 0.0009585236406264671
+        },
+        "baseline": {
+          "value": 0.0009585236406264672,
+          "error": 0.0009585236406264671
+        },
+        "risk": {
+          "value": 0.0,
+          "lo": 0.0,
+          "hi": 0.0013568577126237004
+        },
+        "counts": {
+          "main": 0.0,
+          "control": 0.0,
+          "baseline": 0.0,
+          "trials": 2000
+        }
+      },
+      "linkability_k10": {
+        "main": {
+          "value": 0.008444145786017071,
+          "error": 0.0038937683502078446
+        },
+        "control": {
+          "value": 0.012935519073251434,
+          "error": 0.004858364797228796
+        },
+        "baseline": {
+          "value": 0.008444145786017071,
+          "error": 0.0038937683502078446
+        },
+        "risk": {
+          "value": 0.0,
+          "lo": 0.0,
+          "hi": 0.0017750187632777584
+        },
+        "counts": {
+          "main": 15.0,
+          "control": 24.0,
+          "baseline": 15.0,
+          "trials": 2000
+        }
+      },
+      "inference": {
+        "main": {
+          "value": 0.2325137686713758,
+          "error": 0.018488801330324527
+        },
+        "control": {
+          "value": 0.23750418343496954,
+          "error": 0.01862567523211835
+        },
+        "baseline": {
+          "value": 0.00944222873873582,
+          "error": 0.004128460999050264
+        },
+        "risk": {
+          "value": 0.0,
+          "lo": 0.0,
+          "hi": 0.02798745442183075
+        },
+        "counts": {
+          "main": 464.0,
+          "control": 474.0,
+          "baseline": 17.0,
+          "trials": 2000
+        }
+      }
+    }
+  },
+  "reference_hardware": {
     "cpu": "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz",
     "logical_cores": 12,
     "os": "Windows 11",

@@ -44,6 +44,11 @@ Options:
   alternately.
 - `n_attacks` (2,000, capped at the number of targets), `n_cols` (3 attributes per multivariate
   predicate), `k_values` ((1, 10)) and `seed`.
+
+Singling out averages five independent predicate searches, seeded `seed`, `seed` + 1,000 and so
+on, as the project's own tables do (PLAN.md section 2.12): which predicates a search finds is
+random, and that noise alone can move a result across the detection line. The trials stay at
+`n_attacks`, since the five searches ask about the same people.
 - `columns`: a fixed coding.
 
 The membership inference attack (`groundhog.py`) is not in the one-call path. It needs the
@@ -77,7 +82,7 @@ table for the independent table of the tests, which knows nothing about its targ
 | Attack | Success on targets, % | Success on control, % | Risk, % (95% CI) | Detected |
 |---|---|---|---|---|
 | singling out, univariate | 0.5 | 0.3 | 0.2 (0.0 to 0.7) | no |
-| singling out, multivariate | 12.9 | 14.6 | 0.0 (0.0 to 2.6) | no |
+| singling out, multivariate | 13.8 | 15.4 | 0.0 (0.0 to 2.9) | no |
 | linkability, 1 neighbour | 0.3 | 0.3 | 0.0 (0.0 to 0.5) | no |
 | linkability, 10 neighbours | 3.6 | 3.0 | 0.7 (0.0 to 2.7) | no |
 | inference | 46.5 | 44.4 | 3.9 (0.0 to 13.8) | no |

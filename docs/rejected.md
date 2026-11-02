@@ -4,7 +4,7 @@ PLAN.md section 10 listed four approaches this project expected to reject. This 
 the one with the clearest evidence: using distance to closest record (DCR) to decide whether a
 synthetic table is safe to release. DCR is the check most synthetic-data tools put in front of
 their users. On these 51 configurations (three datasets, seven synthesisers, the budgets that were
-run, three seeds each), it failed in both directions. It passed both configurations an attack
+run, three seeds each), it failed in both directions. It passed the one configuration an attack
 broke, and it flagged eight configurations that no attack could break, seven of them carrying a
 differential-privacy guarantee.
 
@@ -36,7 +36,7 @@ interval, at the Bonferroni level, to exclude zero.
 ## What happened
 
 **It passed the configuration an attack broke.** AIM at epsilon 1 on ACS (smartnoise-synth
-1.0.8) is one of the two configurations in the grid where an attack detects a risk. The inference attack
+1.0.8) is the one configuration in the grid where an attack detects a risk. The inference attack
 recovers the income bracket of 23.4% of training records against 21.4% of control records, a
 risk of 2.5% (0.7 to 4.4). Its closer-to-training share is 0.492, and every seed's interval
 includes one half (the lowest lower bound is 0.467). Its exact-copy rates are 0.8% for targets
@@ -58,13 +58,15 @@ share whose interval sits above one half on every seed:
 
 Seven of the eight are differentially private. MST at epsilon 0.5 is among the smallest budgets in
 the grid, and its guarantee comes from the library's own accountant (`docs/synthesisers.md`). A
-release gate built on DCR would have stopped every MST table on IEEE-CIS and passed both
-configurations the attacks break.
+release gate built on DCR would have stopped every MST table on IEEE-CIS and passed the
+configuration the attacks break.
 
 **It passed the diffusion model too (added 2026-10-30).** TabDDPM on ACS (synthcity 0.2.12, no
 privacy), added to the grid after this page was first written (PLAN.md section 2.11), is the
-second configuration an attack breaks: multivariate singling out, a risk of 1.8% (0.7 to 2.9).
-Its closer-to-training share is 0.504, and every seed's interval includes one half (the lowest
+configuration where an attack detected a risk under the single-search singling out: 1.8% (0.7
+to 2.9). Averaged over five searches (PLAN.md section 2.12, 2026-11-01) it is 0.6% (0.0 to 1.7)
+and no longer detected, so it is not counted here as a configuration an attack breaks. Its
+closer-to-training share is 0.504, and every seed's interval includes one half (the lowest
 lower bound is 0.474). Its exact-copy rates are 6.4% for targets and 6.1% for control. DCR flags
 no TabDDPM configuration on any dataset.
 
@@ -94,7 +96,7 @@ the perturbed copy, SMOTE-NC and k-anonymity: every seed's interval sits above o
 not flag the overfitted TVAE, which no attack catches on its full target sets either. So DCR
 does catch copies and near-copies, which is the case it was designed for. The rejection stands
 for the cases that matter here: tables that are not copies, where it flagged differentially
-private ones no attack could break and passed both that an attack broke.
+private ones no attack could break and passed the one that an attack broke.
 
 ## What the project does instead
 

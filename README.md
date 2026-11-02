@@ -72,11 +72,11 @@ detected are named in [docs/results.md](docs/results.md#the-leakage-ladder).
 | Dataset | Perturbed copy | SMOTE-NC | k-anonymity, k = 5 | TVAE, 3,000 epochs |
 |---|---|---|---|---|
 | ACS PUMS, California 2018 | 4 of 5, up to 18.5% (linkability, 10 neighbours); utility -0.014 (employment) | 4 of 5, up to 27.8% (inference); utility -0.009 (employment) | 2 of 5, up to 9.3% (inference); utility -0.019 (employment) | none detected; utility -0.068 (employment) |
-| IEEE-CIS card transactions | 3 of 5, up to 7.7% (inference); utility -0.050 (fraud) | 4 of 5, up to 38.6% (inference); utility -0.043 (fraud) | 2 of 5, up to 6.1% (inference); utility -0.082 (fraud) | none detected; utility -0.131 (fraud) |
+| IEEE-CIS card transactions | 3 of 5, up to 7.7% (inference); utility -0.050 (fraud) | 3 of 5, up to 38.6% (inference); utility -0.043 (fraud) | 2 of 5, up to 6.1% (inference); utility -0.082 (fraud) | none detected; utility -0.131 (fraud) |
 | NY SPARCS discharges | 3 of 5, up to 57.6% (inference); utility -0.010 (high_charge) | 3 of 5, up to 32.1% (inference); utility -0.009 (high_charge) | 2 of 5, up to 4.9% (inference); utility -0.033 (long_stay) | none detected; utility -0.078 (long_stay) |
 
 **The most exposed records.** The same attacks on each grid table's most unusual quarter of
-targets against its most unusual quarter of control records: 7 detected risks
+targets against its most unusual quarter of control records: 5 detected risks
 across 51 configurations, where chance alone would give about 1.3 of the
 255 tests.
 
@@ -84,10 +84,8 @@ across 51 configurations, where chance alone would give about 1.3 of the
 |---|---|---|---|---|
 | ACS PUMS, California 2018 | TabDDPM, epsilon inf | inference | 8.5 (4.3 to 12.6) | 31.5 vs 25.2 |
 | ACS PUMS, California 2018 | MST, epsilon 1 | inference | 4.6 (1.9 to 7.4) | 16.0 vs 11.9 |
-| ACS PUMS, California 2018 | AIM, epsilon 1 | singling out, multivariate | 2.2 (0.5 to 3.9) | 6.5 vs 4.3 |
 | ACS PUMS, California 2018 | AIM, epsilon 1 | inference | 7.2 (3.8 to 10.7) | 24.2 vs 18.3 |
 | ACS PUMS, California 2018 | AIM, epsilon 2 | inference | 5.5 (2.0 to 9.0) | 23.6 vs 19.1 |
-| ACS PUMS, California 2018 | PATE-CTGAN, epsilon 2 | singling out, multivariate | 1.0 (0.3 to 1.8) | 1.5 vs 0.5 |
 | NY SPARCS discharges | PATE-CTGAN, epsilon 4 | linkability, 10 neighbours | 0.8 (0.2 to 1.4) | 0.9 vs 0.1 |
 
 **A foundation model as the membership attacker.** The same Groundhog evidence classified
@@ -101,12 +99,13 @@ not published and nothing here depends on it. The table by table numbers are in
 [docs/results.md](docs/results.md#membership-inference-with-a-foundation-model-attacker).
 
 **What leaked.** A risk counts when its interval at the Bonferroni level excludes zero.
+Beside each, Anonymeter on the same tables, pooled the same way (PLAN.md section 2.12);
+a leak it does not detect at that level stays, marked as not reproduced.
 
-| Dataset | Library and version | Configuration | Attack | Risk, % (95% CI) | Success on members vs control, % |
-|---|---|---|---|---|---|
-| ACS PUMS, California 2018 | synthcity 0.2.12 | TabDDPM, epsilon inf, 20,000 rows | singling out, multivariate | 1.8 (0.7 to 2.9) | 9.5 vs 7.8 |
-| ACS PUMS, California 2018 | smartnoise-synth 1.0.8 | AIM, epsilon 1, 20,000 rows | inference | 2.5 (0.7 to 4.4) | 23.4 vs 21.4 |
-| ACS PUMS, California 2018 | smartnoise-synth 1.0.8 | AIM, epsilon 1, about 1,000 rows | membership, TabFM | accuracy 0.650 (0.558 to 0.735) | |
+| Dataset | Library and version | Configuration | Attack | Risk, % (95% CI) | Success on members vs control, % | Anonymeter, risk % (95% CI) |
+|---|---|---|---|---|---|---|
+| ACS PUMS, California 2018 | smartnoise-synth 1.0.8 | AIM, epsilon 1, 20,000 rows | inference | 2.5 (0.7 to 4.4) | 23.4 vs 21.4 | 1.8 (0.0 to 3.7), **not reproduced** |
+| ACS PUMS, California 2018 | smartnoise-synth 1.0.8 | AIM, epsilon 1, about 1,000 rows | membership, TabFM | accuracy 0.650 (0.558 to 0.735) | | |
 
 <!-- report:end -->
 
@@ -130,7 +129,7 @@ is not something these attacks are shown to catch.
 ## Tried and rejected
 
 Distance to closest record, the check most synthetic-data tools show their users, was tested as a
-privacy measure on every table and rejected. It passed both configurations an attack broke and
+privacy measure on every table and rejected. It passed the one configuration an attack broke and
 failed eight that no attack could break, seven of them differentially private. The evidence is in
 [docs/rejected.md](docs/rejected.md). DCR stays in the full tables, labelled as what it is.
 

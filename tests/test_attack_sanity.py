@@ -21,7 +21,7 @@ from facsimile.attacks.dcr import dcr
 from facsimile.attacks.inference import inference
 from facsimile.attacks.linkability import linkability
 from facsimile.attacks.risk import residual, wilson
-from facsimile.attacks.singling_out import Mode, singling_out
+from facsimile.attacks.singling_out import SEARCHES, Mode, search_seeds, singling_out
 from facsimile.prep import Categorical, Domain, Numeric, encode, fit_domain
 
 CONTROL_LEVEL = 0.02
@@ -105,6 +105,26 @@ def test_singling_out_copy_is_detected_and_independent_is_not(world, mode: Mode)
     assert copied.risk.detected, copied.as_dict()
     fresh = singling_out(targets, control, independent, domain, mode=mode, n_attacks=300)
     assert fresh.risk.lo < CONTROL_LEVEL, fresh.as_dict()
+
+
+def test_singling_out_averages_its_searches_without_counting_them_as_trials(world) -> None:  # type: ignore[no-untyped-def]
+    """PLAN.md section 2.12: the mean over the searches, the trials left at the number of attacks,
+    and the first search is the single search it replaced."""
+    _, targets, control, independent, domain = world
+    five = singling_out(targets, control, independent, domain, n_attacks=300, seed=7)
+    runs = five.params["searches"]
+    assert runs["seeds"] == search_seeds(7) == [7, 1007, 2007, 3007, 4007]
+    assert len(runs["main"]) == SEARCHES
+    assert five.main.successes == pytest.approx(np.mean(runs["main"]))
+    assert five.control.successes == pytest.approx(np.mean(runs["control"]))
+    assert five.main.trials == five.control.trials == 300
+    one = singling_out(targets, control, independent, domain, n_attacks=300, seed=7, searches=1)
+    assert (one.main.successes, one.control.successes, one.baseline.successes) == (
+        runs["main"][0],
+        runs["control"][0],
+        runs["baseline"][0],
+    )
+    assert len(set(runs["main"])) > 1, "the searches should differ, or there is nothing to average"
 
 
 def test_dcr_sees_a_copy_and_calls_an_independent_table_even(world) -> None:  # type: ignore[no-untyped-def]

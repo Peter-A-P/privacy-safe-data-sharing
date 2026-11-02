@@ -17,12 +17,18 @@ yields fewer singling-out predicates scores lower, as in the reference library.
 
 Following the reference library, duplicate rows are dropped from each table before predicates
 are made or counted. `docs/attacks.md` records the choice and its effect.
+
+Which predicates the search finds is random, and that noise alone moved one configuration across
+the detection line (PLAN.md section 2.12). So a risk averages `SEARCHES` independent searches on
+the same table and the same records: the successes are the mean over the searches and the trials
+stay at the number of attacks, because the searches reuse the same records and are not
+independent trials.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Literal
+from typing import Final, Literal
 
 import numpy as np
 import pandas as pd
@@ -35,6 +41,14 @@ Mode = Literal["univariate", "multivariate"]
 
 EQ, NE, LT, GT, LE, GE = range(6)
 BATCH = 10_000
+SEARCHES: Final = 5
+SEARCH_STRIDE: Final = 1_000
+
+
+def search_seeds(seed: int, searches: int = SEARCHES) -> list[int]:
+    """The seeds of the searches averaged: the table's own seed first, so the first search is the
+    one run before section 2.12, then a stride apart."""
+    return [seed + SEARCH_STRIDE * k for k in range(searches)]
 
 
 @dataclass(frozen=True, slots=True)
@@ -204,28 +218,19 @@ def random_predicates(
     return Predicates(cols.astype(np.int64), ops.astype(np.int64), vals.astype(np.int64))
 
 
-def singling_out(
-    targets: pd.DataFrame,
-    control: pd.DataFrame,
-    synthetic: pd.DataFrame,
-    domain: Domain,
-    *,
-    mode: Mode = "multivariate",
-    n_attacks: int = 2000,
-    n_cols: int = 3,
-    max_attempts: int = 1_000_000,
-    seed: int = 0,
-) -> AttackResult:
-    if len(targets) != len(control):
-        raise ValueError(
-            "the target and control sets must be the same size for the rates to compare"
-        )
+def _search(
+    tgt: NDArray[np.int16],
+    ctl: NDArray[np.int16],
+    syn: NDArray[np.int16],
+    numeric: NDArray[np.bool_],
+    mode: Mode,
+    n_attacks: int,
+    n_cols: int,
+    max_attempts: int,
+    seed: int,
+) -> tuple[int, int, int, int]:
+    """One search: successes on the targets, the control and the baseline, and predicates found."""
     rng = np.random.default_rng(seed)
-    names = domain.names
-    numeric = np.array([domain[c].kind == "numeric" for c in names])
-    syn = _unique_rows(synthetic[names])
-    tgt = _unique_rows(targets[names])
-    ctl = _unique_rows(control[names])
     if mode == "univariate":
         preds = univariate(syn, numeric, n_attacks, rng)
         width = 1
@@ -237,18 +242,57 @@ def singling_out(
     ctrl = int((counts(ctl, preds) == 1).sum())
     base_preds = random_predicates(syn, numeric, n_attacks, width, rng)
     base = int((counts(tgt_bits, base_preds) == 1).sum())
+    return main, ctrl, base, len(preds)
+
+
+def singling_out(
+    targets: pd.DataFrame,
+    control: pd.DataFrame,
+    synthetic: pd.DataFrame,
+    domain: Domain,
+    *,
+    mode: Mode = "multivariate",
+    n_attacks: int = 2000,
+    n_cols: int = 3,
+    max_attempts: int = 1_000_000,
+    seed: int = 0,
+    searches: int = SEARCHES,
+) -> AttackResult:
+    if len(targets) != len(control):
+        raise ValueError(
+            "the target and control sets must be the same size for the rates to compare"
+        )
+    if searches < 1:
+        raise ValueError("at least one search")
+    names = domain.names
+    numeric = np.array([domain[c].kind == "numeric" for c in names])
+    syn = _unique_rows(synthetic[names])
+    tgt = _unique_rows(targets[names])
+    ctl = _unique_rows(control[names])
+    seeds = search_seeds(seed, searches)
+    runs = [
+        _search(tgt, ctl, syn, numeric, mode, n_attacks, n_cols, max_attempts, s) for s in seeds
+    ]
+    main, ctrl, base, found = (np.asarray(x, dtype=np.int64) for x in zip(*runs, strict=True))
     return result(
         f"singling_out_{mode}",
         n_attacks,
-        float(main),
-        float(ctrl),
-        float(base),
+        float(main.mean()),
+        float(ctrl.mean()),
+        float(base.mean()),
         {
             "mode": mode,
-            "n_cols": width,
-            "predicates_found": len(preds),
+            "n_cols": 1 if mode == "univariate" else n_cols,
+            "predicates_found": int(found.min()),
             "max_attempts": max_attempts,
             "unique_rows": {"synthetic": len(syn), "targets": len(tgt), "control": len(ctl)},
             "seed": seed,
+            "searches": {
+                "seeds": seeds,
+                "main": main.tolist(),
+                "control": ctrl.tolist(),
+                "baseline": base.tolist(),
+                "predicates_found": found.tolist(),
+            },
         },
     )

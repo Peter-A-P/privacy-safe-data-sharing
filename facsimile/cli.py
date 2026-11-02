@@ -101,6 +101,30 @@ def cmd_attack_exposed(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_attack_searches(args: argparse.Namespace) -> int:
+    from facsimile.attacks.searches import search_again
+
+    ready = _done_cells(args)
+    print(f"singling out over five searches on {len(ready)} tables")
+    for i, cell in enumerate(ready, 1):
+        for exposed_records in (False, True):
+            rec = search_again(cell, exposed_records=exposed_records, reference=args.reference)
+            if rec is None:
+                continue
+            so = rec["attacks"]["singling_out_multivariate"]
+            ref = rec.get("reference", {}).get("anonymeter", {}).get("singling_out_multivariate")
+            theirs = (
+                f", Anonymeter {ref['risk']['value']:.3f}" if ref and not exposed_records else ""
+            )
+            print(
+                f"[{i}/{len(ready)}] {cell.dataset} {cell.method} {cell.eps_tag} seed{cell.seed}"
+                f"{' exposed' if exposed_records else ''}: multivariate "
+                f"{so['risk']['value']:.3f} ({so['risk']['lo']:.3f} to {so['risk']['hi']:.3f}){theirs}",
+                flush=True,
+            )
+    return 0
+
+
 def cmd_utility(args: argparse.Namespace) -> int:
     from facsimile.utility.run import run_utility
 
@@ -365,6 +389,16 @@ def main(argv: Sequence[str] | None = None) -> int:
         if name == "attack":
             p.add_argument("--reference", action="store_true", help="also run Anonymeter")
         p.set_defaults(func=func)
+
+    srch = sub.add_parser(
+        "attack-searches",
+        help="singling out averaged over five searches, into the records on disk (PLAN.md 2.12)",
+    )
+    srch.add_argument("datasets", nargs="+")
+    srch.add_argument("--methods", nargs="*", default=None)
+    srch.add_argument("--seeds", type=int, default=3)
+    srch.add_argument("--reference", action="store_true", help="also Anonymeter, grid tables only")
+    srch.set_defaults(func=cmd_attack_searches)
 
     gh = sub.add_parser("groundhog", help="membership inference at about 1,000 rows, resumable")
     gh.add_argument("datasets", nargs="+")

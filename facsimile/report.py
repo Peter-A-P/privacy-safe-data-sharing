@@ -222,6 +222,21 @@ def _risks(seeds: list[dict[str, Any]]) -> dict[str, Any]:
     return out
 
 
+def _reference_risks(seeds: list[dict[str, Any]]) -> dict[str, Any] | None:
+    """Anonymeter's risks pooled over the seeds exactly as the project's are, from its success
+    counts (PLAN.md section 2.12); None unless every attacked seed has them."""
+    refs = [s.get("reference", {}).get("anonymeter") for s in seeds]
+    if not all(r and all("counts" in r.get(a, {}) for a in ATTACKS) for r in refs):
+        return None
+
+    def as_record(counts: dict[str, Any]) -> dict[str, Any]:
+        return {
+            k: {"successes": counts[k], "trials": counts["trials"]} for k in ("main", "control")
+        }
+
+    return _risks([{"attacks": {a: as_record(r[a]["counts"]) for a in ATTACKS}} for r in refs if r])
+
+
 def _membership_fm(record: dict[str, Any], forest: dict[str, Any] | None) -> dict[str, Any]:
     """TabFM as the membership attacker beside the forest, on the same evaluation tables."""
     pool = record["pooled"]
@@ -288,6 +303,9 @@ def summarise(c: Cell) -> dict[str, Any]:
     if c.attacks:
         seeds = [c.attacks[s] for s in sorted(c.attacks)]
         out["risk"] = _risks(seeds)
+        ref = _reference_risks(seeds)
+        if ref is not None:
+            out["risk_reference"] = ref
         dcr = [s["dcr"] for s in seeds if "dcr" in s]
         if dcr:
             out["dcr"] = {
@@ -489,19 +507,23 @@ def leaks_of(
         }
         for a, risk in r.get(key, {}).items():
             if risk["detected"]:
-                leaks.append(
-                    {
-                        **named,
-                        "attack": a,
-                        "risk": risk["value"],
-                        "lo": risk["lo"],
-                        "hi": risk["hi"],
-                        "lo_bonferroni": risk["lo_bonferroni"],
-                        "main_rate": risk["main_rate"],
-                        "control_rate": risk["control_rate"],
-                        "seeds": len(r[seeds_key]),
+                leak = {
+                    **named,
+                    "attack": a,
+                    "risk": risk["value"],
+                    "lo": risk["lo"],
+                    "hi": risk["hi"],
+                    "lo_bonferroni": risk["lo_bonferroni"],
+                    "main_rate": risk["main_rate"],
+                    "control_rate": risk["control_rate"],
+                    "seeds": len(r[seeds_key]),
+                }
+                ref = r.get("risk_reference", {}).get(a) if key == "risk" else None
+                if ref:
+                    leak["reference"] = {
+                        k: ref[k] for k in ("value", "lo", "hi", "lo_bonferroni", "detected")
                     }
-                )
+                leaks.append(leak)
         for attack in ("membership", "membership_tabfm"):
             mem = r.get(attack)
             if key == "risk" and mem and mem["detected"]:
@@ -1145,6 +1167,8 @@ def render_readme_section(report: dict[str, Any]) -> str:
         *render_exposed_summary(report),
         *render_membership_fm_summary(report),
         "**What leaked.** A risk counts when its interval at the Bonferroni level excludes zero.",
+        "Beside each, Anonymeter on the same tables, pooled the same way (PLAN.md section 2.12);",
+        "a leak it does not detect at that level stays, marked as not reproduced.",
         "",
     ]
     leaks = report["leaks"]
@@ -1152,8 +1176,8 @@ def render_readme_section(report: dict[str, Any]) -> str:
         out.append("No attack detected a risk on any table measured so far.")
     else:
         out += [
-            "| Dataset | Library and version | Configuration | Attack | Risk, % (95% CI) | Success on members vs control, % |",
-            "|---|---|---|---|---|---|",
+            "| Dataset | Library and version | Configuration | Attack | Risk, % (95% CI) | Success on members vs control, % | Anonymeter, risk % (95% CI) |",
+            "|---|---|---|---|---|---|---|",
         ]
         for lk in leaks:
             conf = f"{METHOD_NAMES[lk['method']]}, epsilon {_eps_label(lk['epsilon'])}, 20,000 rows"
@@ -1162,16 +1186,24 @@ def render_readme_section(report: dict[str, Any]) -> str:
                 who = "membership" if lk["attack"] == "membership" else "membership, TabFM"
                 out.append(
                     f"| {DATASET_NAMES[lk['dataset']]} | {lk['library']} {lk['version']} | "
-                    f"{conf.replace('20,000', 'about 1,000')} | {who} | {meas} | |"
+                    f"{conf.replace('20,000', 'about 1,000')} | {who} | {meas} | | |"
                 )
                 continue
             out.append(
                 f"| {DATASET_NAMES[lk['dataset']]} | {lk['library']} {lk['version']} | {conf} | "
                 f"{ATTACK_NAMES[lk['attack']]} | {_pct(lk['risk'])} ({_pct(lk['lo'])} to "
-                f"{_pct(lk['hi'])}) | {_pct(lk['main_rate'])} vs {_pct(lk['control_rate'])} |"
+                f"{_pct(lk['hi'])}) | {_pct(lk['main_rate'])} vs {_pct(lk['control_rate'])} | "
+                f"{_reference_cell(lk.get('reference'))} |"
             )
     out += ["", END]
     return "\n".join(out)
+
+
+def _reference_cell(ref: dict[str, Any] | None) -> str:
+    if not ref:
+        return "not run"
+    call = "detected" if ref["detected"] else "**not reproduced**"
+    return f"{_pct(ref['value'])} ({_pct(ref['lo'])} to {_pct(ref['hi'])}), {call}"
 
 
 def _short_reason(reason: str) -> str:

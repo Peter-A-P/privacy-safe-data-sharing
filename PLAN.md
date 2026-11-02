@@ -283,7 +283,8 @@ tables is the question.
   -0.061 on IEEE-CIS, -0.015 on SPARCS), still outside the 0.02 rule on every dataset's worst
   seed and blocked by the 03 gate; and, as expected, the deep arm an attack detects: multivariate
   singling out on ACS, 1.8% (0.7 to 2.9), the grid's first leak without differential privacy,
-  which Anonymeter puts at the edge of detection (`docs/attacks.md`). Not expected: Groundhog does
+  which Anonymeter puts at the edge of detection (`docs/attacks.md`); averaged over five searches
+  (section 2.12) it is 0.6% (0.0 to 1.7) and no longer a leak. Not expected: Groundhog does
   not detect it on any dataset (finished 2026-11-01): 0.542 (0.448 to 0.633) on ACS, 0.483 (0.391
   to 0.576) on IEEE-CIS, 0.500 (0.407 to 0.593) on SPARCS, and the TabFM attacker on the same
   evidence agrees. At 1,000 rows the defaults give an under-trained model, so this says the attack
@@ -327,6 +328,17 @@ before anything is rerun and applies to every table, in both directions.
   detects and this project does not is listed in `docs/attacks.md`.
 - The ACS TabDDPM row may stay, go, or be joined by others. Whatever the averaged numbers say
   is what ships.
+- **What it showed (2026-11-01).** Every one of the 189 attack records reproduced its published
+  first search exactly. The ACS TabDDPM row goes: 0.6% (0.0 to 1.7) here and 1.0% (0.0 to 2.1) in
+  Anonymeter, neither detected. No singling-out risk is detected pooled on any configuration, by
+  either. The one remaining leak, AIM at epsilon 1 on ACS (inference, unchanged at 2.5% (0.7 to
+  4.4)), is not reproduced by Anonymeter at the Bonferroni level, 1.8% (0.0 to 3.7), and is marked
+  so. Anonymeter detects two linkability risks with ten neighbours that this project does not
+  (PATE-CTGAN at epsilon 2 on ACS, MST at epsilon 8 on SPARCS), listed in `docs/attacks.md`; all
+  three differences trace to the tie-break. On the exposed records two singling-out risks leave
+  (AIM at epsilon 1 and PATE-CTGAN at epsilon 2, both ACS), seven risks becoming five. On the
+  ladder, SMOTE-NC on IEEE-CIS loses its multivariate singling-out detection (three of five
+  attacks instead of four). The run took 7 h 40 min on the desktop CPU in six processes.
 
 **Cost.** CA$0: the desktop CPU, an estimated 10 to 17 hours of compute before running tables in
 parallel, from the recorded attack timings (this project's multivariate search 24 to 32 s a

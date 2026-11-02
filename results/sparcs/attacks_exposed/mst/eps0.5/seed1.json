@@ -30,10 +30,10 @@
         "trials": 500
       },
       "baseline": {
-        "value": 0.02564443474062197,
-        "lo": 0.012328008269927578,
-        "hi": 0.03896086121131637,
-        "successes": 11.0,
+        "value": 0.033186489753114175,
+        "lo": 0.017959433429834033,
+        "hi": 0.048413546076394316,
+        "successes": 14.8,
         "trials": 500
       },
       "risk": {
@@ -53,37 +53,74 @@
           "targets": 500,
           "control": 498
         },
-        "seed": 1
+        "seed": 1,
+        "searches": {
+          "seeds": [
+            1,
+            1001,
+            2001,
+            3001,
+            4001
+          ],
+          "main": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "control": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "baseline": [
+            11,
+            13,
+            15,
+            19,
+            16
+          ],
+          "predicates_found": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
       }
     },
     "singling_out_multivariate": {
       "attack": "singling_out_multivariate",
       "n_attacks": 500,
       "main": {
-        "value": 0.13679050860892814,
-        "lo": 0.10691500187152081,
-        "hi": 0.16666601534633546,
-        "successes": 67.0,
+        "value": 0.13163015517932822,
+        "lo": 0.10224408209767075,
+        "hi": 0.1610162282609857,
+        "successes": 64.4,
         "trials": 500
       },
       "control": {
-        "value": 0.13480575728985122,
-        "lo": 0.10511672384831994,
-        "hi": 0.1644947907313825,
-        "successes": 66.0,
+        "value": 0.1292484535964359,
+        "lo": 0.10009341047092073,
+        "hi": 0.1584034967219511,
+        "successes": 63.2,
         "trials": 500
       },
       "baseline": {
-        "value": 0.07129371507939057,
-        "lo": 0.049066507424906855,
-        "hi": 0.09352092273387429,
-        "successes": 34.0,
+        "value": 0.062163859011636846,
+        "lo": 0.04134881476705132,
+        "hi": 0.08297890325622237,
+        "successes": 29.4,
         "trials": 500
       },
       "risk": {
-        "value": 0.0022939950604153846,
+        "value": 0.0027352252117488233,
         "lo": 0.0,
-        "hi": 0.05091974263137693,
+        "hi": 0.05021032398590639,
         "detected": false
       },
       "beats_baseline": true,
@@ -97,7 +134,44 @@
           "targets": 500,
           "control": 498
         },
-        "seed": 1
+        "seed": 1,
+        "searches": {
+          "seeds": [
+            1,
+            1001,
+            2001,
+            3001,
+            4001
+          ],
+          "main": [
+            67,
+            64,
+            56,
+            70,
+            65
+          ],
+          "control": [
+            66,
+            61,
+            63,
+            74,
+            52
+          ],
+          "baseline": [
+            34,
+            32,
+            37,
+            29,
+            15
+          ],
+          "predicates_found": [
+            500,
+            500,
+            500,
+            500,
+            500
+          ]
+        }
       }
     },
     "linkability_k1": {
@@ -267,8 +341,8 @@
     }
   },
   "timings": {
-    "singling_out_univariate": 0.1,
-    "singling_out_multivariate": 0.93,
+    "singling_out_univariate": 0.36,
+    "singling_out_multivariate": 7.91,
     "linkability_k1": 10.31,
     "linkability_k10": 9.63,
     "inference": 8.47

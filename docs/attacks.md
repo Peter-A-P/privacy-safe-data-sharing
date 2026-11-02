@@ -148,38 +148,51 @@ are published here (above, under "A foundation model as the attacker").
 
 ## Reference agreement
 
-Anonymeter 1.1.0 was run beside this project's implementations on seed 0 of every configuration
-attacked (48 tables), and on all three seeds of TabDDPM's when it joined the grid (9 tables), with
-the same targets, control, synthetic table, secret, attribute halves,
-number of attacks and search budget (`facsimile attack --reference`). The table, written by
-`facsimile report`, is in [results.md](results.md#reference-agreement-this-project-against-anonymeter).
+Anonymeter 1.1.0 is run beside this project's implementations on every seed of every grid
+configuration attacked (153 tables, since 2026-11-01; before that, seed 0 of each and all seeds
+of TabDDPM's), with the same targets, control, synthetic table, secret, attribute halves, number
+of attacks and search budget. Singling out runs five searches in both, with the same seeds, and
+is averaged the same way (PLAN.md section 2.12). Every record keeps Anonymeter's success counts,
+so the report pools its three seeds exactly as it pools this project's. `facsimile attack
+--reference` writes it for a new table; `facsimile attack-searches --reference` brought the
+records already on disk up to the rule. The table, written by `facsimile report`, is in
+[results.md](results.md#reference-agreement-this-project-against-anonymeter).
 
-**The intervals agree everywhere.** For all five attacks on all 57 tables, the two risks' 95%
-intervals overlap. The mean difference between the two risks is under 0.6 percentage points
-for every attack. The largest is 3.5 points, the inference risk on IEEE-CIS MST at epsilon 0.5:
-0.0% (0.0 to 2.5) here and 3.5% (0.0 to 7.3) in Anonymeter. Neither detects a risk there.
+**Seed by seed, the intervals agree on 764 of 765 pairs.** The mean difference between the two
+risks is under 0.3 percentage points for every attack. The largest is 3.5 points, the inference
+risk on IEEE-CIS MST at epsilon 0.5, seed 0: 0.0% (0.0 to 2.5) here and 3.5% (0.0 to 7.3) in
+Anonymeter. Neither detects a risk there. The one pair whose intervals do not overlap is
+linkability with ten neighbours on IEEE-CIS TVAE, seed 2: 0.0% (0.0 to 0.1) here and 0.9% (0.2
+to 1.6) in Anonymeter, from the control rates (1.8% against 0.9%), the tie-break below.
 
-**The calls differ on 11 of 285 pairs.** On the first 48 tables they differ on 8 of 240, and
-every one is a borderline case: one implementation's lower bound is above zero by at most 0.18
-points and the other's touches zero. Five are linkability with ten neighbours, two are inference
-and one is multivariate singling out. None is a leak in the README's sense, which pools the three
-seeds and tests at the Bonferroni level. The leak there on those tables (AIM, epsilon 1, ACS,
-inference) is detected by both on this seed: 5.1% (1.8 to 8.3) here and 4.0% (0.7 to 7.3) in
-Anonymeter.
+**The calls differ on 13 of 765 pairs**, every one borderline: one lower bound clears zero by at
+most 0.2 points and the other touches it. Ten are linkability with ten neighbours, two are
+inference and one is multivariate singling out (IEEE-CIS TabDDPM, seed 1, where Anonymeter found
+1,128 of the 2,000 predicates). Univariate singling out agrees exactly on every table.
 
-**TabDDPM's leak is one implementation's call, not both (recorded 2026-10-30).** Three of the
-nine TabDDPM tables differ, by more than the earlier ones: linkability with ten neighbours on
-IEEE-CIS seed 0 (0.1% here, 1.3% (0.2 to 2.5) in Anonymeter), and multivariate singling out on
-ACS seeds 0 and 2, in opposite directions (1.4% (0.0 to 3.3) here against 2.2% (0.4 to 4.0); 2.7%
-(0.8 to 4.6) here against 0.8% (0.0 to 2.8)). That second attack is the leak in the README:
-pooled over the three seeds, 1.8% (0.7 to 2.9) here, with a lower bound of 0.35 points at the
-Bonferroni level. Pooled the same way from Anonymeter's rates (its success rates times the 2,000
-attacks, since it does not report counts), it is 1.1% (0.0 to 2.2), and the Bonferroni lower bound
-touches zero. The success rates on the training records agree, 9.5% here and 9.3% in Anonymeter;
-the control rates do not, 7.9% against 8.3%. That is the singling-out search below: the two draw
-different predicates and score them on different control records. So the leak is reported as this
-project's measurement, as every number here is, and this paragraph is the record that the
-reference library, on the same tables, puts it at the edge of detection rather than inside it.
+**Pooled, as the README calls a leak, they differ on three configurations.**
+
+- *AIM at epsilon 1 on ACS, inference, detected here and not by Anonymeter.* 2.5% (0.7 to 4.4)
+  here, a Bonferroni lower bound of 0.08 points; 1.8% (0.0 to 3.7) in Anonymeter, bound at zero.
+  The success rates agree to within 0.4 points (23.4% against 23.1% on the targets, 21.4%
+  against 21.6% on the control). Seed by seed the two agree on the call at every seed (seed 0:
+  5.1% against 4.0%; seed 2: 3.3% against 3.3%). The pooled difference is seed 1, where both
+  risks are zero but Anonymeter's targets fall further below its control (398 against 428 of
+  2,000; here 428 against 440), which is the tie-break below. The README keeps the leak and marks it as not reproduced, as section 2.12 fixed in advance.
+- *Two risks Anonymeter detects and this project does not*, both linkability with ten neighbours,
+  listed here as section 2.12 requires: PATE-CTGAN at epsilon 2 on ACS, 0.2% (0.0 to 0.5) here
+  against 0.4% (0.2 to 0.7), Bonferroni bound 0.12 points; and MST at epsilon 8 on SPARCS, 0.1%
+  (0.0 to 0.5) here against 0.4% (0.1 to 0.8), bound 0.02 points. In both the success on the
+  targets is close (0.7% against 0.6%; 1.1% against 1.0%) and Anonymeter's control rate is lower
+  (0.2% against 0.5%; 0.5% against 1.0%): the tie-break again.
+
+**TabDDPM on ACS is no longer a leak (2026-11-01).** Under a single search it was detected here,
+1.8% (0.7 to 2.9) pooled, and not by Anonymeter, 1.1% (0.0 to 2.2), and the seed-level gaps ran in
+opposite directions (seed 0: 1.4% here against 2.2%; seed 2: 2.7% against 0.8%). That was the
+noise of the predicate search, which section 2.12 averages away. On five searches it is 0.6%
+(0.0 to 1.7) here and 1.0% (0.0 to 2.1) in Anonymeter, neither detected; the success rates are
+8.7% against 8.9% on the targets and 8.2% against 8.0% on the control. Within one table the
+successes on the targets ranged from 127 to 193 of 2,000 between searches.
 
 **The causes are the two choices recorded above.**
 
@@ -187,15 +200,14 @@ reference library, on the same tables, puts it at the edge of detection rather t
   breaks ties at random, seeded. Anonymeter takes `numpy.argsort` order. On binned attributes
   most targets have many synthetic records at the same distance, so the two pick different
   records and the success rates move by a few tenths of a point in either direction. The control
-  rates move too: on SPARCS MST at epsilon 8 the control linkability rate is 1.1% here and 0.5%
-  in Anonymeter. That is the pattern a tie-break difference produces, and it is why the five
-  linkability disagreements go both ways.
+  rates move most, and in both directions, which is the pattern a tie-break difference produces.
+  Every pooled disagreement above is of this kind.
 - *The singling-out search.* Both search with the same budget of 1,000,000 attempts, but they
-  draw candidate predicates in a different order. On some tables neither finds all 2,000
-  predicates (Anonymeter reported 972 to 1,491 on three SPARCS tables), and the two then score
-  different predicate sets. The multivariate singling-out disagreements (IEEE-CIS MST at epsilon
-  0.5, and TabDDPM on ACS above) come from the control rate: 8.2% here against 10.2% in
-  Anonymeter on IEEE-CIS MST.
+  draw candidate predicates in a different order. Anonymeter stopped short of 2,000 multivariate
+  predicates in 165 of its 765 searches (as few as 512, on IEEE-CIS), and its rate divides by the
+  number requested, so there it reads lower than its success per predicate. Pooled over five
+  searches and three seeds, the two multivariate risks differ by at most 0.9 points (SPARCS MST
+  at epsilon 0.5).
 
 Neither difference is a defect in either implementation. Both follow the paper, which leaves
 these choices open. The project keeps its own choices for the reasons given above and reports its
@@ -284,7 +296,8 @@ level on the grid mean something.
   It leaves the secret as it was, which is what inference tests. That is the known weakness of
   k-anonymity (Machanavajjhala et al. 2007, l-diversity).
 - **The perturbed copy and SMOTE-NC** are caught by inference and linkability everywhere. Both
-  are also caught by multivariate singling out on ACS, and SMOTE-NC on IEEE-CIS too.
+  are also caught by multivariate singling out on ACS. SMOTE-NC on IEEE-CIS was too under a
+  single search; averaged over five (PLAN.md section 2.12) it is not.
 - **Univariate singling out** detects nothing anywhere, not even on the perturbed copy. In a
   binned domain with rare categories merged, almost no single value is unique to one person.
   That attack has no power on these coded tables, and its zeros on the grid say nothing.
@@ -325,24 +338,24 @@ its mean mixed-type distance to a fixed sample of 2,000 test-split records, whic
 sees (`facsimile/attacks/exposed.py`). That gives 500 targets against 500 controls per seed,
 pooled over three seeds, with the same Bonferroni level as the leak table.
 
-**Six risks appear that the full target set does not show, all on differentially private
-configurations.** By chance alone about 1.2 of the 240 tests would. The strongest are
-inference on ACS:
+**Five risks appear on the exposed records, four of them where the full target set shows none.**
+By chance alone about 1.3 of the 255 tests would. Four are inference on ACS:
 
 | Configuration | Risk on all targets | Risk on the most exposed |
 |---|---|---|
+| TabDDPM, no privacy | 1.4% (0.0 to 3.4), not detected | 8.5% (4.3 to 12.6) |
 | AIM, epsilon 1 | 2.5% (0.7 to 4.4) | 7.2% (3.8 to 10.7) |
 | AIM, epsilon 2 | 1.7% (0.0 to 3.7), not detected | 5.5% (2.0 to 9.0) |
 | MST, epsilon 1 | 0.2% (0.0 to 1.7), not detected | 4.6% (1.9 to 7.4) |
 
-Three smaller ones are at the edge of what chance could produce:
-- multivariate singling out on AIM at epsilon 1;
-- multivariate singling out on PATE-CTGAN at epsilon 2 on ACS;
-- linkability at ten neighbours on PATE-CTGAN at epsilon 4 on SPARCS, 0.9% against 0.1%.
+The fifth is at the edge of what chance could produce: linkability at ten neighbours on
+PATE-CTGAN at epsilon 4 on SPARCS, 0.9% against 0.1%. Under a single singling-out search there
+were two more, both multivariate singling out on ACS (AIM at epsilon 1, PATE-CTGAN at epsilon 2);
+averaged over five searches (PLAN.md section 2.12) neither is detected.
 
-None of the three synthesisers without a privacy guarantee shows a risk on its exposed records.
-That is not proof that they protect unusual people better, and the project did not test why. It
-is reported as measured.
+TabDDPM is the only synthesiser without a privacy guarantee that shows a risk on its exposed
+records. The project did not test why the copula, CTGAN and TVAE do not; it is reported as
+measured.
 
 What this changes: a configuration that passes on randomly chosen targets can still give
 unusual people away. Differential privacy's bound holds for every person, but at epsilon 1 and 2

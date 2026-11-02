@@ -401,6 +401,12 @@ function leak(data) {
       stat(pct(l.risk), "excess: what the table gives away about the people in it", "down", `95% interval ${pct(l.lo)} to ${pct(l.hi)}`),
     );
     card.append(head, stats);
+    const ref = l.reference;
+    if (ref) {
+      card.append(el("p", { class: "note" }, ref.detected
+        ? `Anonymeter, the reference library, on the same tables and pooled the same way: ${pct(ref.value)}, 95% interval ${pct(ref.lo)} to ${pct(ref.hi)}, detected at the corrected level too.`
+        : `Not reproduced by Anonymeter, the reference library: on the same tables, pooled the same way, it puts the excess at ${pct(ref.value)}, 95% interval ${pct(ref.lo)} to ${pct(ref.hi)}, not detected at the corrected level. The leak is this project's measurement, shown with that caveat.`));
+    }
   }
   const dcrOf = (l) => {
     const cell = data.cells.find((c) => c.dataset === l.dataset && c.method === l.method && c.epsilon === l.epsilon);
