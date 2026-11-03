@@ -169,11 +169,22 @@ function hero(data) {
 
   const leaks = data.leaks;
   $("hero-leaks").textContent = `${leaks.length} of ${attacked.length}`;
-  $("hero-leaks-unit").textContent = leaks.length === 1 ? "configuration where an attack detected a risk" : "configurations where an attack detected a risk";
+  $("hero-leaks-unit").textContent = leaks.length === 1 ? "synthesiser configuration where an attack detected a risk" : "synthesiser configurations where an attack detected a risk";
   if (leaks.length) {
     const l = leaks[0];
     const exposed = (data.exposed_leaks || []).filter((x) => METHODS[x.method]).length;
     $("hero-leaks-note").textContent = `${METHODS[l.method].name} at epsilon ${l.epsilon}, with differential privacy, on ${DATASETS[l.dataset].short}: the inference attack, ${pct(l.risk)} excess.${exposed ? ` ${exposed} more on the most unusual people.` : ""}`;
+  }
+
+  // The positive controls: what the attacks find on the techniques synthetic data replaces.
+  const older = (data.ladder || []).filter((r) => r.method !== "tvae_overfit" && LADDER[r.method]);
+  const broken = older.filter((r) => Object.values(r.risk).some((v) => v.detected));
+  $("hero-ladder").textContent = `${broken.length} of ${older.length}`;
+  const top = (data.ladder_leaks || []).filter((l) => LADDER[l.method] && ATTACKS[l.attack]).sort((a, b) => b.risk - a.risk)[0];
+  const overfit = (data.ladder || []).filter((r) => r.method === "tvae_overfit");
+  const overfitCaught = overfit.filter((r) => Object.values(r.risk).some((v) => v.detected)).length;
+  if (older.length) {
+    $("hero-ladder-note").textContent = `A perturbed copy, SMOTE-NC and k-anonymity, on every dataset${top ? `, up to ${pct(top.risk)} excess` : ""}. An overfitted TVAE was ${overfitCaught ? `caught on ${overfitCaught} of ${overfit.length}` : "not caught"}.`;
   }
 
   const useful = attacked.filter((c) => c.passes_utility).length;

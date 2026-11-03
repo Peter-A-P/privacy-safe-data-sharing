@@ -207,9 +207,19 @@ strong { font-weight: 600; }
 
 .hero-points {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  grid-template-columns: repeat(5, 1fr);
   gap: 0.9rem;
   margin: 1.75rem 0 1.1rem;
+}
+
+/* Five across, or the count of tables on its own row above two pairs: never four and one. */
+@media (max-width: 60rem) {
+  .hero-points { grid-template-columns: repeat(2, 1fr); }
+  .hero-points > :first-child { grid-column: 1 / -1; }
+}
+
+@media (max-width: 34rem) {
+  .hero-points { grid-template-columns: 1fr; }
 }
 
 .point {
