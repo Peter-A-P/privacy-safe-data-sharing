@@ -177,13 +177,13 @@ function hero(data) {
   }
 
   // The positive controls: what the attacks find on the techniques synthetic data replaces.
-  const older = (data.ladder || []).filter((r) => r.method !== "tvae_overfit" && LADDER[r.method]);
-  const broken = older.filter((r) => Object.values(r.risk).some((v) => v.detected));
-  $("hero-ladder").textContent = `${broken.length} of ${older.length}`;
+  const classical = (data.ladder || []).filter((r) => r.method !== "tvae_overfit" && LADDER[r.method]);
+  const broken = classical.filter((r) => Object.values(r.risk).some((v) => v.detected));
+  $("hero-ladder").textContent = `${broken.length} of ${classical.length}`;
   const top = (data.ladder_leaks || []).filter((l) => LADDER[l.method] && ATTACKS[l.attack]).sort((a, b) => b.risk - a.risk)[0];
   const overfit = (data.ladder || []).filter((r) => r.method === "tvae_overfit");
   const overfitCaught = overfit.filter((r) => Object.values(r.risk).some((v) => v.detected)).length;
-  if (older.length) {
+  if (classical.length) {
     $("hero-ladder-note").textContent = `A perturbed copy, SMOTE-NC and k-anonymity, on every dataset${top ? `, up to ${pct(top.risk)} excess` : ""}. An overfitted TVAE was ${overfitCaught ? `caught on ${overfitCaught} of ${overfit.length}` : "not caught"}.`;
   }
 
