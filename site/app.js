@@ -169,7 +169,7 @@ function hero(data) {
 
   const leaks = data.leaks;
   $("hero-leaks").textContent = `${leaks.length} of ${attacked.length}`;
-  $("hero-leaks-unit").textContent = leaks.length === 1 ? "synthesiser configuration where an attack detected a risk" : "synthesiser configurations where an attack detected a risk";
+  $("hero-leaks-unit").textContent = leaks.length === 1 ? "synthesiser configuration broken by the attacks" : "synthesiser configurations broken by the attacks";
   if (leaks.length) {
     const l = leaks[0];
     const exposed = (data.exposed_leaks || []).filter((x) => METHODS[x.method]).length;
