@@ -128,6 +128,15 @@ function config(cell) {
   return `${METHODS[cell.method].name}, ${epsLabel(cell.epsilon)}`;
 }
 
+/* Every task within the margin on every seed: the rule's utility half, at any margin. */
+function usefulAt(cell, margin) {
+  return Object.values(cell.utility).every((u) => u.delta_lo_worst > -margin);
+}
+
+function margin() {
+  return Number($("surface-margin").value);
+}
+
 function cellsOf(data, ds) {
   return data.cells.filter((c) => c.dataset === ds);
 }
@@ -189,6 +198,18 @@ function hero(data) {
 
   const useful = attacked.filter((c) => c.passes_utility).length;
   $("hero-useful").textContent = `${useful} of ${attacked.length}`;
+  const loose = data.rule.sensitivity_delta_auc;
+  if (loose) {
+    const looser = attacked.filter((c) => usefulAt(c, loose) && c.passes_risk);
+    // One phrase per synthesiser and budget, its datasets in brackets.
+    const groups = new Map();
+    for (const c of looser) {
+      const key = `${METHODS[c.method].name} ${c.epsilon === null ? "without privacy" : `at epsilon ${c.epsilon}`}`;
+      groups.set(key, [...(groups.get(key) || []), DATASETS[c.dataset].short]);
+    }
+    const named = [...groups].map(([k, ds]) => `${k} (${ds.join(", ")})`).join("; ");
+    $("hero-useful-note").textContent = `within ${data.rule.delta_auc} AUC of a model trained on the real data, on every task and seed. At a looser ${loose}: ${looser.length}${looser.length ? `, ${named}` : ""}.`;
+  }
 
   const flagged = attacked.filter((c) => c.dcr && c.dcr.closer_lo_min > 0.5);
   const falseAlarms = flagged.filter((c) => !leakOf(data, c).length);
@@ -214,6 +235,14 @@ function surfaceControls(data) {
     fidelity(data);
   });
   taskSelect.addEventListener("change", () => surface(data));
+  const slider = $("surface-margin");
+  slider.value = String(data.rule.sensitivity_delta_auc ?? 0.05);
+  const moved = () => {
+    $("surface-margin-value").textContent = margin().toFixed(2);
+    surface(data);
+  };
+  slider.addEventListener("input", moved);
+  $("surface-margin-value").textContent = margin().toFixed(2);
 }
 
 function surface(data) {
@@ -242,6 +271,11 @@ function surface(data) {
     svg.append(sv("text", { class: "tick", x: m.l - 8, y: yy + 4, "text-anchor": "end" }, signed(v, 2)));
   }
   svg.append(sv("text", { class: "zone-label", x: W - m.r - 6, y: y(-data.rule.delta_auc) - 5, "text-anchor": "end" }, "within the rule's 0.02"));
+  const chosen = margin();
+  if (Math.abs(chosen - data.rule.delta_auc) > 1e-9 && -chosen >= yMin) {
+    svg.append(sv("line", { class: "margin-line", x1: m.l, x2: W - m.r, y1: y(-chosen), y2: y(-chosen) }));
+    svg.append(sv("text", { class: "margin-label", x: m.l + 6, y: y(-chosen) + 14, "text-anchor": "start" }, `your margin, ${chosen.toFixed(2)}`));
+  }
   BUDGETS.forEach((b, i) => {
     svg.append(sv("text", { class: "tick", x: x(i), y: H - m.b + 18, "text-anchor": "middle" }, b === null ? "none" : String(b)));
   });
@@ -306,6 +340,29 @@ function surface(data) {
     strong(`Nothing reaches the strip on ${DATASETS[ds].short}. `),
     `The closest is ${config(best)}, ${signed(worstTask(best).u.delta, 3)} AUC on its worst task. With a privacy guarantee, the closest is ${config(bestDp)}, at ${signed(worstTask(bestDp).u.delta, 3)}. `,
     mstSpan(cells),
+  ]);
+  marginVerdict(data, ds, cells);
+}
+
+/* What a looser (or tighter) margin buys: a sensitivity line, never the rule. */
+function marginVerdict(data, ds, cells) {
+  const chosen = margin();
+  const label = chosen.toFixed(2);
+  const all = data.cells.filter(scored);
+  const useful = cells.filter((c) => usefulAt(c, chosen));
+  const clean = useful.filter((c) => c.passes_risk);
+  const allUseful = all.filter((c) => usefulAt(c, chosen));
+  const allClean = allUseful.filter((c) => c.passes_risk);
+  const private_ = allClean.filter((c) => c.epsilon !== null).length;
+  const named = (c) => `${METHODS[c.method].name} ${c.epsilon === null ? "without privacy" : `at epsilon ${c.epsilon}`}`;
+  const here = useful.length
+    ? `On ${DATASETS[ds].short}, ${useful.map(named).join("; ")} ${useful.length === 1 ? "comes" : "come"} within it on every task and seed, judged by the bottom of each line rather than the mark, as the rule judges, ${clean.length === useful.length ? (useful.length === 1 ? "with no detected risk" : "all with no detected risk") : `${clean.length} of them with no detected risk`}. `
+    : `On ${DATASETS[ds].short}, nothing comes within it on every task and seed, judged by the bottom of each line rather than the mark, as the rule judges. `;
+  fill($("surface-margin-verdict"), [
+    strong(`At a margin of ${label}: `),
+    here,
+    `Across the three datasets, ${allClean.length} of ${all.length} configurations would pass, ${private_ ? `${private_} of them with differential privacy` : "none of them with differential privacy"}. `,
+    Math.abs(chosen - data.rule.delta_auc) > 1e-9 ? `This is a sensitivity line added after the results were seen; the rule's ${data.rule.delta_auc} stays the recommendation.` : "This is the rule's own margin.",
   ]);
 }
 

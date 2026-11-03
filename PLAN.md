@@ -183,6 +183,13 @@ above -0.02 on every seed; risk passes when, with successes pooled over the thre
 attack's risk interval at 1 - 0.05/(number of attacks) includes zero; epsilon infinity is a
 budget like any other.
 
+Amended 2026-11-03, after every table was scored and the rule had recommended nothing: a
+sensitivity line runs the same rule at 0.05 AUC (`SENSITIVITY_DELTA`) and is reported beside
+it, in the README and on the site, where a slider moves the margin from 0.01 to 0.10. It is
+labelled as added after the results and never replaces the 0.02 recommendation; it exists
+because 0.02 on the worst seed's lower bound is strict, and a reader who accepts more loss
+should see what that buys without the rule being refitted to the answer.
+
 ### 2.7 Naming a leak
 
 Where a configuration leaks, the README names the library, the version, the configuration

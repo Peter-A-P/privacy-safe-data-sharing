@@ -2,6 +2,7 @@
  "facsimile": "0.0.1",
  "rule": {
   "delta_auc": 0.02,
+  "sensitivity_delta_auc": 0.05,
   "alpha": 0.05,
   "attacks": [
    "singling_out_univariate",
@@ -11923,6 +11924,11 @@
    "epsilon": null,
    "exists": false,
    "reason": "no budget is within 0.02 AUC of the real-data ceiling on every task and seed",
+   "sensitivity": {
+    "epsilon": null,
+    "exists": false,
+    "reason": "no budget is within 0.05 AUC of the real-data ceiling on every task and seed"
+   },
    "budgets_assessed": [
     "inf"
    ],
@@ -11934,6 +11940,11 @@
    "epsilon": null,
    "exists": false,
    "reason": "no budget is within 0.02 AUC of the real-data ceiling on every task and seed",
+   "sensitivity": {
+    "epsilon": null,
+    "exists": false,
+    "reason": "no budget is within 0.05 AUC of the real-data ceiling on every task and seed"
+   },
    "budgets_assessed": [
     "inf"
    ],
@@ -11945,6 +11956,11 @@
    "epsilon": null,
    "exists": false,
    "reason": "no budget is within 0.02 AUC of the real-data ceiling on every task and seed",
+   "sensitivity": {
+    "epsilon": null,
+    "exists": false,
+    "reason": "no budget is within 0.05 AUC of the real-data ceiling on every task and seed"
+   },
    "budgets_assessed": [
     "inf"
    ],
@@ -11956,6 +11972,11 @@
    "epsilon": null,
    "exists": false,
    "reason": "no budget is within 0.02 AUC of the real-data ceiling on every task and seed",
+   "sensitivity": {
+    "epsilon": null,
+    "exists": true,
+    "reason": "smallest budget passing both: epsilon infinity"
+   },
    "budgets_assessed": [
     "inf"
    ],
@@ -11967,6 +11988,11 @@
    "epsilon": null,
    "exists": false,
    "reason": "no budget is within 0.02 AUC of the real-data ceiling on every task and seed",
+   "sensitivity": {
+    "epsilon": null,
+    "exists": false,
+    "reason": "no budget is within 0.05 AUC of the real-data ceiling on every task and seed"
+   },
    "budgets_assessed": [
     "0.5",
     "1",
@@ -11982,6 +12008,11 @@
    "epsilon": null,
    "exists": false,
    "reason": "no budget is within 0.02 AUC of the real-data ceiling on every task and seed",
+   "sensitivity": {
+    "epsilon": null,
+    "exists": false,
+    "reason": "no budget is within 0.05 AUC of the real-data ceiling on every task and seed"
+   },
    "budgets_assessed": [
     "0.5",
     "1",
@@ -11998,6 +12029,11 @@
    "epsilon": null,
    "exists": false,
    "reason": "no budget is within 0.02 AUC of the real-data ceiling on every task and seed",
+   "sensitivity": {
+    "epsilon": null,
+    "exists": false,
+    "reason": "no budget is within 0.05 AUC of the real-data ceiling on every task and seed"
+   },
    "budgets_assessed": [
     "0.5",
     "1",
@@ -12013,6 +12049,11 @@
    "epsilon": null,
    "exists": false,
    "reason": "no budget is within 0.02 AUC of the real-data ceiling on every task and seed",
+   "sensitivity": {
+    "epsilon": null,
+    "exists": false,
+    "reason": "no budget is within 0.05 AUC of the real-data ceiling on every task and seed"
+   },
    "budgets_assessed": [
     "inf"
    ],
@@ -12024,6 +12065,11 @@
    "epsilon": null,
    "exists": false,
    "reason": "no budget is within 0.02 AUC of the real-data ceiling on every task and seed",
+   "sensitivity": {
+    "epsilon": null,
+    "exists": false,
+    "reason": "no budget is within 0.05 AUC of the real-data ceiling on every task and seed"
+   },
    "budgets_assessed": [
     "inf"
    ],
@@ -12035,6 +12081,11 @@
    "epsilon": null,
    "exists": false,
    "reason": "no budget is within 0.02 AUC of the real-data ceiling on every task and seed",
+   "sensitivity": {
+    "epsilon": null,
+    "exists": false,
+    "reason": "no budget is within 0.05 AUC of the real-data ceiling on every task and seed"
+   },
    "budgets_assessed": [
     "inf"
    ],
@@ -12046,6 +12097,11 @@
    "epsilon": null,
    "exists": false,
    "reason": "no budget is within 0.02 AUC of the real-data ceiling on every task and seed",
+   "sensitivity": {
+    "epsilon": null,
+    "exists": false,
+    "reason": "no budget is within 0.05 AUC of the real-data ceiling on every task and seed"
+   },
    "budgets_assessed": [
     "inf"
    ],
@@ -12057,6 +12113,11 @@
    "epsilon": null,
    "exists": false,
    "reason": "no budget is within 0.02 AUC of the real-data ceiling on every task and seed",
+   "sensitivity": {
+    "epsilon": null,
+    "exists": false,
+    "reason": "no budget is within 0.05 AUC of the real-data ceiling on every task and seed"
+   },
    "budgets_assessed": [
     "0.5",
     "1",
@@ -12072,6 +12133,11 @@
    "epsilon": null,
    "exists": false,
    "reason": "no budget is within 0.02 AUC of the real-data ceiling on every task and seed",
+   "sensitivity": {
+    "epsilon": null,
+    "exists": false,
+    "reason": "no budget is within 0.05 AUC of the real-data ceiling on every task and seed"
+   },
    "budgets_assessed": [
     "0.5",
     "1",
@@ -12088,6 +12154,11 @@
    "epsilon": null,
    "exists": false,
    "reason": "no budget is within 0.02 AUC of the real-data ceiling on every task and seed",
+   "sensitivity": {
+    "epsilon": null,
+    "exists": false,
+    "reason": "no budget is within 0.05 AUC of the real-data ceiling on every task and seed"
+   },
    "budgets_assessed": [
     "0.5",
     "1",
@@ -12103,6 +12174,11 @@
    "epsilon": null,
    "exists": false,
    "reason": "no budget is within 0.02 AUC of the real-data ceiling on every task and seed",
+   "sensitivity": {
+    "epsilon": null,
+    "exists": false,
+    "reason": "no budget is within 0.05 AUC of the real-data ceiling on every task and seed"
+   },
    "budgets_assessed": [
     "inf"
    ],
@@ -12114,6 +12190,11 @@
    "epsilon": null,
    "exists": false,
    "reason": "no budget is within 0.02 AUC of the real-data ceiling on every task and seed",
+   "sensitivity": {
+    "epsilon": null,
+    "exists": false,
+    "reason": "no budget is within 0.05 AUC of the real-data ceiling on every task and seed"
+   },
    "budgets_assessed": [
     "inf"
    ],
@@ -12125,6 +12206,11 @@
    "epsilon": null,
    "exists": false,
    "reason": "no budget is within 0.02 AUC of the real-data ceiling on every task and seed",
+   "sensitivity": {
+    "epsilon": null,
+    "exists": false,
+    "reason": "no budget is within 0.05 AUC of the real-data ceiling on every task and seed"
+   },
    "budgets_assessed": [
     "inf"
    ],
@@ -12136,6 +12222,11 @@
    "epsilon": null,
    "exists": false,
    "reason": "no budget is within 0.02 AUC of the real-data ceiling on every task and seed",
+   "sensitivity": {
+    "epsilon": null,
+    "exists": true,
+    "reason": "smallest budget passing both: epsilon infinity"
+   },
    "budgets_assessed": [
     "inf"
    ],
@@ -12147,6 +12238,11 @@
    "epsilon": null,
    "exists": false,
    "reason": "no budget is within 0.02 AUC of the real-data ceiling on every task and seed",
+   "sensitivity": {
+    "epsilon": null,
+    "exists": false,
+    "reason": "no budget is within 0.05 AUC of the real-data ceiling on every task and seed"
+   },
    "budgets_assessed": [
     "0.5",
     "1",
@@ -12162,6 +12258,11 @@
    "epsilon": null,
    "exists": false,
    "reason": "no budget is within 0.02 AUC of the real-data ceiling on every task and seed",
+   "sensitivity": {
+    "epsilon": null,
+    "exists": false,
+    "reason": "no budget is within 0.05 AUC of the real-data ceiling on every task and seed"
+   },
    "budgets_assessed": [
     "0.5",
     "1",
@@ -12178,6 +12279,11 @@
    "epsilon": null,
    "exists": false,
    "reason": "no budget is within 0.02 AUC of the real-data ceiling on every task and seed",
+   "sensitivity": {
+    "epsilon": null,
+    "exists": false,
+    "reason": "no budget is within 0.05 AUC of the real-data ceiling on every task and seed"
+   },
    "budgets_assessed": [
     "0.5",
     "1",

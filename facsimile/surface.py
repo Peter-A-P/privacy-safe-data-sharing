@@ -16,6 +16,11 @@ them within 0.05 of the ceiling, and before any table had been scored on purpose
 in (2) is a Bonferroni correction across the attacks, because five attacks at 95% would call a
 leak by chance in about one cell in five. Epsilon infinity (the non-DP methods) is a budget like
 any other here and is recommended only if it passes, which is what Rule C candidate 3 tests.
+
+SENSITIVITY_DELTA, 0.05 AUC, is not the rule. It was added on 2026-11-03, after every table had
+been scored and the rule had recommended nothing, to show what a reader who accepts more loss
+would get: the same rule, run again at the looser margin, reported beside the first and never in
+its place.
 """
 
 from __future__ import annotations
@@ -28,6 +33,7 @@ from typing import Any
 from facsimile.attacks.risk import residual, wilson
 
 DELTA = 0.02
+SENSITIVITY_DELTA = 0.05
 ALPHA = 0.05
 
 

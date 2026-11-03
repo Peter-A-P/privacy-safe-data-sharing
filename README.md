@@ -36,6 +36,16 @@ _none: utility_ means no budget is within the margin of the ceiling on every tas
 _none: risk_ means every useful budget has a detected risk; _pending_ means a budget's
 tables are not all attacked and scored yet.
 
+**At a looser margin.** The same rule at 0.05 AUC in place of 0.02, for a
+reader who accepts more loss. A sensitivity line, added after the results were seen; the
+rule above stays the recommendation (PLAN.md section 2.6).
+
+| Dataset | Gaussian copula | CTGAN | TVAE | TabDDPM | MST | AIM | PATE-CTGAN |
+|---|---|---|---|---|---|---|---|
+| ACS PUMS, California 2018 | none: utility | none: utility | none: utility | epsilon inf | none: utility | none: utility | none: utility |
+| IEEE-CIS card transactions | none: utility | none: utility | none: utility | none: utility | none: utility | none: utility | none: utility |
+| NY SPARCS discharges | none: utility | none: utility | none: utility | epsilon inf | none: utility | none: utility | none: utility |
+
 **How close each gets.** The budget at which a synthesiser comes nearest the real-data
 ceiling, and the gap on its worst task there: AUC trained on synthetic minus trained on
 real, the mean over seeds (the worst seed's lower 95% bound in brackets).

@@ -162,7 +162,8 @@
       Each point is one synthesiser at one privacy budget, averaged over its three seeds. Height
       is how much worse a model trained on that synthetic table does than one trained on the real
       data, as AUC on real test records: zero is as good as real. The shaded strip is within the
-      0.02 the rule allows. Smaller epsilon is stronger privacy; the column on the right has none.
+      0.02 the rule allows. The dashed line is a margin you choose: slide it to see what accepting
+      more loss would buy. Smaller epsilon is stronger privacy; the column on the right has none.
       Point at a mark to read it.
     </p>
     <div class="controls">
@@ -176,6 +177,12 @@
         </label>
         <select id="surface-task"></select>
       </div>
+      <div class="control">
+        <label for="surface-margin">Loss you would accept: <output id="surface-margin-value">0.05</output> AUC
+          <span class="hint">the rule's own margin is 0.02</span>
+        </label>
+        <input type="range" id="surface-margin" min="0.01" max="0.10" step="0.01" value="0.05">
+      </div>
     </div>
     <figure class="chart-figure">
       <div id="surface-chart" class="chart"></div>
@@ -185,6 +192,7 @@
     </figure>
     <div class="verdict">
       <p id="surface-verdict"></p>
+      <p id="surface-margin-verdict"></p>
     </div>
     <details class="disclose">
       <summary>Why the table that looks most like the data is not the most useful one</summary>

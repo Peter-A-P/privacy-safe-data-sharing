@@ -31,7 +31,15 @@ from typing import Any
 from facsimile import __version__
 from facsimile.attacks.risk import residual, wilson
 from facsimile.paths import DOCS, REPO, RESULTS
-from facsimile.surface import ALPHA, DELTA, Point, recommend, risk_ok, utility_ok
+from facsimile.surface import (
+    ALPHA,
+    DELTA,
+    SENSITIVITY_DELTA,
+    Point,
+    recommend,
+    risk_ok,
+    utility_ok,
+)
 
 DATASETS = ("acs", "ieeecis", "sparcs")
 DATASET_NAMES = {
@@ -583,6 +591,7 @@ def build(root: Path = RESULTS) -> dict[str, Any]:
                     "dataset": ds,
                     "method": m,
                     **rec.as_dict(),
+                    "sensitivity": recommend(points, SENSITIVITY_DELTA).as_dict(),
                     "budgets_assessed": sorted(
                         (_eps_label(p.epsilon) for p in points),
                         key=lambda s: math.inf if s == "inf" else float(s),
@@ -594,7 +603,12 @@ def build(root: Path = RESULTS) -> dict[str, Any]:
     vs["facsimile"] = __version__
     return {
         "facsimile": __version__,
-        "rule": {"delta_auc": DELTA, "alpha": ALPHA, "attacks": list(ATTACKS)},
+        "rule": {
+            "delta_auc": DELTA,
+            "sensitivity_delta_auc": SENSITIVITY_DELTA,
+            "alpha": ALPHA,
+            "attacks": list(ATTACKS),
+        },
         "versions": vs,
         "cells": rows,
         "surface": surface,
@@ -1117,23 +1131,20 @@ def render_readme_section(report: dict[str, Any]) -> str:
         "| Dataset | " + " | ".join(METHOD_NAMES[m] for m in METHODS) + " |",
         "|---|" + "---|" * len(METHODS),
     ]
-    surf = {(s["dataset"], s["method"]): s for s in report["surface"]}
-    for ds in DATASETS:
-        row = [DATASET_NAMES[ds]]
-        for m in METHODS:
-            s = surf.get((ds, m))
-            if s is None:
-                row.append("pending")
-            elif s["exists"]:
-                row.append(f"epsilon {_eps_label(s['epsilon'])}")
-            else:
-                row.append("none: " + _short_reason(s["reason"]))
-        out.append("| " + " | ".join(row) + " |")
+    out += _recommendation_rows(report["surface"], None)
     out += [
         "",
         "_none: utility_ means no budget is within the margin of the ceiling on every task and seed;",
         "_none: risk_ means every useful budget has a detected risk; _pending_ means a budget's",
         "tables are not all attacked and scored yet.",
+        "",
+        f"**At a looser margin.** The same rule at {SENSITIVITY_DELTA} AUC in place of {DELTA}, for a",
+        "reader who accepts more loss. A sensitivity line, added after the results were seen; the",
+        "rule above stays the recommendation (PLAN.md section 2.6).",
+        "",
+        "| Dataset | " + " | ".join(METHOD_NAMES[m] for m in METHODS) + " |",
+        "|---|" + "---|" * len(METHODS),
+        *_recommendation_rows(report["surface"], "sensitivity"),
         "",
         "**How close each gets.** The budget at which a synthesiser comes nearest the real-data",
         "ceiling, and the gap on its worst task there: AUC trained on synthetic minus trained on",
@@ -1204,6 +1215,25 @@ def _reference_cell(ref: dict[str, Any] | None) -> str:
         return "not run"
     call = "detected" if ref["detected"] else "**not reproduced**"
     return f"{_pct(ref['value'])} ({_pct(ref['lo'])} to {_pct(ref['hi'])}), {call}"
+
+
+def _recommendation_rows(surface: list[dict[str, Any]], key: str | None) -> list[str]:
+    """One row per dataset of what the rule recommends; `key` picks the sensitivity run."""
+    surf = {(s["dataset"], s["method"]): s for s in surface}
+    out = []
+    for ds in DATASETS:
+        row = [DATASET_NAMES[ds]]
+        for m in METHODS:
+            s = surf.get((ds, m))
+            rec = None if s is None else (s if key is None else s.get(key))
+            if rec is None:
+                row.append("pending")
+            elif rec["exists"]:
+                row.append(f"epsilon {_eps_label(rec['epsilon'])}")
+            else:
+                row.append("none: " + _short_reason(rec["reason"]))
+        out.append("| " + " | ".join(row) + " |")
+    return out
 
 
 def _short_reason(reason: str) -> str:

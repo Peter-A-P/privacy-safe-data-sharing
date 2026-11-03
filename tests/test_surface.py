@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from facsimile.surface import DELTA, Point, recommend, risk_ok, utility_ok
+from facsimile.surface import DELTA, SENSITIVITY_DELTA, Point, recommend, risk_ok, utility_ok
 
 QUIET = {"inference": [(500.0, 500.0, 2000)] * 3, "linkability": [(30.0, 30.0, 2000)] * 3}
 LEAKY = {"inference": [(900.0, 500.0, 2000)] * 3, "linkability": [(30.0, 30.0, 2000)] * 3}
@@ -56,3 +56,11 @@ def test_one_seed_of_chance_does_not_make_a_leak_but_a_pooled_excess_does() -> N
     chance = {"inference": [(560.0, 500.0, 2000), (500.0, 500.0, 2000), (500.0, 500.0, 2000)]}
     assert risk_ok(Point(1, {"t": [0.0]}, chance))
     assert not risk_ok(Point(1, {"t": [0.0]}, LEAKY))
+
+
+def test_the_sensitivity_margin_is_looser_and_changes_only_the_utility_half() -> None:
+    # A gap of 0.03 fails the rule and passes the sensitivity line; a leak fails both.
+    assert SENSITIVITY_DELTA > DELTA
+    assert not recommend([point(None, -0.03, QUIET)]).exists
+    assert recommend([point(None, -0.03, QUIET)], SENSITIVITY_DELTA).exists
+    assert not recommend([point(None, -0.03, LEAKY)], SENSITIVITY_DELTA).exists
