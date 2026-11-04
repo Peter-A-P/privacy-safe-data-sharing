@@ -17,6 +17,7 @@
 <nav class="tabs" aria-label="This site">
   <div class="tabs-inner">
     <a href="index.html" aria-current="page">Overview</a>
+    <a href="#basics">The basics</a>
     <a href="#method-panel">Method</a>
     <a href="#surface-panel">Trade-off</a>
     <a href="#leak-panel">The leak</a>
@@ -35,26 +36,27 @@
     <div class="cta">
       <a class="button primary" href="https://github.com/Peter-A-P/privacy-safe-data-sharing">Read the code</a>
       <a class="button" href="#use-it">Run the attacks on your own tables</a>
-      <span class="cta-note">Every number below is read from one file the repository's report command writes.</span>
+      <span class="cta-note">Every number below comes from one file that the repository's report command writes.</span>
     </div>
 
     <p class="eyebrow">Attacked, measured, and reproducible from the repository</p>
     <h1>Synthetic data is sold as safe to share. <span class="hl">This project attacked it</span> to find out what it protects, and what it costs.</h1>
     <p class="lead">
-      Health records, census answers and card transactions are exactly the data that would
-      unlock better analytics and models, and exactly the data privacy law keeps locked up. The
-      popular answer is synthetic data: a generated table with the same patterns and none of the
-      people. <strong>Whether it really contains none of the people is usually asserted, not
-      measured.</strong> Here, synthetic versions of three public datasets of real people were
-      made seven ways, with and without differential privacy, then attacked with the three tests
-      European regulators use to judge whether data is anonymous, and scored on the question a
-      data scientist cares about: does a model trained on it still work on real data?
+      Hospital records, census answers and card transactions could power better research and
+      better models, and privacy law keeps most of them locked away. The usual way out is
+      synthetic data: a computer-generated table that keeps the patterns of the real one but is
+      meant to contain none of the real people. <strong>Whether it really contains none of them
+      is usually claimed, not checked.</strong> This project checks. It made synthetic copies of
+      three public datasets of real people with seven different generators, some with a
+      mathematical privacy guarantee and some without, and attacked every copy the way European
+      regulators say anonymity should be tested. Then it asked what a data scientist would ask:
+      does a model trained on the copy still work on real people?
     </p>
     <div class="hero-points">
       <div class="point">
         <span class="point-figure" id="hero-tables">-</span>
         <span class="point-unit">synthetic tables attacked</span>
-        <span class="point-label" id="hero-tables-note">three datasets, seven synthesisers, budgets from epsilon 0.5 to no privacy, three seeds each</span>
+        <span class="point-label" id="hero-tables-note">three datasets, seven synthesisers, privacy levels from strong to none, three runs each</span>
       </div>
       <div class="point warnline">
         <span class="point-figure down" id="hero-ladder">-</span>
@@ -68,20 +70,20 @@
       </div>
       <div class="point violet">
         <span class="point-figure" id="hero-useful">-</span>
-        <span class="point-unit">configurations close enough to the real data to recommend</span>
-        <span class="point-label" id="hero-useful-note">within 0.02 AUC of a model trained on the real data, on every task and seed</span>
+        <span class="point-unit">configurations as useful as the real data, by the strict 0.02 rule</span>
+        <span class="point-label" id="hero-useful-note">A model trained on the copy scores within 0.02 AUC of one trained on the real data, on every task and every run</span>
       </div>
       <div class="point good">
-        <span class="point-figure" id="hero-dcr">-</span>
-        <span class="point-unit">false alarms from the check most tools show</span>
-        <span class="point-label" id="hero-dcr-note">distance to closest record failed tables no attack could break, and passed the one that leaked</span>
+        <span class="point-figure" id="hero-loose">-</span>
+        <span class="point-unit" id="hero-loose-unit">configurations as useful as the real data, at a looser 0.05</span>
+        <span class="point-label" id="hero-loose-note">-</span>
       </div>
     </div>
     <p class="hero-note">
-      The attacks stay inside each dataset: no outside data is ever joined to a record and no
+      The attacks stay inside each dataset: no outside data is ever joined to a record, and no
       record is ever named. Every rate is measured against a control group of real people the
-      synthesiser never saw, so a table that is merely useful about everyone is not counted as a
-      leak. Every number carries a 95 percent confidence interval.
+      synthesiser never saw, so a table that is simply good at describing everyone is not counted
+      as a leak. Every number carries a 95 percent confidence interval.
       <a href="architecture.html">See how it's built</a>, in four diagrams.
     </p>
   </header>
@@ -95,36 +97,175 @@
 
   <p class="warning" id="failure" hidden></p>
 
+  <section class="section" id="basics">
+    <h2>The basics, in plain words</h2>
+    <p class="section-lead">
+      Three ideas carry the rest of this page. If you work with synthetic data every day, skip
+      ahead to the <a href="#surface-panel">trade-off</a>.
+    </p>
+    <div class="guide">
+      <article class="guide-card">
+        <h3>What a synthesiser is</h3>
+        <p>
+          A program that studies a real table, learns its patterns (how age relates to income,
+          which diagnoses come with which procedures) and then writes a brand-new table of
+          made-up rows with the same patterns. Nobody in the new table is supposed to be real.
+          The danger is that it learns too much: if it memorises details of the real people it
+          studied, the made-up table can give them away.
+        </p>
+      </article>
+      <article class="guide-card">
+        <h3>What a privacy guarantee is, and epsilon</h3>
+        <p>
+          Differential privacy is a mathematical promise: the output barely changes whether or
+          not any one person was in the data, so it cannot reveal much about anyone. Epsilon sets
+          how strong the promise is, and smaller is stronger. At epsilon 1, one person can change
+          the odds of any result by at most a factor of about 2.7. Four of the seven synthesisers
+          here make no such promise.
+        </p>
+      </article>
+      <article class="guide-card">
+        <h3>What "within 0.02 AUC" means</h3>
+        <p>
+          To judge usefulness, a model learns from the synthetic table and is tested on real
+          people it has never seen. AUC scores how well it tells cases apart, from 0.5 (a coin
+          toss) to 1.0 (perfect). Trained on the real census data, the model scores about 0.90
+          at spotting incomes above $50,000. Within 0.02 means the copy-trained model scores at
+          least about 0.88: a loss small enough that most teams would accept the swap.
+        </p>
+      </article>
+    </div>
+    <details class="disclose">
+      <summary>The seven synthesisers in this study, one by one</summary>
+      <div class="glossary">
+        <article class="guide-card">
+          <h3>Gaussian copula <span class="tag open">no guarantee</span></h3>
+          <p>
+            Classic statistics. It learns the shape of each column on its own, and how strongly
+            each pair of columns moves together, then draws new rows that follow those shapes. Fast
+            and simple, but it misses any pattern that is not a straight-line relationship.
+          </p>
+        </article>
+        <article class="guide-card">
+          <h3>CTGAN <span class="tag open">no guarantee</span></h3>
+          <p>
+            Two neural networks trained against each other. One invents rows; the other tries to
+            tell invented rows from real ones. Each pushes the other to get better, until the
+            invented rows are hard to tell apart.
+          </p>
+        </article>
+        <article class="guide-card">
+          <h3>TVAE <span class="tag open">no guarantee</span></h3>
+          <p>
+            A neural network that learns to squeeze each row into a short code and rebuild the row
+            from it. New rows come from rebuilding codes it has never seen.
+          </p>
+        </article>
+        <article class="guide-card">
+          <h3>TabDDPM <span class="tag open">no guarantee</span></h3>
+          <p>
+            A diffusion model, the idea behind today's image generators, applied to tables. It
+            learns to remove noise from a row a little at a time. To make a new row it starts from
+            pure noise and cleans it up a thousand times.
+          </p>
+        </article>
+        <article class="guide-card">
+          <h3>MST <span class="tag dp">privacy guarantee</span></h3>
+          <p>
+            Counts how often pairs of values occur together (say, age band and occupation) for the
+            pairs that matter most, adds carefully measured random noise to those counts, then
+            builds rows that agree with the noisy counts. It won the US National Institute of
+            Standards and Technology's 2018 challenge for private synthetic data.
+          </p>
+        </article>
+        <article class="guide-card">
+          <h3>AIM <span class="tag dp">privacy guarantee</span></h3>
+          <p>
+            A more adaptive MST. It picks which combinations of columns to count as it goes,
+            spending its privacy budget wherever its current table is furthest from the real one.
+          </p>
+        </article>
+        <article class="guide-card">
+          <h3>PATE-CTGAN <span class="tag dp">privacy guarantee</span></h3>
+          <p>
+            CTGAN with a guarantee. The network that judges real from invented is replaced by a
+            panel of "teachers", each shown only its own slice of the real data. They vote, with
+            noise added to the tally, so no single person can swing the result.
+          </p>
+        </article>
+      </div>
+    </details>
+    <details class="disclose">
+      <summary>The four attacks, one by one</summary>
+      <div class="glossary">
+        <article class="guide-card">
+          <h3>Singling out</h3>
+          <p>
+            Can the table be used to pick out one person? The attacker reads combinations of
+            values off the synthetic rows, such as "a 67-year-old widowed pharmacist", and checks
+            whether exactly one real person fits.
+          </p>
+        </article>
+        <article class="guide-card">
+          <h3>Linkability</h3>
+          <p>
+            Someone holds two separate halves of people's records. Can the synthetic table help
+            them match the halves back together?
+          </p>
+        </article>
+        <article class="guide-card">
+          <h3>Inference</h3>
+          <p>
+            Someone already knows a few facts about a person. Can the table help them guess one
+            more, such as an income bracket, a transaction amount or a diagnosis group?
+          </p>
+        </article>
+        <article class="guide-card">
+          <h3>Membership inference</h3>
+          <p>
+            The most direct question: can anyone tell whether a given person's record was used to
+            make the table at all?
+          </p>
+        </article>
+      </div>
+      <p class="note">
+        The first three are the tests named in the EU's guidance on anonymisation. Each one also
+        runs on a control group of real people the synthesiser never saw, and only the extra
+        success on the people it did see counts as risk.
+      </p>
+    </details>
+  </section>
+
   <section class="section" id="why-panel">
     <h2>Why this question matters</h2>
     <p class="section-lead">
-      Organisations sit on data that could improve care, catch fraud and inform policy, and
-      mostly cannot share it, even internally. A synthetic copy is the shortcut everyone reaches
-      for, and vendors sell it with a privacy score attached. The trouble is that a privacy score
-      computed by the tool that made the data is not evidence. The test that counts is the one an
-      adversary would run.
+      Organisations hold data that could improve care, catch fraud and guide policy, and most of
+      it cannot be shared, sometimes not even between teams. A synthetic copy is the shortcut
+      everyone reaches for, and vendors sell it with a privacy score attached. But a score worked
+      out by the same tool that made the data is not evidence. The test that counts is the one an
+      attacker would run.
     </p>
     <div class="guide">
       <article class="guide-card">
         <h3>For a privacy officer</h3>
         <p>
-          Whether a synthetic table passes the three tests of anonymity regulators name, measured
-          the way an attacker would measure them, with an interval, rather than a vendor's
+          Whether a synthetic table passes the three tests of anonymity that regulators name,
+          measured the way an attacker would and with a margin of error, instead of a vendor's
           similarity score.
         </p>
       </article>
       <article class="guide-card">
         <h3>For a data scientist</h3>
         <p>
-          How much a model loses when it is trained on the synthetic table instead of the real
-          one, at each privacy budget, and which synthesiser comes closest.
+          How much a model loses when it learns from the synthetic table instead of the real one,
+          at each privacy level, and which synthesiser comes closest.
         </p>
       </article>
       <article class="guide-card">
         <h3>For whoever signs off</h3>
         <p>
-          A rule, fixed before any table was scored, for where on the privacy-usefulness curve to
-          sit, and a release gate that checks the answer independently.
+          A rule, written down before any results came in, for how much privacy to buy and at
+          what cost, and an independent release gate that checks the answer.
         </p>
       </article>
     </div>
@@ -133,55 +274,59 @@
   <section class="section" id="method-panel">
     <h2>How it was tested</h2>
     <p class="section-lead">
-      Three public datasets of real people: California census responses (ACS PUMS 2018), card
-      transactions from a public fraud competition (IEEE-CIS), and New York hospital discharges
-      (SPARCS 2024). Each one goes through the same steps.
+      Three public datasets of real people: California census answers (ACS PUMS 2018), card
+      transactions from a public fraud-detection competition (IEEE-CIS), and New York hospital
+      discharges (SPARCS 2024). Each went through the same six steps.
     </p>
     <ol class="steps">
-      <li><span class="step-n">1</span><span class="step-body"><strong>Split three ways, once.</strong> A training set the synthesisers see, a control set of real people they never see, and a test set for usefulness.</span></li>
-      <li><span class="step-n">2</span><span class="step-body"><strong>Synthesise seven ways.</strong> Gaussian copula, CTGAN, TVAE and the diffusion model TabDDPM with no privacy guarantee; AIM, MST and PATE-CTGAN with differential privacy at epsilon 0.5 to 8. Three seeds each, every epsilon from the library's own accountant.</span></li>
-      <li><span class="step-n">3</span><span class="step-body"><strong>Attack every table.</strong> Singling out, linkability and inference, the three criteria of the EU's anonymisation guidance, implemented from the paper that turned them into measurements, plus shadow-model membership inference.</span></li>
-      <li><span class="step-n">4</span><span class="step-body"><strong>Subtract what the table tells about anyone.</strong> Each attack runs identically on the control set. Only the excess success on the training records is risk.</span></li>
-      <li><span class="step-n">5</span><span class="step-body"><strong>Train on synthetic, test on real.</strong> A LightGBM model trained on each table, scored on real records it never saw, against the same model trained on the real data.</span></li>
-      <li><span class="step-n">6</span><span class="step-body"><strong>Apply a rule written in advance.</strong> The smallest epsilon within 0.02 AUC of the real-data model on every task and seed, with no attack detecting a risk. Then check it through a release gate.</span></li>
+      <li><span class="step-n">1</span><span class="step-body"><strong>Split it three ways, once.</strong> One part trains the synthesisers, one is a control group of real people they never see, and one is kept back to test usefulness.</span></li>
+      <li><span class="step-n">2</span><span class="step-body"><strong>Make synthetic copies seven ways.</strong> Four synthesisers without a privacy guarantee (Gaussian copula, CTGAN, TVAE, TabDDPM) and three with one (MST, AIM, PATE-CTGAN) at epsilon 0.5 to 8. Each copy is made three times, and every epsilon comes from the library's own privacy accounting.</span></li>
+      <li><span class="step-n">3</span><span class="step-body"><strong>Attack every copy.</strong> Singling out, linkability and inference, built from the paper that turned the EU's three tests into measurements, plus a membership attack.</span></li>
+      <li><span class="step-n">4</span><span class="step-body"><strong>Subtract what the table says about everyone.</strong> Each attack also runs on the control group. Only the extra success on the people the synthesiser actually saw counts as risk.</span></li>
+      <li><span class="step-n">5</span><span class="step-body"><strong>Train on synthetic, test on real.</strong> A LightGBM model learns from each copy and is scored on real people it never saw, beside the same model trained on the real data.</span></li>
+      <li><span class="step-n">6</span><span class="step-body"><strong>Apply a rule written in advance.</strong> Recommend the strongest privacy setting that keeps the model within 0.02 AUC of the real-data model on every task and run, with no attack detecting a risk. Then put the answer through a release gate.</span></li>
     </ol>
     <div class="assumption">
       <p>
-        <strong>Why the control set is the whole method.</strong> A good synthetic table predicts
-        a person's income from their job and age, because that is what it is for. Measured alone,
-        that looks like an attack succeeding. Run the same attack on people the synthesiser never
-        saw and it succeeds just as often. Only the difference between the two is something the
-        table learned about the individuals in it.
+        <strong>Why the control group matters so much.</strong> A good synthetic table can predict
+        a person's income from their job and age, because that is what it is for. Measured on its
+        own, that looks like an attack working. Run the same attack on people the synthesiser
+        never saw and it works just as often. Only the difference between the two is something the
+        table learned about the real people in it.
       </p>
     </div>
   </section>
 
   <section class="section" id="surface-panel">
-    <h2>The trade-off, dataset by dataset</h2>
+    <h2>How much usefulness each synthesiser gives up</h2>
     <p class="section-lead">
-      Each point is one synthesiser at one privacy budget, averaged over its three seeds. Height
-      is how much worse a model trained on that synthetic table does than one trained on the real
-      data, as AUC on real test records: zero is as good as real. The shaded strip is within the
-      0.02 the rule allows. The dashed line is a margin you choose: slide it to see what accepting
-      more loss would buy. Smaller epsilon is stronger privacy; the column on the right has none.
-      Point at a mark to read it.
+      Every synthetic table costs some usefulness, and this chart shows how much. Each dot is one
+      synthesiser at one privacy level, averaged over its three runs. The higher the dot, the
+      closer a model trained on that copy comes to one trained on the real data; the top line,
+      0.00, means just as good. Moving left means a stronger privacy guarantee, and the
+      right-hand column has none at all.
     </p>
-    <div class="controls">
+    <p class="section-lead">
+      The dark green strip is the strict standard set before any results: within 0.02. The light
+      green strip is the loss you are willing to accept, set with the slider. A synthesiser makes
+      the cut only if the bottom of its vertical line, its worst run, stays inside the strip.
+      Point at a dot for its details.
+    </p>
+    <div class="controls inline">
       <div class="control">
         <label for="surface-dataset">Dataset</label>
         <select id="surface-dataset"></select>
+        <span class="hint">three public datasets of real people</span>
       </div>
       <div class="control">
-        <label for="surface-task">Task
-          <span class="hint">the worst task is what the rule judges</span>
-        </label>
+        <label for="surface-task">Task</label>
         <select id="surface-task"></select>
+        <span class="hint">the rule judges each synthesiser on its worst task</span>
       </div>
       <div class="control">
-        <label for="surface-margin">Loss you would accept: <output id="surface-margin-value">0.05</output> AUC
-          <span class="hint">the rule's own margin is 0.02</span>
-        </label>
-        <input type="range" id="surface-margin" min="0.01" max="0.10" step="0.01" value="0.05">
+        <label for="surface-margin">Loss you would accept: <output id="surface-margin-value">0.05</output> AUC</label>
+        <div class="range-wrap"><input type="range" id="surface-margin" min="0.01" max="0.20" step="0.01" value="0.05"></div>
+        <span class="hint">the strict standard is 0.02</span>
       </div>
     </div>
     <figure class="chart-figure">
@@ -208,9 +353,8 @@
   <section class="section" id="leak-panel">
     <h2>What leaked</h2>
     <p class="section-lead">
-      A risk counts only when its interval excludes zero at a level corrected for running five
-      attacks on every configuration, with the three seeds pooled. These are the configurations
-      that crossed that line.
+      A risk counts only when it clears a bar raised to allow for running five attacks on every
+      configuration, with the three runs pooled. Here is what cleared it.
     </p>
     <div class="leak-card" id="leak-card"></div>
     <div class="verdict">
@@ -218,9 +362,9 @@
     </div>
     <div class="assumption">
       <p>
-        <strong>A leak is named precisely, as a property of those settings on this data.</strong>
-        It is not a claim that AIM is unsafe in general, and the tables with no detected risk are
-        not proven safe: they are tables these attacks, at this scale, could not break.
+        <strong>A leak is a finding about those settings on this data.</strong> It does not mean
+        AIM is unsafe in general. And the tables where nothing was detected are not proven safe:
+        these attacks, at this scale, could not break them.
       </p>
     </div>
   </section>
@@ -228,12 +372,12 @@
   <section class="section" id="ladder-panel">
     <h2>Do the attacks catch what they should?</h2>
     <p class="section-lead">
-      A result at control level means something only if the same attacks catch a table that does
-      leak. So four methods people really use as "synthetic" or "anonymised" data, each expected to
-      leak, went through exactly the same pipeline: the same splits, targets, control, attacks and
-      seeds. Their settings and expected outcomes were written into the plan before any of them
-      ran. Each mark is one method's risk on one attack, with its 95 percent interval; the grey
-      tick is the largest risk any of the seven synthesisers showed on that attack.
+      A clean result only means something if the same attacks catch a table that really does
+      leak. So four methods people actually use as "synthetic" or "anonymised" data, each expected
+      to leak, went through exactly the same process: the same splits, the same people, the same
+      attacks and runs. Their settings and expected results were written into the plan before any
+      of them ran. Each dot is one method's risk on one attack, with its 95 percent range. The grey
+      tick is the highest risk any of the seven synthesisers reached on that attack.
     </p>
     <div class="controls">
       <div class="control">
@@ -259,11 +403,11 @@
   <section class="section" id="dcr-panel">
     <h2>The check most tools show got it backwards</h2>
     <p class="section-lead">
-      Distance to closest record is the privacy check in front of most synthetic-data users: is a
-      synthetic record closer to the training data than to people the synthesiser never saw? A
-      share above one half is read as a warning. Each mark below is one configuration's share,
-      averaged over its seeds. The grey band is what real records the synthesiser never saw score
-      on the same yardstick.
+      Distance to closest record is the privacy check most synthetic-data tools show first. It
+      asks whether the synthetic records sit closer to the real people the synthesiser trained on
+      than to real people it never saw. A share above one half is read as a warning. Each dot is
+      one configuration, averaged over its runs. The grey band is what real records the
+      synthesiser never saw would score, so it shows where normal sits.
     </p>
     <figure class="chart-figure">
       <div id="dcr-chart" class="chart"></div>
@@ -277,13 +421,14 @@
     <details class="disclose">
       <summary>Why distance cannot see this kind of leak</summary>
       <p>
-        The inference that succeeds on AIM needs no synthetic record near any target. It needs the
-        table to keep the pattern between the other attributes and income a little more faithfully
-        for the training records than for anyone else. Nearest-neighbour distance does not see a
-        pattern. In the other direction, a synthesiser that reproduces its training split's
-        population places its records slightly nearer that split than an independent sample would,
-        which differential privacy permits, because it bounds what any one person changes, not how
-        close the table sits to the population. The write-up, with every number, is in
+        The inference attack that works on AIM does not need any synthetic record to sit near a
+        real person. It only needs the table to keep the link between the other attributes and
+        income a little more faithfully for the people it trained on than for anyone else, and
+        nearest-neighbour distance cannot see a link. It also errs the other way. A synthesiser
+        that reproduces its training population well places its records slightly nearer that
+        population than an independent sample would, and differential privacy allows that,
+        because it limits what any one person changes, not how close the table sits to the
+        population. The full write-up, with every number, is in
         <a href="https://github.com/Peter-A-P/privacy-safe-data-sharing/blob/main/docs/rejected.md">docs/rejected.md</a>.
       </p>
     </details>
@@ -292,13 +437,12 @@
   <section class="section" id="gate-panel">
     <h2>As good as the real thing? The release gate says no</h2>
     <p class="section-lead" id="gate-lead">
-      Project 03's release gate decides whether a candidate is non-inferior to a baseline, the
-      way it would for a model change. Here the candidate is a model trained on synthetic data
-      and the baseline the same model trained on the real data, with a margin of 2 AUC points.
-      No configuration met the rule, so the gate was given the nearest ones: per dataset, the
-      closest of all seven synthesisers and the closest with a privacy guarantee. Each bar is the
-      gap on the worst task, averaged over three seeds, with the range of the gate's 95 percent
-      intervals across them.
+      Project 03's release gate decides whether a new model is at least as good as the one it
+      replaces, within a set margin. Here the new model learns from synthetic data and the old one
+      from the real data, with a margin of 2 AUC points (0.02). Since nothing met the rule, the
+      gate was given the nearest candidates: for each dataset, the closest synthesiser overall
+      and the closest with a privacy guarantee. Each bar is the gap on the worst task, averaged
+      over three runs, with the spread of the gate's 95 percent intervals.
     </p>
     <figure class="chart-figure">
       <div id="gate-chart" class="chart"></div>
@@ -317,11 +461,11 @@
     <h2>Membership inference: at chance, and why that is not proof</h2>
     <p class="section-lead">
       The fourth attack asks the most direct question: was this person in the training data? It
-      follows the Groundhog attack of Stadler et al.: refit the synthesiser dozens of times with
-      and without a target, and train a classifier to tell the difference from the tables alone.
-      That needs a synthesiser fit per shadow table, so it runs at about 1,000 rows with six
-      targets per dataset, the scale of its paper. Each mark is one configuration's accuracy,
-      with its exact 95 percent interval; one half is guessing.
+      follows the Groundhog attack of Stadler and colleagues. Retrain the synthesiser dozens of
+      times, with and without a target person, and teach a classifier to spot the difference from
+      the tables alone. Because every one of those tables needs its own retraining, it runs on
+      about 1,000 rows with six target people per dataset, the scale of the original paper. Each
+      dot is one configuration's accuracy with its exact 95 percent interval; 0.5 is guessing.
     </p>
     <figure class="chart-figure">
       <div id="membership-chart" class="chart"></div>
@@ -337,8 +481,9 @@
   <section class="section" id="checked-panel">
     <h2>Checked against the reference libraries</h2>
     <p class="section-lead">
-      Every attack is implemented from its paper, and then run beside the authors' own library on
-      the same tables. A disagreement is resolved and written down before a number ships.
+      Every attack was written from its paper and then run beside the authors' own library on the
+      same tables. Where the two disagreed, the cause was found and written down before any number
+      went out.
     </p>
     <section class="headline" id="checked-headline" aria-label="Agreement with the reference libraries"></section>
     <div class="verdict">
@@ -349,9 +494,9 @@
   <section class="section" id="takeaways">
     <h2>What to take from it</h2>
     <p class="section-lead">
-      These are findings on three datasets at 20,000 rows, with these libraries and versions, not
-      laws of nature. They are also the questions worth asking of any synthetic data before it is
-      shared.
+      These findings come from three datasets of 20,000 rows each, with these libraries and
+      versions. They are not laws of nature, but they are the right questions to ask of any
+      synthetic data before it is shared.
     </p>
     <div class="guide" id="takeaway-cards"></div>
   </section>
@@ -359,10 +504,9 @@
   <section class="section" id="use-it">
     <h2>Run the attacks on your own tables</h2>
     <p class="section-lead">
-      The attacks are a package that needs no part of the rest of the project. Hand it the real
-      records a synthesiser was trained on, as many real records it never saw, and the synthetic
-      table. It codes raw columns from the held-out records alone and returns every risk with its
-      interval.
+      The attacks are a stand-alone package. Give it the real records a synthesiser was trained
+      on, the same number of real records it never saw, and the synthetic table. It prepares the
+      columns using only the unseen records and returns every risk with its margin of error.
     </p>
     <pre class="code"><code>from facsimile.attacks.evaluate import evaluate
 
@@ -379,11 +523,11 @@ result.detected            # the attacks whose risk interval excludes zero</code
   <section class="section" id="explorer">
     <h2>Every configuration</h2>
     <p class="section-lead">
-      The full table behind the charts, one row per synthesiser and budget, three seeds pooled.
-      Risks are percentages with 95 percent intervals; a bold red risk is a detected one.
-      Usefulness is the gap on the worst task in AUC. The repository's
+      The full table behind the charts: one row per synthesiser and privacy level, with the three
+      runs pooled. Risks are percentages with 95 percent intervals, and a bold red risk is a
+      detected one. Usefulness is the gap on the worst task, in AUC. The repository's
       <a href="https://github.com/Peter-A-P/privacy-safe-data-sharing/blob/main/docs/results.md">docs/results.md</a>
-      holds the same rows with every task.
+      has the same rows with every task.
     </p>
     <div class="controls">
       <div class="control">
@@ -396,12 +540,12 @@ result.detected            # the attacks whose risk interval excludes zero</code
     </div>
     <p class="note">
       Single out 1 and n: singling out on one attribute and on several. Link: linkability at 1 and
-      10 neighbours. Each risk is the excess success on training records over control records, as a
-      share of what was left to gain, pooled over three seeds, with its 95% interval. Member is
-      membership accuracy at about 1,000 rows (chance 0.5), run at epsilon 1, 8 and no privacy.
+      10 neighbours. Each risk is the extra success on training records over control records, as a
+      share of what was left to gain, pooled over three runs, with its 95% interval. Member is
+      membership accuracy at about 1,000 rows (chance is 0.5), run at epsilon 1, 8 and no privacy.
       Usefulness is the AUC gap on the worst task. Fidelity is two-way marginal error. DCR is the
-      share of synthetic records closer to a training record than to a control. Fit is the median
-      fit time over seeds, on the machine named.
+      share of synthetic records closer to a training record than to a control one. Fit is the
+      median fit time over runs, on the machine named.
     </p>
   </section>
 
@@ -410,29 +554,29 @@ result.detected            # the attacks whose risk interval excludes zero</code
     <ul>
       <li>
         <strong>No detected risk is not proof of safety.</strong> These attacks, at these sizes,
-        could not tell the training records from the control. A stronger attack or more attempts
-        might.
+        could not tell the training records from the control group. A stronger attack, or more
+        attempts, might.
       </li>
       <li>
-        <strong>The membership attack has little power at this scale.</strong> Even on a copy of
-        the training data it is only a little above chance, so its results at chance mean it could
-        not tell, nothing more.
+        <strong>The membership attack has little power at this scale.</strong> Even on a straight
+        copy of the training data it does only a little better than chance, so a result at chance
+        means it could not tell, and nothing more.
       </li>
       <li>
-        <strong>AIM at epsilon 4 and 8 was not run.</strong> At epsilon 4 a table ran more than 28
-        hours and used up to 53 GB without finishing on a 32-core, 128 GB machine, and epsilon 8 grew
-        faster still. At epsilon 2 AIM was already 0.10 to 0.17 AUC short of the bar, and no doubling
-        of its budget gained more than 0.03, so the missing cells could not change the
-        recommendation.
+        <strong>AIM at epsilon 4 and 8 was not run.</strong> At epsilon 4 one table ran for more
+        than 28 hours and used up to 53 GB without finishing on a 32-core, 128 GB machine, and
+        epsilon 8 grew faster still. At epsilon 2 AIM was already 0.10 to 0.17 AUC short of the
+        bar, and no doubling of its budget gained more than 0.03, so the missing cells could not
+        change the recommendation.
       </li>
       <li>
-        <strong>Three datasets, 20,000 rows each, one model.</strong> A larger table, other tasks or
-        another downstream model could move the usefulness gaps. The method carries; the exact
-        numbers are a property of these settings.
+        <strong>Three datasets, 20,000 rows each, one model.</strong> A larger table, other tasks
+        or another downstream model could move the usefulness gaps. The method carries over; the
+        exact numbers belong to these settings.
       </li>
       <li>
-        <strong>No defence is tested.</strong> The project measures tables; it does not post-process
-        them to lower a risk.
+        <strong>No defence is tested.</strong> The project measures tables. It does not
+        post-process them to lower a risk.
       </li>
     </ul>
   </section>

@@ -384,6 +384,28 @@ strong { font-weight: 600; }
 .control { display: flex; flex-direction: column; gap: 0.4rem; min-width: 0; }
 .control.wide { grid-column: 1 / -1; }
 
+/* Labels on one line, the inputs level with each other, the hints underneath. */
+.controls.inline { align-items: start; }
+@media (min-width: 46rem) {
+  .controls.inline label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+}
+.controls.inline .hint { margin-top: 0; }
+.range-wrap { display: flex; align-items: center; height: 2.45rem; }
+
+/* The plain-words glossaries in the basics section. */
+.glossary { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 0.75rem; margin: 0.4rem 0 0.75rem; }
+.tag {
+  display: inline-block;
+  margin-left: 0.35rem;
+  padding: 0.05rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  vertical-align: 0.1em;
+}
+.tag.open { background: color-mix(in srgb, var(--ink-faint) 16%, transparent); color: var(--ink-soft); }
+.tag.dp { background: color-mix(in srgb, var(--good) 16%, transparent); color: var(--good); }
+
 label { font-size: 0.85rem; font-weight: 600; color: var(--ink-soft); }
 
 .hint {
@@ -846,8 +868,9 @@ tbody tr.reference { background: var(--accent-soft); }
 
 .zone { fill: color-mix(in srgb, var(--good) 14%, transparent); }
 .zone-label { fill: var(--good); font-size: 10.5px; font-weight: 600; letter-spacing: 0.04em; }
-.margin-line { stroke: var(--ink-soft); stroke-width: 1.5; stroke-dasharray: 5 4; }
-.margin-label { fill: var(--ink-soft); font-size: 10.5px; font-weight: 600; letter-spacing: 0.04em; }
+.zone-soft { fill: color-mix(in srgb, var(--good) 6%, transparent); }
+.margin-line { stroke: color-mix(in srgb, var(--good) 55%, transparent); stroke-width: 1.25; stroke-dasharray: 5 4; }
+.margin-label { fill: var(--good); font-size: 10.5px; font-weight: 600; letter-spacing: 0.04em; opacity: 0.8; }
 .leak-ring { fill: none; stroke: var(--warn); stroke-width: 2; }
 .swatch.ring { width: 0.75rem; height: 0.75rem; border-radius: 50%; background: transparent; border: 2px solid var(--warn); }
 .catcher { cursor: crosshair; outline: none; }
