@@ -250,7 +250,7 @@ function surface(data) {
   const cells = cellsOf(data, ds).filter(scored);
   const W = 760;
   const H = 400;
-  const m = { l: 58, r: 18, t: 36, b: 46 };
+  const m = { l: 58, r: 18, t: 18, b: 46 };
   const values = cells.map((c) => taskOf(c, task).u);
   // The slider reaches 0.20, so the axis always shows that far down and never jumps as it moves.
   const lowest = Math.min(...values.map((u) => u.delta_lo_worst), -0.2);
@@ -301,17 +301,6 @@ function surface(data) {
       svg.append(sv("circle", { class: `dot ${METHODS[method].cls}`, cx, cy: y(p.t.u.delta), r: 4.5 }));
       marks.push({ cx, cy: y(p.t.u.delta), p });
     }
-  }
-  // AIM at epsilon 4 and 8 was not run; one note over the columns where its dots would be, saying why.
-  const missing = new Map();
-  for (const c of cellsOf(data, ds).filter((c) => c.not_run)) {
-    missing.set(c.method, [...(missing.get(c.method) || []), BUDGETS.indexOf(c.epsilon)]);
-  }
-  for (const [method, cols] of missing) {
-    const mid = cols.reduce((a, i) => a + x(i), 0) / cols.length;
-    const at = cols.map((i) => BUDGETS[i]).join(" and ");
-    svg.append(sv("text", { class: "row-note", x: mid, y: m.t - 20, "text-anchor": "middle" }, `No ${METHODS[method].name} at epsilon ${at}:`));
-    svg.append(sv("text", { class: "row-note", x: mid, y: m.t - 7, "text-anchor": "middle" }, "too slow to finish (28+ hours a table)"));
   }
   for (const mk of marks) {
     const hit = sv("circle", { class: "catcher", cx: mk.cx, cy: mk.cy, r: 12, fill: "transparent", tabindex: 0 });
