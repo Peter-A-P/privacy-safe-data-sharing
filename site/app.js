@@ -250,7 +250,7 @@ function surface(data) {
   const cells = cellsOf(data, ds).filter(scored);
   const W = 760;
   const H = 400;
-  const m = { l: 58, r: 18, t: 18, b: 46 };
+  const m = { l: 58, r: 18, t: 36, b: 46 };
   const values = cells.map((c) => taskOf(c, task).u);
   // The slider reaches 0.20, so the axis always shows that far down and never jumps as it moves.
   const lowest = Math.min(...values.map((u) => u.delta_lo_worst), -0.2);
@@ -302,10 +302,16 @@ function surface(data) {
       marks.push({ cx, cy: y(p.t.u.delta), p });
     }
   }
-  // AIM at epsilon 4 and 8 was not run; say so where its marks would be.
+  // AIM at epsilon 4 and 8 was not run; one note over the columns where its dots would be, saying why.
+  const missing = new Map();
   for (const c of cellsOf(data, ds).filter((c) => c.not_run)) {
-    const i = BUDGETS.indexOf(c.epsilon);
-    svg.append(sv("text", { class: "row-note", x: x(i), y: m.t + 12, "text-anchor": "middle" }, `${METHODS[c.method].name} not run`));
+    missing.set(c.method, [...(missing.get(c.method) || []), BUDGETS.indexOf(c.epsilon)]);
+  }
+  for (const [method, cols] of missing) {
+    const mid = cols.reduce((a, i) => a + x(i), 0) / cols.length;
+    const at = cols.map((i) => BUDGETS[i]).join(" and ");
+    svg.append(sv("text", { class: "row-note", x: mid, y: m.t - 20, "text-anchor": "middle" }, `No ${METHODS[method].name} at epsilon ${at}:`));
+    svg.append(sv("text", { class: "row-note", x: mid, y: m.t - 7, "text-anchor": "middle" }, "too slow to finish (28+ hours a table)"));
   }
   for (const mk of marks) {
     const hit = sv("circle", { class: "catcher", cx: mk.cx, cy: mk.cy, r: 12, fill: "transparent", tabindex: 0 });
@@ -332,7 +338,7 @@ function surface(data) {
     ...METHOD_ORDER.map((mm) => [`sw-${METHODS[mm].cls}`, `${METHODS[mm].name}${METHODS[mm].dp ? "" : ", no privacy"}`]),
     ["sw-leak", "a named leak", "ring"],
   ]);
-  $("surface-caption").textContent = "Each dot is the average of three runs. Its vertical line runs from the lowest run's 95% lower bound to the highest run's upper bound. Usefulness: the same LightGBM model is trained once on the synthetic table and once on the real one, both are tested on real people neither has seen, and the real-trained score is subtracted from the synthetic-trained one.";
+  $("surface-caption").textContent = "Each dot is the average of three runs. AIM has no dots at epsilon 4 and 8: one table ran for more than 28 hours and used up to 53 GB of memory without finishing, and at epsilon 2 it was already far below the bar (see What this page does not show, at the end). Each vertical line runs from the lowest run's 95% lower bound to the highest run's upper bound. Usefulness: the same LightGBM model is trained once on the synthetic table and once on the real one, both are tested on real people neither has seen, and the real-trained score is subtracted from the synthetic-trained one.";
 
   const best = cells.reduce((a, c) => (worstTask(c).u.delta > worstTask(a).u.delta ? c : a));
   const dp = cells.filter((c) => c.epsilon !== null);
