@@ -26,6 +26,14 @@ gated on all three seeds of its table.
 
     facsimile gate export     write spec and side files under gate-runs/
     facsimile gate run        run project 03's gate on them, then summarise the ledger
+    facsimile gate sweep      the same runs at every margin from 1 to 20 points
+
+**The sweep** (added 2026-11-03, after the results, for the site's margin slider): the same side
+files, unchanged, decided again by the gate at each whole-point margin from 1 to 20. Only the
+spec's margin and name change, so every position of the slider shows a verdict the gate gave, with
+its own Holm adjustment and power screen, not one read off the 2-point intervals. Each margin has
+its own ledger under `gate-runs/sweep/`; the 2-point decisions stay in the main ledger and are the
+ones the README reports.
 """
 
 from __future__ import annotations
@@ -51,6 +59,8 @@ SUMMARY = RESULTS / "gate.json"
 DELTA_POINTS = 2.0
 PAIR_SEED = 20261017
 SEEDS = (0, 1, 2)
+SWEEP = RUNS / "sweep"
+SWEEP_POINTS = tuple(range(1, 21))
 
 
 def gate_dir() -> Path:
@@ -169,10 +179,26 @@ def export(cell: Cell) -> Path:
     return out
 
 
-def compare(run: Path) -> bool:
+def compare(run: Path, points: int | None = None) -> bool:
     """Run project 03's gate on one exported run: True on a pass. The gate exits 1 on a block and
-    on a crash alike, so a run counts as decided only when it appended its record."""
-    before = _records()
+    on a crash alike, so a run counts as decided only when it appended its record. With `points`,
+    the same sides are decided at that margin into the sweep's ledger for it."""
+    spec, ledger, out = run / "spec.yaml", LEDGER, run / "decision.md"
+    if points is not None:
+        work = SWEEP / f"m{points:02d}"
+        work.mkdir(parents=True, exist_ok=True)
+        text = (run / "spec.yaml").read_text(encoding="utf-8")
+        text = text.replace(f"delta_points: {DELTA_POINTS}", f"delta_points: {float(points)}")
+        text = text.replace(
+            f"name: facsimile-{run.name}", f"name: facsimile-{run.name}-m{points:02d}"
+        )
+        spec, ledger, out = (
+            work / f"{run.name}.yaml",
+            work / "ledger.jsonl",
+            work / f"{run.name}.md",
+        )
+        spec.write_text(text, encoding="utf-8", newline="\n")
+    before = _records(ledger)
     args = [
         "uv",
         "run",
@@ -182,26 +208,58 @@ def compare(run: Path) -> bool:
         "gate",
         "compare",
         "--spec",
-        str(run / "spec.yaml"),
+        str(spec),
         "--baseline",
         str(run / "baseline.json"),
         "--candidate",
         str(run / "candidate.json"),
         "--ledger",
-        str(LEDGER),
+        str(ledger),
         "--out",
-        str(run / "decision.md"),
+        str(out),
     ]
-    code = subprocess.run(args, cwd=gate_dir(), check=False).returncode
-    if code not in (0, 1) or _records() != before + 1:
+    code = subprocess.run(
+        args, cwd=gate_dir(), check=False, capture_output=points is not None
+    ).returncode
+    if code not in (0, 1) or _records(ledger) != before + 1:
         raise RuntimeError(f"{run.name}: the gate exited {code} without recording a decision")
     return code == 0
 
 
-def _records() -> int:
-    if not LEDGER.exists():
+def _records(ledger: Path = LEDGER) -> int:
+    if not ledger.exists():
         return 0
-    return sum(1 for line in LEDGER.read_text(encoding="utf-8").splitlines() if line.strip())
+    return sum(1 for line in ledger.read_text(encoding="utf-8").splitlines() if line.strip())
+
+
+def sweep(points: int) -> None:
+    """Decide every exported run at one margin, skipping runs its ledger already holds."""
+    ledger = SWEEP / f"m{points:02d}" / "ledger.jsonl"
+    done = {r["spec_name"] for r in _read(ledger)}
+    for run in sorted(p for p in RUNS.iterdir() if (p / "spec.yaml").exists()):
+        if f"facsimile-{run.name}-m{points:02d}" not in done:
+            compare(run, points)
+
+
+def _read(ledger: Path) -> list[dict[str, Any]]:
+    if not ledger.exists():
+        return []
+    return [json.loads(x) for x in ledger.read_text(encoding="utf-8").splitlines() if x.strip()]
+
+
+def _outcome(suites: list[dict[str, Any]]) -> str:
+    verdicts = {s["verdict"] for s in suites}
+    return "block" if "block" in verdicts else "not decided" if verdicts == {"warn"} else "pass"
+
+
+def _sweep_summary() -> dict[str, Any]:
+    """Per run, the gate's outcome at each swept margin."""
+    by_run: dict[str, dict[str, str]] = {}
+    for points in SWEEP_POINTS:
+        for rec in _read(SWEEP / f"m{points:02d}" / "ledger.jsonl"):
+            run = rec["spec_name"].removeprefix("facsimile-").rsplit("-", 1)[0]
+            by_run.setdefault(run, {})[str(points)] = _outcome(rec["suites"])
+    return {"points": list(SWEEP_POINTS), "outcomes": by_run}
 
 
 def summarise() -> dict[str, Any]:
@@ -216,6 +274,7 @@ def summarise() -> dict[str, Any]:
         ds, method, eps_tag, seed = spec_name.removeprefix("facsimile-").rsplit("-", 3)
         runs.append(
             {
+                "run": spec_name.removeprefix("facsimile-"),
                 "dataset": ds,
                 "method": method,
                 "epsilon": None if eps_tag == "inf" else float(eps_tag[3:].replace("p", ".")),
@@ -243,6 +302,6 @@ def summarise() -> dict[str, Any]:
                 ],
             }
         )
-    payload = {"delta_points": DELTA_POINTS, "runs": runs}
+    payload = {"delta_points": DELTA_POINTS, "runs": runs, "sweep": _sweep_summary()}
     SUMMARY.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
     return payload

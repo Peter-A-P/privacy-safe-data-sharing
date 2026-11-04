@@ -46,8 +46,7 @@
       better models, and privacy law keeps most of them locked away. The usual way out is
       synthetic data: a computer-generated table that keeps the patterns of the real one but is
       meant to contain none of the real people. <strong>Whether it really contains none of them
-      is usually claimed, not checked.</strong> This project checks. It made synthetic copies of
-      three public datasets of real people with seven different generators, some with a
+      is rarely checked.</strong> This project made synthetic copies of three public datasets of real people with seven different generators, some with a
       mathematical privacy guarantee and some without, and attacked every copy the way European
       regulators say anonymity should be tested. Then it asked what a data scientist would ask:
       does a model trained on the copy still work on real people?
@@ -131,7 +130,7 @@
           people it has never seen. AUC scores how well it tells cases apart, from 0.5 (a coin
           toss) to 1.0 (perfect). Trained on the real census data, the model scores about 0.90
           at spotting incomes above $50,000. Within 0.02 means the copy-trained model scores at
-          least about 0.88: a loss small enough that most teams would accept the swap.
+          least about 0.88.
         </p>
       </article>
     </div>
@@ -241,9 +240,9 @@
     <p class="section-lead">
       Organisations hold data that could improve care, catch fraud and guide policy, and most of
       it cannot be shared, sometimes not even between teams. A synthetic copy is the shortcut
-      everyone reaches for, and vendors sell it with a privacy score attached. But a score worked
-      out by the same tool that made the data is not evidence. The test that counts is the one an
-      attacker would run.
+      everyone reaches for, and vendors sell it with a privacy score attached. That score is
+      worked out by the same tool that made the data. The test that counts is the one an attacker
+      would run.
     </p>
     <div class="guide">
       <article class="guide-card">
@@ -374,8 +373,7 @@
     <p class="section-lead">
       A clean result only means something if the same attacks catch a table that really does
       leak. So four methods people actually use as "synthetic" or "anonymised" data, each expected
-      to leak, went through exactly the same process: the same splits, the same people, the same
-      attacks and runs. Their settings and expected results were written into the plan before any
+      to leak, went through exactly the same process: the same splits, people, attacks and runs. Their settings and expected results were written into the plan before any
       of them ran. Each dot is one method's risk on one attack, with its 95 percent range. The grey
       tick is the highest risk any of the seven synthesisers reached on that attack.
     </p>
@@ -439,11 +437,24 @@
     <p class="section-lead" id="gate-lead">
       Project 03's release gate decides whether a new model is at least as good as the one it
       replaces, within a set margin. Here the new model learns from synthetic data and the old one
-      from the real data, with a margin of 2 AUC points (0.02). Since nothing met the rule, the
-      gate was given the nearest candidates: for each dataset, the closest synthesiser overall
-      and the closest with a privacy guarantee. Each bar is the gap on the worst task, averaged
-      over three runs, with the spread of the gate's 95 percent intervals.
+      from the real data. Since nothing met the rule, the gate was given the nearest candidates:
+      for each dataset, the closest synthesiser overall and the closest with a privacy guarantee.
+      Each bar is the gap on the worst task, averaged over three runs, with the spread of the
+      gate's 95 percent intervals.
     </p>
+    <p class="section-lead">
+      The red line is the strict margin of 2 AUC points (0.02). The green line is the loss you
+      would accept, set with the slider. The verdict on the right is the gate's own decision at
+      that margin: it was run again at every whole point from 1 to 20, so each verdict is one
+      the gate actually gave.
+    </p>
+    <div class="controls inline single">
+      <div class="control">
+        <label for="gate-margin">Loss you would accept: <output id="gate-margin-value">0.05</output> AUC</label>
+        <div class="range-wrap"><input type="range" id="gate-margin" min="0.01" max="0.20" step="0.01" value="0.05"></div>
+        <span class="hint">the same setting as the trade-off chart above; the strict margin is 0.02</span>
+      </div>
+    </div>
     <figure class="chart-figure">
       <div id="gate-chart" class="chart"></div>
       <div class="legend" id="gate-legend"></div>

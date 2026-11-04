@@ -189,6 +189,9 @@ it, in the README and on the site, where a slider moves the margin from 0.01 to 
 labelled as added after the results and never replaces the 0.02 recommendation; it exists
 because 0.02 on the worst seed's lower bound is strict, and a reader who accepts more loss
 should see what that buys without the rule being refitted to the answer.
+The same day, project 03's gate decided the same sides again at every whole-point margin from
+1 to 20 (`facsimile gate sweep`, `docs/gate.md`), so the slider on the gate chart shows the
+gate's own verdicts; the 2-point decisions stay the result.
 
 ### 2.7 Naming a leak
 

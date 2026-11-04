@@ -60,18 +60,20 @@ real, the mean over seeds (the worst seed's lower 95% bound in brackets).
 synthetic table is non-inferior to the same model trained on the real data, at a margin
 of 2 AUC points, on each seed's table. The gap is synthetic minus real on the
 worst task, in points, across the three seeds.
+Beside it, the same gate on the same sides at 5 points: a what-if for the
+looser margin, decided by the gate itself, added after the results were seen.
 
-| Dataset | Candidate | Gate, three seeds | Worst-task gap, points |
-|---|---|---|---|
-| ACS PUMS, California 2018 | TabDDPM, epsilon inf | block on 3 of 3 | -2.7 to -1.3 |
-| ACS PUMS, California 2018 | TVAE, epsilon inf | block on 3 of 3 | -6.2 to -5.1; every interval wholly below -2 |
-| ACS PUMS, California 2018 | AIM, epsilon 1 | block on 3 of 3 | -22.9 to -12.5; every interval wholly below -2 |
-| IEEE-CIS card transactions | TabDDPM, epsilon inf | not decided on 3 of 3 (too few fraud cases for the power screen) | -8.4 to -6.0; every interval wholly below -2 |
-| IEEE-CIS card transactions | TVAE, epsilon inf | not decided on 3 of 3 (too few fraud cases for the power screen) | -17.4 to -8.4; every interval wholly below -2 |
-| IEEE-CIS card transactions | AIM, epsilon 2 | not decided on 3 of 3 (too few fraud cases for the power screen) | -18.9 to -12.3; every interval wholly below -2 |
-| NY SPARCS discharges | CTGAN, epsilon inf | block on 3 of 3 | -7.6 to -7.0; every interval wholly below -2 |
-| NY SPARCS discharges | TabDDPM, epsilon inf | block on 3 of 3 | -2.3 to -1.3 |
-| NY SPARCS discharges | AIM, epsilon 2 | block on 3 of 3 | -17.1 to -13.8; every interval wholly below -2 |
+| Dataset | Candidate | Gate, three seeds | At 5 points | Worst-task gap, points |
+|---|---|---|---|---|
+| ACS PUMS, California 2018 | TabDDPM, epsilon inf | block on 3 of 3 | pass on 3 of 3 | -2.7 to -1.3 |
+| ACS PUMS, California 2018 | TVAE, epsilon inf | block on 3 of 3 | block on 3 of 3 | -6.2 to -5.1; every interval wholly below -2 |
+| ACS PUMS, California 2018 | AIM, epsilon 1 | block on 3 of 3 | block on 3 of 3 | -22.9 to -12.5; every interval wholly below -2 |
+| IEEE-CIS card transactions | TabDDPM, epsilon inf | not decided on 3 of 3 (too few fraud cases for the power screen) | block on 3 of 3 | -8.4 to -6.0; every interval wholly below -2 |
+| IEEE-CIS card transactions | TVAE, epsilon inf | not decided on 3 of 3 (too few fraud cases for the power screen) | block on 3 of 3 | -17.4 to -8.4; every interval wholly below -2 |
+| IEEE-CIS card transactions | AIM, epsilon 2 | not decided on 3 of 3 (too few fraud cases for the power screen) | block on 3 of 3 | -18.9 to -12.3; every interval wholly below -2 |
+| NY SPARCS discharges | CTGAN, epsilon inf | block on 3 of 3 | block on 3 of 3 | -7.6 to -7.0; every interval wholly below -2 |
+| NY SPARCS discharges | TabDDPM, epsilon inf | block on 3 of 3 | pass on 3 of 3 | -2.3 to -1.3 |
+| NY SPARCS discharges | AIM, epsilon 2 | block on 3 of 3 | block on 3 of 3 | -17.1 to -13.8; every interval wholly below -2 |
 
 **The leakage ladder.** Four methods people use as synthetic or anonymised data, expected
 to leak, through the same attacks as the positive controls of the grid (PLAN.md section

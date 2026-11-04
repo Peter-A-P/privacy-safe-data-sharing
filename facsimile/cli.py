@@ -274,6 +274,14 @@ def cmd_gate(args: argparse.Namespace) -> int:
             for seed in gate.SEEDS:
                 print(f"wrote {gate.export(Cell(ds, method, eps, seed))}")
         return 0
+    if args.gate_command == "sweep":
+        points = args.points or list(gate.SWEEP_POINTS)
+        for p in points:
+            gate.sweep(p)
+            print(f"margin {p} points: decided")
+        payload = gate.summarise()
+        print(f"wrote {gate.SUMMARY} (sweep over {len(payload['sweep']['outcomes'])} runs)")
+        return 0
     runs = sorted(p for p in gate.RUNS.iterdir() if (p / "spec.yaml").exists())
     for run in runs:
         print(f"{run.name}: {'pass' if gate.compare(run) else 'block'}")
@@ -448,6 +456,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     gsub = gp.add_subparsers(dest="gate_command", required=True)
     gsub.add_parser("export", help="write the spec and side files under gate-runs/")
     gsub.add_parser("run", help="run the gate on every exported run and summarise the ledger")
+    sw = gsub.add_parser("sweep", help="decide every run again at margins of 1 to 20 points")
+    sw.add_argument("points", nargs="*", type=int, help="margins in points (default 1 to 20)")
     gp.set_defaults(func=cmd_gate)
 
     rp = sub.add_parser("report", help="the README tables, docs/results.md and the site JSON")

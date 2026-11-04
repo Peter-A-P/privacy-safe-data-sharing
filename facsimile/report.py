@@ -954,9 +954,20 @@ def render_gate_summary(gate: dict[str, Any]) -> list[str]:
         "synthetic table is non-inferior to the same model trained on the real data, at a margin",
         f"of {delta:g} AUC points, on each seed's table. The gap is synthetic minus real on the",
         "worst task, in points, across the three seeds.",
+    ]
+    loose = round(SENSITIVITY_DELTA * 100)
+    sweep = gate.get("sweep", {}).get("outcomes", {})
+    if sweep:
+        out += [
+            f"Beside it, the same gate on the same sides at {loose} points: a what-if for the",
+            "looser margin, decided by the gate itself, added after the results were seen.",
+        ]
+    out += [
         "",
-        "| Dataset | Candidate | Gate, three seeds | Worst-task gap, points |",
-        "|---|---|---|---|",
+        "| Dataset | Candidate | Gate, three seeds | "
+        + (f"At {loose} points | " if sweep else "")
+        + "Worst-task gap, points |",
+        "|---|---|---|" + ("---|" if sweep else "") + "---|",
     ]
     groups: dict[tuple[str, str, Any], list[dict[str, Any]]] = {}
     for run in gate["runs"]:
@@ -976,7 +987,13 @@ def render_gate_summary(gate: dict[str, Any]) -> list[str]:
             )
             if all(s["hi"] < -delta / 100 for s in worst):
                 gap += f"; every interval wholly below -{delta:g}"
-            out.append(f"| {DATASET_NAMES[ds]} | {_gate_config(runs[0])} | {verdict} | {gap} |")
+            looser = ""
+            if sweep:
+                at = sorted({sweep.get(r["run"], {}).get(str(loose), "not run") for r in runs})
+                looser = " / ".join(at) + f" on {len(runs)} of {len(runs)} | "
+            out.append(
+                f"| {DATASET_NAMES[ds]} | {_gate_config(runs[0])} | {verdict} | {looser}{gap} |"
+            )
     return [*out, ""]
 
 

@@ -53,3 +53,7 @@ site/out/
 Thumbs.db
 .vscode/
 .idea/
+
+# The gate sweep: only the ledgers are kept; specs and decisions regenerate from gate-runs/
+gate-runs/sweep/**/*.yaml
+gate-runs/sweep/**/*.md

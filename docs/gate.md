@@ -75,6 +75,19 @@ too small to see the margin can also pass by chance, and that rule holds here to
 So the gate agrees with the recommendation rule, on a different statistic and with its own test:
 no synthetic table here is as good as the real data for training these models.
 
+## At other margins: the sweep
+
+Added 2026-11-03, after the results, for the site's margin slider and the README's 5-point
+column. The same side files, unchanged, were decided again by the same gate at every whole-point
+margin from 1 to 20: 540 decisions, one ledger per margin under `gate-runs/sweep/`. Only the
+spec's margin and name change, so each verdict carries the gate's own Holm adjustment and power
+screen at that margin. The 2-point sweep reproduces all 27 decisions above exactly.
+
+At 5 points the gate passes TabDDPM without privacy on ACS and on SPARCS, on all three seeds, and
+blocks the other seven candidates on every seed. The card data is decided at 5 points, because a
+wider margin needs fewer pairs, and every card candidate is blocked. Nothing with a privacy
+guarantee passes on any seed below 15 points. These are what-ifs; the 2-point decisions stay the result.
+
 ## A defect in the gate, found on the way
 
 McNemar's exact test, which the gate computes beside its verdict, divided by `float(2**n)`. That
@@ -89,6 +102,7 @@ by dividing the integers directly, and every decision here was made with the fix
 ```bash
 facsimile gate export   # the spec and both side files per run, under gate-runs/
 facsimile gate run      # project 03's gate on each, then results/gate.json from the ledger
+facsimile gate sweep    # the same runs at 1 to 20 points (or name the margins), resumable
 facsimile report
 ```
 

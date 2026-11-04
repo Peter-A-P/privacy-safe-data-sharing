@@ -234,14 +234,22 @@ function surfaceControls(data) {
     fidelity(data);
   });
   taskSelect.addEventListener("change", () => surface(data));
-  const slider = $("surface-margin");
-  slider.value = String(data.rule.sensitivity_delta_auc ?? 0.05);
-  const moved = () => {
+  // One setting, two sliders: the trade-off chart's and the gate's move together.
+  const start = String(data.rule.sensitivity_delta_auc ?? 0.05);
+  const sliders = ["surface-margin", "gate-margin"].map($).filter(Boolean);
+  const moved = (from) => {
+    for (const s of sliders) s.value = from.value;
     $("surface-margin-value").textContent = margin().toFixed(2);
+    if ($("gate-margin-value")) $("gate-margin-value").textContent = margin().toFixed(2);
     surface(data);
+    gate(data);
   };
-  slider.addEventListener("input", moved);
+  for (const s of sliders) {
+    s.value = start;
+    s.addEventListener("input", () => moved(s));
+  }
   $("surface-margin-value").textContent = margin().toFixed(2);
+  if ($("gate-margin-value")) $("gate-margin-value").textContent = margin().toFixed(2);
 }
 
 function surface(data) {
@@ -588,7 +596,7 @@ function ladder(data) {
       const missed = [...new Set(all.filter((r) => !caught.includes(r)).map((r) => LADDER[r.method].name))];
       return missed.length ? [`The ones they missed are ${missed.join(", ")}: trained ten times longer on 20,000 records, it showed no measurable memorisation, which the plan had allowed for. `] : [];
     })(),
-    "On the same attacks the seven synthesisers sit near zero, apart from the leak above. So a clean result for a synthesiser means the attacks found nothing they would have found in tables like these. It does not mean the attacks were too weak to find anything.",
+    "On the same attacks the seven synthesisers sit near zero, apart from the leak above. Because the attacks catch tables like these, a clean result on a synthesiser carries weight.",
   ] : ["The ladder's tables are still being attacked."]);
 
   const exposed = (data.exposed_leaks || []).filter((l) => METHODS[l.method]);
@@ -681,6 +689,7 @@ function gate(data) {
         lo: 100 * Math.min(...worst.map((s) => s.lo)),
         hi: 100 * Math.max(...worst.map((s) => s.hi)),
         outcomes: [...new Set(own.map((r) => r.outcome))],
+        names: own.map((r) => r.run),
         seeds: own.length,
         items: worst[0].paired_items,
         needed: worst[0].items_needed,
@@ -689,9 +698,13 @@ function gate(data) {
   }
   const W = 760;
   const rowH = 38;
-  const m = { l: 250, r: 120, t: 12, b: 40 };
+  const m = { l: 250, r: 120, t: 26, b: 40 };
   const H = m.t + rowH * groups.length + m.b;
-  const xMin = Math.floor(Math.min(...groups.map((gr) => gr.lo)) / 5) * 5;
+  const points = Math.round(margin() * 100);
+  const swept = (g.sweep && g.sweep.outcomes) || {};
+  // The gate's own outcome at the chosen margin, one per run; the 2-point decisions when not swept.
+  const at = (gr) => gr.names.map((n, k) => (swept[n] && swept[n][String(points)]) || (points === g.delta_points ? gr.outcomes[k] || gr.outcomes[0] : "not run"));
+  const xMin = Math.floor(Math.min(-points - 1, ...groups.map((gr) => gr.lo)) / 5) * 5;
   const x = (v) => m.l + ((v - xMin) / (2 - xMin)) * (W - m.l - m.r);
   const svg = svgRoot(W, H, "The release gate's verdict on the nearest configurations");
   for (let v = xMin; v <= 0; v += 5) {
@@ -699,7 +712,11 @@ function gate(data) {
     svg.append(sv("text", { class: "tick", x: x(v), y: H - m.b + 16, "text-anchor": "middle" }, v === 0 ? "0" : String(v)));
   }
   svg.append(sv("line", { class: "budget", x1: x(-g.delta_points), x2: x(-g.delta_points), y1: m.t, y2: H - m.b }));
-  svg.append(sv("text", { class: "budget-label", x: x(-g.delta_points) - 4, y: H - m.b - 4, "text-anchor": "end" }, `margin -${g.delta_points}`));
+  svg.append(sv("text", { class: "budget-label", x: x(-g.delta_points) + 4, y: m.t - 8, "text-anchor": "start" }, `strict, -${g.delta_points}`));
+  if (points !== g.delta_points) {
+    svg.append(sv("line", { class: "margin-line", x1: x(-points), x2: x(-points), y1: m.t, y2: H - m.b }));
+    svg.append(sv("text", { class: "margin-label", x: x(-points) - 4, y: m.t - 8, "text-anchor": "end" }, `yours, -${points}`));
+  }
   svg.append(sv("text", { class: "axis-title", x: m.l + (W - m.l - m.r) / 2, y: H - 6, "text-anchor": "middle" }, "worst-task AUC points, synthetic-trained minus real-trained"));
   groups.forEach((gr, i) => {
     const mid = m.t + i * rowH + rowH / 2;
@@ -710,8 +727,11 @@ function gate(data) {
     svg.append(sv("line", { class: "whisker", x1: x(gr.lo), x2: x(gr.hi), y1: mid, y2: mid }));
     svg.append(sv("line", { class: "whisker", x1: x(gr.lo), x2: x(gr.lo), y1: mid - 5, y2: mid + 5 }));
     svg.append(sv("line", { class: "whisker", x1: x(gr.hi), x2: x(gr.hi), y1: mid - 5, y2: mid + 5 }));
-    const verdict = gr.outcomes.length === 1 ? `${gr.outcomes[0]}, ${gr.seeds} of ${gr.seeds}` : gr.outcomes.join(" / ");
-    svg.append(sv("text", { class: `verdict-label ${gr.outcomes.includes("block") ? "blocked" : "undecided"}`, x: W - m.r + 10, y: mid + 4 }, verdict));
+    const outs = at(gr);
+    const kinds = [...new Set(outs)];
+    const verdict = kinds.length === 1 ? `${kinds[0]}, ${gr.seeds} of ${gr.seeds}` : kinds.map((k) => `${k} ${outs.filter((o) => o === k).length}`).join(", ");
+    const cls = kinds.every((k) => k === "pass") ? "passed" : kinds.includes("block") ? "blocked" : "undecided";
+    svg.append(sv("text", { class: `verdict-label ${cls}`, x: W - m.r + 10, y: mid + 4 }, verdict));
   });
   const node = $("gate-chart");
   node.textContent = "";
@@ -724,15 +744,33 @@ function gate(data) {
   const open = groups.filter((gr) => gr.run.epsilon === null);
   const dps = groups.filter((gr) => gr.run.epsilon !== null);
   const rangeText = (gs) => `${fmt(Math.min(...gs.map((gr) => -gr.mean)), 1)} to ${fmt(Math.max(...gs.map((gr) => -gr.mean)), 1)}`;
+  const plain = (gr) => `${METHODS[gr.run.method].name} ${gr.run.epsilon === null ? "without privacy" : `at epsilon ${gr.run.epsilon}`} on the ${DATASETS[gr.ds].plain} data`;
+  const passing = groups.filter((gr) => at(gr).every((o) => o === "pass"));
+  const some = groups.filter((gr) => !passing.includes(gr) && at(gr).includes("pass"));
+  const list = (xs) => (xs.length < 3 ? xs.join(" and ") : `${xs.slice(0, -1).join(", ")} and ${xs[xs.length - 1]}`);
   fill($("gate-verdict"), [
-    strong("No synthetic table here is as good as the real data for training these models. "),
-    `The best synthesiser without privacy leaves a model ${rangeText(open)} AUC points worse on its worst task, and the best with a privacy guarantee ${rangeText(dps)} points worse. On the census and hospital data the gate blocks every candidate on every run.`,
+    strong("At the strict 2 points, no synthetic table here is as good as the real data for training these models. "),
+    `The best synthesiser without privacy leaves a model ${rangeText(open)} AUC points worse on its worst task, and the best with a privacy guarantee ${rangeText(dps)} points worse. On the census and hospital data the gate blocks every candidate on every run. `,
+    ...(points === g.delta_points ? [] : [
+      strong(`With ${points} points accepted: `),
+      passing.length
+        ? `the gate passes ${list(passing.map(plain))} on every run. `
+        : "the gate still passes no candidate on every run. ",
+      some.length ? `${list(some.map(plain))} ${some.length === 1 ? "passes" : "pass"} on some runs only. ` : "",
+      dps.some((gr) => passing.includes(gr)) ? "" : "Nothing with a privacy guarantee passes. ",
+      "A what-if, added after the results; the strict margin stays the recommendation.",
+    ]),
   ]);
   const undecided = groups.find((gr) => gr.outcomes.includes("not decided"));
   if (undecided) {
     fill($("gate-assumption"), [
-      strong("Why the card data is not decided. "),
-      `Its test set has only ${undecided.items} fraud cases, and the gate wants at least ${undecided.needed} before it will settle a question as fine as 2 points. So it declines rather than guess. This project reports that as not decided, never as a pass, even though every interval on the card data sits entirely below the margin.`,
+      strong("Why the card data is not decided at 2 points. "),
+      `Its test set has only ${undecided.items} fraud cases, and the gate wants at least ${undecided.needed} before it will settle a question as fine as 2 points. So it declines to decide. This project reports that as not decided, never as a pass, even though every interval on the card data sits entirely below the margin. `,
+      ...(() => {
+        const card = groups.filter((gr) => gr.ds === undecided.ds).map(at).flat();
+        const kinds = [...new Set(card)];
+        return points === g.delta_points || kinds.includes("not decided") ? [] : [`A wider margin needs fewer pairs: at ${points} points the gate does decide, and it ${kinds.length === 1 && kinds[0] === "block" ? "blocks every card candidate on every run" : `gives ${kinds.join(" and ")}`}.`];
+      })(),
     ]);
   }
 }
@@ -807,7 +845,7 @@ function membership(data) {
     stat(fmt(tapas.correct / tapas.trials, 3), "the reference library, TAPAS, on the same tables", `${tapas.correct} of ${tapas.trials} right`),
   );
   fill($("membership-verdict"), [
-    strong("The paper's attack is at chance everywhere, and that says less than it seems. "),
+    strong("The paper's attack is at chance everywhere, which proves little at this scale. "),
     "Even when the 'synthetic' table is the training data itself, the attack is right only a little more than half the time at this scale, in this project's version and in the authors' library alike. So a result at chance here means the attack could not tell, not that the table is safe. The three regulators' attacks run on the full 20,000-row tables, and they carry the risk numbers.",
     ...data.membershipFm.map((m) => ` A stronger classifier on the same evidence, the TabFM foundation model, does see one: ${METHODS[m.method].name} at epsilon ${m.epsilon} on ${DATASETS[m.dataset].short}, ${fmt(m.risk, 3)} against a coin's 0.5. It is the same configuration as the leak above.`),
   ]);
@@ -834,7 +872,7 @@ function checked(data) {
     stat("Resolved", "a gap with TAPAS on membership inference: this project's features were weaker, so every run was redone with the library's encoding"),
   );
   fill($("checked-verdict"), [
-    strong("Agreeing with the authors' own code is what shows the attacks are theirs. "),
+    strong("The attacks match the authors' own libraries, and the check fixed problems on both sides. "),
     "On membership inference the check found this project's version weaker than the library's, so it was fixed and every membership run redone: 9,720 synthesiser fits, on a rented machine and a desktop. Along the way it turned up a bug in the reference library itself: TAPAS 1.0.0 misreads ordered columns in its histogram features. ",
     strong("It also took back a leak. "),
     "TabDDPM was first reported as leaking on the census data through singling out. Anonymeter, run on the same tables, did not agree, and the two disagreed in opposite directions from run to run: the mark of a random search, not of a leak. The fix was decided and written into the plan before anything was rerun: every singling-out attack now averages five independent searches, in both versions, on all 153 tables. The leak disappeared in both and was withdrawn. Every step is written up in the repository.",
@@ -861,9 +899,9 @@ function takeaways(data) {
     ["The most useful 'synthetic' tables were the leakiest", "The only tables that met the strict 0.02 standard for usefulness were a perturbed copy and SMOTE output, and the attacks broke both. A usefulness score on its own would have picked exactly the wrong tables."],
     ["Do not use distance to closest record as the privacy test", `It flagged ${flagged.length} tables no attack could break and passed the one that leaked, yet it is the check most tools show first. It does catch crude copies, every perturbed copy, SMOTE and k-anonymity table, but on real synthesisers it got the answer wrong in both directions.`],
     ["Differential privacy limits a leak; it does not make it zero", l ? `${METHODS[l.method].name} at epsilon ${l.epsilon} carries a formal guarantee and still gave away ${pct(l.risk)} on income bracket. Epsilon is a promise about the method. Whether a leak shows up on your data is a separate question, and only an attack answers it.` : "Epsilon is a promise about the method, not a measurement of a table."],
-    ["Privacy has a price, and you can measure it before you pay", `The best synthesiser without privacy lost ${span(gaps.map((g) => g.open))} AUC on its worst task, and the best one with a guarantee lost ${span(gaps.map((g) => g.dp))}. That is the conversation a privacy officer and a data scientist need to have, with numbers on the table.`],
+    ["Privacy has a price, and you can measure it before you pay", `The best synthesiser without privacy lost ${span(gaps.map((g) => g.open))} AUC on its worst task, and the best one with a guarantee lost ${span(gaps.map((g) => g.dp))}, so a privacy officer and a data scientist can weigh the two with numbers on the table.`],
     ["Looking like the data is not the same as being useful", "The Gaussian copula reproduces the counts better than most and trains some of the worst models. Judge a synthetic table by training on it and testing on real data, not by a similarity score."],
-    ["A null result is only as good as the attack's power", "The paper's membership attack found nothing anywhere, and could barely spot a straight copy of the training data. A stronger classifier on the same evidence found one leak it had missed. Saying so is the difference between 'we found no leak' and 'there is no leak'."],
+    ["A null result is only as good as the attack's power", "The paper's membership attack found nothing anywhere, and could barely spot a straight copy of the training data. A stronger classifier on the same evidence found one leak it had missed."],
     ["A leak claim deserves the same scrutiny as a safety claim", "One leak reported here did not survive a second look: checked against the authors' library, it turned out to be noise from a random search. The rule for settling it was fixed before the rerun and applied to every table, so it could as easily have added leaks as removed one."],
   ];
   const node = $("takeaway-cards");
