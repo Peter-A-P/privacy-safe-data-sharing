@@ -20,10 +20,10 @@
     <a href="#basics">The basics</a>
     <a href="#method-panel">Method</a>
     <a href="#surface-panel">Trade-off</a>
+    <a href="#gate-panel">The gate</a>
     <a href="#leak-panel">The leak</a>
     <a href="#ladder-panel">The ladder</a>
     <a href="#dcr-panel">The usual check</a>
-    <a href="#gate-panel">The gate</a>
     <a href="#membership-panel">Membership</a>
     <a href="#takeaways">Takeaways</a>
     <a href="#explorer">All results</a>
@@ -349,6 +349,42 @@
     </details>
   </section>
 
+  <section class="section" id="gate-panel">
+    <h2>As good as the real thing? The release gate says no</h2>
+    <p class="section-lead" id="gate-lead">
+      Project 03's release gate decides whether a new model is at least as good as the one it
+      replaces, within a set margin. Here the new model learns from synthetic data and the old one
+      from the real data. Since nothing met the rule, the gate was given the nearest candidates:
+      for each dataset, the closest synthesiser overall and the closest with a privacy guarantee.
+      Each bar is the gap on the worst task, averaged over three runs, with the spread of the
+      gate's 95 percent intervals.
+    </p>
+    <p class="section-lead">
+      The red line is the strict margin of 2 AUC points (0.02). The green line is the loss you
+      would accept, set with the slider. The verdict on the right is the gate's own decision at
+      that margin: it was run again at every whole point from 1 to 20, so each verdict is one
+      the gate actually gave.
+    </p>
+    <div class="controls inline single">
+      <div class="control">
+        <label for="gate-margin">Loss you would accept: <output id="gate-margin-value">0.05</output> AUC</label>
+        <div class="range-wrap"><input type="range" id="gate-margin" min="0.01" max="0.20" step="0.01" value="0.05"></div>
+        <span class="hint">the same setting as the trade-off chart above; the strict margin is 0.02</span>
+      </div>
+    </div>
+    <figure class="chart-figure">
+      <div id="gate-chart" class="chart"></div>
+      <div class="legend" id="gate-legend"></div>
+      <figcaption id="gate-caption"></figcaption>
+    </figure>
+    <div class="verdict">
+      <p id="gate-verdict"></p>
+    </div>
+    <div class="assumption">
+      <p id="gate-assumption"></p>
+    </div>
+  </section>
+
   <section class="section" id="leak-panel">
     <h2>What leaked</h2>
     <p class="section-lead">
@@ -430,42 +466,6 @@
         <a href="https://github.com/Peter-A-P/privacy-safe-data-sharing/blob/main/docs/rejected.md">docs/rejected.md</a>.
       </p>
     </details>
-  </section>
-
-  <section class="section" id="gate-panel">
-    <h2>As good as the real thing? The release gate says no</h2>
-    <p class="section-lead" id="gate-lead">
-      Project 03's release gate decides whether a new model is at least as good as the one it
-      replaces, within a set margin. Here the new model learns from synthetic data and the old one
-      from the real data. Since nothing met the rule, the gate was given the nearest candidates:
-      for each dataset, the closest synthesiser overall and the closest with a privacy guarantee.
-      Each bar is the gap on the worst task, averaged over three runs, with the spread of the
-      gate's 95 percent intervals.
-    </p>
-    <p class="section-lead">
-      The red line is the strict margin of 2 AUC points (0.02). The green line is the loss you
-      would accept, set with the slider. The verdict on the right is the gate's own decision at
-      that margin: it was run again at every whole point from 1 to 20, so each verdict is one
-      the gate actually gave.
-    </p>
-    <div class="controls inline single">
-      <div class="control">
-        <label for="gate-margin">Loss you would accept: <output id="gate-margin-value">0.05</output> AUC</label>
-        <div class="range-wrap"><input type="range" id="gate-margin" min="0.01" max="0.20" step="0.01" value="0.05"></div>
-        <span class="hint">the same setting as the trade-off chart above; the strict margin is 0.02</span>
-      </div>
-    </div>
-    <figure class="chart-figure">
-      <div id="gate-chart" class="chart"></div>
-      <div class="legend" id="gate-legend"></div>
-      <figcaption id="gate-caption"></figcaption>
-    </figure>
-    <div class="verdict">
-      <p id="gate-verdict"></p>
-    </div>
-    <div class="assumption">
-      <p id="gate-assumption"></p>
-    </div>
   </section>
 
   <section class="section" id="membership-panel">
