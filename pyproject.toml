@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "facsimile"
-version = "0.0.1"
+version = "0.1.0"
 description = "Synthetic tables of real people, attacked the way a regulator says and the way a researcher would, and measured for usefulness as train-on-synthetic, test-on-real."
 readme = "README.md"
 requires-python = ">=3.13,<3.14"

@@ -5,8 +5,8 @@ versions of three public datasets of real people, generated seven ways with and 
 differential privacy, attacked with the three criteria regulators use to judge anonymity and
 with membership inference, and measured for usefulness as train-on-synthetic, test-on-real.
 The plan is in [PLAN.md](PLAN.md); the diagrams in [docs/architecture.md](docs/architecture.md).
-Status: week 3 in progress (grid built except AIM at epsilon 4 and 8; attacks, utility and the
-report written; Groundhog redone with the TAPAS encoding and checked against TAPAS).
+Status: built and measured, `v0.1.0` (2026-11-08), repository public, site live at
+privacy.peterparker.ca (AIM at epsilon 4 and 8 not run, PLAN.md section 2.2).
 
 ## Read first
 

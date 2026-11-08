@@ -5,4 +5,4 @@ privacy, attacked with the three criteria regulators use to judge anonymity and 
 inference, and measured for usefulness as train-on-synthetic, test-on-real. PLAN.md is the design.
 """
 
-__version__ = "0.0.1"
+__version__ = "0.1.0"
