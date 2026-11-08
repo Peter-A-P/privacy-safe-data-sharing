@@ -182,7 +182,7 @@ function hero(data) {
   if (leaks.length) {
     const l = leaks[0];
     const exposed = (data.exposed_leaks || []).filter((x) => METHODS[x.method]).length;
-    $("hero-leaks-note").textContent = `${METHODS[l.method].name} at epsilon ${l.epsilon}, with a privacy guarantee, on the ${DATASETS[l.dataset].plain} data: the inference attack, ${pct(l.risk)} excess.${exposed ? ` ${exposed} more on the most unusual people.` : ""}`;
+    $("hero-leaks-note").textContent = `${METHODS[l.method].name} at epsilon ${l.epsilon}, with a privacy guarantee, on the ${DATASETS[l.dataset].plain} data: the inference attack, ${pct(l.risk)} excess${l.reference && !l.reference.detected ? ", not reproduced by the reference library" : ""}.${exposed ? ` ${exposed} more on the most unusual people.` : ""}`;
   }
 
   // The positive controls: what the attacks find on the techniques synthetic data replaces.
@@ -335,7 +335,7 @@ function surface(data) {
     ...METHOD_ORDER.map((mm) => [`sw-${METHODS[mm].cls}`, `${METHODS[mm].name}${METHODS[mm].dp ? "" : ", no privacy"}`]),
     ["sw-leak", "a named leak", "ring"],
   ]);
-  $("surface-caption").textContent = "Each dot is the average of three runs. AIM has no dots at epsilon 4 and 8: one table ran for more than 28 hours and used up to 53 GB of memory without finishing, and at epsilon 2 it was already far below the bar (see What this page does not show, at the end). Each vertical line runs from the lowest run's 95% lower bound to the highest run's upper bound. Usefulness: the same LightGBM model is trained once on the synthetic table and once on the real one, both are tested on real people neither has seen, and the real-trained score is subtracted from the synthetic-trained one.";
+  $("surface-caption").textContent = "Nothing with a privacy guarantee comes near the strip on any dataset. AIM has no dots at epsilon 4 and 8: one table ran for more than 28 hours and used up to 53 GB of memory without finishing, and at epsilon 2 it was already far below the bar (see What this page does not show, at the end). Each vertical line runs from the lowest run's 95% lower bound to the highest run's upper bound. Usefulness: the same LightGBM model is trained once on the synthetic table and once on the real one, both are tested on real people neither has seen, and the real-trained score is subtracted from the synthetic-trained one.";
 
   const best = cells.reduce((a, c) => (worstTask(c).u.delta > worstTask(a).u.delta ? c : a));
   const dp = cells.filter((c) => c.epsilon !== null);
@@ -448,6 +448,18 @@ const LEAK_WORDS = {
   },
 };
 
+/* How many TabFM detections chance alone would give: one one-sided test at half the rule's
+   alpha on each membership configuration. */
+function fmTests(data) {
+  const n = data.cells.filter((c) => c.membership).length;
+  return { n, expected: fmt((n * data.rule.alpha) / 2, 1) };
+}
+
+function fmChance(data) {
+  const t = fmTests(data);
+  return `Over the ${t.n} configurations it was run on, chance alone would give about ${t.expected} such detections.`;
+}
+
 function leak(data) {
   const card = $("leak-card");
   card.textContent = "";
@@ -507,7 +519,7 @@ function leak(data) {
       dcr !== null ? `Distance to closest record passes it too, at ${fmt(dcr, 3)}. ` : "",
     );
   }
-  verdict.push(...data.membershipFm.map((m) => ` A second membership attacker flags it too. With Google's TabFM foundation model in place of the usual random forest, at about 1,000 rows, it tells whether a person was in the training data ${pct(m.risk)} of the time, against a coin's 50% (95% interval ${pct(m.lo)} to ${pct(m.hi)}), where the forest saw nothing.`));
+  verdict.push(...data.membershipFm.map((m) => ` A second membership attacker flags it too. With Google's TabFM foundation model in place of the usual random forest, at about 1,000 rows, it tells whether a person was in the training data ${pct(m.risk)} of the time, against a coin's 50% (95% interval ${pct(m.lo)} to ${pct(m.hi)}), where the forest saw nothing. ${fmChance(data)}`));
   fill($("leak-verdict"), verdict);
 }
 
@@ -594,7 +606,7 @@ function ladder(data) {
     strong(`The attacks caught ${caught.length} of the ${all.length} leaky tables they were given. `),
     ...(() => {
       const missed = [...new Set(all.filter((r) => !caught.includes(r)).map((r) => LADDER[r.method].name))];
-      return missed.length ? [`The ones they missed are ${missed.join(", ")}: trained ten times longer on 20,000 records, it showed no measurable memorisation, which the plan had allowed for. `] : [];
+      return missed.length ? [`${missed.length === 1 ? "The one they missed is" : "The ones they missed are"} ${missed.join(", ")}: trained ten times longer on 20,000 records, it showed no measurable memorisation, which the plan had allowed for. `] : [];
     })(),
     "On the same attacks the seven synthesisers sit near zero, apart from the leak above. Because the attacks catch tables like these, a clean result on a synthesiser carries weight.",
   ] : ["The ladder's tables are still being attacked."]);
@@ -667,6 +679,7 @@ function dcrChart(data) {
     `It flagged ${flagged.length} configurations that no attack could break, ${dpFlagged.length} of them with a privacy guarantee, and it passed ${leaked.length === 1 ? "the one" : "every one"} an attack did break. `,
     "A release gate built on this check would have blocked every MST table on the card data and let through the table the inference attack breaks. This project keeps the number in its tables, labelled for what it is, and never calls it privacy.",
   ]);
+  $("refuted-dcr").textContent = `The check most tools show was expected to flag the tables that leak. It passed ${leaked.length === 1 ? "the one" : "every one"} an attack broke and flagged ${flagged.length} that none could break, ${dpFlagged.length} of them with a privacy guarantee.`;
 }
 
 /* ---------------------------------------------------------------- the gate */
@@ -718,12 +731,14 @@ function gate(data) {
     svg.append(sv("text", { class: "margin-label", x: x(-points) - 4, y: m.t - 8, "text-anchor": "end" }, `yours, -${points}`));
   }
   svg.append(sv("text", { class: "axis-title", x: m.l + (W - m.l - m.r) / 2, y: H - 6, "text-anchor": "middle" }, "worst-task AUC points, synthetic-trained minus real-trained"));
+  const readout = $("gate-readout");
   groups.forEach((gr, i) => {
     const mid = m.t + i * rowH + rowH / 2;
     const dp = gr.run.epsilon !== null;
     svg.append(sv("text", { class: "row-label", x: 8, y: mid - 2 }, DATASETS[gr.ds].short));
     svg.append(sv("text", { class: "row-note", x: 8, y: mid + 12 }, config(gr.run)));
-    svg.append(sv("rect", { class: `bar ${dp ? "gate-dp" : "gate-open"}`, x: x(gr.mean), y: mid - 9, width: x(0) - x(gr.mean), height: 18, rx: 2 }));
+    const bar = sv("rect", { class: `bar ${dp ? "gate-dp" : "gate-open"}`, x: x(gr.mean), y: mid - 9, width: x(0) - x(gr.mean), height: 18, rx: 2, tabindex: 0 });
+    svg.append(bar);
     svg.append(sv("line", { class: "whisker", x1: x(gr.lo), x2: x(gr.hi), y1: mid, y2: mid }));
     svg.append(sv("line", { class: "whisker", x1: x(gr.lo), x2: x(gr.lo), y1: mid - 5, y2: mid + 5 }));
     svg.append(sv("line", { class: "whisker", x1: x(gr.hi), x2: x(gr.hi), y1: mid - 5, y2: mid + 5 }));
@@ -732,17 +747,27 @@ function gate(data) {
     const verdict = kinds.length === 1 ? `${kinds[0]}, ${gr.seeds} of ${gr.seeds}` : kinds.map((k) => `${k} ${outs.filter((o) => o === k).length}`).join(", ");
     const cls = kinds.every((k) => k === "pass") ? "passed" : kinds.includes("block") ? "blocked" : "undecided";
     svg.append(sv("text", { class: `verdict-label ${cls}`, x: W - m.r + 10, y: mid + 4 }, verdict));
+    const show = () => fill(readout, [
+      el("span", { class: "when" }, `${DATASETS[gr.ds].short}, ${config(gr.run)}`),
+      el("span", { class: "pair" }, `${signed(gr.mean, 1)} AUC points on the worst task, runs' intervals ${signed(gr.lo, 1)} to ${signed(gr.hi, 1)}`),
+      el("span", { class: "pair" }, `at ${points} point${points === 1 ? "" : "s"}: ${verdict}`),
+    ]);
+    bar.addEventListener("mouseenter", show);
+    bar.addEventListener("focus", show);
   });
   const node = $("gate-chart");
   node.textContent = "";
   node.append(svg);
+  readout.textContent = "Point at a bar to read it.";
   legend($("gate-legend"), [
-    ["sw-gate-open", "nearest of all seven, no privacy guarantee"],
-    ["sw-gate-dp", "nearest with differential privacy"],
+    ["sw-gate-open", "no privacy guarantee"],
+    ["sw-gate-dp", "with differential privacy"],
   ]);
   $("gate-caption").textContent = "An item is a pair of real test records, one positive and one negative, never reused; it is correct when the model scores the positive one higher, so the share correct estimates the AUC. Paired bootstrap, 2,000 resamples, Holm's adjustment across a dataset's tasks.";
   const open = groups.filter((gr) => gr.run.epsilon === null);
   const dps = groups.filter((gr) => gr.run.epsilon !== null);
+  // The best candidate per dataset in each pool: the no-privacy pool holds two per dataset.
+  const bestPer = (gs) => ORDER.map((ds) => gs.filter((gr) => gr.ds === ds).reduce((a, gr) => (!a || gr.mean > a.mean ? gr : a), null)).filter(Boolean);
   const rangeText = (gs) => `${fmt(Math.min(...gs.map((gr) => -gr.mean)), 1)} to ${fmt(Math.max(...gs.map((gr) => -gr.mean)), 1)}`;
   const plain = (gr) => `${METHODS[gr.run.method].name} ${gr.run.epsilon === null ? "without privacy" : `at epsilon ${gr.run.epsilon}`} on the ${DATASETS[gr.ds].plain} data`;
   const passing = groups.filter((gr) => at(gr).every((o) => o === "pass"));
@@ -750,7 +775,7 @@ function gate(data) {
   const list = (xs) => (xs.length < 3 ? xs.join(" and ") : `${xs.slice(0, -1).join(", ")} and ${xs[xs.length - 1]}`);
   fill($("gate-verdict"), [
     strong("At the strict 2 points, no synthetic table here is as good as the real data for training these models. "),
-    `The best synthesiser without privacy leaves a model ${rangeText(open)} AUC points worse on its worst task, and the best with a privacy guarantee ${rangeText(dps)} points worse. On the census and hospital data the gate blocks every candidate on every run. `,
+    `The best synthesiser without privacy leaves a model ${rangeText(bestPer(open))} AUC points worse on its worst task, and the best with a privacy guarantee ${rangeText(bestPer(dps))} points worse. On the census and hospital data the gate blocks every candidate on every run. `,
     ...(points === g.delta_points ? [] : [
       strong(`With ${points} points accepted: `),
       passing.length
@@ -820,6 +845,11 @@ function membership(data) {
   node.textContent = "";
   node.append(svg);
   readout.textContent = "Point at a dot to read it.";
+  const shown = METHOD_ORDER.filter((mm) => rows.some((r) => r.method === mm));
+  legend($("membership-legend"), [
+    ["sw-copy", "copy of the training data (control)", "dot"],
+    ...shown.map((mm) => [`sw-${METHODS[mm].cls}`, `${METHODS[mm].name}${METHODS[mm].dp ? "" : ", no privacy"}`, "dot"]),
+  ]);
   $("membership-caption").textContent = "Six target people per dataset, 40 practice tables and 20 test tables each: 120 trials per configuration, with exact (Clopper-Pearson) 95% intervals. The copy control is a 'synthesiser' that simply hands back its training data.";
 
   const copies = data.groundhog_reference.filter((r) => r.method === "copy");
@@ -847,7 +877,7 @@ function membership(data) {
   fill($("membership-verdict"), [
     strong("The paper's attack is at chance everywhere, which proves little at this scale. "),
     "Even when the 'synthetic' table is the training data itself, the attack is right only a little more than half the time at this scale, in this project's version and in the authors' library alike. So a result at chance here means the attack could not tell, not that the table is safe. The three regulators' attacks run on the full 20,000-row tables, and they carry the risk numbers.",
-    ...data.membershipFm.map((m) => ` A stronger classifier on the same evidence, the TabFM foundation model, does see one: ${METHODS[m.method].name} at epsilon ${m.epsilon} on ${DATASETS[m.dataset].short}, ${fmt(m.risk, 3)} against a coin's 0.5. It is the same configuration as the leak above.`),
+    ...data.membershipFm.map((m) => ` A stronger classifier on the same evidence, the TabFM foundation model, does see one: ${METHODS[m.method].name} at epsilon ${m.epsilon} on ${DATASETS[m.dataset].short}, ${fmt(m.risk, 3)} against a coin's 0.5. It is the same configuration as the leak above, though over ${fmTests(data).n} configurations chance alone would give about ${fmTests(data).expected} detections.`),
   ]);
 }
 
@@ -867,7 +897,7 @@ function checked(data) {
     return s;
   };
   head.append(
-    stat(`${Math.round(overlap)} of ${pairs}`, `risk intervals that overlap Anonymeter's, on ${ag.tables} configurations and five attacks`),
+    stat(`${Math.round(overlap)} of ${pairs}`, `risk intervals that overlap Anonymeter's, on ${ag.tables} tables and five attacks`),
     stat(`${Math.round(same)} of ${pairs}`, "the same detected-or-not call; the rest sit at the edge, explained in docs/attacks.md"),
     stat("Resolved", "a gap with TAPAS on membership inference: this project's features were weaker, so every run was redone with the library's encoding"),
   );
@@ -875,7 +905,7 @@ function checked(data) {
     strong("The attacks match the authors' own libraries, and the check fixed problems on both sides. "),
     "On membership inference the check found this project's version weaker than the library's, so it was fixed and every membership run redone: 9,720 synthesiser fits, on a rented machine and a desktop. Along the way it turned up a bug in the reference library itself: TAPAS 1.0.0 misreads ordered columns in its histogram features. ",
     strong("It also took back a leak. "),
-    "TabDDPM was first reported as leaking on the census data through singling out. Anonymeter, run on the same tables, did not agree, and the two disagreed in opposite directions from run to run: the mark of a random search, not of a leak. The fix was decided and written into the plan before anything was rerun: every singling-out attack now averages five independent searches, in both versions, on all 153 tables. The leak disappeared in both and was withdrawn. Every step is written up in the repository.",
+    `TabDDPM was first reported as leaking on the census data through singling out. Anonymeter, run on the same tables, did not agree, and the two disagreed in opposite directions from run to run: the mark of a random search, not of a leak. The fix was decided and written into the plan before anything was rerun: every singling-out attack now averages five independent searches, in both versions, on all ${ag.tables} tables. The leak disappeared in both and was withdrawn. Every step is written up in the repository.`,
   ]);
 }
 
@@ -891,13 +921,21 @@ function takeaways(data) {
     return { open: -worstTask(best(cs.filter((c) => c.epsilon === null))).u.delta, dp: -worstTask(best(cs.filter((c) => c.epsilon !== null))).u.delta };
   });
   const span = (vs) => `${fmt(Math.min(...vs), 2)} to ${fmt(Math.max(...vs), 2)}`;
+  // The inference leaks with a privacy guarantee that only the most unusual targets showed.
+  const unusual = (data.exposed_leaks || []).filter((x) => METHODS[x.method] && x.epsilon !== null && x.attack === "inference");
+  const unusualEps = [...new Set(unusual.map((x) => x.epsilon))].sort((a, b) => a - b);
+  const unusualRisks = unusual.map((x) => x.risk);
+  const fullRisks = unusual.map((x) => data.leaks.find((y) => y.dataset === x.dataset && y.method === x.method && y.epsilon === x.epsilon && y.attack === x.attack)).filter(Boolean).map((y) => pct(y.risk));
+  const unusualText = unusual.length
+    ? `Randomly chosen targets are mostly ordinary people. Attacked again on the most unusual quarter, tables with a privacy guarantee at epsilon ${unusualEps.join(" and ")} gave away ${unusual.length === 1 ? pct(unusualRisks[0]) : `${pct(Math.min(...unusualRisks))} to ${pct(Math.max(...unusualRisks))}`} on inference, where the full set of targets showed ${fullRisks.length ? `${fullRisks.join(" or ")} or nothing at all` : "nothing at all"}.`
+    : "Randomly chosen targets are mostly ordinary people. Attacked again on the most unusual quarter, no table with a privacy guarantee gave away anything the full set of targets had not already shown.";
   const cards = [
     ["Demand a control group, or the number means nothing", "An attack on a useful table always works on someone, because predicting people is what the table is for. Only the extra success over people the synthesiser never saw is a leak. Ask any vendor what their privacy score is measured against."],
-    ["Test the attacks before trusting a clean result", "Four methods people really use, a perturbed copy, SMOTE, k-anonymity and an overfitted model, went through the same attacks. The regulators' three attacks caught every perturbed copy, SMOTE and k-anonymity table they were given. Without checks like these, 'no leak found' looks exactly like 'attack too weak to find one'."],
-    ["Attack the unusual people separately", "Randomly chosen targets are mostly ordinary people. Attacked again on the most unusual quarter, tables with a privacy guarantee at epsilon 1 and 2 gave away 4.6% to 7.2% on inference, where the full set of targets showed 2.5% or nothing at all."],
+    ["Test the attacks before trusting a clean result", "Four methods people really use (a perturbed copy, SMOTE, k-anonymity and an overfitted model) went through the same attacks. The regulators' three attacks caught every perturbed copy, SMOTE and k-anonymity table they were given. Without checks like these, 'no leak found' looks exactly like 'attack too weak to find one'."],
+    ["Attack the unusual people separately", unusualText],
     ["Training longer is not the same as memorising", "TVAE trained for 3,000 epochs instead of 300, on 20,000 records, showed no detected risk on its full targets on any dataset; only inference on the most unusual card records found one. Overfitting is mostly a small-table worry. At this size, the classical methods people call safe were far more dangerous."],
     ["The most useful 'synthetic' tables were the leakiest", "The only tables that met the strict 0.02 standard for usefulness were a perturbed copy and SMOTE output, and the attacks broke both. A usefulness score on its own would have picked exactly the wrong tables."],
-    ["Do not use distance to closest record as the privacy test", `It flagged ${flagged.length} tables no attack could break and passed the one that leaked, yet it is the check most tools show first. It does catch crude copies, every perturbed copy, SMOTE and k-anonymity table, but on real synthesisers it got the answer wrong in both directions.`],
+    ["Do not use distance to closest record as the privacy test", `It flagged ${flagged.length} tables no attack could break and passed the one that leaked, yet it is the check most tools show first. It does catch crude copies (every perturbed copy, SMOTE and k-anonymity table), but on real synthesisers it got the answer wrong in both directions.`],
     ["Differential privacy limits a leak; it does not make it zero", l ? `${METHODS[l.method].name} at epsilon ${l.epsilon} carries a formal guarantee and still gave away ${pct(l.risk)} on income bracket. Epsilon is a promise about the method. Whether a leak shows up on your data is a separate question, and only an attack answers it.` : "Epsilon is a promise about the method, not a measurement of a table."],
     ["Privacy has a price, and you can measure it before you pay", `The best synthesiser without privacy lost ${span(gaps.map((g) => g.open))} AUC on its worst task, and the best one with a guarantee lost ${span(gaps.map((g) => g.dp))}, so a privacy officer and a data scientist can weigh the two with numbers on the table.`],
     ["Looking like the data is not the same as being useful", "The Gaussian copula reproduces the counts better than most and trains some of the worst models. Judge a synthetic table by training on it and testing on real data, not by a similarity score."],

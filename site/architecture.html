@@ -5,6 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>How it's built: Share the Data, Not the People</title>
 <meta name="description" content="How synthetic data is generated, attacked and scored in Share the Data, Not the People, in four diagrams.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Peter Parker">
+<meta property="og:url" content="https://privacy.peterparker.ca/architecture.html">
+<meta property="og:title" content="How it's built: Share the Data, Not the People">
+<meta property="og:description" content="How synthetic data is generated, attacked and scored in Share the Data, Not the People, in four diagrams.">
+<meta property="og:image" content="https://privacy.peterparker.ca/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Share the data, not the people. Seven synthesisers on three public datasets of real people, attacked the way a regulator says. Peter Parker, privacy.peterparker.ca.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.png">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -39,7 +51,7 @@
       drawn before the first line of code, so that the design could not be shaped to fit the
       result. Select a diagram to open it full size.
     </p>
-    <p class="hero-note"><a href="index.html">Back to the findings</a></p>
+    <p class="hero-note"><a href="index.html">Back to the results</a></p>
   </header>
 
   <section class="section" id="the-pipeline">
@@ -74,7 +86,7 @@
     </figure>
     <div class="prose">
       <p>Every attack has the same shape; only the predicates and the search change. In the inference attack, the attacker knows everything about a person but one attribute, here the income bracket. They find that person's nearest records in the synthetic table and guess the missing attribute from them.</p>
-      <p>Right or wrong is counted over the targets, over the control and for the random guess. The risk is the targets' excess over the control, as a share of what was left to gain, with a 95% interval. The authors' library, Anonymeter, runs on the same inputs. On 48 configurations and five attacks, every one of the 240 pairs of intervals overlaps.</p>
+      <p>Right or wrong is counted over the targets, over the control and for the random guess. The risk is the targets' excess over the control, as a share of what was left to gain, with a 95% interval. The authors' library, Anonymeter, runs on the same inputs. On all 153 tables and five attacks, 764 of the 765 pairs of intervals overlap.</p>
       <p class="where">Where it lives: <code>facsimile.attacks.inference</code>, <code>facsimile.attacks.neighbours</code> and <code>facsimile.attacks.reference</code>.</p>
     </div>
   </section>
@@ -91,7 +103,7 @@
     </div>
   </section>
 
-  <p class="arch-back"><a href="index.html">Back to the findings</a></p>
+  <p class="arch-back"><a href="index.html">Back to the results</a></p>
 </main>
 <footer class="foot">
   <div class="foot-inner">

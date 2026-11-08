@@ -29,6 +29,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # The stylesheet and script carry the commit, so a browser never keeps last deploy's copy.
+      - name: Stamp style.css and app.js with the commit
+        run: |
+          v="${GITHUB_SHA::7}"
+          sed -i -E "s/(href|src)=\"(style\.css|app\.js)\"/\1=\"\2?v=${v}\"/g" site/index.html site/architecture.html
+          grep -c "?v=${v}" site/index.html
+
       - name: Deploy to Azure Static Web Apps
         uses: Azure/static-web-apps-deploy@v1
         with:

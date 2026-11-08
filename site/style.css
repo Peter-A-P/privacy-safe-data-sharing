@@ -964,3 +964,61 @@ td.not-run { white-space: normal; color: var(--ink-faint); font-size: 0.84rem; }
 .sw-grid-max { background: var(--ink-faint); }
 .card-result { color: var(--ink) !important; font-weight: 600; }
 #ladder-cards { margin-bottom: 0.5rem; }
+
+/* ---------------------------------------------------------------- house sections */
+
+/* On this page: the numbered list of every section, below the first screen. */
+.toc { padding: 1.5rem 0 1.75rem; border-bottom: 1px solid var(--line); }
+.toc ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: toc;
+  columns: 2 16rem;
+  column-gap: 2rem;
+}
+.toc li { counter-increment: toc; margin: 0 0 0.3rem; break-inside: avoid; font-size: 0.93rem; }
+.toc li::before {
+  content: counter(toc, decimal-leading-zero);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-faint);
+  font-size: 0.78rem;
+  margin-right: 0.6rem;
+}
+
+.part { padding: 3.5rem 0 0.5rem; }
+.part-title { font-size: clamp(1.75rem, 3.4vw, 2.4rem); line-height: 1.15; margin-bottom: 0.9rem; }
+
+/* What did not work. */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 0.9rem; margin: 1.25rem 0; }
+.card-note { padding: 1rem 1.1rem; background: var(--paper-soft); border: 1px solid var(--line); border-top: 3px solid var(--warn); border-radius: var(--radius); }
+.card-note h3 { font-size: 1.08rem; }
+.card-note p { font-size: 0.9rem; color: var(--ink-soft); margin: 0; }
+
+/* The glossary in How this was built: a definition list, not the cards of the basics. */
+dl.terms { margin: 0 0 0.9rem; }
+.terms dt { font-weight: 600; margin-top: 0.7rem; }
+.terms dd { margin: 0.15rem 0 0; color: var(--ink-soft); font-size: 0.92rem; }
+
+/* A word-labelled chart keeps its size on a phone and scrolls inside its box, by touch too. */
+.wide-chart svg { touch-action: pan-x pan-y; }
+
+/* The gate's bars are focusable, for the readout. */
+.bar.gate-open:focus-visible, .bar.gate-dp:focus-visible { outline: none; stroke: var(--accent); stroke-width: 2; }
+.bar.gate-open, .bar.gate-dp { cursor: crosshair; }
+
+.sw-copy { background: var(--ink); }
+
+/* Twelve menu stops on one row at desktop widths. */
+@media (min-width: 46.01rem) {
+  .tabs-inner { gap: 0; }
+  .tabs a { padding: 0.2rem 0.4rem; font-size: 0.8rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+}
+
+@media (max-width: 34rem) {
+  .toc ol { columns: 1; }
+}

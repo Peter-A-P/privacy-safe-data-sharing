@@ -109,5 +109,5 @@ counts, and its interval includes zero.
   of the training data must be caught, by inference and linkability. A table independent of the
   targets must score at control level on every attack.
 - `tests/test_attack_sanity.py` runs the same pair on the attacks directly.
-- On this project's 48 configurations, the implementations agree with Anonymeter, the reference
-  library: every interval overlaps ([attacks.md](attacks.md)).
+- On this project's 153 tables, the implementations agree with Anonymeter, the reference
+  library: the intervals overlap on 764 of 765 pairs ([attacks.md](attacks.md)).
